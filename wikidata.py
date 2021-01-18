@@ -50,7 +50,7 @@ class WikidataRecord:
         except KeyError:
             self.instance_ofs = set()
 
-    def parse_aliases(self):
+    def parse_aliases(self) -> None:
         self.aliases = {lang: d["value"] for lang, d in self.record["labels"].items()}
 
     @property
@@ -88,7 +88,7 @@ class WikidataRecord:
     help="Number of records to print",
 )
 @click.option("--instance-of", default="Q5", help="Identifier for instance-of relation")
-def main(dump_file, num_records, instance_of):
+def main(dump_file, num_records, instance_of) -> None:
 
     n_dumped = 0
     wikidata = WikidataDump(dump_file)
