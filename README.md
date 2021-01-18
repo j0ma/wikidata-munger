@@ -241,7 +241,7 @@ We can find a single record that is an instance of `human`, identified by `Q5`, 
 Similarly, to find a single instance of `university`, denoted by `Q3918`, run the following:
 
 ```
-> python wikidata.py --dump-file /data-drive/datasets/wikidata/latest-all.json.bz2 --instance-of Q5 --num-records 1 | jq
+> python wikidata.py --dump-file /data-drive/datasets/wikidata/latest-all.json.bz2 --instance-of Q3918 --num-records 1 | jq
 
 {
   "id": "Q16947",
