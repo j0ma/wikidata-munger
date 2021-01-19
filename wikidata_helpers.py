@@ -2,7 +2,7 @@ import bz2
 import json
 import os
 
-from typing import Generator, Set
+from typing import Generator, Set, List
 
 
 class WikidataDump:
