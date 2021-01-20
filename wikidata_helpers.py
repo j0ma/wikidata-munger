@@ -2,6 +2,7 @@ import bz2
 import orjson
 import json
 import math
+import orjson
 import os
 import itertools
 
@@ -95,7 +96,7 @@ class WikidataRecord:
             return self.record
 
     def to_json(self, simple=True) -> str:
-        return orjson.dumps(self.to_dict(simple))
+        return orjson.dumps(self.to_dict(simple), ensure_ascii=False)
 
     def __str__(self) -> str:
         return f'WikidataRecord(name="{self.name}", id="{self.id}, mongo_id={self.mongo_id} instance_of={self.instance_ofs})"'
