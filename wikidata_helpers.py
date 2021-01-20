@@ -1,5 +1,5 @@
 import bz2
-import json
+import orjson
 import os
 
 from typing import Generator, Set, List
@@ -10,13 +10,17 @@ class WikidataDump:
         self.dumpfile = os.path.abspath(dumpfile)
 
     def __iter__(self) -> Generator:
+        n_decode_errors = 0
         with bz2.open(self.dumpfile, mode="rt") as f:
             f.read(2)  # skip first two bytes: "{\n"
             for line in f:
                 try:
-                    yield json.loads(line.rstrip(",\n"))
-                except json.decoder.JSONDecodeError:
+                    yield orjson.loads(line.rstrip(",\n"))
+                except orjson.JSONDecodeError:
+                    n_decode_errors += 1
                     continue
+        print(f"Decode errors: {n_decode_errors}")
+            
 
 
 class WikidataRecord:
@@ -62,7 +66,7 @@ class WikidataRecord:
             return self.record
 
     def to_json(self, simple=True) -> str:
-        return json.dumps(self.to_dict(simple), ensure_ascii=False)
+        return orjson.dumps(self.to_dict(simple), ensure_ascii=False)
 
     def __str__(self) -> str:
         return f'WikidataRecord(name="{self.name}", id="{self.id})"'
