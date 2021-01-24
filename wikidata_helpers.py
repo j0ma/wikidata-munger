@@ -37,7 +37,19 @@ class WikidataDump:
                     n_decode_errors += 1
                     continue
         print(f"Decode errors: {n_decode_errors}")
-            
+
+
+class WikidataMongoDB:
+    """Class for interfacing with Wikidata dump
+    ingested into a MongoDB instance."""
+
+    def __init__(
+        self, database_name: str = "wikidata_db", collection_name: str = "wikidata",
+    ) -> None:
+        self.database_name = database_name
+        self.collection_name = collection_name
+        self.client = MongoClient()
+        self.conn = self.client[self.database_name][self.collection_name]
 
 
 class WikidataRecord:
