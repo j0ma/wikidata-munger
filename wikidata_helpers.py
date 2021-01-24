@@ -21,7 +21,6 @@ def chunks(iterable, size, should_enumerate=False):
         yield (ix, chunk) if should_enumerate else chunk
         ix += 1
 
-
 class WikidataDump:
     def __init__(self, dumpfile: str) -> None:
         self.dumpfile = os.path.abspath(dumpfile)
@@ -41,6 +40,21 @@ class WikidataDump:
             
 
 
+class WikidataMongoDB:
+    """Class for interfacing with Wikidata dump
+    ingested into a MongoDB instance."""
+
+    def __init__(
+        self,
+        database_name: str = "wikidata_db",
+        collection_name: str = "wikidata",
+    ) -> None:
+        self.database_name = database_name
+        self.collection_name = collection_name
+        self.client = MongoClient()
+        self.conn = self.client[self.database_name][self.collection_name]
+
+
 class WikidataRecord:
     def __init__(self, record: dict, default_lang: str = "en") -> None:
         self.record = record
@@ -58,13 +72,16 @@ class WikidataRecord:
         try:
             self.instance_ofs = set(
                 iof["mainsnak"]["datavalue"]["value"]["id"]
+
                 for iof in self.record["claims"]["P31"]
             )
         except KeyError:
             self.instance_ofs = set()
 
     def parse_aliases(self) -> None:
-        self.aliases = {lang: d["value"] for lang, d in self.record["labels"].items()}
+        self.aliases = {
+            lang: d["value"] for lang, d in self.record["labels"].items()
+        }
 
     def parse_alias_langs(self) -> None:
         self.alias_langs = {lang for lang in self.aliases}
