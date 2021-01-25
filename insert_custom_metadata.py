@@ -55,8 +55,18 @@ def parallel_upsert(
 @click.option("--collection-name", "-c", default="wikidata", help="Collection name")
 @click.option("--chunk-size", "-cz", type=int, help="Chunk size")
 @click.option("--n-processes", "-np", type=int, default=8, help="Number of processes")
+@click.option(
+    "--max-tasks-per-child", "-m", type=int, default=1000, help="Max tasks per child"
+)
 @click.option("--verbose", is_flag=True)
-def main(database_name, collection_name, chunk_size, n_processes, verbose,) -> None:
+def main(
+    database_name,
+    collection_name,
+    chunk_size,
+    n_processes,
+    max_tasks_per_child,
+    verbose,
+) -> None:
     """Retrieves everything that is an instance of something from MongoDB,
     adds that information at the top level, and upserts the document"""
 
@@ -76,7 +86,7 @@ def main(database_name, collection_name, chunk_size, n_processes, verbose,) -> N
         chunk_size=chunk_size,
     )
 
-    with mp.Pool(processes=n_processes, maxtasksperchild=100) as pool:
+    with mp.Pool(processes=n_processes, maxtasksperchild=max_tasks_per_child) as pool:
         pool.map(_parallel_upsert, chunks_iterable)
 
 
