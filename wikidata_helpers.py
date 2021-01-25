@@ -3,6 +3,8 @@ import orjson
 import json
 import math
 import orjson
+import json
+import math
 import os
 import itertools
 
@@ -37,7 +39,6 @@ class WikidataDump:
                     n_decode_errors += 1
                     continue
         print(f"Decode errors: {n_decode_errors}")
-
 
 class WikidataMongoDB:
     """Class for interfacing with Wikidata dump
