@@ -35,6 +35,21 @@ def grab_metadata_from_chunk(
     ]
 
 
+def parallel_upsert(
+    chunk_plus_id_tuple, verbose, database_name, collection_name, chunk_size
+):
+    chunk_id, chunk = chunk_plus_id_tuple
+    wdb = WikidataMongoDB(database_name=database_name, collection_name=collection_name)
+    if verbose:
+        _from = chunk_id * chunk_size
+        _to = (chunk_id + 1) * chunk_size - 1
+        print(f"Updating documents {_from} - {_to}...")
+
+    chunk = grab_metadata_from_chunk(chunk)
+    for _id, doc in chunk:
+        wdb.collection.update_one({"_id": ObjectId(_id)}, {"$set": doc}, upsert=True)
+
+
 @click.command()
 @click.option("--database-name", "-db", default="wikidata_db", help="Database name")
 @click.option("--collection-name", "-c", default="wikidata", help="Collection name")
@@ -53,25 +68,15 @@ def main(database_name, collection_name, chunk_size, n_processes, verbose,) -> N
         outer_wdb.find_matching_docs(as_record=True), chunk_size, should_enumerate=True
     )
 
-    def parallel_upsert(chunk_plus_id_tuple, verbose):
-        chunk_id, chunk = chunk_plus_id_tuple
-        wdb = WikidataMongoDB(
-            database_name=database_name, collection_name=collection_name
-        )
-        if verbose:
-            _from = chunk_id * chunk_size
-            _to = (chunk_id + 1) * chunk_size - 1
-            print(f"Updating documents {_from} - {_to}...")
+    _parallel_upsert = partial(
+        parallel_upsert,
+        verbose=verbose,
+        database_name=database_name,
+        collection_name=collection_name,
+        chunk_size=chunk_size,
+    )
 
-        chunk = grab_metadata_from_chunk(chunk)
-        for _id, doc in chunk:
-            wdb.collection.update_one(
-                {"_id": ObjectId(_id)}, {"$set": doc}, upsert=True
-            )
-
-    _parallel_upsert = partial(parallel_upsert, verbose=verbose)
-
-    with mp.Pool(processes=n_processes) as pool:
+    with mp.Pool(processes=n_processes, maxtasksperchild=100) as pool:
         pool.map(_parallel_upsert, chunks_iterable)
 
 
