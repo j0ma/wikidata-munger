@@ -6,18 +6,7 @@ from typing import Generator, Set, List
 import click
 from qwikidata.sparql import get_subclasses_of_item
 from pymongo import MongoClient
-from wikidata_helpers import WikidataDump
-import itertools
-
-
-def chunks(iterable, size):
-    """Source: https://alexwlchan.net/2018/12/iterating-in-fixed-size-chunks/"""
-    it = iter(iterable)
-    while True:
-        chunk = tuple(itertools.islice(it, size))
-        if not chunk:
-            break
-        yield chunk
+from wikidata_helpers import WikidataDump, chunks
 
 
 @click.command()
@@ -25,12 +14,7 @@ def chunks(iterable, size):
 @click.option("--chunk-size", "-c", type=int, help="Chunk size")
 @click.option("--mongodb-uri", default="", help="URI for MongoDB database")
 @click.option("--verbose", is_flag=True)
-def main(
-    dump_file,
-    chunk_size,
-    mongodb_uri,
-    verbose,
-) -> None:
+def main(dump_file, chunk_size, mongodb_uri, verbose,) -> None:
     """Performs a linear scan through the .bz2 dump and optionally inserts to MongoDB"""
 
     if not mongodb_uri:
@@ -45,7 +29,9 @@ def main(
 
     for chunk_id, chunk in enumerate(chunks(WikidataDump(dump_file), chunk_size)):
         if verbose:
-            print(f"Inserting documents {chunk_id*chunk_size} - {(chunk_id+1)*chunk_size - 1}...")
+            print(
+                f"Inserting documents {chunk_id*chunk_size} - {(chunk_id+1)*chunk_size - 1}..."
+            )
         db.wikidata.insert_many(chunk)
 
 
