@@ -1,5 +1,6 @@
 import bz2
 import json
+import orjson
 import math
 import os
 import itertools
@@ -7,6 +8,19 @@ import itertools
 from typing import Generator, Set, Union, Dict, Any
 from pymongo import MongoClient
 
+
+def orjson_dump(d: dict) -> str:
+    """Dumps a dictionary in UTF-8 format using orjson"""
+    json_bytes: bytes = orjson.dumps(d)
+    json_utf8 = json_bytes.decode("utf8")
+    return json_utf8
+
+def json_dump(d: dict) -> str:
+    """Dumps a dictionary in UTF-8 foprmat using json
+
+    Effectively the `json` counterpart to `orjson_dump`.
+    """
+    return json.dumps(d, ensure_ascii=False)
 
 def chunks(iterable, size, should_enumerate=False):
     """Source: https://alexwlchan.net/2018/12/iterating-in-fixed-size-chunks/"""
@@ -90,7 +104,7 @@ class WikidataRecord:
             return self.record
 
     def to_json(self, simple=True) -> str:
-        return json.dumps(self.to_dict(simple), ensure_ascii=False)
+        return orjson_dump(self.to_dict(simple))
 
     def __str__(self) -> str:
         return f'WikidataRecord(name="{self.name}", id="{self.id}, mongo_id={self.mongo_id} instance_of={self.instance_ofs})"'
