@@ -66,7 +66,8 @@ def main(
     subclasses = set(get_subclasses_of_item(instance_subclass_of))
 
     n_dumped = 0
-    for record in WikidataDump(dump_file):
+    dump = WikidataDump(dump_file)
+    for record in dump:
 
         record = WikidataRecord(record)
 
@@ -76,6 +77,8 @@ def main(
         if record.instance_of(subclasses):
             process(record, verbose=verbose)
             n_dumped += 1
+
+    print(f"Decode errors: {dump.n_decode_errors}")
 
 
 if __name__ == "__main__":
