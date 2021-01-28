@@ -39,8 +39,18 @@ class WikidataDump:
         self.dumpfile = os.path.abspath(dumpfile)
         self.n_decode_errors = 0
 
+    def open_dump_file(self, dumpfile) -> File:
+        _, dumpfile_ext = os.path.splitetx(dumpfile)
+        if dumpfile_ext == ".bz2":
+            return bz2.open(dumpfile, mode="rt")
+        elif dumpfile_ext == ".json":
+            return open(dumpfile, mode="r", encoding="utf-8")
+        else:
+            raise ValueError("Dump file must be .json or .bz2")
+
+
     def __iter__(self) -> Generator:
-        with bz2.open(self.dumpfile, mode="rt") as f:
+        with self.open_dump_file(self.dumpfile) as f:
             f.read(2)  # skip first two bytes: "{\n"
 
             for line in f:
