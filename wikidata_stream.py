@@ -14,6 +14,7 @@ from qwikidata.sparql import get_subclasses_of_item
 from pymongo import MongoClient
 from wikidata_helpers import WikidataDump, WikidataRecord
 
+
 @click.command()
 @click.option("--dump-file", "-d", help="Path to dump file")
 @click.option(
@@ -21,7 +22,7 @@ from wikidata_helpers import WikidataDump, WikidataRecord
     "-n",
     type=float,
     default=math.inf,
-    help="Number of records t o print",
+    help="Number of records to print",
 )
 @click.option(
     "--instance-subclass-of",

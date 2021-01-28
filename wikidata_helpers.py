@@ -37,6 +37,7 @@ def chunks(iterable, size, should_enumerate=False):
 class WikidataDump:
     def __init__(self, dumpfile: str) -> None:
         self.dumpfile = os.path.abspath(dumpfile)
+        self.n_decode_errors = 0
 
     def __iter__(self) -> Generator:
         with bz2.open(self.dumpfile, mode="rt") as f:
@@ -44,8 +45,9 @@ class WikidataDump:
 
             for line in f:
                 try:
-                    yield json.loads(line.rstrip(",\n"))
-                except json.decoder.JSONDecodeError:
+                    yield orjson.loads(line.rstrip(",\n"))
+                except orjson.JSONDecodeError:
+                    self.n_decode_errors += 1
                     continue
 
 
@@ -60,7 +62,10 @@ class WikidataRecord:
 
     def parse_ids(self) -> None:
         self.id = self.record["id"]
-        self.mongo_id = self.record["_id"]
+        try:
+            self.mongo_id = self.record["_id"]
+        except KeyError:
+            self.mongo_id = None
 
     def parse_instance_of(self) -> None:
         try:
