@@ -5,7 +5,7 @@ import math
 import os
 import itertools
 
-from typing import Generator, Set, Union, Dict, Any
+from typing import Generator, Set, Union, Dict, Any, TextIO
 from pymongo import MongoClient
 
 
@@ -39,7 +39,7 @@ class WikidataDump:
         self.dumpfile = os.path.abspath(dumpfile)
         self.n_decode_errors = 0
 
-    def open_dump_file(self, dumpfile) -> File:
+    def open_dump_file(self, dumpfile) -> TextIO:
         _, dumpfile_ext = os.path.splitetx(dumpfile)
         if dumpfile_ext == ".bz2":
             return bz2.open(dumpfile, mode="rt")
