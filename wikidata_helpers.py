@@ -2,15 +2,23 @@ import bz2
 import orjson
 import json
 import math
-import orjson
-import json
-import math
 import os
 import itertools
 
 from typing import Generator, Set, Union, Dict, Any
 from pymongo import MongoClient
 
+
+def chunks(iterable, size, should_enumerate=False):
+    """Source: https://alexwlchan.net/2018/12/iterating-in-fixed-size-chunks/"""
+    it = iter(iterable)
+    ix = 0
+    while True:
+        chunk = tuple(itertools.islice(it, size))
+        if not chunk:
+            break
+        yield (ix, chunk) if should_enumerate else chunk
+        ix += 1
 
 def chunks(iterable, size, should_enumerate=False):
     """Source: https://alexwlchan.net/2018/12/iterating-in-fixed-size-chunks/"""
@@ -77,9 +85,6 @@ class WikidataRecord:
 
     def parse_aliases(self) -> None:
         self.aliases = {lang: d["value"] for lang, d in self.record["labels"].items()}
-
-    def parse_alias_langs(self) -> None:
-        self.alias_langs = {lang for lang in self.aliases}
 
     def parse_alias_langs(self) -> None:
         self.alias_langs = {lang for lang in self.aliases}
