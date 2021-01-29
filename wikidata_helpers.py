@@ -5,7 +5,7 @@ import math
 import os
 import itertools
 
-from typing import Generator, Set, Union, Dict, Any, TextIO
+from typing import Generator, Set, List, Union, Dict, Any, TextIO
 from pymongo import MongoClient
 
 
@@ -15,12 +15,14 @@ def orjson_dump(d: dict) -> str:
     json_utf8 = json_bytes.decode("utf8")
     return json_utf8
 
+
 def json_dump(d: dict) -> str:
     """Dumps a dictionary in UTF-8 foprmat using json
 
     Effectively the `json` counterpart to `orjson_dump`.
     """
     return json.dumps(d, ensure_ascii=False)
+
 
 def chunks(iterable, size, should_enumerate=False):
     """Source: https://alexwlchan.net/2018/12/iterating-in-fixed-size-chunks/"""
@@ -47,7 +49,6 @@ class WikidataDump:
             return open(dumpfile, mode="r", encoding="utf-8")
         else:
             raise ValueError("Dump file must be .json or .bz2")
-
 
     def __iter__(self) -> Generator:
         with self.open_dump_file(self.dumpfile) as f:
@@ -154,3 +155,101 @@ class WikidataMongoDB:
                 yield WikidataRecord(doc) if as_record else doc
             else:
                 break
+
+
+class WikidataMongoIngesterWorker:
+    """Class to handle reading every Nth line of Wikidata
+    and ingesting them to MongoDB."""
+
+    def __init__(
+        self,
+        name: str,
+        input_path: str,
+        database_name: str,
+        collection_name: str,
+        read_every: int = 1,
+        start_at: int = 0,
+        cache_size: int = 100,
+        max_docs: Union[float, int] = math.inf,
+        error_log_path: str = "",
+    ):
+
+        # naming and error logging related attributes
+        self.name = name
+        self.error_log_path = (
+            error_log_path if error_log_path else f"/tmp/{self.name}.error.log"
+        )
+
+        # reading-related attributes
+        self.input_path = input_path
+        self.start_at = start_at
+        self.next_read_at = start_at
+        self.read_every = read_every
+
+        # database-related attributes
+        self.database_name = database_name
+        self.collection_name = collection_name
+        self.client = MongoClient()
+        self.db = self.client[self.database_name][self.collection_name]
+
+        # caching-related attributes
+        self.cache_size = cache_size
+        self.cache_used = 0
+        self.cache: List[str] = []
+
+        # misc attributes
+        self.max_docs = max_docs
+        self.n_decode_errors = 0
+
+    def write(self):
+        """Writes cache contents (JSON list) to MongoDB"""
+        self.db.insert_many(self.cache)
+        self.cache = []
+        self.cache_used = len(self.cache)
+
+    @property
+    def cache_full(self):
+        """The cache is defined to be full when its size
+        is at least as large as self.cache_size."""
+        return self.cache_used >= self.cache_size
+
+    def __call__(self):
+        """Main method for invoking the read procedure.
+
+        Iterates over Wikidata JSON dump (decompressed),
+        reads every Nth line starting from a given line,
+        caches the ingested lines, and bulk inserts them
+        to a specified MongoDB collection as required."""
+
+        with open(self.input_path, encoding="utf-8") as f:
+            for line_nr, line in enumerate(f, start=1):
+
+                # if we're too early, skip
+                if line_nr < self.start_at:
+                    continue
+
+                # if we're past the max, stop
+                if line_nr > self.max_docs:
+                    self.write()
+                    break
+
+                # if we're exactly at the right spot, parse JSON
+                if line_nr == self.next_read_at:
+                    try:
+                        doc = orjson.loads(line.rstrip(",\n"))
+                        self.cache.append(doc)
+                        self.cache_used += 1
+                    except orjson.JSONDecodeError:
+                        # in case of decode error, log it and keep going
+                        self.n_decode_errors += 1
+                        continue
+
+                    # in either case, take note of next line to read at
+                    self.next_read_at += self.read_every
+
+                # always write if our cache is full
+                if self.cache_full:
+                    self.write()
+
+            # finally write one more time
+            self.write()
