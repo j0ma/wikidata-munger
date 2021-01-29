@@ -13,6 +13,7 @@ def orjson_dump(d: dict) -> str:
     """Dumps a dictionary in UTF-8 format using orjson"""
     json_bytes: bytes = orjson.dumps(d)
     json_utf8 = json_bytes.decode("utf8")
+
     return json_utf8
 
 
@@ -21,6 +22,7 @@ def json_dump(d: dict) -> str:
 
     Effectively the `json` counterpart to `orjson_dump`.
     """
+
     return json.dumps(d, ensure_ascii=False)
 
 
@@ -28,8 +30,10 @@ def chunks(iterable, size, should_enumerate=False):
     """Source: https://alexwlchan.net/2018/12/iterating-in-fixed-size-chunks/"""
     it = iter(iterable)
     ix = 0
+
     while True:
         chunk = tuple(itertools.islice(it, size))
+
         if not chunk:
             break
         yield (ix, chunk) if should_enumerate else chunk
@@ -43,6 +47,7 @@ class WikidataDump:
 
     def open_dump_file(self, dumpfile) -> TextIO:
         _, dumpfile_ext = os.path.splitetx(dumpfile)
+
         if dumpfile_ext == ".bz2":
             return bz2.open(dumpfile, mode="rt")
         elif dumpfile_ext == ".json":
@@ -59,6 +64,7 @@ class WikidataDump:
                     yield orjson.loads(line.rstrip(",\n"))
                 except orjson.JSONDecodeError:
                     self.n_decode_errors += 1
+
                     continue
 
 
@@ -82,13 +88,16 @@ class WikidataRecord:
         try:
             self.instance_ofs = set(
                 iof["mainsnak"]["datavalue"]["value"]["id"]
+
                 for iof in self.record["claims"]["P31"]
             )
         except KeyError:
             self.instance_ofs = set()
 
     def parse_aliases(self) -> None:
-        self.aliases = {lang: d["value"] for lang, d in self.record["labels"].items()}
+        self.aliases = {
+            lang: d["value"] for lang, d in self.record["labels"].items()
+        }
 
     def parse_alias_langs(self) -> None:
         self.alias_langs = {lang for lang in self.aliases}
@@ -106,6 +115,7 @@ class WikidataRecord:
     @property
     def languages(self) -> Set[str]:
         """Returns a set of languages in which the entity has a transliteration."""
+
         return self.alias_langs
 
     def instance_of(self, classes: Set[str]) -> bool:
@@ -115,7 +125,13 @@ class WikidataRecord:
 
     def to_dict(self, simple=False, custom_metadata=False) -> dict:
         if simple:
-            return {"id": self.id, "name": self.name, "aliases": self.aliases}
+            return {
+                "id": self.id,
+                "name": self.name,
+                "aliases": list(self.aliases),
+                "instance_of": list(self.instance_ofs),
+                "languages": list(self.alias_langs),
+            }
         else:
             return self.record
 
@@ -133,7 +149,9 @@ class WikidataMongoDB:
     """Class for interfacing with Wikidata dump ingested into a MongoDB instance."""
 
     def __init__(
-        self, database_name: str = "wikidata_db", collection_name: str = "wikidata",
+        self,
+        database_name: str = "wikidata_db",
+        collection_name: str = "wikidata",
     ) -> None:
         self.database_name = database_name
         self.collection_name = collection_name
@@ -147,9 +165,11 @@ class WikidataMongoDB:
         as_record: bool = False,
     ) -> Generator[Union[Dict[str, Any], WikidataRecord], None, None]:
         """Generator to yield at most n documents matching conditions in filter_dict."""
+
         if filter_dict is None:
             # by default, find everything that is an instance of something
             filter_dict = {"claims.P31": {"$exists": True}}
+
         for ix, doc in enumerate(self.collection.find(filter_dict)):
             if ix < n:
                 yield WikidataRecord(doc) if as_record else doc
@@ -172,6 +192,8 @@ class WikidataMongoIngesterWorker:
         cache_size: int = 100,
         max_docs: Union[float, int] = math.inf,
         error_log_path: str = "",
+        debug: bool = False,
+        simple_records: bool = False,
     ):
 
         # naming and error logging related attributes
@@ -189,8 +211,6 @@ class WikidataMongoIngesterWorker:
         # database-related attributes
         self.database_name = database_name
         self.collection_name = collection_name
-        self.client = MongoClient()
-        self.db = self.client[self.database_name][self.collection_name]
 
         # caching-related attributes
         self.cache_size = cache_size
@@ -200,18 +220,37 @@ class WikidataMongoIngesterWorker:
         # misc attributes
         self.max_docs = max_docs
         self.n_decode_errors = 0
+        self.debug = debug
+        self.simple_records = simple_records
+
+    def establish_mongo_client(self, client):
+        self.client = client
+        self.db = self.client[self.database_name][self.collection_name]
 
     def write(self):
         """Writes cache contents (JSON list) to MongoDB"""
-        self.db.insert_many(self.cache)
-        self.cache = []
-        self.cache_used = len(self.cache)
+
+        if self.cache:
+            if self.debug:
+                print(f"Worker {self.name} inserting to MongoDB...")
+            self.db.insert_many(self.cache)
+            self.cache = []
+            self.cache_used = len(self.cache)
 
     @property
     def cache_full(self):
         """The cache is defined to be full when its size
         is at least as large as self.cache_size."""
-        return self.cache_used >= self.cache_size
+
+        if self.cache_used >= self.cache_size:
+            if self.debug:
+                print(
+                    f"Cache full for worker {self.name}. Used: {self.cache_used}, Size: {self.cache_size}"
+                )
+
+            return True
+        else:
+            return False
 
     def __call__(self):
         """Main method for invoking the read procedure.
@@ -225,29 +264,38 @@ class WikidataMongoIngesterWorker:
             for line_nr, line in enumerate(f, start=1):
 
                 # if we're too early, skip
+
                 if line_nr < self.start_at:
                     continue
 
                 # if we're past the max, stop
+
                 if line_nr > self.max_docs:
                     self.write()
+
                     break
 
                 # if we're exactly at the right spot, parse JSON
+
                 if line_nr == self.next_read_at:
                     try:
                         doc = orjson.loads(line.rstrip(",\n"))
-                        self.cache.append(doc)
+                        record = WikidataRecord(doc)
+                        self.cache.append(
+                            record.to_dict(simple=self.simple_records)
+                        )
                         self.cache_used += 1
                     except orjson.JSONDecodeError:
                         # in case of decode error, log it and keep going
                         self.n_decode_errors += 1
+
                         continue
 
                     # in either case, take note of next line to read at
                     self.next_read_at += self.read_every
 
                 # always write if our cache is full
+
                 if self.cache_full:
                     self.write()
 
