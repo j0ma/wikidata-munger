@@ -69,13 +69,13 @@ def main(
     dump = WikidataDump(dump_file)
     for record in dump:
 
-        record = WikidataRecord(record)
+        wikidata_record = WikidataRecord(record)
 
         if n_dumped >= num_records:
             break
 
-        if record.instance_of(subclasses):
-            process(record, verbose=verbose)
+        if wikidata_record.instance_of(subclasses):
+            process(wikidata_record, verbose=verbose)
             n_dumped += 1
 
     print(f"Decode errors: {dump.n_decode_errors}")

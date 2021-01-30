@@ -60,7 +60,6 @@ def main(
             debug=debug,
             simple_records=simple_records,
         )
-
         for i in range(1, num_workers + 1)
     ]
 

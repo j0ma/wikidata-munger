@@ -5,7 +5,7 @@ import math
 import os
 import itertools
 
-from typing import Generator, Set, List, Union, Dict, Any, TextIO
+from typing import Generator, Set, List, Union, Dict, Any, IO
 from pymongo import MongoClient
 
 
@@ -45,8 +45,8 @@ class WikidataDump:
         self.dumpfile = os.path.abspath(dumpfile)
         self.n_decode_errors = 0
 
-    def open_dump_file(self, dumpfile) -> TextIO:
-        _, dumpfile_ext = os.path.splitetx(dumpfile)
+    def open_dump_file(self, dumpfile) -> IO[Any]:
+        _, dumpfile_ext = os.path.splitext(dumpfile)
 
         if dumpfile_ext == ".bz2":
             return bz2.open(dumpfile, mode="rt")
@@ -55,7 +55,7 @@ class WikidataDump:
         else:
             raise ValueError("Dump file must be .json or .bz2")
 
-    def __iter__(self) -> Generator:
+    def __iter__(self) -> Generator[Dict[str, Any], None, None]:
         with self.open_dump_file(self.dumpfile) as f:
             f.read(2)  # skip first two bytes: "{\n"
 
@@ -89,16 +89,13 @@ class WikidataRecord:
         try:
             self.instance_ofs = set(
                 iof["mainsnak"]["datavalue"]["value"]["id"]
-
                 for iof in self.record["claims"]["P31"]
             )
         except KeyError:
             self.instance_ofs = set()
 
     def parse_aliases(self) -> None:
-        self.aliases = {
-            lang: d["value"] for lang, d in self.record["labels"].items()
-        }
+        self.aliases = {lang: d["value"] for lang, d in self.record["labels"].items()}
 
     def parse_alias_langs(self) -> None:
         self.alias_langs = {lang for lang in self.aliases}
@@ -153,9 +150,7 @@ class WikidataMongoDB:
     """Class for interfacing with Wikidata dump ingested into a MongoDB instance."""
 
     def __init__(
-        self,
-        database_name: str = "wikidata_db",
-        collection_name: str = "wikidata",
+        self, database_name: str = "wikidata_db", collection_name: str = "wikidata",
     ) -> None:
         self.database_name = database_name
         self.collection_name = collection_name
@@ -198,7 +193,7 @@ class WikidataMongoIngesterWorker:
         error_log_path: str = "",
         debug: bool = False,
         simple_records: bool = False,
-    ):
+    ) -> None:
 
         # naming and error logging related attributes
         self.name = name
@@ -219,7 +214,7 @@ class WikidataMongoIngesterWorker:
         # caching-related attributes
         self.cache_size = cache_size
         self.cache_used = 0
-        self.cache: List[str] = []
+        self.cache: List[Union[str, Dict[Any, Any]]] = []
 
         # misc attributes
         self.max_docs = max_docs
@@ -227,11 +222,11 @@ class WikidataMongoIngesterWorker:
         self.debug = debug
         self.simple_records = simple_records
 
-    def establish_mongo_client(self, client):
+    def establish_mongo_client(self, client) -> None:
         self.client = client
         self.db = self.client[self.database_name][self.collection_name]
 
-    def write(self):
+    def write(self) -> None:
         """Writes cache contents (JSON list) to MongoDB"""
 
         if self.cache:
@@ -242,7 +237,7 @@ class WikidataMongoIngesterWorker:
             self.cache_used = len(self.cache)
 
     @property
-    def cache_full(self):
+    def cache_full(self) -> bool:
         """The cache is defined to be full when its size
         is at least as large as self.cache_size."""
 
@@ -256,7 +251,7 @@ class WikidataMongoIngesterWorker:
         else:
             return False
 
-    def __call__(self):
+    def __call__(self) -> None:
         """Main method for invoking the read procedure.
 
         Iterates over Wikidata JSON dump (decompressed),
@@ -285,9 +280,7 @@ class WikidataMongoIngesterWorker:
                     try:
                         doc = orjson.loads(line.rstrip(",\n"))
                         record = WikidataRecord(doc)
-                        self.cache.append(
-                            record.to_dict(simple=self.simple_records)
-                        )
+                        self.cache.append(record.to_dict(simple=self.simple_records))
                         self.cache_used += 1
                     except orjson.JSONDecodeError:
                         # in case of decode error, log it and keep going
