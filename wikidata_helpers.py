@@ -76,6 +76,7 @@ class WikidataRecord:
         self.parse_instance_of()
         self.parse_aliases()
         self.parse_alias_langs()
+        self.parse_ipa()
 
     def parse_ids(self) -> None:
         self.id = self.record["id"]
@@ -101,6 +102,9 @@ class WikidataRecord:
 
     def parse_alias_langs(self) -> None:
         self.alias_langs = {lang for lang in self.aliases}
+
+    def parse_ipa(self) -> None:
+        pass
 
     @property
     def name(self) -> str:
@@ -128,7 +132,7 @@ class WikidataRecord:
             return {
                 "id": self.id,
                 "name": self.name,
-                "aliases": list(self.aliases),
+                "aliases": self.aliases,
                 "instance_of": list(self.instance_ofs),
                 "languages": list(self.alias_langs),
             }
