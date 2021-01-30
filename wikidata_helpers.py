@@ -235,6 +235,8 @@ class WikidataMongoIngesterWorker:
             self.db.insert_many(self.cache)
             self.cache = []
             self.cache_used = len(self.cache)
+        else:
+            print(f"Cache empty for worker {self.name}. Not writing...")
 
     @property
     def cache_full(self) -> bool:
