@@ -1,24 +1,53 @@
 import sys
 import os
 import math
-from typing import IO, Generator, List, Dict, Any, Union
+import csv
+from typing import IO, Generator, List, Dict, Any, Union, Iterable
 
 from pymongo import MongoClient
 import wikidata_helpers as wh
 import click
 
 
-def output_jsonl(document: wh.WikidataRecord) -> Generator[str, None, None]:
+def output_jsonl(
+    document: wh.WikidataRecord,
+    f: IO,
+    languages: Iterable[str],
+    strict: bool = False,
+) -> None:
     wikidata_id = document.id
+    language_set = set(languages)
 
     for lang, alias in document.aliases.items():
-        yield wh.orjson_dump(
+        if strict and lang not in language_set:
+            continue
+        row = wh.orjson_dump(
             {"id": wikidata_id, "alias": alias, "language": lang}
         )
+        f.write(f"{row}\n")
 
 
-def output_csv(document: dict, delimiter) -> Generator[str, None, None]:
-    raise NotImplementedError("CSV output not implemented!")
+def output_csv(
+    document: wh.WikidataRecord,
+    f: IO,
+    languages: Iterable[str],
+    strict: bool = False,
+    delimiter: str = ",",
+) -> None:
+    language_set = set(languages)
+    wikidata_id = document.id
+    writer = csv.DictWriter(f, fieldnames=["id", "alias", "language"])
+    writer.writeheader()
+    rows = (
+        {"id": wikidata_id, "alias": alias, "language": lang}
+
+        for lang, alias in document.aliases.items()
+    )
+
+    if strict:
+        rows = (row for row in rows if row["language"] in language_set)
+
+    writer.writerows(rows)
 
 
 def resolve_output_file(output_file: str, mode="a") -> IO:
@@ -74,6 +103,12 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
     default=math.inf,
     help="Number of documents to output",
 )
+@click.option(
+    "--strict",
+    "-s",
+    is_flag=True,
+    help="Strict mode: Filter output down to specified languages",
+)
 def main(
     mongodb_uri,
     database_name,
@@ -85,6 +120,7 @@ def main(
     conll_type,
     languages,
     num_docs,
+    strict,
 ):
 
     # parse some input args
@@ -112,10 +148,14 @@ def main(
     with resolve_output_file(output_file) as fout:
         for ix, doc in enumerate(results):
             if ix < num_docs:
-                for transliteration in output(
-                    wh.WikidataRecord(doc, simple=True)
-                ):
-                    fout.write(f"{transliteration}\n")
+                output(
+                    wh.WikidataRecord(doc, simple=True),
+                    f=fout,
+                    languages=language_list,
+                    strict=strict,
+                )
+            else:
+                break
 
 
 if __name__ == "__main__":
