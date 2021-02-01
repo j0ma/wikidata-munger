@@ -112,6 +112,12 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
     help="Comma-separated list of languages to include",
 )
 @click.option(
+    "--ids",
+    "-i",
+    default="",
+    help="Only search for these IDs"
+)
+@click.option(
     "--num-docs",
     "-n",
     type=float,
@@ -134,12 +140,14 @@ def main(
     delimiter,
     conll_type,
     languages,
+    ids,
     num_docs,
     strict,
 ):
 
     # parse some input args
     language_list = languages.split(",")
+    id_list = ids.split(",")
     output = output_jsonl if output_format == "jsonl" else output_csv
 
     # form connections to mongo db
@@ -157,6 +165,9 @@ def main(
 
     if languages:
         filter_dict["languages"] = {"$in": language_list}
+
+    if ids:
+        filter_dict["id"] = {"$in": id_list}
 
     results = (doc for doc in db.find(filter_dict))
 
