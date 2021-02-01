@@ -69,7 +69,10 @@ class WikidataDump:
 
 
 class WikidataRecord:
-    def __init__(self, record: dict, default_lang: str = "en") -> None:
+    def __init__(
+        self, record: dict, default_lang: str = "en", simple: bool = False
+    ) -> None:
+        self.simple = simple
         self.record = record
         self.default_lang = default_lang
         self.parse_ids()
@@ -86,19 +89,31 @@ class WikidataRecord:
             self.mongo_id = None
 
     def parse_instance_of(self) -> None:
-        try:
-            self.instance_ofs = set(
-                iof["mainsnak"]["datavalue"]["value"]["id"]
-                for iof in self.record["claims"]["P31"]
-            )
-        except KeyError:
-            self.instance_ofs = set()
+        if self.simple:
+            self.instance_ofs = self.record["instance_of"]
+        else:
+            try:
+                self.instance_ofs = set(
+                    iof["mainsnak"]["datavalue"]["value"]["id"]
+
+                    for iof in self.record["claims"]["P31"]
+                )
+            except KeyError:
+                self.instance_ofs = set()
 
     def parse_aliases(self) -> None:
-        self.aliases = {lang: d["value"] for lang, d in self.record["labels"].items()}
+        if self.simple:
+            self.aliases = self.record["aliases"]
+        else:
+            self.aliases = {
+                lang: d["value"] for lang, d in self.record["labels"].items()
+            }
 
     def parse_alias_langs(self) -> None:
-        self.alias_langs = {lang for lang in self.aliases}
+        if self.simple:
+            self.alias_langs = self.record["languages"]
+        else:
+            self.alias_langs = {lang for lang in self.aliases}
 
     def parse_ipa(self) -> None:
         pass
@@ -124,7 +139,7 @@ class WikidataRecord:
 
         return len(self.instance_ofs.intersection(classes)) > 0
 
-    def to_dict(self, simple=False, custom_metadata=False) -> dict:
+    def to_dict(self, simple=False) -> dict:
         if simple:
             return {
                 "id": self.id,
@@ -150,7 +165,9 @@ class WikidataMongoDB:
     """Class for interfacing with Wikidata dump ingested into a MongoDB instance."""
 
     def __init__(
-        self, database_name: str = "wikidata_db", collection_name: str = "wikidata",
+        self,
+        database_name: str = "wikidata_db",
+        collection_name: str = "wikidata",
     ) -> None:
         self.database_name = database_name
         self.collection_name = collection_name
@@ -162,6 +179,7 @@ class WikidataMongoDB:
         filter_dict: Union[dict, None] = None,
         n: Union[float, int] = math.inf,
         as_record: bool = False,
+        simple: bool = False,
     ) -> Generator[Union[Dict[str, Any], WikidataRecord], None, None]:
         """Generator to yield at most n documents matching conditions in filter_dict."""
 
@@ -171,7 +189,7 @@ class WikidataMongoDB:
 
         for ix, doc in enumerate(self.collection.find(filter_dict)):
             if ix < n:
-                yield WikidataRecord(doc) if as_record else doc
+                yield WikidataRecord(doc, simple=simple) if as_record else doc
             else:
                 break
 
@@ -253,6 +271,11 @@ class WikidataMongoIngesterWorker:
         else:
             return False
 
+    def error_summary(self) -> None:
+        print(
+            f"Worker {self.name}, JSON decode errors: {self.n_decode_errors}"
+        )
+
     def __call__(self) -> None:
         """Main method for invoking the read procedure.
 
@@ -282,7 +305,9 @@ class WikidataMongoIngesterWorker:
                     try:
                         doc = orjson.loads(line.rstrip(",\n"))
                         record = WikidataRecord(doc)
-                        self.cache.append(record.to_dict(simple=self.simple_records))
+                        self.cache.append(
+                            record.to_dict(simple=self.simple_records)
+                        )
                         self.cache_used += 1
                     except orjson.JSONDecodeError:
                         # in case of decode error, log it and keep going
