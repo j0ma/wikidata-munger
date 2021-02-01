@@ -14,7 +14,7 @@ def output_jsonl(
     f: IO,
     languages: Iterable[str],
     strict: bool = False,
-    row_number: int = 0
+    row_number: int = 0,
 ) -> None:
     wikidata_id = document.id
     language_set = set(languages)
@@ -76,7 +76,7 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
     "--collection-name", default="wikidata_simple", help="Collection name"
 )
 @click.option(
-    "--subclass-collection-name",
+    "--subclass-coll-name",
     default="subclasses",
     help="Subclass collection name",
 )
@@ -86,8 +86,19 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
     type=click.Choice(["jsonl", "csv"]),
     default="jsonl",
 )
-@click.option("--output-file", "-o", default="-")
-@click.option("--delimiter", "-d", type=click.Choice([",", "\t"]), default=",")
+@click.option(
+    "--output-file",
+    "-o",
+    default="-",
+    help="Output file. If empty or '-', defaults to stdout.",
+)
+@click.option(
+    "--delimiter",
+    "-d",
+    type=click.Choice([",", "\t"]),
+    default=",",
+    help="Delimiter for CSV output. Can be comma or tab. Defaults to comma.",
+)
 @click.option(
     "--conll-type",
     "-t",
@@ -111,13 +122,13 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
     "--strict",
     "-s",
     is_flag=True,
-    help="Strict mode: Filter output down to specified languages",
+    help="Strict mode: Only output transliterations in languages specified using the -l flag.",
 )
 def main(
     mongodb_uri,
     database_name,
     collection_name,
-    subclass_collection_name,
+    subclass_coll_name,
     output_format,
     output_file,
     delimiter,
@@ -133,7 +144,7 @@ def main(
 
     # form connections to mongo db
     client = MongoClient(mongodb_uri) if mongodb_uri else MongoClient()
-    subclasses = client[database_name][subclass_collection_name]
+    subclasses = client[database_name][subclass_coll_name]
     db = client[database_name][collection_name]
 
     # formulate a list of all valid instance-of classes
@@ -157,7 +168,7 @@ def main(
                     f=fout,
                     languages=language_list,
                     strict=strict,
-                    row_number=ix
+                    row_number=ix,
                 )
             else:
                 break

@@ -1,297 +1,100 @@
-# Wikidata dump exploration
+# Wikidata gazetteer generation
 
-The script `wikidata.py` provides functionality to explore `.bz2` formatted Wikidata dumps.
+This repository implements ingestion and querying functionality for Wikidata dumps, stored as MongoDB databases.
 
-In addition to filtering based on `instance-of` relations, the script also outputs all aliases (ie. transcriptions) of the entities in all languages. 
-
-This is accomplished using the `to_json()` method of each `WikidataRecord`, which by default outputs a simplified JSON version of a record, containing the `name`, `id` and `aliases` of the entity.
-
-Dumping etc. can be done directly using shell operations.
-
-## Example
-
-We can find a single record that is an instance of `human`, identified by `Q5`, as follows:
+## Dumping information
+If you already have a MongoDB instance running, you can use `wikidata_dump_transliterations.py` to dump transliterations.
 
 ```
-> python wikidata.py --dump-file /data-drive/datasets/wikidata/latest-all.json.bz2 --instance-of Q5 --num-records 1 | jq
+% python wikidata_dump_transliterations.py --help
 
-{
-  "id": "Q23",
-  "name": "George Washington",
-  "aliases": {
-    "eo": "George Washington",
-    "pl": "George Washington",
-    "fr": "George Washington",
-    "br": "George Washington",
-    "ru": "Джордж Вашингтон",
-    "de": "George Washington",
-    "it": "George Washington",
-    "en-gb": "George Washington",
-    "ja": "ジョージ・ワシントン",
-    "ilo": "George Washington",
-    "zh-hant": "佐治·華盛頓",
-    "es": "George Washington",
-    "en-ca": "George Washington",
-    "hr": "George Washington",
-    "uz": "George Washington",
-    "af": "George Washington",
-    "am": "ጆርጅ ዋሽንግተን",
-    "an": "George Washington",
-    "ang": "George Washington",
-    "ar": "جورج واشنطن",
-    "arc": "ܓܘܪܓ ܘܐܫܝܢܓܛܘܢ",
-    "arz": "جورج واشينطون",
-    "ast": "George Washington",
-    "ay": "George Washington",
-    "az": "Corc Vaşinqton",
-    "ba": "Джордж Вашингтон",
-    "bar": "George Washington",
-    "bcl": "George Washington",
-    "be": "Джордж Вашынгтон",
-    "bg": "Джордж Вашингтон",
-    "bn": "জর্জ ওয়াশিংটন",
-    "bs": "George Washington",
-    "ca": "George Washington",
-    "cdo": "George Washington",
-    "ceb": "George Washington",
-    "chr": "ᏣᏥ ᏩᏒᏓᎾ",
-    "ckb": "جۆرج واشینگتن",
-    "co": "George Washington",
-    "cs": "George Washington",
-    "cy": "George Washington",
-    "da": "George Washington",
-    "dv": "ޖޯޖް ވޮޝިންގޓަން",
-    "el": "Τζορτζ Ουάσινγκτον",
-    "et": "George Washington",
-    "eu": "George Washington",
-    "fa": "جورج واشنگتن",
-    "fi": "George Washington",
-    "fo": "George Washington",
-    "fy": "George Washington",
-    "ga": "George Washington",
-    "gan": "喬治·華盛頓",
-    "gd": "George Washington",
-    "gl": "George Washington",
-    "haw": "Keoki Wakinekona",
-    "he": "ג'ורג' וושינגטון",
-    "hi": "जॉर्ज वॉशिंगटन",
-    "hif": "George Washington",
-    "hu": "George Washington",
-    "hy": "Ջորջ Վաշինգտոն",
-    "id": "George Washington",
-    "io": "George Washington",
-    "is": "George Washington",
-    "iu": "ᔫᕐᒋ ᕚᓯᖕᑐᓐ",
-    "jv": "George Washington",
-    "ka": "ჯორჯ ვაშინგტონი",
-    "kk": "Джордж Уошингтон",
-    "kn": "ಜಾರ್ಜ್ ವಾಷಿಂಗ್ಟನ್",
-    "ko": "조지 워싱턴",
-    "ksh": "George Washington",
-    "ku": "George Washington",
-    "kw": "George Washington",
-    "ky": "Вашингтон, Жорж",
-    "la": "Georgius Washingtonius",
-    "lb": "George Washington",
-    "ln": "George Washington",
-    "lt": "George Washington",
-    "lv": "Džordžs Vašingtons",
-    "mg": "George Washington",
-    "mi": "George Washington",
-    "mk": "Џорџ Вашингтон",
-    "ml": "ജോർജ് വാഷിംഗ്ടൺ",
-    "mn": "Жорж Вашингтон",
-    "mr": "जॉर्ज वॉशिंग्टन",
-    "ms": "George Washington",
-    "my": "ဝါရှင်တန်၊ ဂျော့ချ်",
-    "mzn": "جورج واشنگتن",
-    "nah": "George Washington",
-    "nds": "George Washington",
-    "ne": "जर्ज वासिङ्टन",
-    "nl": "George Washington",
-    "nn": "George Washington",
-    "oc": "George Washington",
-    "pam": "George Washington",
-    "pap": "George Washington",
-    "pnb": "جارج واشنگٹن",
-    "pt": "George Washington",
-    "qu": "George Washington",
-    "ro": "George Washington",
-    "rue": "Джордж Вашінґтон",
-    "rw": "George Washington",
-    "sa": "जार्ज वाशिंगटन",
-    "scn": "George Washington",
-    "sco": "George Washington",
-    "sh": "George Washington",
-    "sk": "George Washington",
-    "sl": "George Washington",
-    "sq": "George Washington",
-    "sr": "Џорџ Вашингтон",
-    "sv": "George Washington",
-    "sw": "George Washington",
-    "ta": "சியார்ச் வாசிங்டன்",
-    "te": "జార్జి వాషింగ్టన్",
-    "tg": "Ҷорҷ Вашингтон",
-    "th": "จอร์จ วอชิงตัน",
-    "tl": "George Washington",
-    "tr": "George Washington",
-    "tt": "Джордж Вашингтон",
-    "udm": "Вашингтон, Джордж",
-    "ug": "گېئورگى ۋاشىنگتون",
-    "uk": "Джордж Вашингтон",
-    "ur": "جارج واشنگٹن",
-    "vep": "Vašington Džordž",
-    "vi": "George Washington",
-    "war": "George Washington",
-    "yi": "דזשארזש וואשינגטאן",
-    "yo": "George Washington",
-    "zh": "乔治·华盛顿",
-    "zh-cn": "乔治·华盛顿",
-    "zh-hans": "乔治·华盛顿",
-    "be-tarask": "Джордж Вашынгтон",
-    "yue": "佐治華盛頓",
-    "sgs": "Džuordžos Vašėngtuons",
-    "si": "ජෝර්ජ් වොෂිංටන්",
-    "nan": "George Washington",
-    "pt-br": "George Washington",
-    "nb": "George Washington",
-    "zh-sg": "乔治·华盛顿",
-    "zh-my": "乔治·华盛顿",
-    "zh-hk": "佐治·華盛頓",
-    "zh-tw": "喬治·華盛頓",
-    "zh-mo": "佐治·華盛頓",
-    "de-ch": "George Washington",
-    "so": "George Washington",
-    "pag": "George Washington",
-    "pms": "George Washington",
-    "srn": "George Washington",
-    "en": "George Washington",
-    "pa": "ਜਾਰਜ ਵਾਸ਼ਿੰਗਟਨ",
-    "lmo": "George Washington",
-    "rm": "George Washington",
-    "sr-ec": "Џорџ Вашингтон",
-    "nds-nl": "George Washington",
-    "vec": "George Washington",
-    "wa": "George Washington",
-    "ce": "Вашингтон, Джордж",
-    "kl": "George Washington",
-    "gsw": "George Washington",
-    "lzh": "華盛頓",
-    "ace": "George Washington",
-    "ia": "George Washington",
-    "de-at": "George Washington",
-    "frp": "George Washington",
-    "fur": "George Washington",
-    "ie": "George Washington",
-    "kg": "George Washington",
-    "li": "George Washington",
-    "lij": "George Washington",
-    "min": "George Washington",
-    "nap": "George Washington",
-    "nrm": "George Washington",
-    "pcd": "George Washington",
-    "sc": "George Washington",
-    "sr-el": "George Washington",
-    "vls": "George Washington",
-    "vo": "George Washington",
-    "wo": "George Washington",
-    "zu": "George Washington",
-    "hak": "George Washington",
-    "gu": "જ્યોર્જ વૉશિંંગટન",
-    "jbo": "djordj. wAcintan.",
-    "new": "जर्ज वाशिङ्तन",
-    "ht": "George Washington",
-    "tk": "Jorj Waşington",
-    "sah": "Джордж Вашингтон",
-    "wuu": "乔治·华盛顿",
-    "mai": "जर्ज वासिङ्टन",
-    "bxr": "Джордж Вашингтон",
-    "azb": "جرج واشنگتن",
-    "na": "George Washington",
-    "ny": "George Washington",
-    "jam": "George Washington",
-    "frr": "George Washington",
-    "xmf": "ჯორჯ ვაშინგტონი",
-    "bi": "George Washington",
-    "cv": "Джордж Вашингтон",
-    "hsb": "George Washington",
-    "ext": "George Washington",
-    "olo": "George Washington",
-    "kbp": "George Washington",
-    "bho": "जॉर्ज वाशिंगटन",
-    "gn": "George Washington",
-    "lfn": "George Washington",
-    "gor": "George Washington",
-    "sat": "ᱡᱚᱨᱡᱽ ᱚᱣᱟᱥᱤᱝᱴᱚᱱ",
-    "ha": "George Washington",
-    "ab": "Вашингтон, Џьорџь",
-    "hyw": "Ճորճ Ուաշինկթըն",
-    "eml": "George Washington",
-    "nqo": "ߖߌ߬ߐߖ ߥߊߛ߭ߌ߲ߕߐ߲߬",
-    "bjn": "George Washington",
-    "gag": "George Washington",
-    "awa": "जॉर्ज वॉशिंगटन",
-    "ak": "George Washington",
-    "diq": "George Washington",
-    "myv": "Вашингтон Джордж"
-  }
-}
+Usage: wikidata_dump_transliterations.py [OPTIONS]
+
+Options:
+  --mongodb-uri TEXT              MongoDB URI
+  --database-name TEXT            Database name
+  --collection-name TEXT          Collection name
+  --subclass-coll-name TEXT       Subclass collection name
+  -f, --output-format [jsonl|csv]
+  -o, --output-file TEXT          Output file. If empty or '-', defaults to
+                                  stdout.
+
+  -d, --delimiter [,|	]           Delimiter for CSV output. Can be comma or
+                                  tab. Defaults to comma.
+
+  -t, --conll-type [PER|LOC|ORG]
+  -l, --languages TEXT            Comma-separated list of languages to include
+  -n, --num-docs FLOAT            Number of documents to output
+  -s, --strict                    Strict mode: Only output transliterations in
+                                  languages specified using the -l flag.
+
+  --help                          Show this message and exit.
 ```
 
-Similarly, to find a single instance of `university`, denoted by `Q3918`, run the following:
+For instance, to find the transliterations of 5 geographical locations in Esperanto, we would run:
 
 ```
-> python wikidata.py --dump-file /data-drive/datasets/wikidata/latest-all.json.bz2 --instance-of Q3918 --num-records 1 | jq
+% python wikidata_dump_transliterations.py -t LOC -l eo -f csv -n 5 --strict
 
-{
-  "id": "Q16947",
-  "name": "Tongji University",
-  "aliases": {
-    "en": "Tongji University",
-    "zh": "同济大学",
-    "zh-cn": "同济大学",
-    "fr": "université Tongji",
-    "de": "Tongji-Universität",
-    "et": "Tongji Ülikool",
-    "it": "Università Tongji",
-    "ja": "同済大学",
-    "ru": "Университет Тунцзи",
-    "uk": "Університет Тонджі",
-    "vi": "Đại học Đồng Tế",
-    "zh-hans": "同济大学",
-    "en-ca": "Tongji University",
-    "en-gb": "Tongji University",
-    "de-ch": "Tongji-Universität",
-    "wuu": "同济大学",
-    "zh-hant": "同濟大學",
-    "zh-sg": "同济大学",
-    "zh-my": "同济大学",
-    "zh-hk": "同濟大學",
-    "zh-tw": "同濟大學",
-    "zh-mo": "同濟大學",
-    "es": "Universidad de Tongji",
-    "nb": "Tongjiuniversitetet",
-    "ko": "통지 대학",
-    "yue": "同濟大學",
-    "nl": "Tongji University",
-    "nan": "Tông-chè Tāi-ha̍k",
-    "id": "Universitas Tongji",
-    "ca": "Universitat Tongji",
-    "tl": "Pamantasang Tongji",
-    "ar": "جامعة تونغجي",
-    "he": "אוניברסיטת טונג'י",
-    "cs": "univerzita Tchung-ťi",
-    "cy": "Prifysgol Tongji",
-    "az": "Tunçzi Universiteti",
-    "ga": "Ollscoil Tongji",
-    "tt": "Туңҗи үнивирситите",
-    "ast": "Universidá de Tongji"
-  }
-}
+id,alias,language
+Q463,Rodano-Alpoj,eo
+Q694,Sud-Holando,eo
+Q912,Malio,eo
+Q1693,Norda Maro,eo
+Q2109,Arikio kaj Parinakotio,eo
 ```
 
-## To-do
-- Support for more complex filtering. For instance, an instance of `singer` should also match if we are searching for instances of `human`.
-- Maybe some caching? Right now all the searches are linear.
-- Alternatively, parse a config file and dump instances of several identifiers to several JSON files.
-  - e.g. humans to `human.json`, countries to `country.json` etc.
+We can also get output in JSONL format:
+
+```
+% python wikidata_dump_transliterations.py -t LOC -l eo -f jsonl -n 5 --strict
+
+{"id":"Q463","alias":"Rodano-Alpoj","language":"eo"}
+{"id":"Q694","alias":"Sud-Holando","language":"eo"}
+{"id":"Q912","alias":"Malio","language":"eo"}
+{"id":"Q1693","alias":"Norda Maro","language":"eo"}
+{"id":"Q2109","alias":"Arikio kaj Parinakotio","language":"eo"}
+```
+
+Note that the `-n` flag applies to number of _documents_, not the number of transliterations.
+As a result, the number of output lines may vary when not using the `--strict` flag.
+
+Finally, we can also use UNIX tools to get the list of languages.
+For example, if we have languages specified in a file `languages.txt`:
+
+```
+fi
+eo
+en
+de
+```
+
+We may filter for those languages simply by using `tr` to turn the file into a comma-separated list:
+
+```
+% python wikidata_dump_transliterations.py \
+    -l $(tr "\n" "," < languages | sed s/,$//g) \
+    -t PER -f csv -o - -n 5 --strict
+
+id,alias,language
+Q1936,Djibril Cissé,en
+Q1936,Djibril Cissé,de
+Q1936,Djibril Cissé,fi
+Q4671,Matthew Kneale,de
+Q4671,Matthew Kneale,en
+Q4671,Matthew Kneale,fi
+Q4926,Birger Kildal,en
+Q4926,Birger Kildal,de
+Q5380,Robert de Boron,en
+Q5380,Robert de Boron,de
+Q5380,Robert de Boron,eo
+Q5380,Robert de Boron,fi
+Q5594,Antonello da Messina,en
+Q5594,Antonello da Messina,de
+Q5594,Antonello da Messina,fi
+Q5594,Antonello da Messina,eo
+```
+
+## Notes / todo
+- [] Figure out a better way to map to CoNLL types
+- [] Figure out a list of African languages
