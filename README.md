@@ -2,6 +2,52 @@
 
 This repository implements ingestion and querying functionality for Wikidata dumps, stored as MongoDB databases.
 
+## Example: Getting all 
+
+A list of the most spoken African languages can be found in `data/african-languages.txt`.
+We can use that list along with `scrape_language_table.py` to obtain a list of African language Wikipedias:
+
+```
+% python scrape_language_table.py --african-only --abbrev-only | tr '\n' ',' | sed "s/,$//g"
+
+sw,af,mg,am,yo,ln,wo,ig,kg,so,ha,sn,om,ti,zu,rw,xh,ts,ak,ny,lg,rn,nso,ve,tn,aa
+```
+
+We can save this into an environment variable, say, `AFRICAN_LANGS`, and use it in our call to `wikidata_dump_transliterations.py`:
+
+```
+% AFRICAN_LANGS=$(python scrape_language_table.py --african-only --abbrev-only | tr '\n' ',' | sed "s/,$//g")
+
+% python wikidata_dump_transliterations.py -t ORG -l $AFRICAN_LANGS -f csv -o - -n 5 --strict  
+
+id,alias,language
+Q388264,Blackfeet,mg
+Q376091,Solarpark Bavaria,af
+Q376091,Solarpark Bavaria,kg
+Q376091,Solarpark Bavaria,mg
+Q376091,Solarpark Bavaria,sw
+Q376091,Solarpark Bavaria,wo
+Q376091,Solarpark Bavaria,zu
+Q518772,Hohenburg,af
+Q518772,Hohenburg,kg
+Q518772,Hohenburg,mg
+Q518772,Hohenburg,sw
+Q518772,Hohenburg,wo
+Q518772,Hohenburg,zu
+Q503026,Egloffstein,af
+Q503026,Egloffstein,kg
+Q503026,Egloffstein,mg
+Q503026,Egloffstein,sw
+Q503026,Egloffstein,wo
+Q503026,Egloffstein,zu
+Q524364,Hohenfels,af
+Q524364,Hohenfels,kg
+Q524364,Hohenfels,mg
+Q524364,Hohenfels,sw
+Q524364,Hohenfels,wo
+Q524364,Hohenfels,zu
+```
+
 ## Dumping information
 If you already have a MongoDB instance running, you can use `wikidata_dump_transliterations.py` to dump transliterations.
 

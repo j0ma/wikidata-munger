@@ -40,7 +40,7 @@ def main(url, sel, columns, african_only, abbrev_only):
 
     if african_only:
 
-        with open("african-languages.txt", encoding="utf-8") as f:
+        with open("data/african-languages.txt", encoding="utf-8") as f:
             african_langs = set([line.strip() for line in f.readlines()])
 
         filtered = df[df.language.isin(african_langs)].reset_index(drop=True)
