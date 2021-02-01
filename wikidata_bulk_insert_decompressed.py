@@ -60,11 +60,18 @@ def main(
             debug=debug,
             simple_records=simple_records,
         )
+
         for i in range(1, num_workers + 1)
     ]
 
     with mp.Pool(processes=num_workers) as pool:
         pool.map(use_single_worker, workers)
+
+    # finally non-parallel error logging
+    print("JSON decode error summary:")
+
+    for worker in workers:
+        worker.error_summary()
 
 
 if __name__ == "__main__":
