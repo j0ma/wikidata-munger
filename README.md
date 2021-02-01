@@ -60,7 +60,7 @@ Note that the `-n` flag applies to number of _documents_, not the number of tran
 As a result, the number of output lines may vary when not using the `--strict` flag.
 
 Finally, we can also use UNIX tools to get the list of languages.
-For example, if we have languages specified in a file `languages.txt`:
+For example, if we have languages specified in a file `languages`:
 
 ```
 fi
