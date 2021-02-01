@@ -14,6 +14,7 @@ def output_jsonl(
     f: IO,
     languages: Iterable[str],
     strict: bool = False,
+    row_number: int = 0
 ) -> None:
     wikidata_id = document.id
     language_set = set(languages)
@@ -32,12 +33,15 @@ def output_csv(
     f: IO,
     languages: Iterable[str],
     strict: bool = False,
+    row_number: int = 0,
     delimiter: str = ",",
 ) -> None:
     language_set = set(languages)
     wikidata_id = document.id
     writer = csv.DictWriter(f, fieldnames=["id", "alias", "language"])
-    writer.writeheader()
+
+    if row_number == 0:
+        writer.writeheader()
     rows = (
         {"id": wikidata_id, "alias": alias, "language": lang}
 
@@ -153,6 +157,7 @@ def main(
                     f=fout,
                     languages=language_list,
                     strict=strict,
+                    row_number=ix
                 )
             else:
                 break
