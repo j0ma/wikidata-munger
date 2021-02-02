@@ -2,7 +2,7 @@
 
 This repository implements ingestion and querying functionality for Wikidata dumps, stored as MongoDB databases.
 
-## Example: Getting all 
+## Example: Getting all `ORG`s that have names in African languages
 
 A list of the most spoken African languages can be found in `data/african-languages.txt`.
 We can use that list along with `scrape_language_table.py` to obtain a list of African language Wikipedias:
