@@ -13,6 +13,7 @@ def output_jsonl(
     document: wh.WikidataRecord,
     f: IO,
     languages: Iterable[str],
+    conll_type: str,
     strict: bool = False,
     row_number: int = 0,
 ) -> None:
@@ -23,7 +24,12 @@ def output_jsonl(
         if strict and lang not in language_set:
             continue
         row = wh.orjson_dump(
-            {"id": wikidata_id, "alias": alias, "language": lang}
+            {
+                "id": wikidata_id,
+                "alias": alias,
+                "language": lang,
+                "type": conll_type,
+            }
         )
         f.write(f"{row}\n")
 
@@ -32,18 +38,24 @@ def output_csv(
     document: wh.WikidataRecord,
     f: IO,
     languages: Iterable[str],
+    conll_type: str,
     strict: bool = False,
     row_number: int = 0,
     delimiter: str = ",",
 ) -> None:
     language_set = set(languages)
     wikidata_id = document.id
-    writer = csv.DictWriter(f, fieldnames=["id", "alias", "language"])
+    writer = csv.DictWriter(f, fieldnames=["id", "alias", "language", "type"])
 
     if row_number == 0:
         writer.writeheader()
     rows = (
-        {"id": wikidata_id, "alias": alias, "language": lang}
+        {
+            "id": wikidata_id,
+            "alias": alias,
+            "language": lang,
+            "type": conll_type,
+        }
 
         for lang, alias in document.aliases.items()
     )
@@ -111,12 +123,7 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
     default="en",
     help="Comma-separated list of languages to include",
 )
-@click.option(
-    "--ids",
-    "-i",
-    default="",
-    help="Only search for these IDs"
-)
+@click.option("--ids", "-i", default="", help="Only search for these IDs")
 @click.option(
     "--num-docs",
     "-n",
@@ -178,6 +185,7 @@ def main(
                     wh.WikidataRecord(doc, simple=True),
                     f=fout,
                     languages=language_list,
+                    conll_type=conll_type,
                     strict=strict,
                     row_number=ix,
                 )
