@@ -1,0 +1,28 @@
+lang,language_code,conll_type,n_entities
+Afrikaans,af,LOC,89861
+Afrikaans,af,ORG,56630
+Afrikaans,af,PER,210648
+Northern Sotho,nso,LOC,3195
+Northern Sotho,nso,ORG,1263
+Northern Sotho,nso,PER,24796
+Swati,ss,LOC,495
+Swati,ss,ORG,1013
+Swati,ss,PER,22912
+Sesotho,st,LOC,956
+Sesotho,st,ORG,1091
+Sesotho,st,PER,25041
+Tswana,tn,LOC,835
+Tswana,tn,ORG,1015
+Tswana,tn,PER,24839
+Tsonga,ts,LOC,635
+Tsonga,ts,ORG,1092
+Tsonga,ts,PER,24814
+Venda,ve,LOC,665
+Venda,ve,ORG,961
+Venda,ve,PER,24970
+Xhosa,xh,LOC,727
+Xhosa,xh,ORG,1090
+Xhosa,xh,PER,25306
+Zulu,zu,LOC,81216
+Zulu,zu,ORG,49261
+Zulu,zu,PER,107106
