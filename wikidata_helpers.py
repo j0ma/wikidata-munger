@@ -5,8 +5,51 @@ import math
 import os
 import itertools
 
-from typing import Generator, Set, List, Union, Dict, Any, IO
+from typing import Generator, Set, List, Union, Dict, Any, IO, Tuple
 from pymongo import MongoClient
+
+import pandas as pd
+
+
+def purity(df: pd.DataFrame) -> Tuple[int, int]:
+    """Computes a measure of 'purity', defined as
+    N_pure / N_tot, where
+
+        - N_pure: Wikidata IDs for which either
+                    a) the English name and alias are not equal, or
+                    b) there is no English name at all
+
+        - N_tot: Total number of Wikidata IDs
+
+    Returns a tuple (N_pure, N_tot).
+
+    Note: impurity is easily computed as 1 - N_pure / N_tot
+    """
+
+    # create masks
+    english_alias_not_equal = df["alias"] != df["name"]
+    no_english_name = df["name"] == df["id"]
+
+    # compute quantities
+    N_pure = (english_alias_not_equal | no_english_name).sum()
+    N_tot = df.shape[0]
+
+    return N_pure, N_tot
+
+
+def compute_purity_df(csv: pd.DataFrame) -> pd.DataFrame():
+    """Transform data frame of aliases to a data frame of purity scores"""
+
+    purity_tuples = (
+        csv.groupby(["language", "type"]).apply(purity).reset_index()
+    )
+    out = purity_tuples[["language", "type"]]
+    out['n_pure'] = purity_tuples[0].apply(lambda t: t[0])
+    out['n_tot'] = purity_tuples[0].apply(lambda t: t[1])
+    out["purity"] = out.n_pure / out.n_tot
+    out['impurity'] = 1 - out.purity
+
+    return out
 
 
 def orjson_dump(d: dict) -> str:

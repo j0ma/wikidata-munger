@@ -18,6 +18,7 @@ def output_jsonl(
     row_number: int = 0,
 ) -> None:
     wikidata_id = document.id
+    name = document.name
     language_set = set(languages)
 
     for lang, alias in document.aliases.items():
@@ -26,6 +27,7 @@ def output_jsonl(
         row = wh.orjson_dump(
             {
                 "id": wikidata_id,
+                "name": name,
                 "alias": alias,
                 "language": lang,
                 "type": conll_type,
@@ -45,13 +47,15 @@ def output_csv(
 ) -> None:
     language_set = set(languages)
     wikidata_id = document.id
-    writer = csv.DictWriter(f, fieldnames=["id", "alias", "language", "type"])
+    name = document.name
+    writer = csv.DictWriter(f, fieldnames=["id", "name","alias", "language", "type"])
 
     if row_number == 0:
         writer.writeheader()
     rows = (
         {
             "id": wikidata_id,
+            "name": name,
             "alias": alias,
             "language": lang,
             "type": conll_type,
