@@ -11,19 +11,19 @@ from pymongo import MongoClient
 import pandas as pd
 
 
-def purity(df: pd.DataFrame) -> Tuple[int, int]:
-    """Computes a measure of 'purity', defined as
-    N_pure / N_tot, where
+def english_dissimilarity(df: pd.DataFrame) -> Tuple[int, int]:
+    """Computes a measure of 'english_dissimilarity', defined as
+    N_good / N_tot, where
 
-        - N_pure: Wikidata IDs for which either
+        - N_good: Wikidata IDs for which either
                     a) the English name and alias are not equal, or
                     b) there is no English name at all
 
         - N_tot: Total number of Wikidata IDs
 
-    Returns a tuple (N_pure, N_tot).
+    Returns a tuple (N_good, N_tot).
 
-    Note: impurity is easily computed as 1 - N_pure / N_tot
+    Note: english_dissimilarity is easily computed as 1 - N_good / N_tot
     """
 
     # create masks
@@ -31,23 +31,23 @@ def purity(df: pd.DataFrame) -> Tuple[int, int]:
     no_english_name = df["name"] == df["id"]
 
     # compute quantities
-    N_pure = (english_alias_not_equal | no_english_name).sum()
+    N_good = (english_alias_not_equal | no_english_name).sum()
     N_tot = df.shape[0]
 
-    return N_pure, N_tot
+    return N_good, N_tot
 
 
-def compute_purity_df(csv: pd.DataFrame) -> pd.DataFrame():
-    """Transform data frame of aliases to a data frame of purity scores"""
+def compute_english_dissimilarity_df(csv: pd.DataFrame) -> pd.DataFrame:
+    """Transform data frame of aliases to a data frame of english_dissimilarity scores"""
 
-    purity_tuples = (
-        csv.groupby(["language", "type"]).apply(purity).reset_index()
+    english_dissimilarity_tuples = (
+        csv.groupby(["language"]).apply(english_dissimilarity).reset_index()
     )
-    out = purity_tuples[["language", "type"]]
-    out['n_pure'] = purity_tuples[0].apply(lambda t: t[0])
-    out['n_tot'] = purity_tuples[0].apply(lambda t: t[1])
-    out["purity"] = out.n_pure / out.n_tot
-    out['impurity'] = 1 - out.purity
+    out = english_dissimilarity_tuples[["language"]]
+    out['n_good'] = english_dissimilarity_tuples[0].apply(lambda t: t[0])
+    out['n_tot'] = english_dissimilarity_tuples[0].apply(lambda t: t[1])
+    out["english_dissimilarity"] = out.n_good / out.n_tot
+    out['english_similarity'] = 1 - out.english_dissimilarity
 
     return out
 
