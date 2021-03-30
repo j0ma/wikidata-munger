@@ -28,7 +28,7 @@ run () {
 
 }
 
-# first extract everything for each type
+## first extract everything for each type
 for conll_type in "PER" "LOC" "ORG"
 do
     run $conll_type
@@ -45,6 +45,6 @@ python deduplicate.py \
     -o $DEDUP_OUTPUT
 
 # finally create the matrix form
-#python create_matrix.py \
-    #-i $DEDUP_OUTPUT \
-    #-o $MATRIX_OUTPUT
+python create_matrix.py \
+    -i $DEDUP_OUTPUT \
+    -o $MATRIX_OUTPUT

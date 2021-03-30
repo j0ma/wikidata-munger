@@ -91,10 +91,36 @@ def deduplicate(data: pd.DataFrame) -> pd.DataFrame:
     # print out some information to the user
     print("Deduplication complete")
     print(f"No. of rows, original: {data_old.shape[0]}")
-    print(f"No. of rows, dedupilcated: {data.shape[0]}")
+    print(f"No. of rows, deduplicated: {data.shape[0]}")
     print(f"Rows removed = {data_old.shape[0] - data.shape[0]}")
 
     return data
+
+
+def filter_am_ti(data: pd.DataFrame) -> pd.DataFrame:
+    with open("./data/am_ti_kept_ids.txt", encoding="utf8") as f:
+        am_ti_kept_ids = set([l.strip() for l in f])
+
+        print(f"Loaded {len(am_ti_kept_ids)} IDs to keep for Amharic/Tigrinya...")
+
+    # construct a mask for items that are to be excluded
+
+    def should_keep(row):
+        if row.language not in ["am", "ti"]:
+            return True
+        else:
+            return row.id in am_ti_kept_ids
+
+    keep_these = data.apply(should_keep, axis=1)
+
+    filtered = data[keep_these]
+
+    print("Amharic/Tigrinya filtering complete")
+    print(f"No. of rows, original: {data.shape[0]}")
+    print(f"No. of rows, filtered: {filtered.shape[0]}")
+    print(f"Rows removed = {data.shape[0] - filtered.shape[0]}")
+
+    return filtered
 
 
 @click.command()
@@ -117,6 +143,9 @@ def main(input_csv, output_csv, alias_column, english_column):
 
     # deduplicate rows using trumping rules
     data = deduplicate(data)
+
+    # filter amharic & tigrinya
+    data = filter_am_ti(data)
 
     # write to disk
     write(data, output_csv, io_format="csv")
