@@ -8,7 +8,34 @@ import itertools
 from typing import Generator, Set, List, Union, Dict, Any, IO, Tuple
 from pymongo import MongoClient
 
+import unicodedata as ud
 import pandas as pd
+
+
+class LatinChecker:
+    """Cache-based checker for whether a string is Latin-only]
+
+    Note: Very much based on https://anon.to/gSQN9s
+    """
+
+    def __init__(self):
+        self.latin_letters = {}
+
+    def is_latin(self, uchr):
+        try:
+            return self.latin_letters[uchr]
+        except KeyError:
+            return self.latin_letters.setdefault(
+                uchr, "LATIN" in ud.name(uchr)
+            )
+
+    def only_latin_chars(self, unistr):
+        return all(
+            self.is_latin(uchr) for uchr in unistr if uchr.isalpha()
+        )  # isalpha suggested by John Machin
+
+    def __call__(self, string):
+        return self.only_latin_chars(string)
 
 
 def english_dissimilarity(df: pd.DataFrame) -> Tuple[int, int]:
@@ -44,10 +71,10 @@ def compute_english_dissimilarity_df(csv: pd.DataFrame) -> pd.DataFrame:
         csv.groupby(["language"]).apply(english_dissimilarity).reset_index()
     )
     out = english_dissimilarity_tuples[["language"]]
-    out['n_good'] = english_dissimilarity_tuples[0].apply(lambda t: t[0])
-    out['n_tot'] = english_dissimilarity_tuples[0].apply(lambda t: t[1])
+    out["n_good"] = english_dissimilarity_tuples[0].apply(lambda t: t[0])
+    out["n_tot"] = english_dissimilarity_tuples[0].apply(lambda t: t[1])
     out["english_dissimilarity"] = out.n_good / out.n_tot
-    out['english_similarity'] = 1 - out.english_dissimilarity
+    out["english_similarity"] = 1 - out.english_dissimilarity
 
     return out
 
