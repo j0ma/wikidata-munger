@@ -101,7 +101,9 @@ def filter_am_ti(data: pd.DataFrame) -> pd.DataFrame:
     with open("./data/am_ti_kept_ids.txt", encoding="utf8") as f:
         am_ti_kept_ids = set([l.strip() for l in f])
 
-        print(f"Loaded {len(am_ti_kept_ids)} IDs to keep for Amharic/Tigrinya...")
+        print(
+            f"Loaded {len(am_ti_kept_ids)} IDs to keep for Amharic/Tigrinya..."
+        )
 
     # construct a mask for items that are to be excluded
 
@@ -109,7 +111,10 @@ def filter_am_ti(data: pd.DataFrame) -> pd.DataFrame:
         if row.language not in ["am", "ti"]:
             return True
         else:
-            return row.id in am_ti_kept_ids
+            id_is_suitable = row.id in am_ti_kept_ids
+            alias_not_eng = row.alias != row.eng
+
+            return id_is_suitable and alias_not_eng
 
     keep_these = data.apply(should_keep, axis=1)
 
@@ -118,6 +123,9 @@ def filter_am_ti(data: pd.DataFrame) -> pd.DataFrame:
     print("Amharic/Tigrinya filtering complete")
     print(f"No. of rows, original: {data.shape[0]}")
     print(f"No. of rows, filtered: {filtered.shape[0]}")
+    print(
+        f"No of. am/ti rows in filtered: {filtered[filtered.language.isin(['am', 'ti'])].shape[0]}"
+    )
     print(f"Rows removed = {data.shape[0] - filtered.shape[0]}")
 
     return filtered

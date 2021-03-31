@@ -28,7 +28,7 @@ run () {
 
 }
 
-## first extract everything for each type
+# first extract everything for each type
 for conll_type in "PER" "LOC" "ORG"
 do
     run $conll_type
