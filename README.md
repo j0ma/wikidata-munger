@@ -140,7 +140,3 @@ Q5594,Antonello da Messina,de
 Q5594,Antonello da Messina,fi
 Q5594,Antonello da Messina,eo
 ```
-
-## Notes / todo
-- [] Figure out a better way to map to CoNLL types
-- [] Figure out a list of African languages
