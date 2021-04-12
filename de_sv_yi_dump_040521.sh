@@ -2,14 +2,14 @@
 
 set -euo pipefail
 
-# Dumping everything, 2/5/2021
+# Dumping german/swedish/yiddish. 040521
 
-LANGS="aa,af,ak,am,ny,ha,ig,rw,rn,kg,ln,lg,mg,nso,om,sn,so,sw,ti,ts,tn,ve,wo,xh,yo,zu,kea,ada,fon,ful,gaa,kik,naq,kmb,mkw,luo,mfe,mos,nmq,ndc,snf,nde,sot,crs,nbl,ss,lua,twi,umb"
+LANGS="de,sv,yi"
 FORMAT="tsv"
-OUTPUT_FOLDER="${1:-/home/jonne/datasets/wikidata/final-resource-dump/}"
-COMBO_OUTPUT="${OUTPUT_FOLDER}/final_resource.tsv"
-DEDUP_OUTPUT="${OUTPUT_FOLDER}/final_resource.dedup.tsv"
-MATRIX_OUTPUT="${OUTPUT_FOLDER}/final_resource.matrix.tsv"
+OUTPUT_FOLDER="${1:-/home/jonne/datasets/wikidata/de-sv-yi-dump-040521/}"
+COMBO_OUTPUT="${OUTPUT_FOLDER}/de_sv_yi.tsv"
+DEDUP_OUTPUT="${OUTPUT_FOLDER}/de_sv_yi.dedup.tsv"
+MATRIX_OUTPUT="${OUTPUT_FOLDER}/de_sv_yi.matrix.tsv"
 
 mkdir -p $OUTPUT_FOLDER
 
@@ -46,6 +46,12 @@ python deduplicate.py \
     -o $DEDUP_OUTPUT
 
 # finally create the matrix form
-python create_matrix.py \
-    -i $DEDUP_OUTPUT \
-    -o $MATRIX_OUTPUT
+#python create_matrix.py \
+    #-i $DEDUP_OUTPUT \
+    #-o $MATRIX_OUTPUT
+
+# separate by language
+python separate_by_language.py \
+    --lang-column "language" \
+    --input-file "${DEDUP_OUTPUT}"  \
+    --io-format "tsv"

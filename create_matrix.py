@@ -4,25 +4,10 @@ import math
 import csv
 from typing import IO, Generator, List, Dict, Any, Union, Iterable
 
+import wikidata_helpers as wh
 import pandas as pd
 import numpy as np
 import click
-
-
-def read(input_file: str, io_format: str) -> pd.DataFrame:
-    if io_format == "csv":
-        return pd.read_csv(input_file, encoding="utf-8")
-    else:
-        return pd.read_json(input_file, "records", encoding="utf-8")
-
-
-def write(
-    data: pd.DataFrame, output_file: str, io_format: str, index: bool = False
-) -> None:
-    if io_format == "csv":
-        return data.to_csv(output_file, encoding="utf-8", index=index)
-    else:
-        return data.to_json(output_file, "records", encoding="utf-8", index=index)
 
 
 def tall_to_wide(df):
@@ -51,13 +36,20 @@ def clean(data):
 @click.command()
 @click.option("--input-file", "-i", required=True)
 @click.option("--output-file", "-o", required=True)
-@click.option("--io-format", "-f", type=click.Choice(["csv", "jsonl"]), default="csv")
+@click.option(
+    "--io-format",
+    "-f",
+    type=click.Choice(["csv", "tsv", "jsonl"]),
+    default="tsv",
+)
 def main(input_file, output_file, io_format):
 
-    data = read(input_file, io_format)
+    data = wh.read(input_file, io_format)
     data = clean(data)
     matrix = tall_to_wide(data)
-    write(matrix, output_file, io_format, index=(io_format == "csv"))
+    wh.write(
+        matrix, output_file, io_format, index=(io_format in ["csv", "tsv"])
+    )
 
 
 if __name__ == "__main__":

@@ -2,14 +2,14 @@
 
 set -euo pipefail
 
-# Dumping everything, 2/5/2021
+# Dumping Finnish, 4/4/2021
 
-LANGS="aa,af,ak,am,ny,ha,ig,rw,rn,kg,ln,lg,mg,nso,om,sn,so,sw,ti,ts,tn,ve,wo,xh,yo,zu,kea,ada,fon,ful,gaa,kik,naq,kmb,mkw,luo,mfe,mos,nmq,ndc,snf,nde,sot,crs,nbl,ss,lua,twi,umb"
+LANGS="fi"
 FORMAT="tsv"
-OUTPUT_FOLDER="${1:-/home/jonne/datasets/wikidata/final-resource-dump/}"
-COMBO_OUTPUT="${OUTPUT_FOLDER}/final_resource.tsv"
-DEDUP_OUTPUT="${OUTPUT_FOLDER}/final_resource.dedup.tsv"
-MATRIX_OUTPUT="${OUTPUT_FOLDER}/final_resource.matrix.tsv"
+OUTPUT_FOLDER="${1:-/home/jonne/datasets/wikidata/finnish-dump-040421/}"
+COMBO_OUTPUT="${OUTPUT_FOLDER}/finnish.tsv"
+DEDUP_OUTPUT="${OUTPUT_FOLDER}/finnish.dedup.tsv"
+MATRIX_OUTPUT="${OUTPUT_FOLDER}/finnish.matrix.tsv"
 
 mkdir -p $OUTPUT_FOLDER
 

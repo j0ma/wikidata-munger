@@ -4,23 +4,7 @@
 
 import click
 import pandas as pd
-from wikidata_helpers import LatinChecker
-
-
-def read(input_file: str, io_format: str) -> pd.DataFrame:
-    if io_format == "csv":
-        return pd.read_csv(input_file, encoding="utf-8")
-    else:
-        return pd.read_json(input_file, "records", encoding="utf-8")
-
-
-def write(data: pd.DataFrame, output_file: str, io_format: str) -> None:
-    if io_format == "csv":
-        return data.to_csv(output_file, encoding="utf-8", index=False)
-    else:
-        return data.to_json(
-            output_file, "records", encoding="utf-8", index=False
-        )
+import wikidata_helpers as wh
 
 
 def deduplicate(data: pd.DataFrame) -> pd.DataFrame:
@@ -132,16 +116,16 @@ def filter_am_ti(data: pd.DataFrame) -> pd.DataFrame:
 
 
 @click.command()
-@click.option("--input-csv", "-i")
-@click.option("--output-csv", "-o")
+@click.option("--input-file", "-i")
+@click.option("--output-file", "-o")
 @click.option("--alias-column", "-a", default="alias")
 @click.option("--english-column", "-e", default="name")
-def main(input_csv, output_csv, alias_column, english_column):
+def main(input_file, output_file, alias_column, english_column):
 
-    latin_checker = LatinChecker()
+    latin_checker = wh.LatinChecker()
 
     # read in data
-    data = read(input_csv, io_format="csv")
+    data = wh.read(input_file, io_format="tsv")
 
     # change <english_column> to "english"
     data = data.rename(columns={english_column: "eng"})
@@ -156,7 +140,7 @@ def main(input_csv, output_csv, alias_column, english_column):
     data = filter_am_ti(data)
 
     # write to disk
-    write(data, output_csv, io_format="csv")
+    wh.write(data, output_file, io_format="tsv")
 
 
 if __name__ == "__main__":
