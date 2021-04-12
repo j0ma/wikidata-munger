@@ -12,6 +12,33 @@ import unicodedata as ud
 import pandas as pd
 
 
+def read(input_file: str, io_format: str) -> pd.DataFrame:
+    if io_format in ["csv", "tsv"]:
+        return pd.read_csv(
+            input_file,
+            encoding="utf-8",
+            delimiter="\t" if io_format == "tsv" else ",",
+        )
+    else:
+        return pd.read_json(input_file, "records", encoding="utf-8")
+
+
+def write(
+    data: pd.DataFrame, output_file: str, io_format: str, index: bool = False
+) -> None:
+    if io_format in ["csv", "tsv"]:
+        return data.to_csv(
+            output_file,
+            sep="\t" if io_format == "tsv" else ",",
+            encoding="utf-8",
+            index=index,
+        )
+    else:
+        return data.to_json(
+            output_file, "records", encoding="utf-8", index=False
+        )
+
+
 class LatinChecker:
     """Cache-based checker for whether a string is Latin-only]
 

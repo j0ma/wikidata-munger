@@ -16,6 +16,8 @@ def output_jsonl(
     conll_type: str,
     strict: bool = False,
     row_number: int = 0,
+    *args,
+    **kwargs,
 ) -> None:
     wikidata_id = document.id
     name = document.name
@@ -44,11 +46,17 @@ def output_csv(
     strict: bool = False,
     row_number: int = 0,
     delimiter: str = ",",
+    *args,
+    **kwargs,
 ) -> None:
     language_set = set(languages)
     wikidata_id = document.id
     name = document.name
-    writer = csv.DictWriter(f, fieldnames=["id", "name","alias", "language", "type"])
+    writer = csv.DictWriter(
+        f,
+        delimiter=delimiter,
+        fieldnames=["id", "name", "alias", "language", "type"],
+    )
 
     if row_number == 0:
         writer.writeheader()
@@ -99,7 +107,7 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
 @click.option(
     "--output-format",
     "-f",
-    type=click.Choice(["jsonl", "csv"]),
+    type=click.Choice(["jsonl", "csv", "tsv"]),
     default="jsonl",
 )
 @click.option(
@@ -111,7 +119,7 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
 @click.option(
     "--delimiter",
     "-d",
-    type=click.Choice([",", "\t"]),
+    type=click.Choice([",", "\t", "tab"]),
     default=",",
     help="Delimiter for CSV output. Can be comma or tab. Defaults to comma.",
 )
@@ -160,6 +168,7 @@ def main(
     language_list = languages.split(",")
     id_list = ids.split(",")
     output = output_jsonl if output_format == "jsonl" else output_csv
+    delimiter = "\t" if delimiter == "tab" else delimiter
 
     # form connections to mongo db
     client = MongoClient(mongodb_uri) if mongodb_uri else MongoClient()
@@ -192,6 +201,7 @@ def main(
                     conll_type=conll_type,
                     strict=strict,
                     row_number=ix,
+                    delimiter=delimiter,
                 )
             else:
                 break
