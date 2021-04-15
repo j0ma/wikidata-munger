@@ -4,6 +4,9 @@ import orjson
 import math
 import os
 import itertools
+from unicodeblock import blocks
+from collections import Counter
+from functools import lru_cache
 
 from typing import Generator, Set, List, Union, Dict, Any, IO, Tuple
 from pymongo import MongoClient
@@ -12,15 +15,27 @@ import unicodedata as ud
 import pandas as pd
 
 
-def read(input_file: str, io_format: str) -> pd.DataFrame:
+@lru_cache(maxsize=None)
+def unicode_blocks(word: str) -> Counter:
+    return Counter(blocks.of(c) for c in str(word))  # wrap in str() to handle e.g. digits
+
+
+@lru_cache(maxsize=None)
+def most_common_unicode_block(word: str) -> str:
+    return unicode_blocks(word).most_common(1)[0][0]
+
+
+def read(input_file: str, io_format: str, typ: str = "frame") -> pd.DataFrame:
     if io_format in ["csv", "tsv"]:
         return pd.read_csv(
             input_file,
             encoding="utf-8",
             delimiter="\t" if io_format == "tsv" else ",",
         )
-    else:
-        return pd.read_json(input_file, "records", encoding="utf-8")
+    elif io_format == "jsonl":
+        return pd.read_json(input_file, "records", encoding="utf-8", typ=typ)
+    elif io_format == "json":
+        return pd.read_json(input_file, encoding="utf-8", typ=typ)
 
 
 def write(
@@ -58,7 +73,7 @@ class LatinChecker:
 
     def only_latin_chars(self, unistr):
         return all(
-            self.is_latin(uchr) for uchr in unistr if uchr.isalpha()
+            self.is_latin(uchr) for uchr in str(unistr) if uchr.isalpha()
         )  # isalpha suggested by John Machin
 
     def __call__(self, string):

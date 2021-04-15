@@ -10,7 +10,11 @@ import numpy as np
 import click
 
 
-def tall_to_wide(df):
+def tall_to_wide(df, use_int64=False):
+    if use_int64:
+        pass  # unnecessary now
+        # df = df.astype('int64')
+
     return df.pivot(
         index=["id", "type", "eng"], values="alias", columns="language"
     ).fillna("")
@@ -42,11 +46,12 @@ def clean(data):
     type=click.Choice(["csv", "tsv", "jsonl"]),
     default="tsv",
 )
-def main(input_file, output_file, io_format):
+@click.option("--use-int64", is_flag=True)
+def main(input_file, output_file, io_format, use_int64):
 
     data = wh.read(input_file, io_format)
     data = clean(data)
-    matrix = tall_to_wide(data)
+    matrix = tall_to_wide(data, use_int64)
     wh.write(
         matrix, output_file, io_format, index=(io_format in ["csv", "tsv"])
     )
