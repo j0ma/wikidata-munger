@@ -6,7 +6,6 @@ def main():
     db = client["wikidata_db"]["wikidata_simple"]
 
     results = db.aggregate([
-        # {"$limit": 1000},
         {"$project": {"languages": 1, "_id": 1}},
         {"$unwind": "$languages"},
         {"$group": {
