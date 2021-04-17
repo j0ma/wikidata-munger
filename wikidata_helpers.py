@@ -17,7 +17,9 @@ import pandas as pd
 
 @lru_cache(maxsize=None)
 def unicode_blocks(word: str) -> Counter:
-    return Counter(blocks.of(c) for c in str(word))  # wrap in str() to handle e.g. digits
+    return Counter(
+        blocks.of(c) for c in str(word)
+    )  # wrap in str() to handle e.g. digits
 
 
 @lru_cache(maxsize=None)
@@ -25,17 +27,32 @@ def most_common_unicode_block(word: str) -> str:
     return unicode_blocks(word).most_common(1)[0][0]
 
 
-def read(input_file: str, io_format: str, typ: str = "frame") -> pd.DataFrame:
+def read(
+    input_file: str,
+    io_format: str,
+    typ: str = "frame",
+    chunksize: Union[int, None] = None,
+) -> pd.DataFrame:
     if io_format in ["csv", "tsv"]:
         return pd.read_csv(
             input_file,
             encoding="utf-8",
             delimiter="\t" if io_format == "tsv" else ",",
+            chunksize=chunksize,
         )
     elif io_format == "jsonl":
-        return pd.read_json(input_file, "records", encoding="utf-8", typ=typ)
+        return pd.read_json(
+            input_file,
+            "records",
+            encoding="utf-8",
+            typ=typ,
+            lines=True,
+            chunksize=chunksize,
+        )
     elif io_format == "json":
-        return pd.read_json(input_file, encoding="utf-8", typ=typ)
+        return pd.read_json(
+            input_file, encoding="utf-8", typ=typ, chunksize=chunksize
+        )
 
 
 def write(

@@ -20,7 +20,7 @@ def deduplicate(data: pd.DataFrame) -> pd.DataFrame:
     )
 
     # join this to the original data frame
-    data_old = data.copy()  # copy this just in case
+    old_nrows = data.shape[0]
     data = data.merge(id_to_ntypes_df, on="id")
 
     # if id is in this dict, it will have several types
@@ -74,9 +74,9 @@ def deduplicate(data: pd.DataFrame) -> pd.DataFrame:
 
     # print out some information to the user
     print("Deduplication complete")
-    print(f"No. of rows, original: {data_old.shape[0]}")
+    print(f"No. of rows, original: {old_nrows}")
     print(f"No. of rows, deduplicated: {data.shape[0]}")
-    print(f"Rows removed = {data_old.shape[0] - data.shape[0]}")
+    print(f"Rows removed = {old_nrows - data.shape[0]}")
 
     return data
 
@@ -118,20 +118,21 @@ def filter_am_ti(data: pd.DataFrame) -> pd.DataFrame:
 @click.command()
 @click.option("--input-file", "-i")
 @click.option("--output-file", "-o")
+@click.option("--io-format", "-f")
 @click.option("--alias-column", "-a", default="alias")
 @click.option("--english-column", "-e", default="name")
-def main(input_file, output_file, alias_column, english_column):
+def main(input_file, output_file, io_format, alias_column, english_column):
 
     latin_checker = wh.LatinChecker()
 
     # read in data
-    data = wh.read(input_file, io_format="tsv")
+    data = wh.read(input_file, io_format=io_format)
 
     # change <english_column> to "english"
     data = data.rename(columns={english_column: "eng"})
 
     # add is_latin column
-    data["is_latin"] = data[alias_column].apply(latin_checker)
+    # data["is_latin"] = data[alias_column].apply(latin_checker)
 
     # deduplicate rows using trumping rules
     data = deduplicate(data)
@@ -140,8 +141,7 @@ def main(input_file, output_file, alias_column, english_column):
     data = filter_am_ti(data)
 
     # write to disk
-    wh.write(data, output_file, io_format="tsv")
-
+    wh.write(data, output_file, io_format=io_format)
 
 if __name__ == "__main__":
     main()
