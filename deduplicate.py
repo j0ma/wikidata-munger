@@ -119,7 +119,7 @@ def filter_am_ti(data: pd.DataFrame) -> pd.DataFrame:
 @click.command()
 @click.option("--input-file", "-i")
 @click.option("--output-file", "-o")
-@click.option("--io-format", "-f")
+@click.option("--io-format", "-f", default="tsv")
 @click.option("--alias-column", "-a", default="alias")
 @click.option("--english-column", "-e", default="name")
 def main(input_file, output_file, io_format, alias_column, english_column):

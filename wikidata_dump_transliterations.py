@@ -166,7 +166,7 @@ def main(
 
     # parse some input args
     languages = "" if languages == "-" else languages
-    language_list = languages.split(",") 
+    language_list = languages.split(",")
     id_list = ids.split(",")
     output = output_jsonl if output_format == "jsonl" else output_csv
     delimiter = "\t" if delimiter == "tab" else delimiter
@@ -177,9 +177,9 @@ def main(
     db = client[database_name][collection_name]
 
     # formulate a list of all valid instance-of classes
-    valid_instance_ofs = subclasses.find_one(
-        {"id": conll_type_to_wikidata_id[conll_type]}
-    )["subclasses"]
+    parent_wikidata_id = conll_type_to_wikidata_id[conll_type]
+    subclass_dict = subclasses.find_one({"id": parent_wikidata_id})
+    valid_instance_ofs = subclass_dict["subclasses"]
 
     # fetch results from mongodb
     filter_dict = {"instance_of": {"$in": valid_instance_ofs}}

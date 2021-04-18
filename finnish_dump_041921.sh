@@ -6,7 +6,7 @@ set -euo pipefail
 
 LANGS="fi"
 FORMAT="tsv"
-OUTPUT_FOLDER="${1:-/home/jonne/datasets/wikidata/finnish-dump-040421/}"
+OUTPUT_FOLDER="${1:-/home/jonne/datasets/wikidata/finnish-dump-041921/}"
 COMBO_OUTPUT="${OUTPUT_FOLDER}/finnish.tsv"
 DEDUP_OUTPUT="${OUTPUT_FOLDER}/finnish.dedup.tsv"
 MATRIX_OUTPUT="${OUTPUT_FOLDER}/finnish.matrix.tsv"
@@ -21,6 +21,8 @@ run () {
     # dump everything into one file
     python wikidata_dump_transliterations.py \
         --strict \
+        --database-name wikidata_db \
+        --collection-name wikidata_simple_preconference \
         -t "${CONLL_TYPE}" \
         -l "${LANGS}" \
         -f "${FORMAT}" \
