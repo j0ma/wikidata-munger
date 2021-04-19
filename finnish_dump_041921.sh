@@ -44,6 +44,7 @@ tail +2 $OUTPUT_FOLDER/ORG.tsv >> $COMBO_OUTPUT
 
 # deduplicate the rows by using "trumping rules" to break ties etc.
 python deduplicate.py \
+    -f $FORMAT \
     -i $COMBO_OUTPUT \
     -o $DEDUP_OUTPUT
 
