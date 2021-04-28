@@ -112,9 +112,10 @@ def filter_am_ti(data: pd.DataFrame) -> pd.DataFrame:
             return True
         else:
             id_is_suitable = row.id in am_ti_kept_ids
-            alias_not_eng = row.alias != row.eng
+            # alias_not_eng = row.alias != row.eng
+            alias_not_latin = bool(not row.is_latin)
 
-            return id_is_suitable and alias_not_eng
+            return id_is_suitable and alias_not_latin
 
     keep_these = data.apply(should_keep, axis=1)
 
