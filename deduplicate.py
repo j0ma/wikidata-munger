@@ -129,7 +129,7 @@ def main(input_file, output_file, io_format, alias_column, english_column):
     # read in data
     data = wh.read(input_file, io_format=io_format)
 
-    # change <english_column> to "english"
+    # change <english_column> to "eng"
     data = data.rename(columns={english_column: "eng"})
 
     # add is_latin column

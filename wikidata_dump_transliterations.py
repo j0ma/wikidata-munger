@@ -166,11 +166,7 @@ def main(
 
     # parse some input args
     languages = "" if languages == "-" else languages
-<<<<<<< HEAD
-    language_list = languages.split(",")
-=======
     language_list = languages.split(",") 
->>>>>>> cc7d31e0d4d7f8dbba43fdc7f76d1091a768310c
     id_list = ids.split(",")
     output = output_jsonl if output_format == "jsonl" else output_csv
     delimiter = "\t" if delimiter == "tab" else delimiter
