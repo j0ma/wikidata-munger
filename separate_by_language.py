@@ -1,18 +1,27 @@
+from typing import IO, Generator, List, Dict, Any, Union, Iterable
+import pathlib
 import sys
 import os
 import math
 import csv
-from typing import IO, Generator, List, Dict, Any, Union, Iterable
 
 import wikidata_helpers as wh
-import pandas as pd
 import click
 
 
-def get_output_filename(input_file: str, language: str) -> str:
+def get_output_filename(
+    input_path: str, language: str, use_subfolders: bool = False
+) -> pathlib.Path:
+    input_folder = os.path.dirname(input_path)
+    input_file = os.path.basename(input_path)
     prefix, extension = os.path.splitext(input_file)
 
-    return f"{prefix}.{language}{extension}"
+    if use_subfolders:
+        output_path = f"{input_folder}/{language}/{prefix}{extension}"
+    else:
+        output_path = f"{input_folder}/{prefix}.{language}{extension}"
+
+    return pathlib.Path(output_path)
 
 
 @click.command()
@@ -24,17 +33,34 @@ def get_output_filename(input_file: str, language: str) -> str:
     "--io-format",
     "-f",
     type=click.Choice(["csv", "jsonl", "tsv"]),
-    default="csv",
+    default="tsv",
     help="I/O format",
 )
-def main(lang_column, input_file, io_format):
+@click.option(
+    "--use-subfolders",
+    "-s",
+    is_flag=True,
+    help="Separate-language files should go in their own subfolders",
+)
+@click.option("--verbose", "-v", is_flag=True)
+def main(lang_column, input_file, io_format, use_subfolders, verbose):
 
     data = wh.read(input_file, io_format)
+
+    import ipdb
+
+    ipdb.set_trace()
 
     for lang in data[lang_column].unique():
         filtered = data[data[lang_column] == lang]
 
-        output_file = get_output_filename(input_file, lang)
+        output_file = get_output_filename(input_file, lang, use_subfolders)
+        output_folder = pathlib.Path(os.basename(output_file))
+
+        if not output_folder.exists():
+            if verbose:
+                print(f"{output_folder} not found. Creating with mkdir...")
+            output_folder.mkdir()
 
         wh.write(filtered, output_file, io_format)
 
