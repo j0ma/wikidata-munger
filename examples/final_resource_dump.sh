@@ -4,7 +4,7 @@ set -euo pipefail
 
 LANGS="aa,af,ak,am,ny,ha,ig,rw,rn,kg,ln,lg,mg,nso,om,sn,so,sw,ti,ts,tn,ve,wo,xh,yo,zu,kea,ada,fon,ful,gaa,kik,naq,kmb,mkw,luo,mfe,mos,nmq,ndc,snf,nde,sot,crs,nbl,ss,lua,twi,umb"
 FORMAT="tsv"
-OUTPUT_FOLDER="${1:-/home/jonne/datasets/wikidata/final-resource-dump/}"
+OUTPUT_FOLDER="${1:-/home/jonne/datasets/wikidata/final-resource-dump2/}"
 COMBO_OUTPUT="${OUTPUT_FOLDER}/final_resource.tsv"
 DEDUP_OUTPUT="${OUTPUT_FOLDER}/final_resource.dedup.tsv"
 MATRIX_OUTPUT="${OUTPUT_FOLDER}/final_resource.matrix.tsv"
@@ -17,7 +17,7 @@ run () {
     OUTPUT="${OUTPUT_FOLDER}/${CONLL_TYPE}.tsv"
 
     # dump everything into one file
-    python wikidata_dump_transliterations.py \
+    python scripts/io/wikidata_dump_transliterations.py \
         --strict \
         -t "${CONLL_TYPE}" \
         -l "${LANGS}" \
@@ -39,12 +39,12 @@ tail +2 $OUTPUT_FOLDER/LOC.tsv >> $COMBO_OUTPUT
 tail +2 $OUTPUT_FOLDER/ORG.tsv >> $COMBO_OUTPUT
 
 # deduplicate the rows by using "trumping rules" to break ties etc.
-python deduplicate.py \
+python scripts/io/deduplicate.py \
     -i $COMBO_OUTPUT \
     -o $DEDUP_OUTPUT \
     -f tsv
 
 # finally create the matrix form
-python create_matrix.py \
+python scripts/io/create_matrix.py \
     -i $DEDUP_OUTPUT \
     -o $MATRIX_OUTPUT 

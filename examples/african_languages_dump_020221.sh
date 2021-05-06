@@ -12,7 +12,7 @@ OUTPUT="/home/jonne/datasets/wikidata/african-language-dump-020221/${CONLL_TYPE}
 mkdir -p $(dirname ${OUTPUT})
 
 # dump everything into one file
-python wikidata_dump_transliterations.py \
+python scripts/io/wikidata_dump_transliterations.py \
     --strict \
     -t "${CONLL_TYPE}" \
     -l "${LANGS}" \
@@ -20,6 +20,6 @@ python wikidata_dump_transliterations.py \
     -o - | tee "${OUTPUT}"
 
 # separate by language
-python separate_by_language.py \
+python scripts/io/separate_by_language.py \
     --lang-column "language"
     --input-file "${OUTPUT}" \ 

@@ -19,7 +19,7 @@ dump () {
     OUTPUT="${OUTPUT_FOLDER}/${CONLL_TYPE}.${FORMAT}"
 
     # dump everything into one file
-    python wikidata_dump_transliterations.py \
+    python scripts/io/wikidata_dump_transliterations.py \
         --strict \
         -t "${CONLL_TYPE}" \
         -l "${LANGS}" \
@@ -54,12 +54,12 @@ done
 combine_output
 
 # deduplicate the rows by using "trumping rules" to break ties etc.
-python deduplicate.py \
+python scripts/io/deduplicate.py \
     -i $COMBO_OUTPUT \
     -o $DEDUP_OUTPUT \
     -f $FORMAT
 
 # finally create the matrix form
-#python create_matrix.py \
+#python scripts/io/create_matrix.py \
     #-i $DEDUP_OUTPUT \
     #-o $MATRIX_OUTPUT

@@ -13,7 +13,7 @@ dump () {
     output="${output_folder}/${conll_type}.tsv"
 
     # dump everything into one file
-    python wikidata_dump_transliterations.py \
+    python scripts/io/wikidata_dump_transliterations.py \
         --strict \
         -t "${conll_type}" \
         -l "${langs}" \
@@ -28,7 +28,7 @@ deduplicate () {
     local dedup_file=$2
 
     # deduplicate the rows by using "trumping rules" to break ties etc.
-    python deduplicate.py \
+    python scripts/io/deduplicate.py \
         -i $input_file \
         -o $dedup_file \
         -f tsv
@@ -38,7 +38,7 @@ deduplicate () {
 separate_by_language () {
     
     local dedup_file=$1
-    python separate_by_language.py \
+    python scripts/io/separate_by_language.py \
         --input-file $dedup_file \
         --lang-column language \
         --io-format tsv \

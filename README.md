@@ -1,4 +1,4 @@
-# Wikidata gazetteer generation
+# Wikidata name resource generation
 
 This repository implements ingestion and querying functionality for Wikidata dumps, stored as MongoDB databases.
 
@@ -18,7 +18,7 @@ We can save this into an environment variable, say, `AFRICAN_LANGS`, and use it 
 ```
 % AFRICAN_LANGS=$(python scrape_language_table.py --african-only --abbrev-only | tr '\n' ',' | sed "s/,$//g")
 
-% python wikidata_dump_transliterations.py -t ORG -l $AFRICAN_LANGS -f csv -o - -n 5 --strict  
+% python wikidata_dump_transliterations.py -t ORG -l $AFRICAN_LANGS -f csv -o - -n 5 --strict
 
 id,alias,language
 Q388264,Blackfeet,mg
