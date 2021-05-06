@@ -17,9 +17,9 @@ def get_output_filename(
     prefix, extension = os.path.splitext(input_file)
 
     if use_subfolders:
-        output_path = f"{input_folder}/{language}/{prefix}{extension}"
+        output_path = f"{input_folder}/{language}/{prefix}_{language}{extension}"
     else:
-        output_path = f"{input_folder}/{prefix}.{language}{extension}"
+        output_path = f"{input_folder}/{prefix}_{language}{extension}"
 
     return pathlib.Path(output_path)
 
@@ -47,15 +47,11 @@ def main(lang_column, input_file, io_format, use_subfolders, verbose):
 
     data = wh.read(input_file, io_format)
 
-    import ipdb
-
-    ipdb.set_trace()
-
     for lang in data[lang_column].unique():
         filtered = data[data[lang_column] == lang]
 
         output_file = get_output_filename(input_file, lang, use_subfolders)
-        output_folder = pathlib.Path(os.basename(output_file))
+        output_folder = pathlib.Path(os.path.dirname(output_file))
 
         if not output_folder.exists():
             if verbose:

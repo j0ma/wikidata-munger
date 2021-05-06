@@ -14,7 +14,6 @@ process () {
     linecount=$(wc -l "${_fout}.2" | cut -f1 -d" ") 
     if [ "${linecount}" -gt 0  ]
     then
-        echo "ding"
        head -n1 < ${_fin} >> ${_fout}
        cat ${_fout}.2 >> ${_fout}
     fi
@@ -25,12 +24,12 @@ for lang in "${LANGS[@]}"
 do 
     folder=/tmp/wikidata_shards/${lang}
     mkdir -p $folder
-    for category in "PER" "LOC" "ORG"
+    for entity_type in "PER" "LOC" "ORG"
     do
         process \
-            $lang $category \
+            $lang $entity_type \
             /tmp/wikidata_scripts_filtered.tsv \
-            "${folder}/${category}.tsv" &
+            "${folder}/${entity_type}.tsv" &
     done
     wait
 done

@@ -10,8 +10,8 @@ def main():
         [
             {"$project": {"languages": 1, "_id": 1}},
             {"$unwind": "$languages"},
-            {"$group": {"_id": "$languages", "nEntities": {"$sum": 1}}},
-            {"$project": {"language": "$_id", "nEntities": 1, "_id": 0}},
+            {"$group": {"_id": "$languages", "n_entities": {"$sum": 1}}},
+            {"$project": {"language": "$_id", "n_entities": 1, "_id": 0}},
         ]
     )
 

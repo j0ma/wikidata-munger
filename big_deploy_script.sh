@@ -13,7 +13,7 @@ N_WORKERS=${4:-$DEFAULT_CPUS}
 CHUNKSIZE=${5:-5000}
 
 # ingest into mongo db
-#python wikidata_bulk_insert_decompressed.py \
+#python wikidata_bulk_insert.py \
     #-d "${INPUT_JSON}" \
     #--database-name "${DB_NAME}" \
     #--collection-name "${COLL_NAME}" \

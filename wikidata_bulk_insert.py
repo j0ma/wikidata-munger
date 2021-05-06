@@ -2,37 +2,76 @@
 
 import math
 from typing import Generator, Set, List
+import multiprocessing as mp
 
 import click
-from qwikidata.sparql import get_subclasses_of_item
+from wikidata_helpers import WikidataMongoIngesterWorker
 from pymongo import MongoClient
-from wikidata_helpers import WikidataDump, chunks
+
+
+def use_single_worker(worker):
+    client = MongoClient()
+    worker.establish_mongo_client(client)
+    worker()
 
 
 @click.command()
 @click.option("--dump-file", "-d", help="Path to dump file")
-@click.option("--chunk-size", "-c", type=int, help="Chunk size")
-@click.option("--mongodb-uri", default="", help="URI for MongoDB database")
-@click.option("--verbose", is_flag=True)
-def main(dump_file, chunk_size, mongodb_uri, verbose,) -> None:
-    """Performs a linear scan through the .bz2 dump and optionally inserts to MongoDB"""
+@click.option("--database-name", default="wikidata_db", help="Database name")
+@click.option(
+    "--collection-name", default="parallel_ingest_test", help="Collection name"
+)
+@click.option("--num-workers", "-w", type=int, help="Number of workers")
+@click.option("--cache-size", "-c", type=int, default=1000, help="Cache size")
+@click.option(
+    "--max-docs",
+    "-m",
+    type=float,
+    default=math.inf,
+    help="Max number of documents to ingest",
+)
+@click.option("--debug", is_flag=True)
+@click.option(
+    "--simple-records",
+    is_flag=True,
+    help="Keep only name, id, aliases, instance_ofs, and languages",
+)
+def main(
+    dump_file,
+    database_name,
+    collection_name,
+    num_workers,
+    cache_size,
+    max_docs,
+    debug,
+    simple_records,
+) -> None:
 
-    if not mongodb_uri:
-        print(
-            "WARNING: MongoDB path not found.\n"
-            "Using default URI: mongodb://localhost:27017/"
+    workers = [
+        WikidataMongoIngesterWorker(
+            name=f"WikidataMongoIngestWorker{i}",
+            input_path=dump_file,
+            database_name=database_name,
+            collection_name=collection_name,
+            read_every=num_workers,
+            start_at=i,
+            cache_size=cache_size,
+            max_docs=max_docs,
+            debug=debug,
+            simple_records=simple_records,
         )
 
-    # set up mongo db connection
-    mongo_client = MongoClient()
-    db = mongo_client.wikidata_db
+        for i in range(1, num_workers + 1)
+    ]
 
-    for chunk_id, chunk in enumerate(chunks(WikidataDump(dump_file), chunk_size)):
-        if verbose:
-            print(
-                f"Inserting documents {chunk_id*chunk_size} - {(chunk_id+1)*chunk_size - 1}..."
-            )
-        db.wikidata.insert_many(chunk)
+    with mp.Pool(processes=num_workers) as pool:
+        pool.map(use_single_worker, workers)
+
+    # finally non-parallel error logging
+    print("JSON decode error summary:")
+
+    for worker in workers:
+        worker.error_summary()
 
 
 if __name__ == "__main__":

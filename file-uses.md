@@ -6,28 +6,28 @@
 - [x] wikidata_helpers.py
 
 ### Insertion & database writing
-- [x] bulk_insert_decompressed.sh
-    - Example call to wikidata_bulk_insert_decompressed.py
-- [x] wikidata_bulk_insert_decompressed.py
+- [x] bulk_insert_example.sh
+    - Example call to wikidata_bulk_insert.py
+- [x] wikidata_bulk_insert.py
     - Code for parallelized insert
 - [x] create_index.py
     - Indexes a given field in a collection in a DB
 - [x] wikidata_subclasses.py
     - Script to discover Wikidata entries that are subclasses of something
     - Writes to MongoDB or outputs to stdout
-- [x] create_instance_of.js
+- create_instance_of.js
     - Finds instance-of information for each Wikidata entry
-    - Necessary?
-- wikidata_bulk_insert.py
+    - NOTE: moved to /obsolete/ as of 5/6/21
+- wikidata_bulk_insert_old.py
     - Old non-parallelized code for insert
-    - NOTE: OBSOLETE?
+    - NOTE: moved to /obsolete/ as of 5/6/21
 - insert_custom_metadata.py
     - Download -> skim -> Upsert
     - HORRIBLE pseudoparallel approach for inserting data
-    - NOTE: OBSOLETE?
+    - NOTE: moved to /obsolete/ as of 5/6/21
 - wikidata_stream.py
     - Old insert that streams records from the bzip and inserts?
-    - NOTE: OBSOLETE?
+    - NOTE: moved to /obsolete/ as of 5/6/21
 
 ### Dumping artifacts from DB
 - [x] wikidata_dump_transliterations.py
@@ -38,7 +38,6 @@
 - per_lang_counts.py
     - Another script for computing per-lang counts?
     - Uses pymongo as well
-    - NOTE: OBSOLETE?
 
 ### Web scraping
 - [x] fetch_human_readable_lang_names.sh
@@ -49,7 +48,7 @@
 
 ### Analysis of dumps
 - get_most_common_scripts.sh
-    - Obsolete script counting script
+    - NOTE: moved to /obsolete/ as of 5/6/21
 - compare_am_ti.py
     - Compares am/ti data
     - Used for google sheets
