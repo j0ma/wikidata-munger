@@ -36,7 +36,7 @@ def output_csv(
     row_number: int = 0,
     delimiter: str = ",",
 ) -> None:
-    writer = csv.DictWriter(f, fieldnames=["language", "conll_type", "num_docs"])
+    writer = csv.DictWriter(f, fieldnames=["language", "conll_type", "num_docs"], extrasaction='ignore')
     language_set = set(languages)
 
     if row_number == 0:
