@@ -3,7 +3,7 @@ import os
 import math
 import csv
 from typing import IO, Generator, List, Dict, Any, Union, Iterable
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 import wikidata_helpers as wh
 import pandas as pd
@@ -88,22 +88,6 @@ def main(input_file, output_file, io_format, chunksize, n_jobs):
 
     rows_processed = 0
 
-    # for chunk_ix, data in tqdm(
-    # enumerate(data_chunks, start=1), desc="Progress: "
-    # ):
-    # data = clean(data)
-    # chunk_dict = data.set_index(
-    # ["id", "type", "eng", "language"]
-    # ).alias.to_dict()
-
-    # for entity_alias_dict in munge(chunk_dict):
-    # for entity_record, aliases in entity_alias_dict.items():
-    # unique_langs = unique_langs.union(aliases)
-    # matrix_dict[entity_record].update(aliases)
-
-    # rows_processed += data.shape[0]
-    # print(f"\nChunk processed! Total rows processed: {rows_processed:,}\n")
-
     with Pool(n_jobs) as pool:
         print("Computing all the disjoint matrix dicts")
         matrix_dicts = pool.map(func=process_chunk, iterable=data_chunks)
@@ -115,6 +99,9 @@ def main(input_file, output_file, io_format, chunksize, n_jobs):
     for md, ul in matrix_dicts:
         unique_langs = unique_langs.union(ul)
         matrix_dict.update(md)
+
+    # convert to OrderedDict to preserve order
+    matrix_dict = OrderedDict(matrix_dict)
 
     print(f"Done! Now writing to disk under {output_file}")
     with open(output_file, "w") as tsv_out:
