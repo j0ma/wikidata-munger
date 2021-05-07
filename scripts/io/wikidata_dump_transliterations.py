@@ -56,6 +56,7 @@ def output_csv(
         f,
         delimiter=delimiter,
         fieldnames=["id", "name", "alias", "language", "type"],
+        extrasaction="ignore",
     )
 
     if row_number == 0:
@@ -166,7 +167,7 @@ def main(
 
     # parse some input args
     languages = "" if languages == "-" else languages
-    language_list = languages.split(",") 
+    language_list = languages.split(",")
     id_list = ids.split(",")
     output = output_jsonl if output_format == "jsonl" else output_csv
     delimiter = "\t" if delimiter == "tab" else delimiter

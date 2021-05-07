@@ -15,7 +15,9 @@ from multiprocessing import Pool
 
 def output_matrix(matrix_dict, delimiter, languages, f):
     field_names = ["id", "eng", "type"] + [l for l in languages]
-    writer = csv.DictWriter(f, delimiter=delimiter, fieldnames=field_names)
+    writer = csv.DictWriter(
+        f, delimiter=delimiter, fieldnames=field_names, extrasaction="ignore"
+    )
 
     writer.writeheader()
 
