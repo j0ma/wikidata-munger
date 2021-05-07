@@ -1,5 +1,4 @@
 var instanceOfPipeline = [
-    //{$limit: 10000000},
     {$unwind: "$claims.P31"},
     {
         $addFields: {
@@ -25,10 +24,7 @@ var instanceOfPipeline = [
             }
     },
     {
-        $out: "testingu"
-        //$out: {
-            //db: "wikidata_db", "coll": "test_instance_of"
-        //}
+        $out: "test_instance_of"
     }
 ];
 
