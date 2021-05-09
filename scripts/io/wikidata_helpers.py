@@ -15,18 +15,6 @@ import unicodedata as ud
 import pandas as pd
 
 
-@lru_cache(maxsize=None)
-def unicode_blocks(word: str) -> Counter:
-    return Counter(
-        blocks.of(c) for c in str(word)
-    )  # wrap in str() to handle e.g. digits
-
-
-@lru_cache(maxsize=None)
-def most_common_unicode_block(word: str) -> str:
-    return unicode_blocks(word).most_common(1)[0][0]
-
-
 def read(
     input_file: str,
     io_format: str,

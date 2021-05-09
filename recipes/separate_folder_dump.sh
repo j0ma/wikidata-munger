@@ -2,10 +2,17 @@
 
 set -euo pipefail
 
-langs="${1:-af,fi,sv}"
+usage () {
+    echo "Usage: bash separate_folder_dump.sh LANGUAGES OUTPUT_FOLDER [ENTITY_TYPES=PER,LOC,ORG]"
+}
+
+[ $# -lt 2 ] && usage && exit 1
+
+langs="${1}"
 format="tsv"
-output_folder="${2:-/home/jonne/datasets/wikidata/small-dump-050621}"
+output_folder="${2}"
 mkdir --verbose -p $output_folder/combined
+entity_types=$(echo "${3}" | tr "," " ")
 
 dump () {
 
@@ -59,7 +66,7 @@ separate_by_entity_type () {
 }
 
 # extract & clean everything for each type
-for conll_type in "PER" "LOC" "ORG"
+for conll_type in $entity_types
 do
     dump $conll_type &
 done
@@ -67,16 +74,18 @@ wait
 
 # combine everything into one big tsv
 combined_output="${output_folder}/combined.tsv"
-cat "${output_folder}/PER.tsv" >> $combined_output
-tail +2 "${output_folder}/LOC.tsv" >> $combined_output
-tail +2 "${output_folder}/ORG.tsv" >> $combined_output
+echo "Combining everything to ${combined_output}"
+#cat "${output_folder}/PER.tsv" >> $combined_output
+#tail +2 "${output_folder}/LOC.tsv" >> $combined_output
+#tail +2 "${output_folder}/ORG.tsv" >> $combined_output
+csvstack --verbose --tabs ${output_folder}/*.tsv | csvformat -T >> $combined_output
 
 # deduplicate combined tsv
 dedup_output="${output_folder}/combined_dedup.tsv"
 deduplicate $combined_output $dedup_output
 
 # then separate into one tsv per entity type and language
-for conll_type in "PER" "LOC" "ORG"
+for conll_type in $entity_types
 do
     dedup_output_typed="${output_folder}/${conll_type}_dedup.tsv"
     separate_by_entity_type \
