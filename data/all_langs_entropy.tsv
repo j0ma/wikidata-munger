@@ -1,0 +1,454 @@
+language,language,script_entropy
+ks,Kashmiri,0.928
+gom,Goan Konkani,0.816
+zgh,Standard Moroccan Berber,0.796
+ja,Japanese,0.749
+as,Assamese,0.694
+uz-cyrl,Uzbek Cyrillic alphabet,0.693
+kum,Kumyk,0.693
+dz,Dzongkha,0.688
+inh,Ingush,0.687
+bgn,Western Balochi,0.678
+gom-deva,Goan Konkani in Devanagari script,0.665
+myv,Erzya,0.658
+lbe,Lak,0.653
+mdf,Moksha,0.652
+krc,Karachay-Balkar,0.651
+ab,Abkhaz,0.65
+gan-hant,traditional Gan,0.648
+ady,Adyghe,0.64
+ug-arab,Uyghur Arabic alphabet,0.637
+mni,Meitei,0.635
+arq,Algerian Arabic,0.606
+awa,Awadhi,0.606
+kbd,Kabardian,0.601
+tg-cyrl,Tajik in Cyrillic script,0.581
+ug,Uyghur,0.576
+tcy,Tulu,0.568
+sr,Serbian,0.564
+arc,Aramaic,0.556
+pnt,Pontic Greek,0.542
+my,Burmese,0.531
+tzm,Central Atlas Tamazight,0.53
+yue,Cantonese,0.53
+dv,Dhivehi,0.524
+av,Avaric,0.511
+tt-cyrl,Tatar in Cyrillic script,0.508
+ota,Ottoman Turkish,0.499
+koi,Permyak,0.497
+kv,Komi,0.494
+xal,Kalmyk Oirat,0.474
+tyv,Tuvan,0.466
+pi,Pali,0.456
+mnw,Mon language spelling,0.453
+sty,Siberian Tatar,0.451
+grc,Ancient Greek,0.426
+tt,Tatar,0.421
+shn,Shan,0.418
+glk,Gilaki,0.415
+bxr,Russia Buriat,0.413
+ko-kp,North Korean standard language,0.401
+sat,Santali,0.374
+ii,Nuosu,0.372
+lrc,Northern Luri,0.364
+udm,Udmurt,0.338
+bo,Tibetan,0.323
+km,Khmer,0.314
+kk-kz,Kazakh in Kazakhstan,0.309
+nod,Northern Thai,0.305
+mhr,Meadow Mari,0.3
+dty,Doteli,0.264
+aeb,Tunisian Arabic,0.263
+sah,Sakha,0.257
+sd,Sindhi,0.254
+lez,Lezgian,0.253
+rue,Rusyn,0.247
+mrj,Hill Mari,0.243
+aeb-arab,Tunisian Arabic in Arabic script,0.223
+sa,Sanskrit,0.204
+ku-arab,Kurdish Arabic alphabet,0.204
+os,Ossetian,0.194
+crh-cyrl,Crimean Tatar Cyrillic alphabet,0.19
+ps,Pashto,0.19
+xmf,Mingrelian,0.183
+lo,Lao,0.175
+mn,Mongolian,0.171
+yi,Yiddish,0.168
+ike-cans,Eastern Canadian (Aboriginal syllabics),0.151
+bho,Bhojpuri,0.144
+shi,Tashelhit,0.14
+ary,Moroccan Arabic,0.137
+kk-cn,Kazakh in China,0.131
+zh-mo,Chinese in Macau,0.13
+kjp,Eastern Pwo,0.124
+or,Odia,0.119
+mzn,Mazanderani,0.118
+got,Gothic,0.114
+si,Sinhala,0.11
+mai,Maithili,0.104
+anp,Angika,0.103
+cu,Old Church Slavonic,0.096
+khw,Khowar,0.094
+ckb,Sorani,0.094
+ne,Nepali,0.08
+pa,Eastern Punjabi,0.079
+bqi,Bakhtiari,0.079
+cv,Chuvash,0.079
+sh,Serbo-Croatian,0.077
+gu,Gujarati,0.066
+hi,Hindi,0.066
+new,Newar,0.064
+mk,Macedonian,0.063
+iu,Inuktitut,0.063
+bpy,Bishnupriya Manipuri,0.063
+chr,Cherokee,0.061
+ky,Kyrgyz,0.06
+el,Modern Greek,0.058
+zh-hk,Chinese (Hong Kong),0.057
+te,Telugu,0.054
+kbp,Kabiye,0.053
+ko,Korean,0.052
+ba,Bashkir language,0.052
+kn,Kannada,0.051
+zh-tw,Taiwanese Mandarin,0.049
+ka,Georgian,0.047
+pnb,Western Punjabi,0.046
+mo,Moldovan,0.045
+az,Azerbaijani,0.045
+zh,Chinese,0.043
+wuu,Wu Chinese,0.043
+gan-hans,simplified Gan,0.042
+zh-hans,Simplified Chinese,0.042
+mr,Marathi,0.042
+zh-cn,Putonghua,0.041
+be-tarask,Taraškievica,0.04
+gan,Gan,0.04
+ce,Chechen,0.037
+rwr,Marwari (India),0.037
+zh-my,Malaysian Mandarin,0.036
+ml,Malayalam,0.036
+bn,Bengali,0.035
+tly,Talysh,0.034
+th,Thai,0.034
+sgs,Samogitian,0.034
+ks-deva,Kashmiri in Devanagari script,0.034
+ks-arab,Kashmiri in Arabic script,0.034
+ta,Tamil,0.033
+nqo,N'Ko,0.033
+hy,Armenian,0.033
+sr-ec,Serbian written in Cyrillic,0.032
+zh-sg,Singaporean Mandarin,0.031
+kk-arab,Kazakh Arabic alphabets,0.03
+he,Hebrew,0.03
+bg,Bulgarian,0.029
+kk-cyrl,Kazakh in Cyrillic script,0.029
+uk,Ukrainian,0.029
+es-419,Latin American Spanish,0.028
+be,Belarusian,0.026
+ru,Russian,0.025
+crh,Crimean Tatar,0.024
+kk,Kazakh,0.023
+zh-hant,Traditional Chinese,0.022
+cr,Cree Wikiquote,0.021
+tg,Tajik,0.021
+ar,Arabic,0.02
+am,Amharic,0.02
+ku,Kurdish,0.02
+sjd,Kildin Sami,0.019
+yo,Yoruba,0.018
+ur,Urdu,0.018
+fa,Persian,0.017
+hyw,Western Armenian,0.015
+kk-latn,Kazakh in Latin script,0.015
+uz,Uzbek,0.014
+rmf,Finnish Kalo,0.012
+ilo,Ilocano,0.012
+szy,Sakizaya,0.009
+lki,Laki,0.009
+liv,Livonian,0.009
+ku-latn,Kurdish in Latin script,0.009
+tl,Tagalog,0.009
+cdo,Min Dong,0.008
+fkv,kven,0.008
+ban,Balinese,0.008
+smn,Inari Sami,0.008
+nv,Navajo,0.008
+azb,South Azerbaijani,0.008
+war,Waray,0.007
+lzh,Classical Chinese,0.007
+tr,Turkish,0.007
+rup,Aromanian,0.006
+de-at,Austrian German,0.006
+de-ch,Swiss Standard German,0.006
+ha,Hausa,0.006
+sco,Scots,0.006
+sdc,Sassarese,0.006
+en-ca,Canadian English,0.006
+en-gb,British English,0.006
+rw,Kinyarwanda,0.006
+oc,Occitan,0.006
+ny,Chewa,0.006
+vi,Vietnamese,0.006
+hak,Hakka,0.005
+ms,Malay,0.005
+ki,Gikuyu,0.005
+cs,Czech,0.005
+gl,Galician,0.005
+sk,Slovak,0.005
+eu,Basque,0.005
+sm,Samoan,0.005
+csb,Kashubian,0.005
+pl,Polish,0.004
+pt-br,Brazilian Portuguese,0.004
+kk-tr,Kazakh in Turkey,0.004
+ro,Romanian,0.004
+vro,Võro,0.004
+eo,Esperanto,0.004
+lv,Latvian,0.004
+crh-latn,Crimean Tatar Latin alphabet,0.004
+zu,Zulu,0.003
+arz,Egyptian Arabic,0.003
+id,Indonesian,0.003
+hsb,Upper Sorbian,0.003
+bs,Bosnian,0.003
+gag,Gagauz,0.003
+scn,Sicilian,0.003
+sr-el,Serbian written in Latin script,0.003
+ceb,Cebuano,0.003
+szl,Silesian,0.003
+diq,Zazaki,0.003
+nb,Bokmål,0.002
+tk,Turkmen,0.002
+vep,Veps,0.002
+lt,Lithuanian,0.002
+sv,Swedish,0.002
+tg-latn,Tajik in Latin script,0.002
+nl,Dutch,0.002
+se,Northern Sami,0.002
+qu,Quechua,0.002
+pt,Portuguese,0.002
+nn,Nynorsk,0.002
+sei,Seri,0.002
+aa,Afar,0.002
+ast,Asturian,0.002
+lad,Judaeo-Spanish,0.002
+ca,Catalan,0.002
+gv,Manx,0.002
+lmo,Lombard,0.002
+fr,French,0.002
+hif,Fiji Hindi,0.002
+kl,Greenlandic,0.002
+kr,Kanuri,0.002
+brh,Brahui language,0.002
+fi,Finnish,0.002
+hr,Croatian,0.002
+hu,Hungarian,0.002
+de,German,0.002
+da,Danish,0.002
+et,Estonian,0.002
+it,Italian,0.002
+ia,Interlingua,0.002
+en,English,0.002
+dsb,Lower Sorbian,0.002
+es,Spanish,0.002
+af,Afrikaans,0.002
+br,Breton,0.001
+pms,Piedmontese,0.001
+rif,Riffian,0.001
+rm,Romansh,0.001
+gd,Scottish Gaelic,0.001
+pdt,Plautdietsch,0.001
+pdc,Pennsylvania German,0.001
+pcd,Picard,0.001
+roa-tara,Tarantino,0.001
+tum,Tumbuka,0.001
+vec,Venetian,0.001
+gsw,Alemannic,0.001
+prg,Old Prussian,0.001
+gn,Guarani,0.001
+lij,Ligurian,0.001
+sc,Sardinian,0.001
+cy,Welsh,0.001
+st,Sesotho,0.001
+su,Sundanese,0.001
+ee,Ewe,0.001
+sw,Swahili,0.001
+eml,Emilian-Romagnol,0.001
+sq,Albanian,0.001
+so,Somali,0.001
+sl,Slovene,0.001
+tet,Tetum,0.001
+ff,Fula,0.001
+ch,Chamorro,0.001
+co,Corsican,0.001
+fit,Meänkieli,0.001
+fj,Fijian,0.001
+fo,Faroese,0.001
+ig,Igbo,0.001
+frp,Franco-Provençal,0.001
+frr,North Frisian,0.001
+fur,Friulian,0.001
+fy,West Frisian,0.001
+ie,Interlingue,0.001
+pih,Pitkern,0.001
+nah,Nahuatl,0.001
+ksh,Ripuarian,0.001
+nds-nl,Dutch Low Saxon,0.001
+nds,Low German,0.001
+kab,Kabyle,0.001
+nap,Neapolitan,0.001
+na,Nauruan Wikiquote,0.001
+kg,Kongo,0.001
+mwl,Mirandese,0.001
+ang,Old English,0.001
+za,Zhuang,0.001
+zea,Zeelandic,0.001
+an,Aragonese,0.001
+min,Minangkabau,0.001
+jv,Javanese,0.001
+mi,Māori,0.001
+la,Latin,0.001
+mg,Malagasy,0.001
+ak,Akan Wiktionary,0.001
+lb,Luxembourgish,0.001
+lfn,Lingua Franca Nova,0.001
+lg,Luganda,0.001
+luz,Southern Luri,0.001
+ltg,Latgalian,0.001
+li,Limburgish,0.001
+ace,Acehnese,0.001
+kaa,Karakalpak,0.001
+stq,Saterland Frisian,0.001
+bar,Bavarian,0.001
+wo,Wolof,0.001
+nso,Northern Sotho,0.001
+wa,Walloon,0.001
+nrm,Norman,0.001
+is,Icelandic,0.001
+io,Ido,0.001
+nov,Novial,0.001
+vo,Volapük,0.001
+vmf,Main-Franconian,0.001
+vls,West Flemish,0.001
+ve,Venda,0.0
+aln,Gheg Albanian,0.0
+ti,Tigrinya,0.0
+als,Swiss German,0.0
+cps,Capiznon,0.0
+bjn,Banjar,0.0
+egl,Emilian,0.0
+dag,Dagbani,0.0
+bi,Bislama Wiktionary,0.0
+abs,Ambonese,0.0
+bcl,Central Bikol,0.0
+uz-latn,Uzbek Latin alphabet,0.0
+de-formal,formal address in German,0.0
+tay,Atayal,0.0
+din,Dinka,0.0
+dtp,Kadazandusun,0.0
+aeb-latn,Tunisian Arabic in Latin script,0.0
+ady-cyrl,Adyghe in Cyrillic script,0.0
+tw,Twi,0.0
+chy,Cheyenne,0.0
+ami,Amis,0.0
+avk,Kotava,0.0
+xh,Xhosa,0.0
+ty,Tahitian,0.0
+bug,Buginese,0.0
+ay,Aymara,0.0
+tt-latn,Tatar in Latin script,0.0
+cbk-zam,Zamboanga Chavacano,0.0
+ts,Tsonga,0.0
+trv,Seediq,0.0
+bto,Rinconada Bikol,0.0
+btm,Mandailing,0.0
+tru,Turoyo,0.0
+bbc-latn,Batak Toba in Latin script,0.0
+atj,Atikamekw,0.0
+xsy,Saisiyat,0.0
+tpi,Tok Pisin,0.0
+bbc,Toba Batak,0.0
+to,Tongan,0.0
+arn,Mapudungun,0.0
+tn,Tswana,0.0
+ug-latn,Uyghur Latin alphabet,0.0
+vot,Votic,0.0
+bm,Bambara,0.0
+cho,Choctaw,0.0
+bcc,Southern Balochi,0.0
+ln,Lingala,0.0
+ss,Swazi,0.0
+ng,Ndonga,0.0
+niu,Niuean,0.0
+jut,Jutlandic,0.0
+nl-informal,informal Dutch,0.0
+jbo,Lojban,0.0
+no,Norwegian,0.0
+jam,Jamaican Creole,0.0
+nys,Noongar,0.0
+ike-latn,Eastern Canadian in Latin script,0.0
+olo,Livvi-Karelian,0.0
+om,Oromo,0.0
+ik,Inupiat,0.0
+pag,Pangasinan,0.0
+pam,Kapampangan,0.0
+pap,Papiamento,0.0
+pfl,Palatinate German,0.0
+nia,Nias,0.0
+kbd-cyrl,Kabardian in Cyrillic script,0.0
+hu-formal,formal Hungarian,0.0
+kea,Cape Verdean Creole,0.0
+loz,Lozi,0.0
+lld,Ladin,0.0
+lus,Mizo,0.0
+lzz,Laz,0.0
+mad,Madurese,0.0
+map-bms,Banyumasan,0.0
+mh,Marshallese,0.0
+kw,Cornish,0.0
+krl,Karelian,0.0
+krj,Kinaray-a,0.0
+kri,Krio,0.0
+kj,Kwanyama,0.0
+kiu,Kirmanjki,0.0
+mt,Maltese,0.0
+mus,Muscogee,0.0
+hz,Herero,0.0
+ht,Haitian Creole,0.0
+srq,Sirionó,0.0
+sg,Sango,0.0
+shi-tfng,Tachelhit in Tifinagh script,0.0
+shy-latn,Shawiya in Latin script,0.0
+simple,Simple English,0.0
+sje,Pite Sami,0.0
+sju,Ume Sami,0.0
+ext,Extremaduran,0.0
+skr,Saraiki,0.0
+skr-arab,Saraiki in Arabic script,0.0
+sli,Silesian German,0.0
+sma,Southern Sami,0.0
+smj,Lule Sami,0.0
+es-formal,formal Spanish,0.0
+sms,Skolt Sami,0.0
+sn,Shona,0.0
+srn,Sranan Tongo,0.0
+shi-latn,Tachelhit in Latin script,0.0
+frc,Louisiana French,0.0
+hrx,Hunsrik,0.0
+sdh,Southern Kurdish,0.0
+ho,Hiri Motu,0.0
+hil,Hiligaynon,0.0
+qug,Kichwa,0.0
+rgn,Romagnol,0.0
+hif-latn,Fiji Hindi in Latin script,0.0
+rmy,Romani,0.0
+rn,Kirundi,0.0
+haw,Hawaiian,0.0
+ruq,Megleno-Romanian,0.0
+ruq-cyrl,Megleno-Romanian in Cyrillic script,0.0
+ruq-latn,Megleno-Romanian in Latin script,0.0
+gor,Gorontalo,0.0
+gom-latn,Goan Konkani in Latin script,0.0
+gcr,Guianan Creole,0.0
+ga,Irish,0.0
+ses,Koyraboro Senni,0.0
