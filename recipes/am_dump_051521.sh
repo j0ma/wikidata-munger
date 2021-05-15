@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+# Dumping everything, 2/5/2021
+
 LANGS="am,ti"
 FORMAT="${1}"
 OUTPUT_FOLDER="/home/jonne/datasets/wikidata/am-ti-per-dump-051521/"

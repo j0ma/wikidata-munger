@@ -2,6 +2,7 @@ import sys
 import os
 import math
 import csv
+from collections import defaultdict
 from typing import IO, Generator, List, Dict, Any, Union, Iterable
 
 from pymongo import MongoClient
@@ -13,6 +14,7 @@ def output_jsonl(
     document: wh.WikidataRecord,
     f: IO,
     languages: Iterable[str],
+    not_languages: Iterable[str],
     conll_type: str,
     strict: bool = False,
     row_number: int = 0,
@@ -22,9 +24,10 @@ def output_jsonl(
     wikidata_id = document.id
     name = document.name
     language_set = set(languages)
+    not_language_set = set(not_languages)
 
     for lang, alias in document.aliases.items():
-        if strict and lang not in language_set:
+        if strict and (lang not in language_set or lang in not_language_set):
             continue
         row = wh.orjson_dump(
             {
@@ -42,6 +45,7 @@ def output_csv(
     document: wh.WikidataRecord,
     f: IO,
     languages: Iterable[str],
+    not_languages: Iterable[str],
     conll_type: str,
     strict: bool = False,
     row_number: int = 0,
@@ -50,6 +54,7 @@ def output_csv(
     **kwargs,
 ) -> None:
     language_set = set(languages)
+    not_language_set = set(not_languages)
     wikidata_id = document.id
     name = document.name
     writer = csv.DictWriter(
@@ -74,7 +79,14 @@ def output_csv(
     )
 
     if strict:
-        rows = (row for row in rows if row["language"] in language_set)
+        rows = (
+            row
+
+            for row in rows
+
+            if row["language"] in language_set
+            and row["language"] not in not_language_set
+        )
 
     writer.writerows(rows)
 
@@ -136,6 +148,12 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
     default="en",
     help="Comma-separated list of languages to include",
 )
+@click.option(
+    "--not-languages",
+    "-L",
+    default="",
+    help="Comma-separated list of languages to exclude",
+)
 @click.option("--ids", "-i", default="", help="Only search for these IDs")
 @click.option(
     "--num-docs",
@@ -160,6 +178,7 @@ def main(
     delimiter,
     conll_type,
     languages,
+    not_languages,
     ids,
     num_docs,
     strict,
@@ -167,7 +186,9 @@ def main(
 
     # parse some input args
     languages = "" if languages == "-" else languages
+    not_languages = "" if not_languages == "-" else not_languages
     language_list = languages.split(",")
+    not_language_list = not_languages.split(",")
     id_list = ids.split(",")
     output = output_jsonl if output_format == "jsonl" else output_csv
     delimiter = "\t" if delimiter == "tab" else delimiter
@@ -183,13 +204,14 @@ def main(
     valid_instance_ofs = subclass_dict["subclasses"]
 
     # fetch results from mongodb
-    filter_dict = {"instance_of": {"$in": valid_instance_ofs}}
+    filter_dict = defaultdict(dict)
+    filter_dict["instance_of"].update({"$in": valid_instance_ofs})
 
     if languages:
-        filter_dict["languages"] = {"$in": language_list}
+        filter_dict["languages"].update({"$in": language_list})
 
     if ids:
-        filter_dict["id"] = {"$in": id_list}
+        filter_dict["id"].update({"$in": id_list})
 
     results = (doc for doc in db.find(filter_dict))
 
@@ -200,6 +222,7 @@ def main(
                     wh.WikidataRecord(doc, simple=True),
                     f=fout,
                     languages=language_list,
+                    not_languages=not_language_list,
                     conll_type=conll_type,
                     strict=strict,
                     row_number=ix,

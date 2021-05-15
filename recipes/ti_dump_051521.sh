@@ -2,9 +2,11 @@
 
 set -euo pipefail
 
+# Dumping everything, 2/5/2021
+
 LANGS="am,ti"
 FORMAT="${1}"
-OUTPUT_FOLDER="/home/jonne/datasets/wikidata/am-ti-per-dump-051521/"
+OUTPUT_FOLDER="/home/jonne/datasets/wikidata/ti-dump-051521/"
 COMBO_OUTPUT="${OUTPUT_FOLDER}/combined.csv"
 
 mkdir -p $OUTPUT_FOLDER
@@ -19,7 +21,7 @@ run () {
         --strict \
         -t "${CONLL_TYPE}" \
         -l "${LANGS}" \
-        -L 'ti' \
+        -L 'am' \
         -f "${FORMAT}" \
         -o - | tee "${OUTPUT}"
 

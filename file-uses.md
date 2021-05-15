@@ -59,6 +59,7 @@
 - get_lang_entropy_table.py
     - Analyzes coreutils-generated script counts and generates entropy for lang
     - NOTE: not specific to AfricaNLP
+    - NOTE: obsolete for paranames
 - get_lang_type_count_table.py
     - Counts per lang, mimics what I did in a notebook for AfricaNLP
     - NOTE: not specific to AfricaNLP

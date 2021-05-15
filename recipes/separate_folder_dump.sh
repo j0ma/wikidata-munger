@@ -9,21 +9,30 @@ usage () {
 [ $# -lt 2 ] && usage && exit 1
 
 langs="${1}"
-format="tsv"
 output_folder="${2}"
+format="tsv"
 mkdir --verbose -p $output_folder/combined
-entity_types=$(echo "${3}" | tr "," " ")
+entity_types=$(echo "${3:-PER,LOC,ORG}" | tr "," " ")
 
 dump () {
 
-    conll_type=$1
-    output="${output_folder}/${conll_type}.tsv"
+    local conll_type=$1
+    local langs=$2
+    local output="${output_folder}/${conll_type}.tsv"
+
+    if [ "${langs}" = "all" ]
+    then
+        langs_flag=""
+        strict_flag=""
+    else
+        langs_flag="-l \"${langs}\""
+        strict_flag="--strict"
+    fi
 
     # dump everything into one file
     python scripts/io/wikidata_dump_transliterations.py \
-        --strict \
-        -t "${conll_type}" \
-        -l "${langs}" \
+        $strict_flag \
+        -t "${conll_type}" $langs_flag \
         -f "${format}" \
         -d "tab" \
         -o - | tee "${output}"
@@ -65,14 +74,14 @@ separate_by_entity_type () {
     csvformat -T
 }
 
-# extract & clean everything for each type
+echo "Extract & clean everything for each type"
 for conll_type in $entity_types
 do
-    dump $conll_type &
+    dump $conll_type $langs &
 done
 wait
 
-# combine everything into one big tsv
+echo "Combine everything into one big tsv"
 combined_output="${output_folder}/combined.tsv"
 echo "Combining everything to ${combined_output}"
 #cat "${output_folder}/PER.tsv" >> $combined_output
@@ -80,11 +89,11 @@ echo "Combining everything to ${combined_output}"
 #tail +2 "${output_folder}/ORG.tsv" >> $combined_output
 csvstack --verbose --tabs ${output_folder}/*.tsv | csvformat -T >> $combined_output
 
-# deduplicate combined tsv
+echo "Deduplicate combined tsv"
 dedup_output="${output_folder}/combined_dedup.tsv"
 deduplicate $combined_output $dedup_output
 
-# then separate into one tsv per entity type and language
+echo "Separate into one tsv per entity type and language"
 for conll_type in $entity_types
 do
     dedup_output_typed="${output_folder}/${conll_type}_dedup.tsv"

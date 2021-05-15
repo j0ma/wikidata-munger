@@ -38,6 +38,7 @@ def compute_entropy(series):
 
 @click.command()
 @click.option("--input-file", "-i", required=True)
+@click.option("--output-file", "-o", required=True)
 @click.option(
     "--cache-path",
     required=True,
@@ -47,6 +48,7 @@ def compute_entropy(series):
 @click.option("--num-workers", "-w", default=12, type=int)
 def main(
     input_file: str,
+    output_file: str,
     cache_path: str,
     io_format: str,
     num_workers: int,
@@ -72,16 +74,23 @@ def main(
     data = pd.merge(data, alias_to_script, on="alias", how="left")
 
     script_entropies = dd.from_pandas(
-        data.groupby("language")
+        data.groupby(["language", "language_long"])
         .script.apply(compute_entropy)
         .round(3)
         .sort_values(ascending=False)
-        .reset_index(),
-        chunksize=5000
+        .reset_index()
+        .rename(
+            columns={"language_long": "language", "script": "script_entropy"}
+        ),
+        chunksize=5000,
     )
     script_entropies.compute()
-
-    print(script_entropies)
+    dd.to_csv(
+        script_entropies,
+        output_file,
+        single_file=True,  # only one output file
+        index=False,  # no line numbers
+    )
 
 
 if __name__ == "__main__":
