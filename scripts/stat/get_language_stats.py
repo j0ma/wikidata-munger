@@ -80,7 +80,11 @@ def main(
         .sort_values(ascending=False)
         .reset_index()
         .rename(
-            columns={"language_long": "language", "script": "script_entropy"}
+            columns={
+                "language_long": "language",
+                "script": "script_entropy",
+                "language": "language_code",
+            }
         ),
         chunksize=5000,
     )

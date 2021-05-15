@@ -6,7 +6,7 @@ usage () {
 
 tsv_file=$1
 
-printf "count,language,type\n"
+printf "count,language_code,type\n"
 tail +2 $tsv_file |         # skip header row of TSV file
     cut -f4,5 |             # grab language and type
     sort |                  # sort alphabetically
