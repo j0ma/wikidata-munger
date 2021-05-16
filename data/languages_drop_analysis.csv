@@ -1,0 +1,89 @@
+language_code,comment,should_keep
+ks,multiple scripts,False
+gom,PER is full of latin,True
+zgh,many orthographies naturally,False
+ja,script differences from hiragana,False
+as,lots of PER are equal to english,True
+uz-cyrl,PER has latin,True
+kum,minuscule,True
+dz,PER has latin,True
+ing,PER has latin,True
+bgn,PER has latin,True
+gom-deva,PER has latin,True
+myv,PER has latin,True
+lbe,PER has latin,True
+mdf,PER has latin,True
+krc,PER has latin,True
+ab,PER has latin,True
+gan-hant,PER has latin,True
+ady,PER has latin,True
+ug-arab,PER has latin,True
+mni,few PER latin only,False
+arq,PER has latin,True
+awa,PER has latin,True
+kbd,PER has latin but many scripts,False
+tg-cyrl,PER has latin,True
+ug,PER has latin,True
+tcy,PER has some latin,True
+sr,PER has a LOT of latin,True
+arc,PER has latin,True
+pnt,PER has latin,True
+my,PER has latin,True
+tzm,PER has latin, but only few,False
+yue,PER has some latin but only a bit,False
+dv,PER has about half latin,True
+av,PER has more latin,True
+tt-cyrl,PER is about half latin,True
+ota,PER has plenty of latin,True
+koi,PER has plenty of latin,True
+kv,PER has about half latin,True
+xal,PER has lots of latin,True
+tyv,PER has some latin,False
+pi,PER has latin,True
+mnw,some latin in PER,False
+sty,small and PER has mostly latin,True
+grc,PER is 20% latin at least,True
+tt,PER contains lots of latin,True
+shn,PER has lots of latin,True
+glk,PER has latin,True
+bxr,PER has latin,True
+ko-kp,PER has tons of latin,True
+sat,PER has lots of latin,True
+ii,PER has latin,True
+lrc,PER has latin,True
+udm,PER has latin,True
+bo,PER has latin,True
+km,PER has latin,True
+kk-kz,PER has latin,True
+nod,PER has latin,True
+mhr,PER has latin,True
+dty,PER has latin,True
+aeb,PER has latin,True
+sah,PER has latin,True
+sd,PER has latin,True
+lez,PER has latin,True
+rue,PER has latin,True
+mrj,PER has latin,True
+aeb-arab,PER has latin,True
+sa,PER has latin,True
+ku-arab,PER has latin,True
+os,PER has latin,True
+crh-cyrl,PER has latin,True
+ps,PER has latin,True
+xmf,PER has latin,True
+lo,PER has latin,True
+mn,PER has latin,True
+yi,PER has latin,True
+ike-cans,PER has latin,True
+bho,PER has latin,True
+shi,PER has latin,True
+ary,PER has latin,True
+kk-cn,PER has latin,True
+zh-mo,PER has latin,True
+kjp,PER has latin,True
+or,PER has latin,True
+mzn,PER has latin,True
+got,way too much latin (dead lang),True
+si,PER has way too much latin,True
+mai,PER has latin,True
+anp,PER has latin,True
