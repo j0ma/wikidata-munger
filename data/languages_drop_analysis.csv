@@ -1,4 +1,4 @@
-language_code,comment,should_keep
+language_code,comment,should_drop
 ks,multiple scripts,False
 gom,PER is full of latin,True
 zgh,many orthographies naturally,False
