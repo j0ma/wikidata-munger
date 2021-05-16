@@ -6,12 +6,13 @@ import matplotlib.pyplot as plt
 
 rotation_angle = 90
 width, height = 12, 6
+entropy_threshold = 0.1
 
 
 def plot_zipf_distribution(
     df,
     n_langs=50,
-    title="Count per language",
+    title="",
     use_log_y=False,
     stacked=False,
     save_path="",
@@ -37,7 +38,7 @@ def plot_zipf_distribution(
             stacked=stacked,
             rot=rotation_angle,
             figsize=(width, height),
-            xlabel=""
+            xlabel="",
         )
     else:
         out.sort_values("count", ascending=False)["count"].head(n_langs).plot(
@@ -47,7 +48,7 @@ def plot_zipf_distribution(
             stacked=stacked,
             rot=rotation_angle,
             figsize=(width, height),
-            xlabel=""
+            xlabel="",
         )
 
     plt.tight_layout()
@@ -62,7 +63,7 @@ def plot_zipf_distribution(
 def plot_entropy_distribution(
     df,
     n_langs=50,
-    title="Script entropy per language",
+    title="",
     use_log_y=False,
     save_path="",
     width=12,
@@ -76,9 +77,11 @@ def plot_entropy_distribution(
         logy=use_log_y,
         rot=rotation_angle,
         figsize=(width, height),
-        xlabel=""
+        xlabel="",
     )
 
+    plt.axhline(y=entropy_threshold, linestyle="dashed", color="black")
+    plt.xticks([])
     plt.tight_layout()
     if save_path:
         plt.savefig(save_path)
@@ -109,8 +112,13 @@ def plot_entropy_distribution(
     "--log-scale", is_flag=True, help="Use log scale on the y-axis",
 )
 @click.option(
-    "--n-languages",
-    help="Number of languages to plot results for.",
+    "--n-languages-counts",
+    help="Number of languages to plot in count graph.",
+    default=50,
+)
+@click.option(
+    "--n-languages-entropy",
+    help="Number of languages to plot in entropy graph.",
     default=50,
 )
 @click.option(
@@ -125,7 +133,8 @@ def main(
     entropy_table_path,
     collapse_types,
     log_scale,
-    n_languages,
+    n_languages_counts,
+    n_languages_entropy,
     output_folder,
     width,
     height,
@@ -166,7 +175,7 @@ def main(
         )
         plot_zipf_distribution(
             count_table,
-            n_langs=n_languages,
+            n_langs=n_languages_counts,
             output_folder=output_folder,
             save_path=zipf_output_file,
             use_log_y=log_scale,
@@ -178,7 +187,7 @@ def main(
         plot_zipf_distribution(
             count_table,
             stacked=True,
-            n_langs=n_languages,
+            n_langs=n_languages_counts,
             save_path=zipf_output_file,
             use_log_y=log_scale,
             width=width,
@@ -187,7 +196,7 @@ def main(
 
     plot_entropy_distribution(
         entropy_table,
-        n_langs=n_languages,
+        n_langs=n_languages_entropy,
         save_path=entropy_output_file,
         use_log_y=log_scale,
         width=width,
