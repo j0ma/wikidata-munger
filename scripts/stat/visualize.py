@@ -68,6 +68,7 @@ def plot_entropy_distribution(
     save_path="",
     width=12,
     height=6,
+    disable_xticks=False,
 ):
     df.sort_values("script_entropy", ascending=False).head(n_langs).set_index(
         "language"
@@ -81,7 +82,8 @@ def plot_entropy_distribution(
     )
 
     plt.axhline(y=entropy_threshold, linestyle="dashed", color="black")
-    plt.xticks([])
+    if disable_xticks:
+        plt.xticks([])
     plt.tight_layout()
     if save_path:
         plt.savefig(save_path)
@@ -128,6 +130,7 @@ def plot_entropy_distribution(
 )
 @click.option("--width", default=12)
 @click.option("--height", default=6)
+@click.option("--remove-xticks-entropy", is_flag=True)
 def main(
     counts_table_path,
     entropy_table_path,
@@ -138,6 +141,7 @@ def main(
     output_folder,
     width,
     height,
+    remove_xticks_entropy,
 ):
 
     count_table = pd.read_csv(
@@ -201,6 +205,7 @@ def main(
         use_log_y=log_scale,
         width=width,
         height=height,
+        disable_xticks=remove_xticks_entropy,
     )
 
 
