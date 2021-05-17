@@ -37,6 +37,12 @@ def create_count_table(
 
 
 def add_english_match(count_table, english_match_table):
+    english_match_table[
+        "english_match"
+    ] = english_match_table.english_match.apply(
+        lambda x: f"{round(100*x, 3)}%"
+    )
+
     return count_table.merge(
         english_match_table, how="left", left_index=True, right_index=True
     )
@@ -145,9 +151,9 @@ def main(
 
     count_table.index.name = "Language"
 
-    print(count_table.to_latex())
+    print(count_table.to_latex(longtable=True))
     print()
-    print(entropy_table.to_latex())
+    print(entropy_table.to_latex(longtable=True))
 
 
 if __name__ == "__main__":

@@ -27,7 +27,11 @@ def output_jsonl(
     not_language_set = set(not_languages)
 
     for lang, alias in document.aliases.items():
-        if strict and (lang not in language_set or lang in not_language_set):
+
+        not_in_include_set = strict and lang not in language_set
+        in_exclude_set = lang in not_language_set
+
+        if not_in_include_set or in_exclude_set:
             continue
         row = wh.orjson_dump(
             {
@@ -74,19 +78,18 @@ def output_csv(
             "language": lang,
             "type": conll_type,
         }
-
         for lang, alias in document.aliases.items()
     )
 
     if strict:
         rows = (
             row
-
             for row in rows
-
             if row["language"] in language_set
             and row["language"] not in not_language_set
         )
+    else:
+        rows = (row for row in rows if row["language"] not in not_language_set)
 
     writer.writerows(rows)
 

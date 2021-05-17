@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 
 rotation_angle = 90
 width, height = 12, 6
-entropy_threshold = 0.1
 
 
 def plot_zipf_distribution(
@@ -69,7 +68,12 @@ def plot_entropy_distribution(
     width=12,
     height=6,
     disable_xticks=False,
+    entropy_threshold=0.1,
+    pruned=False,
 ):
+    if pruned:
+        df = df[df.script_entropy < entropy_threshold]
+
     df.sort_values("script_entropy", ascending=False).head(n_langs).set_index(
         "language"
     ).script_entropy.plot(
@@ -81,7 +85,8 @@ def plot_entropy_distribution(
         xlabel="",
     )
 
-    plt.axhline(y=entropy_threshold, linestyle="dashed", color="black")
+    if not pruned:
+        plt.axhline(y=entropy_threshold, linestyle="dashed", color="black")
     if disable_xticks:
         plt.xticks([])
     plt.tight_layout()
@@ -130,7 +135,9 @@ def plot_entropy_distribution(
 )
 @click.option("--width", default=12)
 @click.option("--height", default=6)
+@click.option("--entropy-threshold", default=0.1)
 @click.option("--remove-xticks-entropy", is_flag=True)
+@click.option("--prune-entropy-plot", is_flag=True, help="")
 def main(
     counts_table_path,
     entropy_table_path,
@@ -141,7 +148,9 @@ def main(
     output_folder,
     width,
     height,
+    entropy_threshold,
     remove_xticks_entropy,
+    prune_entropy_plot,
 ):
 
     count_table = pd.read_csv(
@@ -206,6 +215,8 @@ def main(
         width=width,
         height=height,
         disable_xticks=remove_xticks_entropy,
+        pruned=prune_entropy_plot,
+        entropy_threshold=entropy_threshold,
     )
 
 

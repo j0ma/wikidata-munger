@@ -1,0 +1,1 @@
+gom,as,uz-cyrl,kum,dz,ing,bgn,gom-deva,myv,lbe,mdf,krc,ab,gan-hant,ady,ug-arab,mni,arq,awa,tg-cyrl,ug,tcy,sr,arc,pnt,my,yue,dv,av,tt-cyrl,ota,koi,kv,xal,tyv,pi,mnw,sty,grc,tt,shn,glk,bxr,ko-kp,sat,ii,lrc,udm,bo,km,kk-kz,nod,mhr,dty,aeb,sah,sd,lez,rue,mrj,aeb-arab,sa,ku-arab,os,crh-cyrl,ps,xmf,lo,mn,yi,ike-cans,bho,shi,ary,kk-cn,zh-mo,kjp,or,mzn,got,si,mai,anp

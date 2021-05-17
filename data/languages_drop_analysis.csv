@@ -18,7 +18,7 @@ ab,PER has latin,True
 gan-hant,PER has latin,True
 ady,PER has latin,True
 ug-arab,PER has latin,True
-mni,few PER latin only,False
+mni,few PER latin only,True
 arq,PER has latin,True
 awa,PER has latin,True
 kbd,PER has latin but many scripts,False
@@ -30,7 +30,7 @@ arc,PER has latin,True
 pnt,PER has latin,True
 my,PER has latin,True
 tzm,PER has latin, but only few,False
-yue,PER has some latin but only a bit,False
+yue,PER has some latin but only a bit,True
 dv,PER has about half latin,True
 av,PER has more latin,True
 tt-cyrl,PER is about half latin,True
@@ -38,9 +38,9 @@ ota,PER has plenty of latin,True
 koi,PER has plenty of latin,True
 kv,PER has about half latin,True
 xal,PER has lots of latin,True
-tyv,PER has some latin,False
+tyv,PER has some latin,True
 pi,PER has latin,True
-mnw,some latin in PER,False
+mnw,some latin in PER,True
 sty,small and PER has mostly latin,True
 grc,PER is 20% latin at least,True
 tt,PER contains lots of latin,True
