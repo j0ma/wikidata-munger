@@ -15,5 +15,5 @@ tail +2 $tsv_file |         # skip header row of TSV file
     sed 's/^\s*//' |        # get rid of leading whitespace
     sed "s/\s+$//g" |       # get rid of trailing whitespace
     tr ' \t' ',' |          # convert tabs and spaces to commas
-    csvgrep -c 2 -r '.+'    # only retain columns that have nonempty 
+    csvgrep -c 2 -r '.+'    # only retain rows that have nonempty 
                             # values for the "language" column.
