@@ -63,6 +63,7 @@
 - get_lang_type_count_table.py
     - Counts per lang, mimics what I did in a notebook for AfricaNLP
     - NOTE: not specific to AfricaNLP
+    - ./obsolete as of 5/16
 - [x] script_based_analysis.py
     - Analyzes deduplicated dumps and computes script distributions/entropies
     - NOTE: not specific to AfricaNLP
