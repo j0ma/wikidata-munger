@@ -135,9 +135,6 @@ def main(input_file, output_file, io_format, alias_column, english_column):
     # change <english_column> to "eng"
     data = data.rename(columns={english_column: "eng"})
 
-    # add is_latin column
-    # data["is_latin"] = data[alias_column].apply(latin_checker)
-
     # deduplicate rows using trumping rules
     data = deduplicate(data)
 

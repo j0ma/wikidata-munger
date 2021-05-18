@@ -30,7 +30,7 @@ def output_matrix(matrix_dict, delimiter, languages, f):
             }
 
             ## we'll use sorted(languages) to make sure order is preserved
-            row.update({l: d.get(l, "") for l in sorted(languages)})
+            row.update({l: d.get(l, "") for l in sorted(str(l) for l in languages)})
             yield row
 
     writer.writerows(rows(matrix_dict))

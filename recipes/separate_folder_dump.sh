@@ -13,6 +13,7 @@ output_folder="${2}"
 format="tsv"
 mkdir --verbose -p $output_folder/combined
 entity_types=$(echo "${3:-PER,LOC,ORG}" | tr "," " ")
+exclude_these_langs=$(cat ./data/languages_to_drop.txt)
 
 dump () {
 
@@ -35,6 +36,7 @@ dump () {
         -t "${conll_type}" $langs_flag \
         -f "${format}" \
         -d "tab" \
+        -L "${exclude_these_langs}" \
         -o - | tee "${output}"
 
 }
