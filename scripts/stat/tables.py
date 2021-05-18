@@ -88,6 +88,8 @@ def create_entropy_table(df, n_langs=50, use_log_y=False, save_path=""):
     help="Number of languages to include in entropy table.",
     default=50,
 )
+@click.option("--longtable-counts", is_flag=True, help="Counts table in longtable format")
+@click.option("--longtable-entropy", is_flag=True, help="Entropy table in longtable format")
 def main(
     counts_table_path,
     entropy_table_path,
@@ -95,6 +97,8 @@ def main(
     collapse_types,
     n_languages_counts,
     n_languages_entropy,
+    longtable_counts,
+    longtable_entropy
 ):
 
     count_table = pd.read_csv(
@@ -151,9 +155,9 @@ def main(
 
     count_table.index.name = "Language"
 
-    print(count_table.to_latex(longtable=True))
+    print(count_table.to_latex(longtable=longtable_counts))
     print()
-    print(entropy_table.to_latex(longtable=True))
+    print(entropy_table.to_latex(longtable=longtable_entropy))
 
 
 if __name__ == "__main__":
