@@ -127,8 +127,6 @@ def filter_am_ti(data: pd.DataFrame) -> pd.DataFrame:
 @click.option("--english-column", "-e", default="name")
 def main(input_file, output_file, io_format, alias_column, english_column):
 
-    latin_checker = wh.LatinChecker()
-
     # read in data
     data = wh.read(input_file, io_format=io_format)
 

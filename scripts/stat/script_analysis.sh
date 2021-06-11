@@ -19,7 +19,7 @@ SCRIPTS=$TMPDIR/all_aliases_scripts.txt
 TSV=$TMPDIR/all_aliases_with_script.tsv
 
 cut -f $COL_IX $DUMP | sort | uniq > $ALIASES
-./scripts/stat/infer_script < $ALIASES > $SCRIPTS
+./scripts/stat/infer_script_most_common < $ALIASES > $SCRIPTS
 paste $ALIASES $SCRIPTS > $TSV
 
 echo $TMPDIR
