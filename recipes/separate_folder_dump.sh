@@ -26,7 +26,7 @@ dump () {
         langs_flag=""
         strict_flag=""
     else
-        langs_flag="-l \"${langs}\""
+        langs_flag="-l ${langs}"
         strict_flag="--strict"
     fi
 
