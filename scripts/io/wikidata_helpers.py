@@ -27,6 +27,27 @@ def read(
             encoding="utf-8",
             delimiter="\t" if io_format == "tsv" else ",",
             chunksize=chunksize,
+            na_values=set(
+                [
+                    "",
+                    "#N/A",
+                    "#N/A N/A",
+                    "#NA",
+                    "-1.#IND",
+                    "-1.#QNAN",
+                    "-NaN",
+                    "1.#IND",
+                    "1.#QNAN",
+                    "<NA>",
+                    "N/A",
+                    "NA",
+                    "NULL",
+                    "NaN",
+                    "n/a",
+                    "null",
+                ]
+            ),
+            keep_default_na=False,
         )
     elif io_format == "jsonl":
         return pd.read_json(

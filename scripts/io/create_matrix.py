@@ -30,7 +30,9 @@ def output_matrix(matrix_dict, delimiter, languages, f):
             }
 
             ## we'll use sorted(languages) to make sure order is preserved
-            row.update({l: d.get(l, "") for l in sorted(str(l) for l in languages)})
+            row.update(
+                {l: d.get(l, "") for l in sorted(str(l) for l in languages)}
+            )
             yield row
 
     writer.writerows(rows(matrix_dict))
@@ -47,6 +49,7 @@ def clean(data):
 
 
 def munge(d_in):
+
     out = []
 
     for (_id, _cat, _eng, _lang), _alias in d_in.items():
@@ -66,7 +69,12 @@ def process_chunk(data):
 
     for entity_alias_dict in munge(chunk_dict):
         for entity_record, aliases in entity_alias_dict.items():
+            if np.nan in aliases:
+                print(aliases, entity_record)
+                sys.exit(1)
+
             unique_langs = unique_langs.union(aliases)
+
             matrix_dict[entity_record].update(aliases)
 
     return matrix_dict, unique_langs
@@ -94,8 +102,10 @@ def main(input_file, output_file, io_format, chunksize, n_jobs):
         print("Computing all the disjoint matrix dicts")
         matrix_dicts = pool.map(func=process_chunk, iterable=data_chunks)
 
-    print("Done! Now joining them to one big dict")
+    # print("Computing all the disjoint matrix dicts")
+    # matrix_dicts = (process_chunk(c) for c in data_chunks) #pool.map(func=process_chunk, iterable=data_chunks)
 
+    print("Done! Now joining them to one big dict")
     unique_langs = set()
 
     for md, ul in matrix_dicts:

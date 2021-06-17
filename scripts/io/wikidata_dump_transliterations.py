@@ -70,6 +70,7 @@ def output_csv(
 
     if row_number == 0:
         writer.writeheader()
+
     rows = (
         {
             "id": wikidata_id,
@@ -112,9 +113,7 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
 @click.command()
 @click.option("--mongodb-uri", default="", help="MongoDB URI")
 @click.option("--database-name", default="wikidata_db", help="Database name")
-@click.option(
-    "--collection-name", default="wikidata_simple", help="Collection name"
-)
+@click.option("--collection-name", default="wikidata_simple", help="Collection name")
 @click.option(
     "--subclass-coll-name",
     default="subclasses",
