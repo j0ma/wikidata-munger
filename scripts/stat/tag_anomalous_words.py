@@ -5,7 +5,7 @@ import pandas as pd
 import click
 import orjson
 
-import unicode_helpers as uh
+import script_analysis as sa
 
 from unicodeblock import blocks
 import dictances as dt
@@ -25,11 +25,9 @@ def mark_as_anomalous(row: pd.Series, critical_values: Dict[str, float]):
 
 
 def compute_prototype(
-    df: pd.DataFrame, strip: bool = False, normalize: bool = False
+    df: pd.DataFrame, ua: sa.UnicodeAnalyzer
 ) -> Dict[str, float]:
-    return uh.unicode_block_histogram(
-        word=df.alias.str.cat(), strip=strip, normalize=normalize
-    )
+    return ua.unicode_block_histogram(word=df.alias.str.cat())
 
 
 def distance(
@@ -73,25 +71,27 @@ def main(
     # only csv/tsv supported for now
     assert io_format in ["csv", "tsv"]
 
+    # unicode analyzer
+    ua = sa.UnicodeAnalyzer(
+        strip=strip,
+        normalize_histogram=not no_normalize,
+        ignore_punctuation=ignore_punctuation,
+    )
+
     data = pd.read_csv(input_file, sep="\t" if io_format == "tsv" else ",")
 
     # TODO: remove me
-    data = data[~data.eng.str.startswith("Q")]
+    # data = data[~data.eng.str.startswith("Q")]
 
-    _compute_prototype = ft.partial(
-        compute_prototype, normalize=not no_normalize, strip=strip
+    prototypes = (
+        data.groupby("language")
+        .apply(lambda l: compute_prototype(l, ua))
+        .to_dict()
     )
-    prototypes = data.groupby("language").apply(_compute_prototype).to_dict()
 
-    _get_hist = ft.partial(
-        uh.unicode_block_histogram,
-        strip=strip,
-        normalize=not no_normalize,
-        ignore_punctuation=ignore_punctuation,
-    )
     data["distance"] = data.apply(
         lambda row: distance(
-            p=_get_hist(word=row.alias),
+            p=ua.unicode_block_histogram(word=row.alias),
             q=prototypes.get(row.language, {}),
             distance_measure=distance_measure,
         ),
@@ -105,10 +105,9 @@ def main(
     quantiles = data.groupby("language").distance.quantile(q=quantile)
     print(quantiles)
 
-    _mark_as_anomalous = ft.partial(
-        mark_as_anomalous, critical_values=quantiles
+    data["anomalous"] = data.apply(
+        lambda row: mark_as_anomalous(row, quantiles), axis=1
     )
-    data["anomalous"] = data.apply(_mark_as_anomalous, axis=1)
 
     print("What fraction were anomalous?")
     print(data.groupby("language").anomalous.describe())

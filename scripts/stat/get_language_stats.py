@@ -4,7 +4,6 @@ import pandas as pd
 import click
 import orjson
 
-import unicode_helpers as uh
 
 from unicodeblock import blocks
 

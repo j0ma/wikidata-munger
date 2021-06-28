@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from unicode_helpers import most_common_unicode_block, UnicodeAnalyzer
+from script_analysis import UnicodeAnalyzer
 import click
 
 
