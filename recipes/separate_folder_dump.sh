@@ -13,7 +13,10 @@ output_folder="${2}"
 format="tsv"
 mkdir --verbose -p $output_folder/combined
 entity_types=$(echo "${3:-PER,LOC,ORG}" | tr "," " ")
-exclude_these_langs=$(cat ./data/languages_to_drop.txt)
+
+# NOTE: these are not enabled post-emnlp
+#exclude_these_langs=$(cat ./data/languages_to_drop.txt)
+exclude_these_langs=""
 
 dump () {
 
@@ -30,14 +33,22 @@ dump () {
         strict_flag="--strict"
     fi
 
+    if [ -z "${exclude_these_langs}" ]
+    then
+        echo "[INFO] No languages being excluded."
+        exclude_langs_flag=""
+    else
+        echo "[INFO] Excluding ${exclude_these_langs//,/, }."
+        exclude_langs_flag="-L ${exclude_these_langs}"
+    fi
+
     # dump everything into one file
     python scripts/io/wikidata_dump_transliterations.py \
         $strict_flag \
         -t "${conll_type}" $langs_flag \
         -f "${format}" \
         -d "tab" \
-        -L "${exclude_these_langs}" \
-        -o - | tee "${output}"
+        -o - $exclude_langs_flag | tee "${output}"
 
 }
 
@@ -86,10 +97,8 @@ wait
 echo "Combine everything into one big tsv"
 combined_output="${output_folder}/combined.tsv"
 echo "Combining everything to ${combined_output}"
-#cat "${output_folder}/PER.tsv" >> $combined_output
-#tail +2 "${output_folder}/LOC.tsv" >> $combined_output
-#tail +2 "${output_folder}/ORG.tsv" >> $combined_output
-csvstack --verbose --tabs ${output_folder}/*.tsv | csvformat -T >> $combined_output
+csvstack --verbose --tabs ${output_folder}/*.tsv | 
+    csvformat -T >> $combined_output
 
 echo "Deduplicate combined tsv"
 dedup_output="${output_folder}/combined_dedup.tsv"
