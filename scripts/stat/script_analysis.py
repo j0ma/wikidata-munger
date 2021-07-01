@@ -9,21 +9,27 @@ from typing import (
     Any,
     IO,
     Tuple,
+    Type,
     Callable,
     Iterable,
     Optional,
 )
 from pathlib import Path
+import itertools as it
 import tempfile as tf
 import subprocess
+import sys
 import re
 import io
+import os
 
 import unicodedata as ud
 from unicodeblock import blocks
 import pandas as pd
 import numpy as np
 import attr
+
+import editdistance
 
 import dictances as dt
 
@@ -40,7 +46,7 @@ class UnicodeAnalyzer:
     ) -> None:
         self.strip = strip
         self.ignore_punctuation = ignore_punctuation
-        self.normalize_histogram = (normalize_histogram,)
+        self.normalize_histogram = normalize_histogram
         self.ignore_numbers = ignore_numbers
 
     def is_punctuation(self, s: str) -> bool:
@@ -103,7 +109,7 @@ class UnicodeAnalyzer:
 
 
 @attr.s
-class Word:
+class TransliteratedName:
     text: str = attr.ib()
     language: str = attr.ib()
     unicode_analyzer: UnicodeAnalyzer = attr.ib(repr=False)
@@ -120,7 +126,10 @@ class Word:
         return self.unicode_analyzer.unicode_block_histogram(self.text)
 
     def __hash__(self) -> int:
-        return hash(self.word + self.language)
+        return hash(self.text + self.language)
+
+    def add_alignment(self, alignment) -> None:
+        self.alignment = alignment
 
 
 class Alignment:
@@ -129,10 +138,11 @@ class Alignment:
         alignment_str: Optional[str] = None,
         src: Optional[str] = None,
         tgt: Optional[str] = None,
-        word: Optional[Word] = None,
+        word: Optional[TransliteratedName] = None,
     ) -> None:
 
-        alignment_str = alignment_str.strip()
+        if alignment_str:
+            alignment_str = alignment_str.strip()
 
         self.alignment_str = alignment_str
         self.word = word
@@ -155,7 +165,6 @@ class Alignment:
 
         for at in alignment_str.split(" "):
 
-            # TODO: remove try-except
             try:
                 # src, tgt = [int(x) for x in at.split("-")]
                 tgt, src = [int(x) for x in at.split("-")]
@@ -172,9 +181,74 @@ class Alignment:
         return len(self.cross_alignments)
 
     def __repr__(self) -> str:
-        # return f"Alignment({self.alignment_str})"
-
         return f"Alignment({self.word.text}->{self.word.english_text})"
+
+
+@attr.s
+class NameWriter:
+
+    out_folder: Union[str, Path] = attr.ib(default="")
+    verbose: bool = attr.ib(default=False)
+
+    def write(self, split: Dict[str, Iterable[TransliteratedName]]) -> None:
+        if not self.out_folder:
+            self.out_folder = Path(tf.mkdtemp())
+        else:
+            if self.verbose:
+                print(
+                    f"Output folder {self.out_folder} not found. Creating..."
+                )
+            self.out_folder = Path(self.out_folder)
+
+            if not self.out_folder.exists():
+                self.out_folder.mkdir(parents=True)
+
+        for c, names in split.items():
+            path = self.out_folder / f"{c}.txt"
+
+            with open(path, "w", encoding="utf-8") as f:
+                for name in sorted(names, key=lambda name: name.text):
+                    f.write(f"{name.text}\t{name.most_common_unicode_block}\n")
+
+            if self.verbose:
+                print(f"[{c}] Names written to {path}")
+
+
+class CorpusStatistics:
+    def __init__(
+        self,
+        names: Iterable[TransliteratedName],
+        alignments: Optional[Iterable[Alignment]] = None,
+    ) -> None:
+        """Cross-alignment statistics for a transliterated name corpus
+
+        Notes
+        -----
+        - if alignments is None, names is assumed to contain alignments
+        - if names doesn't, then alignments must be passed
+        """
+
+        self.mce: Optional[float] = None
+        self.tce: Optional[int] = None
+
+        self.names = names
+        self.alignments = (
+            alignments if alignments else (n.alignment for n in names)
+        )
+
+    @property
+    def mean_cross_alignments(self) -> float:
+        if not self.mce:
+            self.mce = np.mean([a.n_cross_alignments for a in self.alignments])
+
+        return self.mce
+
+    @property
+    def total_cross_alignments(self) -> float:
+        if not self.tce:
+            self.tce = sum([a.n_cross_alignments for a in self.alignments])
+
+        return self.tce
 
 
 @attr.s
@@ -190,6 +264,7 @@ class AlignmentCollection:
     def __iter__(self):
         return self.alignments.__iter__()
 
+    # TODO: deprecate these in favor of CorpusStatistics
     @property
     def mean_cross_alignments(self) -> float:
         if not self.mce:
@@ -206,7 +281,7 @@ class AlignmentCollection:
 
     @classmethod
     def from_alignment_file(
-        cls, alignment_file: str, words: Optional[Iterable[str]]
+        cls, alignment_file: str, words: Optional[Iterable[TransliteratedName]]
     ):
         with open(alignment_file, "r", encoding="utf-8") as f:
 
@@ -216,6 +291,7 @@ class AlignmentCollection:
 
                     for alignment_string, word in zip(f, words)
                 ]
+
             else:
                 alignments = [
                     Alignment(alignment_str=alignment_string)
@@ -226,124 +302,330 @@ class AlignmentCollection:
             return cls(alignments)
 
 
-class Tagger:
-    def __call__(self, words: Iterable[Word]) -> Iterable[Word]:
-        raise NotImplementedError
+@attr.s
+class UniversalRomanizer:
+    """Python binding to ISI's Universal Romanizer written in Perl
 
-    def classify(self, word: Word) -> Optional[bool]:
-        raise NotImplementedError
+    Notes
+    -----
+    - By default, assumes that the uroman invocation command is stored
+      in the UROMAN_CMD environment variable. It is also possible to pass
+      the command as an argument to __init__.
+    """
 
-    def __call__(self, words: Iterable[Word]) -> Iterable[Word]:
-        return [
-            Word(
-                text=w.text,
-                unicode_analyzer=w.unicode_analyzer,
-                anomalous=self.classify(w),
-                language=w.language,
+    uroman_cmd: Optional[str] = attr.ib(default=os.environ["UROMAN_CMD"])
+
+    def __call__(self, strings: Iterable[str]) -> Iterable[str]:
+
+        try:
+            completed_pid = subprocess.run(
+                [self.uroman_cmd],
+                input="\n".join(strings),
+                capture_output=True,
+                encoding="utf-8",
+                text=True,
             )
 
-            for w in words
-        ]
+            uroman_output = [
+                line
+
+                for line in completed_pid.stdout.split("\n")
+
+                if line.strip()
+            ]
+
+            assert len(uroman_output) == len(strings)
+
+        except subprocess.CalledProcessError as err:
+            print(err)
+        except OSError as err:
+            print(err)
+            raise ValueError("uroman must be installed!")
+
+        return uroman_output
 
 
 @attr.s
-class IncorrectBlockTagger(Tagger):
-    """Tags a word as anomalous if its most common Unicode block is incorrect"""
+class FastAligner:
 
-    expected_block: str = attr.ib()
+    verbose: bool = attr.ib(repr=False, default=False)
+    preserve_raw_output: bool = attr.ib(repr=False, default=False)
 
-    def classify(self, word: Word) -> Optional[bool]:
-        return word.most_common_unicode_block != self.expected_block
+    def __call__(
+        self, names: Iterable[TransliteratedName]
+    ) -> Tuple[AlignmentCollection, Iterable[TransliteratedName]]:
 
+        alignment_train_data = Path(tf.mktemp())
+        fastalign_output = Path(tf.mktemp())
 
-@attr.s
-class MissingBlockTagger(Tagger):
-    """Tags a word as anomalous if it has no characters from given Unicode block"""
+        if self.verbose:
+            print(
+                f"[FastAligner] Saving alignment training data to: {alignment_train_data}"
+            )
+            print(
+                f"[FastAligner] Saving fast_align output to: {fastalign_output}"
+            )
 
-    missing_block: str = attr.ib()
+        # first we write our words into a temporary file for fast_align
+        with open(alignment_train_data, "w") as f_out:
+            for name in names:
 
-    def classify(self, word: Word) -> Optional[bool]:
-        return self.missing_block not in word.unicode_block_histogram
+                name_text = name.text.replace(" ", "▁")
+                english_text = name.english_text.replace(" ", "▁")
 
+                if name.english_text:
+                    f_out.write(
+                        f"{' '.join(name_text)} ||| {' '.join(english_text)}\n"
+                    )
 
-@attr.s
-class JSDTagger(Tagger):
-    """Tags a word as anomalous if its distribution of Unicode blocks is
-    sufficiently far from the per-language Unicode block distribution as
-    measured by the Jensen-Shannon divergence."""
+        # then perform the actual call to fast_align
+        try:
+            with open(fastalign_output, "w", encoding="utf-8") as f_out, open(
+                "/dev/null", "w"
+            ) as null:
+                subprocess.check_call(
+                    [
+                        "fast_align",
+                        "-v",
+                        "-d",
+                        "-o",
+                        "-i",
+                        alignment_train_data,
+                    ],
+                    stdout=f_out,
+                    stderr=null,
+                )
 
-    per_language_distribution: Dict[str, Dict[str, float]] = attr.ib()
-    critical_value: float = attr.ib(default=0.1)
-    distance_measure: str = attr.ib(default="jensen_shannon")
+        except subprocess.CalledProcessError as err:
+            print(err)
+        except OSError as err:
+            print(err)
+            raise ValueError("fast_align must be installed!")
 
-    def distance(
-        self,
-        p: Dict[str, float],
-        q: Dict[str, float],
-    ) -> float:
-        """Computes distance between PMFs p and q using dictances library"""
-
-        return {
-            "jensen_shannon": dt.jensen_shannon,
-            "kullback_leibler": dt.kullback_leibler,
-        }.get(self.distance_measure)(p, q)
-
-    def classify(self, word: Word) -> bool:
-        observed_distance = self.distance(
-            word.unicode_block_histogram, self.per_language_distribution
+        # get all the alignments out as a collection
+        alignments = AlignmentCollection.from_alignment_file(
+            fastalign_output, words=names
         )
 
-        return observed_distance >= self.critical_value
+        # then link the names with the alignments
+
+        for name, alignment in zip(names, alignments):
+            name.add_alignment(alignment)
+
+        # make sure we have as many alignments as we have names
+        assert len(alignments) == len(names)
+
+        # finally remove the temporary files unless told otherwise
+
+        if not self.preserve_raw_output:
+            alignment_train_data.unlink()
+            fastalign_output.unlink()
+
+        return alignments, names
 
 
-class HiraganaKatakanaTagger(Tagger):
-    """Tags words as anomalous/non-anomalous based on their Hiragana/Katakana characters.
+@attr.s
+class Permuter:
 
-    Analyzes Japanese, Modern Chinese variants and Classical Chinese.
+    inplace: bool = attr.ib(default=False)
+    debug_mode: bool = attr.ib(default=False)
 
-    In case of Japanese, the word is tagged as anomalous if it does not include Katakana or Hiragana.
-    In case of Chinese, the word is anomalous if it contains Katakana/Hiragana
-    In case another language is encountered, the tagger abstains.
+    def __call__(
+        self, names: Iterable[TransliteratedName]
+    ) -> Iterable[TransliteratedName]:
+        if self.inplace:
+            return self._call_inplace(names)
+        else:
+            return self._call_immutable(names)
+
+    def _call_immutable(
+        self, names: Iterable[TransliteratedName]
+    ) -> Iterable[TransliteratedName]:
+        raise NotImplementedError
+
+    def _call_inplace(
+        self, names: Iterable[TransliteratedName]
+    ) -> Iterable[TransliteratedName]:
+        raise NotImplementedError
+
+
+@attr.s
+class FirstCommaBasedPermuter(Permuter):
+    """Permutes tokens around the first comma (,) if one is present.
+
+    Meant to catch cases like 'Biden, Joe' => 'Joe Biden'
     """
 
-    def classify(self, word: Word) -> Optional[bool]:
-        hist = word.unicode_block_histogram
+    comma: str = attr.ib(default=",")
 
-        # match chinese variants/japanese/classical chinese with regex
-        re_chinese_japanese = re.compile(r"^(ja|zh-*|lzh|wuu)")
+    def permute(self, name_text: str) -> str:
+        comma_ix = name_text.find(self.comma)
 
-        # all other languages should abstain
+        if comma_ix == -1:
+            return name_text
+        else:
+            head = name_text[:comma_ix]
+            tail = name_text[(comma_ix + 1) :]
 
-        if not re_chinese_japanese.match(word.language):
-            return None
+            return f"{tail} {head}".strip()
 
-        contains_kana = "HIRAGANA" in hist or "KATAKANA" in hist
+    def _call_immutable(
+        self, names: Iterable[TransliteratedName]
+    ) -> Iterable[TransliteratedName]:
+        output = []
 
-        return contains_kana if word.language != "ja" else not contains_kana
+        for name in names:
+            if self.debug_mode:
+                print(f"[{name.english_text}] {name.text}".strip())
+            permuted_name = self.permute(name.text)
+
+            if self.debug_mode:
+                print(f"[{name.english_text}] {permuted_name}".strip())
+            output.append(
+                TransliteratedName(
+                    text=permuted_name,
+                    language=name.language,
+                    unicode_analyzer=name.unicode_analyzer,
+                    anomalous=name.anomalous,
+                    noise_sample=name.noise_sample,
+                    english_text=name.english_text,
+                )
+            )
+
+        return output
+
+    def _call_inplace(
+        self, names: Iterable[TransliteratedName]
+    ) -> Iterable[TransliteratedName]:
+        for name in names:
+            if self.debug_mode:
+                print(f"[{name.english_text}] {name.text}".strip())
+            permuted_name = self.permute(name.text)
+
+            if self.debug_mode:
+                print(f"[{name.english_text}] {permuted_name}".strip())
+            name.text = permuted_name
+
+        return names
 
 
-class CJKTagger(Tagger):
-    """Tags words as anomalous/non-anomalous based on their Hiragana/Katakana characters.
-
-    Analyzes Japanese, Modern Chinese variants and Classical Chinese.
-
-    Words are anomalous if they do not contain any CJK.
+@attr.s
+class LowestDistancePermuter(Permuter):
+    """Permutes tokens in a name to achieve the lowest distance
+    between the name and its romanized version.
     """
 
-    def classify(self, word: Word) -> Optional[bool]:
-        hist = word.unicode_block_histogram
+    distance_function: Callable[[str, str], float] = attr.ib(
+        default=editdistance.eval
+    )
 
-        # match chinese variants/japanese/classical chinese with regex
-        re_chinese_japanese = re.compile(r"^(ja|zh-*|lzh|wuu)")
+    romanizer: UniversalRomanizer = UniversalRomanizer()
 
-        # all other languages should abstain
+    length_lower_bound: int = attr.ib(repr=False, default=2)
+    length_upper_bound: int = attr.ib(repr=False, default=4)
 
-        if not re_chinese_japanese.match(word.language):
-            return None
+    def _call_immutable(
+        self, names: Iterable[TransliteratedName]
+    ) -> Iterable[TransliteratedName]:
 
-        contains_cjk = any(block.startswith("CJK") for block in hist)
+        output = []
 
-        return contains_cjk
+        romanized_names = self.romanizer([n.text for n in names])
+
+        for name, romanized_name in zip(names, romanized_names):
+            tokens = name.text.split()
+            romanized_tokens = romanized_name.split()
+
+            # skip over names that have too few or too many tokens
+
+            if not (
+                self.length_lower_bound
+                <= len(tokens)
+                <= self.length_upper_bound
+            ):
+                output.append(name)
+
+            # otherwise find the best permutation
+            else:
+
+                permuted = [" ".join(perm) for perm in it.permutations(tokens)]
+                permuted_romanized = [
+                    " ".join(perm)
+
+                    for perm in it.permutations(romanized_tokens)
+                ]
+
+                best_distance = np.inf
+                best_name = name.text
+
+                for permutation, rom_permutation in zip(
+                    permuted, permuted_romanized
+                ):
+                    ed = self.distance_function(
+                        rom_permutation, name.english_text
+                    )
+
+                    if ed < best_distance:
+                        best_distance = ed
+                        best_name = permutation
+
+                        if self.debug_mode:
+                            print(
+                                f"[{name.english_text}] {best_name} (ed={best_distance})"
+                            )
+
+                output.append(
+                    TransliteratedName(
+                        text=best_name,
+                        language=name.language,
+                        unicode_analyzer=name.unicode_analyzer,
+                        anomalous=name.anomalous,
+                        noise_sample=name.noise_sample,
+                        english_text=name.english_text,
+                    )
+                )
+
+        return output
+
+    def _call_inplace(
+        self, names: Iterable[TransliteratedName]
+    ) -> Iterable[TransliteratedName]:
+
+        romanized_names = self.romanizer([n.text for n in names])
+
+        for name, romanized_name in zip(names, romanized_names):
+            tokens = name.text.split()
+            romanized_tokens = romanized_name.split()
+
+            if not (
+                self.length_lower_bound
+                <= len(tokens)
+                <= self.length_upper_bound
+            ):
+                continue
+
+            permuted = [" ".join(perm) for perm in it.permutations(tokens)]
+            permuted_romanized = [
+                " ".join(perm) for perm in it.permutations(romanized_tokens)
+            ]
+
+            best_distance = np.inf
+            best_name = name.text
+
+            for permutation, rom_permutation in zip(
+                permuted, permuted_romanized
+            ):
+                name_text = " ".join(permutation)
+                rom_name_text = " ".join(rom_permutation)
+                ed = self.distance_function(rom_name_text, name.english_text)
+
+                if ed < best_distance:
+                    best_distance = ed
+                    best_name = name_text
+
+            name.text = best_name
+
+        return names
 
 
 @attr.s
@@ -351,6 +633,9 @@ class Corpus:
 
     corpus_df: pd.DataFrame = attr.ib(repr=False)
     language: str = attr.ib()
+    permuter_class: Type[Permuter] = attr.ib(
+        repr=False, default=LowestDistancePermuter
+    )
     out_folder: str = attr.ib(default="")
     word_column: str = attr.ib(default="alias", repr=False)
     english_column: Optional[str] = attr.ib(default="eng", repr=False)
@@ -360,6 +645,11 @@ class Corpus:
     ignore_punctuation: bool = attr.ib(default=True)
     ignore_numbers: bool = attr.ib(default=True)
     normalize_histogram: bool = attr.ib(default=True)
+    preserve_fastalign_output: bool = attr.ib(repr=False, default=False)
+    fastalign_verbose: bool = attr.ib(repr=False, default=False)
+    permuter_debug_mode: bool = attr.ib(repr=False, default=False)
+    permuter_inplace: bool = attr.ib(repr=False, default=False)
+    find_best_token_permutation: bool = attr.ib(repr=False, default=False)
 
     def __attrs_post_init__(self) -> None:
         self.unicode_analyzer = UnicodeAnalyzer(
@@ -368,8 +658,20 @@ class Corpus:
             ignore_punctuation=self.ignore_punctuation,
             ignore_numbers=self.ignore_numbers,
         )
-        self.words = self.corpus_df.apply(  # [self.word_column]
-            lambda row: Word(
+
+        self.fast_aligner = FastAligner(
+            verbose=self.fastalign_verbose,
+            preserve_raw_output=self.preserve_fastalign_output,
+        )
+
+        self.permuter = self.permuter_class(
+            inplace=self.permuter_inplace, debug_mode=self.permuter_debug_mode
+        )
+
+        self.name_writer = NameWriter(out_folder=self.out_folder)
+
+        self.words = self.corpus_df.apply(
+            lambda row: TransliteratedName(
                 text=str(row[self.word_column]),
                 english_text=str(row[self.english_column]),
                 language=self.language,
@@ -377,6 +679,9 @@ class Corpus:
             ),
             axis=1,
         ).tolist()
+
+        if self.find_best_token_permutation:
+            self.words = self.permuter(self.words)
 
         self.prototype = self.unicode_analyzer.unicode_block_histogram(
             "".join(w.text for w in self.words)
@@ -391,57 +696,19 @@ class Corpus:
             self.compute_alignments()
 
     def compute_alignments(self) -> None:
-        alignment_train_data = "/tmp/fastalign_train"  # tf.mktemp()
-        fastalign_output = "/tmp/fastalign_output"  # tf.mktemp()
 
-        print(f"Alignment training data going to: {alignment_train_data}")
-        print(f"Fast-align output going to: {fastalign_output}")
+        _alignments, _words = self.fast_aligner(self.words)
 
-        # first we write our words into a temporary file for fast_align
-        with open(alignment_train_data, "w") as f_out:
-            for word in self.words:
-
-                word_text = word.text.replace(" ", "▁")
-                english_text = word.english_text.replace(" ", "▁")
-
-                if word.english_text:
-                    f_out.write(
-                        f"{' '.join(word_text)} ||| {' '.join(english_text)}\n"
-                    )
-
-        # then perform the actual call to fast_align
-        try:
-            with open(fastalign_output, "w", encoding="utf-8") as f_out:
-                subprocess.check_call(
-                    [
-                        "fast_align",
-                        "-v",
-                        "-d",
-                        "-o",
-                        "-i",
-                        alignment_train_data,
-                    ],
-                    stdout=f_out,
-                )
-
-        except subprocess.CalledProcessError as err:
-            print(err)
-        except OSError as err:
-            print(err)
-            raise ValueError("fast_align must be installed!")
-
-        self.alignments = AlignmentCollection.from_alignment_file(
-            fastalign_output, words=self.words
-        )
-
-        assert len(self.alignments) == len(
-            self.words
-        ), f"(alignments) {len(self.alignments)} != (words) {len(self.words)}"
+        self.alignments = _alignments
+        self.words = _words
 
     def split_words(
         self, with_noise_samples: bool = False
-    ) -> Dict[str, Iterable[Word]]:
-        split = {"anomalous": [], "non_anomalous": []}
+    ) -> Dict[str, List[TransliteratedName]]:
+        split: Dict[str, List[TransliteratedName]] = {
+            "anomalous": [],
+            "non_anomalous": [],
+        }
 
         for word in self.words:
             if not with_noise_samples and word.noise_sample:
@@ -450,6 +717,9 @@ class Corpus:
             split[tag].append(word)
 
         return split
+
+    def write_to_folder(self, write_noise_samples=False):
+        self.name_writer.write(self.split_words(write_noise_samples))
 
     @property
     def mean_cross_alignments(self) -> Optional[float]:
@@ -465,44 +735,121 @@ class Corpus:
 
         return self.alignments.total_cross_alignments
 
-    def write_to_folder(self, write_noise_samples=False):
-        if not self.out_folder:
-            self.out_folder = Path(tf.mkdtemp())
-        else:
-            self.out_folder = Path(self.out_folder)
 
-            if not self.out_folder.exists():
-                self.out_folder.mkdir()
+class Tagger:
+    def classify(self, name: TransliteratedName) -> Optional[bool]:
+        raise NotImplementedError
 
-        split = self.split_words(with_noise_samples=write_noise_samples)
-        anomalous, non_anomalous = split["anomalous"], split["non_anomalous"]
+    def __call__(
+        self, names: Iterable[TransliteratedName]
+    ) -> Iterable[TransliteratedName]:
+        return [
+            TransliteratedName(
+                text=w.text,
+                unicode_analyzer=w.unicode_analyzer,
+                anomalous=self.classify(w),
+                language=w.language,
+            )
 
-        anomalous_path = self.out_folder / f"{self.language}"
+            for w in names
+        ]
 
-        if not anomalous_path.exists():
-            anomalous_path.mkdir()
 
-        anomalous_path = anomalous_path / f"{self.language}_anomalous.txt"
+@attr.s
+class IncorrectBlockTagger(Tagger):
+    """Tags a name as anomalous if its most common Unicode block is incorrect"""
 
-        non_anomalous_path = self.out_folder / f"{self.language}"
+    expected_block: str = attr.ib()
 
-        if not non_anomalous_path.exists():
-            non_anomalous_path.mkdir()
-        non_anomalous_path = (
-            non_anomalous_path / f"{self.language}_non_anomalous.txt"
+    def classify(self, name: TransliteratedName) -> Optional[bool]:
+        return name.most_common_unicode_block != self.expected_block
+
+
+@attr.s
+class MissingBlockTagger(Tagger):
+    """Tags a name as anomalous if it has no characters from given Unicode block"""
+
+    missing_block: str = attr.ib()
+
+    def classify(self, name: TransliteratedName) -> Optional[bool]:
+        return self.missing_block not in name.unicode_block_histogram
+
+
+@attr.s
+class JSDTagger(Tagger):
+    """Tags a name as anomalous if its distribution of Unicode blocks is
+    sufficiently far from the per-language Unicode block distribution as
+    measured by the Jensen-Shannon divergence."""
+
+    per_language_distribution: Dict[str, float] = attr.ib()
+    critical_value: float = attr.ib(default=0.1)
+    distance_measure: str = attr.ib(default="jensen_shannon")
+
+    def distance(
+        self,
+        p: Dict[str, float],
+        q: Dict[str, float],
+    ) -> float:
+        """Computes distance between PMFs p and q using dictances library"""
+
+        return {
+            "jensen_shannon": dt.jensen_shannon,
+            "kullback_leibler": dt.kullback_leibler,
+        }[self.distance_measure](p, q)
+
+    def classify(self, name: TransliteratedName) -> bool:
+        observed_distance = self.distance(
+            name.unicode_block_histogram, self.per_language_distribution
         )
 
-        with open(anomalous_path, "w", encoding="utf-8") as f_anom:
-            for w in sorted(anomalous, key=lambda w: w.text):
-                f_anom.write(f"{w.text}\t{w.most_common_unicode_block}\n")
+        return observed_distance >= self.critical_value
 
-        with open(non_anomalous_path, "w", encoding="utf-8") as f_non_anom:
-            for w in sorted(non_anomalous, key=lambda w: w.text):
-                f_non_anom.write(f"{w.text}\t{w.most_common_unicode_block}\n")
 
-        print(
-            f"[{self.language}] Anomalous/non-anomalous words written to {self.out_folder}"
-        )
+class HiraganaKatakanaTagger(Tagger):
+    """Tags names as anomalous/non-anomalous based on their Hiragana/Katakana characters.
 
-    def add_words(self, words: Iterable[Word]) -> None:
-        self.words.extend(words)
+    Analyzes Japanese, Modern Chinese variants and Classical Chinese.
+
+    In case of Japanese, the name is tagged as anomalous if it does not include Katakana or Hiragana.
+    In case of Chinese, the name is anomalous if it contains Katakana/Hiragana
+    In case another language is encountered, the tagger abstains.
+    """
+
+    def classify(self, name: TransliteratedName) -> Optional[bool]:
+        hist = name.unicode_block_histogram
+
+        # match chinese variants/japanese/classical chinese with regex
+        re_chinese_japanese = re.compile(r"^(ja|zh-*|lzh|wuu)")
+
+        # all other languages should abstain
+
+        if not re_chinese_japanese.match(name.language):
+            return None
+
+        contains_kana = "HIRAGANA" in hist or "KATAKANA" in hist
+
+        return contains_kana if name.language != "ja" else not contains_kana
+
+
+class CJKTagger(Tagger):
+    """Tags names as anomalous/non-anomalous based on their Hiragana/Katakana characters.
+
+    Analyzes Japanese, Modern Chinese variants and Classical Chinese.
+
+    Words are anomalous if they do not contain any CJK.
+    """
+
+    def classify(self, name: TransliteratedName) -> Optional[bool]:
+        hist = name.unicode_block_histogram
+
+        # match chinese variants/japanese/classical chinese with regex
+        re_chinese_japanese = re.compile(r"^(ja|zh-*|lzh|wuu)")
+
+        # all other languages should abstain
+
+        if not re_chinese_japanese.match(name.language):
+            return None
+
+        contains_cjk = any(block.startswith("CJK") for block in hist)
+
+        return contains_cjk
