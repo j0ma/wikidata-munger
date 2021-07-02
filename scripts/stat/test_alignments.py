@@ -10,12 +10,18 @@ default_human_readable_langs_path = (
     "/home/jonne/wikidata-munger/data/human_readable_lang_names.json"
 )
 
-permuter_types = ["comma", "edit_distance"]
+permuter_types = [
+    "comma",
+    "edit_distance",
+    "remove_parenthesis_permute_comma",
+    "remove_parenthesis",
+]
 
 
 def compute_crossing_alignments(
     corpus_df: pd.DataFrame,
-    permuter_cls: Type[sa.Permuter],
+    transliterated_names: List[sa.TransliteratedName],
+    permuter_cls: Type[sa.NameProcessor],
     language_column: str,
     human_readable_lang_names: Dict[str, str],
     pool_languages: bool = False,
@@ -28,7 +34,7 @@ def compute_crossing_alignments(
     if pool_languages:
         print("Creating pooled corpus...")
         big_corpus = sa.Corpus(
-            corpus_df=corpus_df,
+            names=transliterated_names,
             language="all",
             normalize_histogram=True,
             ignore_punctuation=True,
@@ -37,37 +43,38 @@ def compute_crossing_alignments(
             fastalign_verbose=True,
             permuter_class=permuter_cls,
             find_best_token_permutation=find_best_token_permutation,
+            analyze_unicode=False,
         )
 
-        words_per_language: Dict[str, List[sa.TransliteratedName]] = {}
+        names_per_language: Dict[str, List[sa.TransliteratedName]] = {}
 
-        print("Separating words by language...")
+        print("Separating names by language...")
 
-        for w, l, a in zip(
-            big_corpus.words, corpus_df[language_column], big_corpus.alignments
+        for n, l, a in zip(
+            big_corpus.names, corpus_df[language_column], big_corpus.alignments
         ):
-            w.add_alignment(a)
+            n.add_alignment(a)
 
-            if l not in words_per_language:
-                words_per_language[l] = []
+            if l not in names_per_language:
+                names_per_language[l] = []
 
-            words_per_language[l].append(w)
+            names_per_language[l].append(n)
 
         print("Avg. number of crossing alignments per language:")
 
-        for lang, words in words_per_language.items():
-            stats = sa.CorpusStatistics(names=words)
+        for lang, names in names_per_language.items():
+            stats = sa.CorpusStatistics(names=names)
             lang_long = human_readable_lang_names.get(lang)
             avg_alignments = stats.mean_cross_alignments
             print(f"{lang_long}\t{avg_alignments}")
 
     else:
         for language in unique_languages:
-            subset = corpus_df[corpus_df[language_column] == language]
+            names_subset = [n for n in names if n.language == language]
 
             print(f"[{language}] Creating corpus...")
             corpus = sa.Corpus(
-                corpus_df=subset,
+                names=names_subset,
                 language=language,
                 normalize_histogram=True,
                 ignore_punctuation=True,
@@ -118,10 +125,15 @@ def compute_crossing_alignments(
     "--debug-mode", is_flag=True, help="Debug mode: only use 10 rows of data"
 )
 @click.option(
+    "--parallelize", is_flag=True, help="Parallelize using num_workers CPUs"
+)
+@click.option(
     "--permute-tokens",
     is_flag=True,
     help="Permute tokens to find the best ordering ",
 )
+@click.option("--num-workers", type=int, default=2)
+@click.option("--debug-n-rows", type=int, default=-1)
 def main(
     input_file,
     language_column,
@@ -130,7 +142,10 @@ def main(
     human_readable_langs_path,
     pool_languages,
     debug_mode,
+    parallelize,
     permute_tokens,
+    num_workers,
+    debug_n_rows,
 ):
 
     # set seed
@@ -139,6 +154,7 @@ def main(
     # read in corpus and subset
     corpus_df = pd.read_csv(
         input_file,
+        chunksize=debug_n_rows if debug_n_rows > 0 else None,
         encoding="utf-8",
         delimiter="\t",
         na_values=set(
@@ -164,19 +180,38 @@ def main(
         keep_default_na=False,
     )
 
+    # grab the data from the generator if needed
+
+    if debug_n_rows > 0:
+        corpus_df = next(corpus_df)
+
     if debug_mode:
-        corpus_df = corpus_df.head()
+        if debug_n_rows < 0:
+            debug_n_rows = 200000
+        corpus_df = corpus_df.head(debug_n_rows)
+
+    name_loader = sa.TransliteratedNameLoader(
+        num_workers=num_workers, parallelize=parallelize
+    )
+
+    print(f"Name Loader: {name_loader}")
+
+    print("Loading names...")
+    transliterated_names = name_loader(corpus_df)
 
     with open(human_readable_langs_path, encoding="utf8") as f:
         human_readable_lang_names = orjson.loads(f.read())
 
     permuter_class = {
-        "comma": sa.FirstCommaBasedPermuter,
-        "edit_distance": sa.LowestDistancePermuter,
+        "comma": sa.PermuteFirstComma,
+        "edit_distance": sa.PermuteLowestDistance,
+        "remove_parenthesis_permute_comma": sa.RemoveParenthesisPermuteComma,
+        "remove_parenthesis": sa.ParenthesisRemover,
     }[permuter_type]
 
     compute_crossing_alignments(
         corpus_df,
+        transliterated_names,
         permuter_class,
         language_column,
         human_readable_lang_names=human_readable_lang_names,
