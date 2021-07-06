@@ -25,6 +25,8 @@ import os
 
 import unicodedata as ud
 from unicodeblock import blocks
+from tqdm import tqdm
+from p_tqdm import p_map
 import pandas as pd
 import numpy as np
 import attr
@@ -32,6 +34,8 @@ import attr
 import editdistance
 
 import dictances as dt
+
+import multiprocessing as mp
 
 CACHE_MAX_SIZE = 10000
 
@@ -116,6 +120,7 @@ class TransliteratedName:
     anomalous: Optional[bool] = attr.ib(default=None)
     noise_sample: Optional[bool] = attr.ib(default=False)
     english_text: Optional[str] = attr.ib(default=None)
+    analyze_unicode: bool = attr.ib(default=True, repr=False)
 
     @property
     def most_common_unicode_block(self) -> str:
@@ -128,7 +133,7 @@ class TransliteratedName:
     def __hash__(self) -> int:
         return hash(self.text + self.language)
 
-    def add_alignment(self, alignment) -> None:
+    def add_alignment(self, alignment: "Alignment") -> None:
         self.alignment = alignment
 
 
@@ -138,14 +143,14 @@ class Alignment:
         alignment_str: Optional[str] = None,
         src: Optional[str] = None,
         tgt: Optional[str] = None,
-        word: Optional[TransliteratedName] = None,
+        name: Optional[TransliteratedName] = None,
     ) -> None:
 
         if alignment_str:
             alignment_str = alignment_str.strip()
 
         self.alignment_str = alignment_str
-        self.word = word
+        self.name = name
 
         src_tgt_not_none = src or tgt
 
@@ -156,8 +161,8 @@ class Alignment:
                 "Must either give an alignment string or a (src_ix, tgt_ix) pair!"
             )
 
-            if word:
-                print(f"Word: {word}")
+            if name:
+                print(f"Word: {name}")
 
             return
 
@@ -166,8 +171,8 @@ class Alignment:
         for at in alignment_str.split(" "):
 
             try:
-                # src, tgt = [int(x) for x in at.split("-")]
-                tgt, src = [int(x) for x in at.split("-")]
+                src, tgt = [int(x) for x in at.split("-")]
+                # tgt, src = [int(x) for x in at.split("-")]
 
                 if tgt < max_tgt_seen:
                     self.cross_alignments.add(f"{src}->{tgt}")
@@ -181,7 +186,13 @@ class Alignment:
         return len(self.cross_alignments)
 
     def __repr__(self) -> str:
-        return f"Alignment({self.word.text}->{self.word.english_text})"
+        try:
+            eng = self.name.english_text
+            txt = self.name.english_text
+        except:
+            eng = txt = "<n/a>"
+
+        return f"Alignment({txt}->{eng})"
 
 
 @attr.s
@@ -237,69 +248,18 @@ class CorpusStatistics:
         )
 
     @property
-    def mean_cross_alignments(self) -> float:
+    def mean_cross_alignments(self) -> Optional[float]:
         if not self.mce:
             self.mce = np.mean([a.n_cross_alignments for a in self.alignments])
 
         return self.mce
 
     @property
-    def total_cross_alignments(self) -> float:
+    def total_cross_alignments(self) -> Optional[float]:
         if not self.tce:
             self.tce = sum([a.n_cross_alignments for a in self.alignments])
 
         return self.tce
-
-
-@attr.s
-class AlignmentCollection:
-
-    alignments: Iterable[Alignment] = attr.ib()
-    mce: Optional[float] = attr.ib(default=None, repr=False)
-    tce: Optional[int] = attr.ib(default=None, repr=False)
-
-    def __len__(self):
-        return len(self.alignments)
-
-    def __iter__(self):
-        return self.alignments.__iter__()
-
-    # TODO: deprecate these in favor of CorpusStatistics
-    @property
-    def mean_cross_alignments(self) -> float:
-        if not self.mce:
-            self.mce = np.mean([a.n_cross_alignments for a in self.alignments])
-
-        return self.mce
-
-    @property
-    def total_cross_alignments(self) -> float:
-        if not self.tce:
-            self.tce = sum([a.n_cross_alignments for a in self.alignments])
-
-        return self.tce
-
-    @classmethod
-    def from_alignment_file(
-        cls, alignment_file: str, words: Optional[Iterable[TransliteratedName]]
-    ):
-        with open(alignment_file, "r", encoding="utf-8") as f:
-
-            if words:
-                alignments = [
-                    Alignment(alignment_str=alignment_string, word=word)
-
-                    for alignment_string, word in zip(f, words)
-                ]
-
-            else:
-                alignments = [
-                    Alignment(alignment_str=alignment_string)
-
-                    for alignment_string in f
-                ]
-
-            return cls(alignments)
 
 
 @attr.s
@@ -315,7 +275,7 @@ class UniversalRomanizer:
 
     uroman_cmd: Optional[str] = attr.ib(default=os.environ["UROMAN_CMD"])
 
-    def __call__(self, strings: Iterable[str]) -> Iterable[str]:
+    def __call__(self, strings: List[str]) -> Iterable[str]:
 
         try:
             completed_pid = subprocess.run(
@@ -329,12 +289,14 @@ class UniversalRomanizer:
             uroman_output = [
                 line
 
-                for line in completed_pid.stdout.split("\n")
-
-                if line.strip()
+                for string, line in zip(
+                    strings, completed_pid.stdout.split("\n")
+                )
             ]
 
-            assert len(uroman_output) == len(strings)
+            assert len(uroman_output) == len(
+                strings
+            ), f"{len(uroman_output)} != {len(strings)}"
 
         except subprocess.CalledProcessError as err:
             print(err)
@@ -351,9 +313,32 @@ class FastAligner:
     verbose: bool = attr.ib(repr=False, default=False)
     preserve_raw_output: bool = attr.ib(repr=False, default=False)
 
+    def load_alignment_file(
+        self,
+        alignment_file: Union[Path, str],
+        names: Optional[Iterable[TransliteratedName]],
+    ) -> List[Alignment]:
+        with open(alignment_file, "r", encoding="utf-8") as f:
+
+            if names:
+                alignments = [
+                    Alignment(alignment_str=alignment_string, name=name)
+
+                    for alignment_string, name in zip(f, names)
+                ]
+
+            else:
+                alignments = [
+                    Alignment(alignment_str=alignment_string)
+
+                    for alignment_string in f
+                ]
+
+            return alignments
+
     def __call__(
-        self, names: Iterable[TransliteratedName]
-    ) -> Tuple[AlignmentCollection, Iterable[TransliteratedName]]:
+        self, names: List[TransliteratedName]
+    ) -> Tuple[List[Alignment], List[TransliteratedName]]:
 
         alignment_train_data = Path(tf.mktemp())
         fastalign_output = Path(tf.mktemp())
@@ -371,9 +356,9 @@ class FastAligner:
             for name in names:
 
                 name_text = name.text.replace(" ", "▁")
-                english_text = name.english_text.replace(" ", "▁")
 
                 if name.english_text:
+                    english_text = name.english_text.replace(" ", "▁")
                     f_out.write(
                         f"{' '.join(name_text)} ||| {' '.join(english_text)}\n"
                     )
@@ -403,9 +388,7 @@ class FastAligner:
             raise ValueError("fast_align must be installed!")
 
         # get all the alignments out as a collection
-        alignments = AlignmentCollection.from_alignment_file(
-            fastalign_output, words=names
-        )
+        alignments = self.load_alignment_file(fastalign_output, names=names)
 
         # then link the names with the alignments
 
@@ -425,10 +408,13 @@ class FastAligner:
 
 
 @attr.s
-class Permuter:
+class NameProcessor:
 
     inplace: bool = attr.ib(default=False)
     debug_mode: bool = attr.ib(default=False)
+
+    def process(self, string: str) -> str:
+        raise NotImplementedError
 
     def __call__(
         self, names: Iterable[TransliteratedName]
@@ -441,49 +427,34 @@ class Permuter:
     def _call_immutable(
         self, names: Iterable[TransliteratedName]
     ) -> Iterable[TransliteratedName]:
-        raise NotImplementedError
+
+        for name in names:
+            if self.debug_mode:
+                print(f"[{name.english_text}] {name.text}".strip())
+            processed_name = self.process(name.text)
+
+            if self.debug_mode:
+                print(f"[{name.english_text}] {processed_name}".strip())
+            name.text = processed_name
+
+        return names
 
     def _call_inplace(
         self, names: Iterable[TransliteratedName]
     ) -> Iterable[TransliteratedName]:
-        raise NotImplementedError
 
-
-@attr.s
-class FirstCommaBasedPermuter(Permuter):
-    """Permutes tokens around the first comma (,) if one is present.
-
-    Meant to catch cases like 'Biden, Joe' => 'Joe Biden'
-    """
-
-    comma: str = attr.ib(default=",")
-
-    def permute(self, name_text: str) -> str:
-        comma_ix = name_text.find(self.comma)
-
-        if comma_ix == -1:
-            return name_text
-        else:
-            head = name_text[:comma_ix]
-            tail = name_text[(comma_ix + 1) :]
-
-            return f"{tail} {head}".strip()
-
-    def _call_immutable(
-        self, names: Iterable[TransliteratedName]
-    ) -> Iterable[TransliteratedName]:
         output = []
 
         for name in names:
             if self.debug_mode:
                 print(f"[{name.english_text}] {name.text}".strip())
-            permuted_name = self.permute(name.text)
+            processed_name = self.process(name.text)
 
             if self.debug_mode:
-                print(f"[{name.english_text}] {permuted_name}".strip())
+                print(f"[{name.english_text}] {processed_name}".strip())
             output.append(
                 TransliteratedName(
-                    text=permuted_name,
+                    text=processed_name,
                     language=name.language,
                     unicode_analyzer=name.unicode_analyzer,
                     anomalous=name.anomalous,
@@ -494,23 +465,53 @@ class FirstCommaBasedPermuter(Permuter):
 
         return output
 
-    def _call_inplace(
-        self, names: Iterable[TransliteratedName]
-    ) -> Iterable[TransliteratedName]:
-        for name in names:
-            if self.debug_mode:
-                print(f"[{name.english_text}] {name.text}".strip())
-            permuted_name = self.permute(name.text)
 
-            if self.debug_mode:
-                print(f"[{name.english_text}] {permuted_name}".strip())
-            name.text = permuted_name
+@attr.s
+class ParenthesisRemover(NameProcessor):
 
-        return names
+    re_parenthesis = re.compile(r"\(.*\)")
+
+    def process(self, string: str) -> str:
+        return self.re_parenthesis.sub("", string).strip()
 
 
 @attr.s
-class LowestDistancePermuter(Permuter):
+class PermuteFirstComma(NameProcessor):
+    """Permutes tokens around the first comma (,) if one is present.
+
+    Meant to catch cases like 'Biden, Joe' => 'Joe Biden'
+    """
+
+    comma: str = attr.ib(default=",")
+
+    def process(self, name_text: str) -> str:
+        comma_ix = name_text.find(self.comma)
+
+        if comma_ix == -1:
+            return name_text
+        else:
+            head = name_text[:comma_ix]
+            tail = name_text[(comma_ix + 1) :]
+
+            return f"{tail} {head}".strip()
+
+
+@attr.s
+class RemoveParenthesisPermuteComma(NameProcessor):
+    """Composes ParenthesisRemover and CommaPermuter"""
+
+    parenthesis_remover = ParenthesisRemover()
+    comma_permuter = PermuteFirstComma()
+
+    def process(self, name_text: str) -> str:
+        processed = self.parenthesis_remover.process(name_text)
+        processed = self.comma_permuter.process(processed)
+
+        return processed
+
+
+@attr.s
+class PermuteLowestDistance(NameProcessor):
     """Permutes tokens in a name to achieve the lowest distance
     between the name and its romanized version.
     """
@@ -629,15 +630,51 @@ class LowestDistancePermuter(Permuter):
 
 
 @attr.s
+class TransliteratedNameLoader:
+    language_column: str = attr.ib(default="language")
+    name_column: str = attr.ib(default="alias", repr=False)
+    english_column: Optional[str] = attr.ib(default="eng", repr=False)
+    unicode_analyzer = UnicodeAnalyzer()
+    num_workers: int = attr.ib(default=2)
+    parallelize: bool = attr.ib(default=True)
+    debug_mode: bool = attr.ib(default=False)
+
+    def load_name(self, tupl: Tuple[int, pd.Series]) -> TransliteratedName:
+        row_ix, row = tupl
+
+        if self.debug_mode:
+            print(
+                f"[NameLoader] Creating TransliteratedName from row {row_ix}..."
+            )
+
+        return TransliteratedName(
+            text=str(row[self.name_column]),
+            english_text=str(row[self.english_column]),
+            language=row[self.language_column],
+            unicode_analyzer=self.unicode_analyzer,
+        )
+
+    def __call__(self, corpus: pd.DataFrame) -> List[TransliteratedName]:
+
+        names = []
+
+        for ix_row_tuple in tqdm(corpus.iterrows(), total=corpus.shape[0]):
+            name = self.load_name(ix_row_tuple)
+            names.append(name)
+
+        return names
+
+
+@attr.s
 class Corpus:
 
-    corpus_df: pd.DataFrame = attr.ib(repr=False)
+    names: List[TransliteratedName] = attr.ib(repr=False)
     language: str = attr.ib()
-    permuter_class: Type[Permuter] = attr.ib(
-        repr=False, default=LowestDistancePermuter
+    permuter_class: Type[NameProcessor] = attr.ib(
+        repr=False, default=PermuteLowestDistance
     )
     out_folder: str = attr.ib(default="")
-    word_column: str = attr.ib(default="alias", repr=False)
+    name_column: str = attr.ib(default="alias", repr=False)
     english_column: Optional[str] = attr.ib(default="eng", repr=False)
 
     strip: bool = attr.ib(default=True)
@@ -650,8 +687,11 @@ class Corpus:
     permuter_debug_mode: bool = attr.ib(repr=False, default=False)
     permuter_inplace: bool = attr.ib(repr=False, default=False)
     find_best_token_permutation: bool = attr.ib(repr=False, default=False)
+    analyze_unicode: bool = attr.ib(repr=False, default=True)
 
     def __attrs_post_init__(self) -> None:
+
+        print("Setting up Unicode analyzer...")
         self.unicode_analyzer = UnicodeAnalyzer(
             strip=self.strip,
             normalize_histogram=self.normalize_histogram,
@@ -659,50 +699,51 @@ class Corpus:
             ignore_numbers=self.ignore_numbers,
         )
 
+        print("Setting up aligner...")
         self.fast_aligner = FastAligner(
             verbose=self.fastalign_verbose,
             preserve_raw_output=self.preserve_fastalign_output,
         )
 
+        print("Setting up token processor...")
         self.permuter = self.permuter_class(
             inplace=self.permuter_inplace, debug_mode=self.permuter_debug_mode
         )
 
+        print("Setting up name writer...")
         self.name_writer = NameWriter(out_folder=self.out_folder)
 
-        self.words = self.corpus_df.apply(
-            lambda row: TransliteratedName(
-                text=str(row[self.word_column]),
-                english_text=str(row[self.english_column]),
-                language=self.language,
-                unicode_analyzer=self.unicode_analyzer,
-            ),
-            axis=1,
-        ).tolist()
-
         if self.find_best_token_permutation:
-            self.words = self.permuter(self.words)
+            print("Permuting tokens, removing parentheses...")
+            self.names = list(self.permuter(self.names))
 
-        self.prototype = self.unicode_analyzer.unicode_block_histogram(
-            "".join(w.text for w in self.words)
-        )
-
-        if self.prototype:
+        if self.analyze_unicode:
+            print("Computing prototype...")
+            self.prototype = self.unicode_analyzer.unicode_block_histogram(
+                "".join(n.text for n in self.names)
+            )
             self.most_common_unicode_block = self.prototype.most_common()[0][0]
         else:
             self.most_common_unicode_block = ""
 
         if self.align_with_english:
+            print("Aligning with English...")
             self.compute_alignments()
+            self.compute_stats()
 
     def compute_alignments(self) -> None:
 
-        _alignments, _words = self.fast_aligner(self.words)
+        _alignments, _names = self.fast_aligner(self.names)
 
         self.alignments = _alignments
-        self.words = _words
+        self.names = _names
 
-    def split_words(
+    def compute_stats(self) -> None:
+        self.stats = CorpusStatistics(
+            names=self.names, alignments=self.alignments
+        )
+
+    def split_names(
         self, with_noise_samples: bool = False
     ) -> Dict[str, List[TransliteratedName]]:
         split: Dict[str, List[TransliteratedName]] = {
@@ -710,30 +751,30 @@ class Corpus:
             "non_anomalous": [],
         }
 
-        for word in self.words:
-            if not with_noise_samples and word.noise_sample:
+        for name in self.names:
+            if not with_noise_samples and name.noise_sample:
                 continue
-            tag = "anomalous" if word.anomalous else "non_anomalous"
-            split[tag].append(word)
+            tag = "anomalous" if name.anomalous else "non_anomalous"
+            split[tag].append(name)
 
         return split
 
     def write_to_folder(self, write_noise_samples=False):
-        self.name_writer.write(self.split_words(write_noise_samples))
+        self.name_writer.write(self.split_names(write_noise_samples))
 
     @property
     def mean_cross_alignments(self) -> Optional[float]:
         if not self.alignments:
             return None
 
-        return self.alignments.mean_cross_alignments
+        return self.stats.mean_cross_alignments
 
     @property
     def total_cross_alignments(self) -> Optional[float]:
         if not self.alignments:
             return None
 
-        return self.alignments.total_cross_alignments
+        return self.stats.total_cross_alignments
 
 
 class Tagger:
@@ -745,13 +786,13 @@ class Tagger:
     ) -> Iterable[TransliteratedName]:
         return [
             TransliteratedName(
-                text=w.text,
-                unicode_analyzer=w.unicode_analyzer,
-                anomalous=self.classify(w),
-                language=w.language,
+                text=n.text,
+                unicode_analyzer=n.unicode_analyzer,
+                anomalous=self.classify(n),
+                language=n.language,
             )
 
-            for w in names
+            for n in names
         ]
 
 
