@@ -40,6 +40,16 @@ import multiprocessing as mp
 CACHE_MAX_SIZE = 10000
 
 
+def chunks(lst, n):
+    """Yield successive n-sized chunks from lst.
+
+    Note -- from SO: https://anon.to/vc1xVW
+    """
+
+    for i in range(0, len(lst), n):
+        yield lst[i : i + n]
+
+
 class UnicodeAnalyzer:
     def __init__(
         self,
@@ -74,7 +84,9 @@ class UnicodeAnalyzer:
         )
 
         digit_cond = (
-            lambda w: not self.is_number(str(w)) if self.ignore_numbers else True
+            lambda w: not self.is_number(str(w))
+            if self.ignore_numbers
+            else True
         )
 
         return Counter(
@@ -115,6 +127,7 @@ class TransliteratedName:
     noise_sample: Optional[bool] = attr.ib(default=False)
     english_text: Optional[str] = attr.ib(default=None)
     analyze_unicode: bool = attr.ib(default=True, repr=False)
+    alignment: Optional["Alignment"] = attr.ib(default=None, repr=False)
 
     @property
     def most_common_unicode_block(self) -> str:
@@ -144,14 +157,16 @@ class Alignment:
             alignment_str = alignment_str.strip()
 
         self.alignment_str = alignment_str
-        self.name = name
+        # self.name = name
 
         src_tgt_not_none = src or tgt
 
         self.cross_alignments = set([])
 
         if not alignment_str and not src_tgt_not_none:
-            print("Must either give an alignment string or a (src_ix, tgt_ix) pair!")
+            print(
+                "Must either give an alignment string or a (src_ix, tgt_ix) pair!"
+            )
 
             if name:
                 print(f"Word: {name}")
@@ -162,16 +177,24 @@ class Alignment:
 
         self.alignment_map: Dict[int, int] = {}
 
-        for at in alignment_str.split(" "):
+        alignment_toks: List[Tuple[int, ...]] = sorted(
+            [
+                tuple([int(x) for x in at.split("-")])
+                for at in alignment_str.split(" ")
+            ],
+            key=lambda t: t[0],
+        )
+
+        for tok in alignment_toks:
 
             try:
-                src, tgt = [int(x) for x in at.split("-")]
-                self.alignment_map[src] = tgt
+                source, target = tok
+                self.alignment_map[source] = target
 
-                if tgt < max_tgt_seen:
-                    self.cross_alignments.add(f"{src}->{tgt}")
+                if target < max_tgt_seen:
+                    self.cross_alignments.add(f"{source}->{target}")
 
-                max_tgt_seen = max(max_tgt_seen, tgt)
+                max_tgt_seen = max(max_tgt_seen, target)
             except:
                 continue
 
@@ -180,13 +203,7 @@ class Alignment:
         return len(self.cross_alignments)
 
     def __repr__(self) -> str:
-        try:
-            eng = self.name.english_text
-            txt = self.name.english_text
-        except AttributeError:
-            eng = txt = "<n/a>"
-
-        return f"Alignment({txt}->{eng})"
+        return f"Alignment(n_crossing={self.n_cross_alignments})"
 
 
 @attr.s
@@ -200,7 +217,9 @@ class NameWriter:
             self.out_folder = Path(tf.mkdtemp())
         else:
             if self.verbose:
-                print(f"Output folder {self.out_folder} not found. Creating...")
+                print(
+                    f"Output folder {self.out_folder} not found. Creating..."
+                )
             self.out_folder = Path(self.out_folder)
 
             if not self.out_folder.exists():
@@ -221,7 +240,7 @@ class CorpusStatistics:
     def __init__(
         self,
         names: Iterable[TransliteratedName],
-        alignments: Optional[Iterable[Alignment]] = None,
+        alignments: Optional[Iterable[Optional[Alignment]]] = None,
     ) -> None:
         """Cross-alignment statistics for a transliterated name corpus
 
@@ -235,7 +254,9 @@ class CorpusStatistics:
         self.tce: Optional[int] = None
 
         self.names = names
-        self.alignments = alignments if alignments else (n.alignment for n in names)
+        self.alignments = (
+            alignments if alignments else (n.alignment for n in names)
+        )
 
     @property
     def mean_cross_alignments(self) -> Optional[float]:
@@ -265,7 +286,7 @@ class UniversalRomanizer:
 
     uroman_cmd: Optional[str] = attr.ib(default=os.environ["UROMAN_CMD"])
 
-    def __call__(self, strings: List[str]) -> Iterable[str]:
+    def __call__(self, strings: List[str]) -> List[str]:
 
         try:
             completed_pid = subprocess.run(
@@ -277,7 +298,10 @@ class UniversalRomanizer:
             )
 
             uroman_output = [
-                line for string, line in zip(strings, completed_pid.stdout.split("\n"))
+                line
+                for string, line in zip(
+                    strings, completed_pid.stdout.split("\n")
+                )
             ]
 
             assert len(uroman_output) == len(
@@ -298,6 +322,7 @@ class FastAligner:
 
     verbose: bool = attr.ib(repr=False, default=False)
     preserve_raw_output: bool = attr.ib(repr=False, default=False)
+    debug_mode: bool = attr.ib(repr=False, default=False)
 
     def load_alignment_file(
         self,
@@ -306,18 +331,20 @@ class FastAligner:
     ) -> List[Alignment]:
         with open(alignment_file, "r", encoding="utf-8") as f:
 
-            if names:
-                alignments = [
-                    Alignment(alignment_str=alignment_string, name=name)
-                    for alignment_string, name in zip(f, names)
-                ]
-
-            else:
-                alignments = [
-                    Alignment(alignment_str=alignment_string) for alignment_string in f
-                ]
+            alignments = self.load_alignments_from_iterable(iterable=f)
 
             return alignments
+
+    def load_alignments_from_iterable(
+        self,
+        iterable: Iterable[str],
+    ):
+        alignments = [
+            Alignment(alignment_str=alignment_string)
+            for alignment_string in iterable
+        ]
+
+        return alignments
 
     def __call__(
         self, names: List[TransliteratedName]
@@ -330,7 +357,9 @@ class FastAligner:
             print(
                 f"[FastAligner] Saving alignment training data to: {alignment_train_data}"
             )
-            print(f"[FastAligner] Saving fast_align output to: {fastalign_output}")
+            print(
+                f"[FastAligner] Saving fast_align output to: {fastalign_output}"
+            )
 
         # first we write our words into a temporary file for fast_align
         with open(alignment_train_data, "w") as f_out:
@@ -340,14 +369,17 @@ class FastAligner:
 
                 if name.english_text:
                     english_text = name.english_text.replace(" ", "▁")
-                    f_out.write(f"{' '.join(name_text)} ||| {' '.join(english_text)}\n")
+                    f_out.write(
+                        f"{' '.join(name_text)} ||| {' '.join(english_text)}\n"
+                    )
 
         # then perform the actual call to fast_align
         try:
             with open(fastalign_output, "w", encoding="utf-8") as f_out, open(
                 "/dev/null", "w"
             ) as null:
-                subprocess.check_call(
+
+                fastalign_completed_pid = subprocess.run(
                     [
                         "fast_align",
                         "-v",
@@ -356,9 +388,17 @@ class FastAligner:
                         "-i",
                         alignment_train_data,
                     ],
-                    stdout=f_out,
-                    stderr=null,
+                    capture_output=True,
+                    encoding="utf-8",
+                    text=True,
                 )
+
+                fastalign_stdout = [
+                    line
+                    for name, line in zip(
+                        names, fastalign_completed_pid.stdout.split("\n")
+                    )
+                ]
 
         except subprocess.CalledProcessError as err:
             print(err)
@@ -367,7 +407,9 @@ class FastAligner:
             raise ValueError("fast_align must be installed!")
 
         # get all the alignments out as a collection
-        alignments = self.load_alignment_file(fastalign_output, names=names)
+        alignments = self.load_alignments_from_iterable(
+            iterable=fastalign_stdout
+        )
 
         # then link the names with the alignments
 
@@ -439,6 +481,7 @@ class NameProcessor:
                     anomalous=name.anomalous,
                     noise_sample=name.noise_sample,
                     english_text=name.english_text,
+                    alignment=name.alignment,
                 )
             )
 
@@ -495,12 +538,17 @@ class PermuteLowestDistance(NameProcessor):
     between the name and its romanized version.
     """
 
-    distance_function: Callable[[str, str], float] = attr.ib(default=editdistance.eval)
-
-    romanizer: UniversalRomanizer = UniversalRomanizer()
+    distance_function: Callable[[str, str], float] = attr.ib(
+        default=editdistance.eval
+    )
 
     length_lower_bound: int = attr.ib(repr=False, default=2)
     length_upper_bound: int = attr.ib(repr=False, default=4)
+
+    def romanize(self, names: List[str]) -> List[str]:
+        romanizer = UniversalRomanizer()
+
+        return romanizer(names)
 
     def _call_immutable(
         self, names: Iterable[TransliteratedName]
@@ -508,15 +556,20 @@ class PermuteLowestDistance(NameProcessor):
 
         output = []
 
-        romanized_names = self.romanizer([n.text for n in names])
+        romanized_names = self.romanize([n.text for n in names])
 
         for name, romanized_name in zip(names, romanized_names):
             tokens = name.text.split()
+            print(tokens)
             romanized_tokens = romanized_name.split()
 
             # skip over names that have too few or too many tokens
 
-            if not (self.length_lower_bound <= len(tokens) <= self.length_upper_bound):
+            if not (
+                self.length_lower_bound
+                <= len(tokens)
+                <= self.length_upper_bound
+            ):
                 output.append(name)
 
             # otherwise find the best permutation
@@ -524,14 +577,19 @@ class PermuteLowestDistance(NameProcessor):
 
                 permuted = [" ".join(perm) for perm in it.permutations(tokens)]
                 permuted_romanized = [
-                    " ".join(perm) for perm in it.permutations(romanized_tokens)
+                    " ".join(perm)
+                    for perm in it.permutations(romanized_tokens)
                 ]
 
                 best_distance = np.inf
                 best_name = name.text
 
-                for permutation, rom_permutation in zip(permuted, permuted_romanized):
-                    ed = self.distance_function(rom_permutation, name.english_text)
+                for permutation, rom_permutation in zip(
+                    permuted, permuted_romanized
+                ):
+                    ed = self.distance_function(
+                        rom_permutation, name.english_text
+                    )
 
                     if ed < best_distance:
                         best_distance = ed
@@ -559,13 +617,17 @@ class PermuteLowestDistance(NameProcessor):
         self, names: Iterable[TransliteratedName]
     ) -> Iterable[TransliteratedName]:
 
-        romanized_names = self.romanizer([n.text for n in names])
+        romanized_names = self.romanize([n.text for n in names])
 
         for name, romanized_name in zip(names, romanized_names):
             tokens = name.text.split()
             romanized_tokens = romanized_name.split()
 
-            if not (self.length_lower_bound <= len(tokens) <= self.length_upper_bound):
+            if not (
+                self.length_lower_bound
+                <= len(tokens)
+                <= self.length_upper_bound
+            ):
                 continue
 
             permuted = [" ".join(perm) for perm in it.permutations(tokens)]
@@ -576,14 +638,14 @@ class PermuteLowestDistance(NameProcessor):
             best_distance = np.inf
             best_name = name.text
 
-            for permutation, rom_permutation in zip(permuted, permuted_romanized):
-                name_text = " ".join(permutation)
-                rom_name_text = " ".join(rom_permutation)
-                ed = self.distance_function(rom_name_text, name.english_text)
+            for permutation, rom_permutation in zip(
+                permuted, permuted_romanized
+            ):
+                ed = self.distance_function(rom_permutation, name.english_text)
 
                 if ed < best_distance:
                     best_distance = ed
-                    best_name = name_text
+                    best_name = permutation
 
             name.text = best_name
 
@@ -596,15 +658,15 @@ class TransliteratedNameLoader:
     name_column: str = attr.ib(default="alias", repr=False)
     english_column: Optional[str] = attr.ib(default="eng", repr=False)
     unicode_analyzer = UnicodeAnalyzer()
-    num_workers: int = attr.ib(default=2)
-    parallelize: bool = attr.ib(default=True)
     debug_mode: bool = attr.ib(default=False)
 
     def load_name(self, tupl: Tuple[int, pd.Series]) -> TransliteratedName:
         row_ix, row = tupl
 
         if self.debug_mode:
-            print(f"[NameLoader] Creating TransliteratedName from row {row_ix}...")
+            print(
+                f"[NameLoader] Creating TransliteratedName from row {row_ix}..."
+            )
 
         return TransliteratedName(
             text=str(row[self.name_column]),
@@ -665,6 +727,7 @@ class Corpus:
         self.fast_aligner = FastAligner(
             verbose=self.fastalign_verbose,
             preserve_raw_output=self.preserve_fastalign_output,
+            debug_mode=self.debug_mode,
         )
 
         if self.debug_mode:
@@ -706,7 +769,20 @@ class Corpus:
         self.names = _names
 
     def compute_stats(self) -> None:
-        self.stats = CorpusStatistics(names=self.names, alignments=self.alignments)
+        self.languages = set(name.language for name in self.names)
+        self.stats: Dict[str, CorpusStatistics] = {}
+
+        if self.debug_mode:
+            print("[compute_stats] Computing global corpus stats...")
+        self.stats["global"] = CorpusStatistics(
+            names=self.names, alignments=self.alignments
+        )
+
+        for language in self.languages:
+            if self.debug_mode:
+                print(f"[compute_stats] Computing stats for {language}...")
+            names_subset = [n for n in self.names if n.language == language]
+            self.stats[language] = CorpusStatistics(names=names_subset)
 
     def split_names(
         self, with_noise_samples: bool = False
