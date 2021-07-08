@@ -43,7 +43,7 @@ CACHE_MAX_SIZE = 10000
 def chunks(lst, n):
     """Yield successive n-sized chunks from lst.
 
-    Note -- from SO: https://anon.to/vc1xVW
+    Note: taken from SO (https://anon.to/vc1xVW)
     """
 
     for i in range(0, len(lst), n):
@@ -75,34 +75,38 @@ class UnicodeAnalyzer:
     def maybe_strip(self, word: str) -> str:
         return str(word).strip() if self.strip else str(word)
 
-    @lru_cache(maxsize=CACHE_MAX_SIZE)
+    # @lru_cache(maxsize=CACHE_MAX_SIZE)
     def unicode_blocks(self, word: str) -> Counter:
         punctuation_cond = (
             lambda w: not self.is_punctuation(str(w))
+
             if self.ignore_punctuation
             else True
         )
 
         digit_cond = (
             lambda w: not self.is_number(str(w))
+
             if self.ignore_numbers
             else True
         )
 
         return Counter(
             blocks.of(c)
+
             for c in self.maybe_strip(word)
+
             if blocks.of(c) and punctuation_cond(c) and digit_cond(c)
         )
 
-    @lru_cache(maxsize=CACHE_MAX_SIZE)
+    # @lru_cache(maxsize=CACHE_MAX_SIZE)
     def most_common_unicode_block(self, word: str) -> str:
         try:
             return self.unicode_blocks(word).most_common(1)[0][0]
         except IndexError:
             return ""
 
-    @lru_cache(maxsize=CACHE_MAX_SIZE)
+    # @lru_cache(maxsize=CACHE_MAX_SIZE)
     def unicode_block_histogram(
         self,
         word: str,
@@ -153,46 +157,50 @@ class Alignment:
         name: Optional[TransliteratedName] = None,
     ) -> None:
 
+        self._n_cross_alignments = 0
+
         if alignment_str:
             alignment_str = alignment_str.strip()
 
-        self.alignment_str = alignment_str
+        # self.alignment_str = alignment_str
         # self.name = name
 
         src_tgt_not_none = src or tgt
 
-        self.cross_alignments = set([])
+        # self.cross_alignments = set([])
 
         if not alignment_str and not src_tgt_not_none:
-            print(
-                "Must either give an alignment string or a (src_ix, tgt_ix) pair!"
-            )
+            # print(
+            # "Must either give an alignment string or a (src_ix, tgt_ix) pair!"
+            # )
 
-            if name:
-                print(f"Word: {name}")
+            # if name:
+            # print(f"Word: {name}")
 
             return
 
         max_tgt_seen = 0
 
-        self.alignment_map: Dict[int, int] = {}
+        # self.alignment_map: Dict[int, int] = {}
 
-        alignment_toks: List[Tuple[int, ...]] = sorted(
+        alignment_tokens: List[Tuple[int, ...]] = sorted(
             [
                 tuple([int(x) for x in at.split("-")])
+
                 for at in alignment_str.split(" ")
             ],
             key=lambda t: t[0],
         )
 
-        for tok in alignment_toks:
+        for tok in alignment_tokens:
 
             try:
                 source, target = tok
-                self.alignment_map[source] = target
+                # self.alignment_map[source] = target
 
                 if target < max_tgt_seen:
-                    self.cross_alignments.add(f"{source}->{target}")
+                    # self.cross_alignments.add(f"{source}->{target}")
+                    self._n_cross_alignments += 1
 
                 max_tgt_seen = max(max_tgt_seen, target)
             except:
@@ -200,7 +208,9 @@ class Alignment:
 
     @property
     def n_cross_alignments(self) -> int:
-        return len(self.cross_alignments)
+        # return len(self.cross_alignments)
+
+        return self._n_cross_alignments
 
     def __repr__(self) -> str:
         return f"Alignment(n_crossing={self.n_cross_alignments})"
@@ -299,6 +309,7 @@ class UniversalRomanizer:
 
             uroman_output = [
                 line
+
                 for string, line in zip(
                     strings, completed_pid.stdout.split("\n")
                 )
@@ -341,6 +352,7 @@ class FastAligner:
     ):
         alignments = [
             Alignment(alignment_str=alignment_string)
+
             for alignment_string in iterable
         ]
 
@@ -365,9 +377,9 @@ class FastAligner:
         with open(alignment_train_data, "w") as f_out:
             for name in names:
 
-                name_text = name.text.replace(" ", "▁")
+                name_text = name.text.replace(" ", "▁").strip()
 
-                if name.english_text:
+                if name.english_text and name_text:
                     english_text = name.english_text.replace(" ", "▁")
                     f_out.write(
                         f"{' '.join(name_text)} ||| {' '.join(english_text)}\n"
@@ -393,8 +405,17 @@ class FastAligner:
                     text=True,
                 )
 
+                if self.debug_mode:
+                    with open(
+                        "/tmp/what_the_heck_fastalign.log",
+                        mode="w",
+                        encoding="utf-8",
+                    ) as f_stderr:
+                        f_stderr.write(fastalign_completed_pid.stderr)
+
                 fastalign_stdout = [
                     line
+
                     for name, line in zip(
                         names, fastalign_completed_pid.stdout.split("\n")
                     )
@@ -413,7 +434,15 @@ class FastAligner:
 
         # then link the names with the alignments
 
-        for name, alignment in zip(names, alignments):
+        if self.debug_mode:
+            print("Adding alignments to names...")
+            name_alignment_iter = tqdm(
+                zip(names, alignments), total=len(names)
+            )
+        else:
+            name_alignment_iter = zip(names, alignments)
+
+        for name, alignment in name_alignment_iter:
             name.add_alignment(alignment)
 
         # make sure we have as many alignments as we have names
@@ -578,6 +607,7 @@ class PermuteLowestDistance(NameProcessor):
                 permuted = [" ".join(perm) for perm in it.permutations(tokens)]
                 permuted_romanized = [
                     " ".join(perm)
+
                     for perm in it.permutations(romanized_tokens)
                 ]
 
@@ -711,6 +741,11 @@ class Corpus:
     analyze_unicode: bool = attr.ib(repr=False, default=True)
     debug_mode: bool = attr.ib(default=False)
 
+    def filter_names(
+        self, names: List[TransliteratedName]
+    ) -> List[TransliteratedName]:
+        return [n for n in names if n.text.strip() and n.english_text]
+
     def __attrs_post_init__(self) -> None:
 
         if self.debug_mode:
@@ -742,8 +777,12 @@ class Corpus:
 
         if self.find_best_token_permutation:
             if self.debug_mode:
-                print("[Corpus] Permuting tokens, removing parentheses...")
+                print("[Corpus] Applying NameProcessor...")
             self.names = list(self.permuter(self.names))
+
+        if self.debug_mode:
+            print("[Corpus] Filtering out names with blank text...")
+        self.names = self.filter_names(self.names)
 
         if self.analyze_unicode:
             if self.debug_mode:
@@ -769,7 +808,9 @@ class Corpus:
         self.names = _names
 
     def compute_stats(self) -> None:
-        self.languages = set(name.language for name in self.names)
+        self.languages = sorted(
+            list(set(name.language for name in self.names))
+        )
         self.stats: Dict[str, CorpusStatistics] = {}
 
         if self.debug_mode:
@@ -818,6 +859,7 @@ class AnomalousTagger:
                 anomalous=self.classify(n),
                 language=n.language,
             )
+
             for n in names
         ]
 
