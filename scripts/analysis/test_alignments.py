@@ -29,6 +29,10 @@ def compute_crossing_alignments(
     human_readable_lang_names: Dict[str, str],
     pool_languages: bool = False,
     find_best_token_permutation: bool = False,
+    preserve_fastalign_output: bool = False,
+    debug_mode: bool = False,
+    write_permuted_names: bool = True,
+    names_output_folder: str = "/tmp/test_alignments_names",
 ):
 
     unique_languages = set(lang for lang in transliterated_names)
@@ -49,21 +53,27 @@ def compute_crossing_alignments(
             align_with_english=True,
             fastalign_verbose=True,
             permuter_class=permuter_cls,
+            permuter_inplace=True,
             find_best_token_permutation=find_best_token_permutation,
             analyze_unicode=False,
+            preserve_fastalign_output=preserve_fastalign_output,
+            debug_mode=debug_mode,
+            out_folder=names_output_folder,
         )
 
-        for n, a in zip(big_corpus.names, big_corpus.alignments):
-            n.add_alignment(a)
+        if write_permuted_names:
+            print(
+                "[compute_crossing_alignments] Writing names out to {big_corpus.out_folder}:"
+            )
+            big_corpus.write_names_tsv()
 
         print(
             "[compute_crossing_alignments] Avg. number of crossing alignments per language:"
         )
 
-        for lang, names in transliterated_names.items():
-            stats = sa.CorpusStatistics(names=names)
-            lang_long = human_readable_lang_names.get(lang)
-            avg_alignments = stats.mean_cross_alignments
+        for lang, stats_per_lang in big_corpus.stats.items():
+            lang_long = human_readable_lang_names.get(lang, lang)
+            avg_alignments = stats_per_lang.mean_cross_alignments
             print(f"{lang_long}\t{avg_alignments}")
 
     else:
@@ -82,11 +92,12 @@ def compute_crossing_alignments(
                 align_with_english=True,
                 permuter_class=permuter_cls,
                 find_best_token_permutation=find_best_token_permutation,
+                preserve_fastalign_output=preserve_fastalign_output,
             )
             corpora[language] = corpus
 
         mean_cross_alignments = {
-            language: corpora[language].mean_cross_alignments
+            language: corpora[language].stats[language].mean_cross_alignments
 
             for language in unique_languages
         }
@@ -136,6 +147,18 @@ def compute_crossing_alignments(
 )
 @click.option("--num-workers", type=int, default=2)
 @click.option("--chunksize", type=int, default=15000)
+@click.option(
+    "--preserve-fastalign-output",
+    is_flag=True,
+    help="Do not delete the alignmer output",
+)
+@click.option("--num-debug-chunks", type=int, default=pow(10, 10))
+@click.option(
+    "--write-permuted-names",
+    is_flag=True,
+    help="Write permuted names to output folder specified by the --names-output-folder flag",
+)
+@click.option("--names-output-folder", default="/tmp/test_alignments_names")
 def main(
     input_file,
     language_column,
@@ -148,6 +171,10 @@ def main(
     permute_tokens,
     num_workers,
     chunksize,
+    preserve_fastalign_output,
+    num_debug_chunks,
+    write_permuted_names,
+    names_output_folder,
 ):
 
     # set seed
@@ -195,9 +222,8 @@ def main(
     )
 
     if debug_mode:
-        n_debug = 5
         corpus_chunks = [
-            chunk for chunk, _ in zip(corpus_chunks, range(n_debug))
+            chunk for chunk, _ in zip(corpus_chunks, range(num_debug_chunks))
         ]
 
     name_loader = sa.TransliteratedNameLoader(
@@ -213,9 +239,8 @@ def main(
 
     transliterated_names = defaultdict(list)
 
-    for name_chunk in nested_names:
-        for name in name_chunk:
-            transliterated_names[name.language].append(name)
+    for name in it.chain.from_iterable(nested_names):
+        transliterated_names[name.language].append(name)
 
     compute_crossing_alignments(
         transliterated_names,
@@ -224,6 +249,10 @@ def main(
         human_readable_lang_names=human_readable_lang_names,
         pool_languages=pool_languages,
         find_best_token_permutation=permute_tokens,
+        preserve_fastalign_output=preserve_fastalign_output,
+        debug_mode=debug_mode,
+        write_permuted_names=write_permuted_names,
+        names_output_folder=names_output_folder,
     )
 
 
