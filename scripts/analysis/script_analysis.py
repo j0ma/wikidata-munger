@@ -19,6 +19,7 @@ import itertools as it
 import tempfile as tf
 import subprocess
 import sys
+import csv
 import re
 import io
 import os
@@ -248,6 +249,14 @@ class NameWriter:
             path = self.out_folder / f"{category}.txt"
 
             with open(path, "w", encoding="utf-8") as f:
+                if name_processor_mode:
+                    writer = csv.DictWriter(
+                        f,
+                        fieldnames=["language", "text", "english_text"],
+                        extrasaction="ignore",
+                    )
+                    writer.writeheader()
+
                 for name in tqdm(
                     sorted(names, key=lambda name: name.text), total=len(names)
                 ):
@@ -255,16 +264,21 @@ class NameWriter:
                         row = (
                             f"{name.text}\t{name.most_common_unicode_block}\n"
                         )
-
-                        if self.debug_mode:
-                            print(row)
                         f.write(row)
                     elif name_processor_mode:
-                        row = f"{name.language}\t{name.text}\t{name.english_text}\n"
 
-                        if self.debug_mode:
-                            print(row)
-                        f.write(row)
+                        writer = csv.DictWriter(
+                            f,
+                            fieldnames=["language", "text", "english_text"],
+                            extrasaction="ignore",
+                        )
+                        writer.writerow(
+                            {
+                                "language": name.language,
+                                "text": name.text,
+                                "english_text": name.english_text,
+                            }
+                        )
 
             if self.debug_mode:
                 print(f"[{category}] Names written to {path}")
