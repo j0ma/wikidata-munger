@@ -175,10 +175,10 @@ def main(
 
         true_labels = []
 
-        for word in corpus.words:
-            if word.anomalous or word.text in anomalous.get(language, {}):
+        for name in corpus.words:
+            if name.anomalous or name.text in anomalous.get(language, {}):
                 true_labels.append(1)
-            elif word.anomalous == None:
+            elif name.anomalous == None:
                 true_labels.append(0)
             else:
                 true_labels.append(-1)
@@ -231,7 +231,7 @@ def main(
         majority_vote_preds = (noisy_votes.mean(axis=1) > 0).astype(int)
         # print(f"[{language}] Majority vote: {cr(majority_vote_preds)}")
 
-        tagged_words = [
+        tagged_names = [
             sa.TransliteratedName(
                 text=w.text,
                 unicode_analyzer=w.unicode_analyzer,
@@ -247,18 +247,18 @@ def main(
 
         print("Here is what FlyingSquid missed:")
 
-        for (word, pred) in zip(corpus.words, preds):
-            gold = word.anomalous
-            neg = word.noise_sample
+        for (name, pred) in zip(corpus.names, preds):
+            gold = name.anomalous
+            neg = name.noise_sample
             pred = bool(pred > 0)
 
             if gold and not pred:
-                print(f"[{language}] Anomalous but not tagged: {word.text}")
+                print(f"[{language}] Anomalous but not tagged: {name.text}")
             elif pred and gold == False and not neg:
-                print(f"[{language}] Non-anomalous but tagged: {word.text}")
+                print(f"[{language}] Non-anomalous but tagged: {name.text}")
 
-        corpus.words = tagged_words
-        corpus.write_to_folder(write_noise_samples=False)
+        corpus.names = tagged_names
+        corpus.write_anomaly_info(write_noise_samples=False)
 
 
 if __name__ == "__main__":
