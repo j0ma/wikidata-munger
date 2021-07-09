@@ -220,30 +220,54 @@ class Alignment:
 class NameWriter:
 
     out_folder: Union[str, Path] = attr.ib(default="")
-    verbose: bool = attr.ib(default=False)
+    debug_mode: bool = attr.ib(default=False)
 
-    def write(self, splits: Dict[str, Iterable[TransliteratedName]]) -> None:
+    def write(
+        self,
+        splits: Dict[str, List[TransliteratedName]],
+        unicode_block_mode: bool = True,
+        name_processor_mode: bool = False,
+    ) -> None:
+
+        assert unicode_block_mode or name_processor_mode
+
         if not self.out_folder:
             self.out_folder = Path(tf.mkdtemp())
-        else:
-            if self.verbose:
+
+            if self.debug_mode:
                 print(
-                    f"Output folder {self.out_folder} not found. Creating..."
+                    f"[NameWriter] Output folder {self.out_folder} not found. Creating..."
                 )
+        else:
             self.out_folder = Path(self.out_folder)
 
             if not self.out_folder.exists():
                 self.out_folder.mkdir(parents=True)
 
-        for c, names in splits.items():
-            path = self.out_folder / f"{c}.txt"
+        for category, names in splits.items():
+            path = self.out_folder / f"{category}.txt"
 
             with open(path, "w", encoding="utf-8") as f:
-                for name in sorted(names, key=lambda name: name.text):
-                    f.write(f"{name.text}\t{name.most_common_unicode_block}\n")
+                for name in tqdm(
+                    sorted(names, key=lambda name: name.text), total=len(names)
+                ):
+                    if unicode_block_mode:
+                        row = (
+                            f"{name.text}\t{name.most_common_unicode_block}\n"
+                        )
 
-            if self.verbose:
-                print(f"[{c}] Names written to {path}")
+                        if self.debug_mode:
+                            print(row)
+                        f.write(row)
+                    elif name_processor_mode:
+                        row = f"{name.language}\t{name.text}\t{name.english_text}\n"
+
+                        if self.debug_mode:
+                            print(row)
+                        f.write(row)
+
+            if self.debug_mode:
+                print(f"[{category}] Names written to {path}")
 
 
 class CorpusStatistics:
@@ -361,6 +385,11 @@ class FastAligner:
     def __call__(
         self, names: List[TransliteratedName]
     ) -> Tuple[List[Alignment], List[TransliteratedName]]:
+        """Performs a call to fast_align in a separate process.
+
+        Note: assumes that all names have already been filtered,
+              so no extensive checking is performed to validate
+              that names and fast_align output strings match"""
 
         alignment_train_data = Path(tf.mktemp())
         fastalign_output = Path(tf.mktemp())
@@ -377,13 +406,12 @@ class FastAligner:
         with open(alignment_train_data, "w") as f_out:
             for name in names:
 
+                # if name.english_text and name_text:
                 name_text = name.text.replace(" ", "▁").strip()
-
-                if name.english_text and name_text:
-                    english_text = name.english_text.replace(" ", "▁")
-                    f_out.write(
-                        f"{' '.join(name_text)} ||| {' '.join(english_text)}\n"
-                    )
+                english_text = name.english_text.replace(" ", "▁")
+                f_out.write(
+                    f"{' '.join(name_text)} ||| {' '.join(english_text)}\n"
+                )
 
         # then perform the actual call to fast_align
         try:
@@ -404,14 +432,6 @@ class FastAligner:
                     encoding="utf-8",
                     text=True,
                 )
-
-                if self.debug_mode:
-                    with open(
-                        "/tmp/what_the_heck_fastalign.log",
-                        mode="w",
-                        encoding="utf-8",
-                    ) as f_stderr:
-                        f_stderr.write(fastalign_completed_pid.stderr)
 
                 fastalign_stdout = [
                     line
@@ -768,12 +788,14 @@ class Corpus:
         if self.debug_mode:
             print("[Corpus] Setting up token processor...")
         self.permuter = self.permuter_class(
-            inplace=self.permuter_inplace, debug_mode=self.permuter_debug_mode
+            inplace=self.permuter_inplace, debug_mode=self.debug_mode
         )
 
         if self.debug_mode:
             print("[Corpus] Setting up name writer...")
-        self.name_writer = NameWriter(out_folder=self.out_folder)
+        self.name_writer = NameWriter(
+            out_folder=self.out_folder, debug_mode=self.debug_mode
+        )
 
         if self.find_best_token_permutation:
             if self.debug_mode:
@@ -841,8 +863,19 @@ class Corpus:
 
         return split
 
-    def write_to_folder(self, write_noise_samples=False):
-        self.name_writer.write(self.split_names(write_noise_samples))
+    def write_anomaly_info(self, write_noise_samples=False):
+        self.name_writer.write(
+            self.split_names(write_noise_samples),
+            unicode_block_mode=True,
+            name_processor_mode=False,
+        )
+
+    def write_names_tsv(self):
+        self.name_writer.write(
+            {"all_names": self.names},
+            unicode_block_mode=False,
+            name_processor_mode=True,
+        )
 
 
 class AnomalousTagger:
