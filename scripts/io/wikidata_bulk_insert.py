@@ -5,12 +5,12 @@ from typing import Generator, Set, List
 import multiprocessing as mp
 
 import click
-from wikidata_helpers import WikidataMongoIngesterWorker
+from wikidata_helpers import WikidataMongoIngesterWorker, DEFAULT_MONGODB_PORT
 from pymongo import MongoClient
 
 
-def use_single_worker(worker):
-    client = MongoClient()
+def use_single_worker(worker, port=DEFAULT_MONGODB_PORT):
+    client = MongoClient(port=port)
     worker.establish_mongo_client(client)
     worker()
 

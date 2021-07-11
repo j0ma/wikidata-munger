@@ -14,6 +14,8 @@ from pymongo import MongoClient
 import unicodedata as ud
 import pandas as pd
 
+DEFAULT_MONGODB_PORT = 27617
+
 
 def read(
     input_file: str,
@@ -281,7 +283,7 @@ class WikidataMongoDB:
     ) -> None:
         self.database_name = database_name
         self.collection_name = collection_name
-        self.client = MongoClient()
+        self.client = MongoClient(port=DEFAULT_MONGO_PORT)
         self.collection = self.client[self.database_name][self.collection_name]
 
     def find_matching_docs(

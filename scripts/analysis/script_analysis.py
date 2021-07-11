@@ -245,8 +245,10 @@ class NameWriter:
             if not self.out_folder.exists():
                 self.out_folder.mkdir(parents=True)
 
+        extension = "txt" if unicode_block_mode else "tsv"
+
         for category, names in splits.items():
-            path = self.out_folder / f"{category}.txt"
+            path = self.out_folder / f"{category}.{extension}"
 
             with open(path, "w", encoding="utf-8") as f:
                 if name_processor_mode:
@@ -254,6 +256,7 @@ class NameWriter:
                         f,
                         fieldnames=["language", "text", "english_text"],
                         extrasaction="ignore",
+                        delimiter="\t",
                     )
                     writer.writeheader()
 
@@ -332,9 +335,28 @@ class UniversalRomanizer:
       the command as an argument to __init__.
     """
 
-    uroman_cmd: Optional[str] = attr.ib(default=os.environ["UROMAN_CMD"])
+    uroman_cmd: str = attr.ib(default=os.environ["UROMAN_CMD"])
+    num_workers: int = attr.ib(default=1)
+    chunksize: int = attr.ib(default=10000)
 
     def __call__(self, strings: List[str]) -> List[str]:
+        if self.num_workers == 1:
+            return self.call(strings)
+        else:
+            return self.call_parallel(strings)
+
+    def call_parallel(self, strings: List[str]) -> List[str]:
+        return list(
+            it.chain.from_iterable(
+                p_map(
+                    self.call,
+                    chunks(strings, self.chunksize),
+                    num_cpus=self.num_workers,
+                )
+            )
+        )
+
+    def call(self, strings: List[str]) -> List[str]:
 
         try:
             completed_pid = subprocess.run(
@@ -387,7 +409,7 @@ class FastAligner:
     def load_alignments_from_iterable(
         self,
         iterable: Iterable[str],
-    ):
+    ) -> List[Alignment]:
         alignments = [
             Alignment(alignment_str=alignment_string)
 
@@ -496,6 +518,7 @@ class NameProcessor:
 
     inplace: bool = attr.ib(default=False)
     debug_mode: bool = attr.ib(default=False)
+    num_workers: int = attr.ib(default=1, repr=False)
 
     def process(self, string: str) -> str:
         raise NotImplementedError
@@ -607,6 +630,9 @@ class PermuteLowestDistance(NameProcessor):
 
     length_lower_bound: int = attr.ib(repr=False, default=2)
     length_upper_bound: int = attr.ib(repr=False, default=4)
+
+    def __attrs_post_init__(self) -> None:
+        self.romanizer = UniversalRomanizer(num_workers=self.num_workers)
 
     def romanize(self, names: List[str]) -> List[str]:
         romanizer = UniversalRomanizer()
@@ -758,6 +784,7 @@ class Corpus:
     permuter_class: Type[NameProcessor] = attr.ib(
         repr=False, default=PermuteLowestDistance
     )
+    num_workers: int = attr.ib(default=1, repr=False)
     out_folder: str = attr.ib(default="")
     name_column: str = attr.ib(default="alias", repr=False)
     english_column: Optional[str] = attr.ib(default="eng", repr=False)
@@ -802,7 +829,9 @@ class Corpus:
         if self.debug_mode:
             print("[Corpus] Setting up token processor...")
         self.permuter = self.permuter_class(
-            inplace=self.permuter_inplace, debug_mode=self.debug_mode
+            inplace=self.permuter_inplace,
+            debug_mode=self.debug_mode,
+            num_workers=self.num_workers,
         )
 
         if self.debug_mode:

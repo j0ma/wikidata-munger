@@ -79,13 +79,16 @@ def output_csv(
             "language": lang,
             "type": conll_type,
         }
+
         for lang, alias in document.aliases.items()
     )
 
     if strict:
         rows = (
             row
+
             for row in rows
+
             if row["language"] in language_set
             and row["language"] not in not_language_set
         )
@@ -112,8 +115,16 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
 
 @click.command()
 @click.option("--mongodb-uri", default="", help="MongoDB URI")
+@click.option(
+    "--mongodb-port",
+    type=int,
+    default=wh.DEFAULT_MONGODB_PORT,
+    help="MongoDB port",
+)
 @click.option("--database-name", default="wikidata_db", help="Database name")
-@click.option("--collection-name", default="wikidata_simple", help="Collection name")
+@click.option(
+    "--collection-name", default="wikidata_simple", help="Collection name"
+)
 @click.option(
     "--subclass-coll-name",
     default="subclasses",
@@ -172,6 +183,7 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
 )
 def main(
     mongodb_uri,
+    mongodb_port,
     database_name,
     collection_name,
     subclass_coll_name,
@@ -196,7 +208,9 @@ def main(
     delimiter = "\t" if delimiter == "tab" else delimiter
 
     # form connections to mongo db
-    client = MongoClient(mongodb_uri) if mongodb_uri else MongoClient()
+    client = (
+        MongoClient(mongodb_uri) if mongodb_uri else MongoClient(mongodb_port)
+    )
     subclasses = client[database_name][subclass_coll_name]
     db = client[database_name][collection_name]
 

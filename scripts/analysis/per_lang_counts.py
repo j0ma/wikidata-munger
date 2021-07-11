@@ -3,6 +3,7 @@ from wikidata_helpers import orjson_dump
 
 
 def main():
+    raise NotImplementedError
     client = MongoClient()
     db = client["wikidata_db"]["wikidata_simple"]
 
