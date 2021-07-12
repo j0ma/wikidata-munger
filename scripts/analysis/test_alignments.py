@@ -22,7 +22,54 @@ permuter_types = [
 ]
 
 
-def compute_crossing_alignments(
+def compute_crossing_alignments_pooled(
+    names: List[sa.TransliteratedName],
+    permuter_cls: Type[sa.NameProcessor],
+    language_column: str,
+    human_readable_lang_names: Dict[str, str],
+    pool_languages: bool = False,
+    find_best_token_permutation: bool = False,
+    preserve_fastalign_output: bool = False,
+    debug_mode: bool = False,
+    write_permuted_names: bool = True,
+    names_output_folder: str = "/tmp/test_alignments_names",
+):
+
+    print("[compute_crossing_alignments] Creating pooled corpus...")
+    big_corpus = sa.Corpus(
+        names=names,
+        language="all",
+        normalize_histogram=True,
+        ignore_punctuation=True,
+        ignore_numbers=False,
+        align_with_english=True,
+        fastalign_verbose=True,
+        permuter_class=permuter_cls,
+        permuter_inplace=True,
+        find_best_token_permutation=find_best_token_permutation,
+        analyze_unicode=False,
+        preserve_fastalign_output=preserve_fastalign_output,
+        debug_mode=debug_mode,
+        out_folder=names_output_folder,
+    )
+
+    if write_permuted_names:
+        print(
+            f"[compute_crossing_alignments] Writing names out to {big_corpus.out_folder}:"
+        )
+        big_corpus.write_names_tsv()
+
+    print(
+        "[compute_crossing_alignments] Avg. number of crossing alignments per language:"
+    )
+
+    for lang, stats_per_lang in big_corpus.stats.items():
+        lang_long = human_readable_lang_names.get(lang, lang)
+        avg_alignments = stats_per_lang.mean_cross_alignments
+        print(f"{lang_long}\t{avg_alignments}")
+
+
+def compute_crossing_alignments_unpooled(
     transliterated_names: Dict[str, List[sa.TransliteratedName]],
     permuter_cls: Type[sa.NameProcessor],
     language_column: str,
@@ -35,86 +82,39 @@ def compute_crossing_alignments(
     names_output_folder: str = "/tmp/test_alignments_names",
 ):
 
-    unique_languages = set(lang for lang in transliterated_names)
-    names = list(
-        it.chain.from_iterable(
-            name_chunk for lang, name_chunk in transliterated_names.items()
-        )
-    )
+    corpora = {}
 
-    if pool_languages:
-        print("[compute_crossing_alignments] Creating pooled corpus...")
-        big_corpus = sa.Corpus(
-            names=names,
-            language="all",
+    for language, names_subset in transliterated_names.items():
+
+        print(f"[{language}] Creating corpus...")
+        corpus = sa.Corpus(
+            names=names_subset,
+            language=language,
             normalize_histogram=True,
             ignore_punctuation=True,
             ignore_numbers=False,
             align_with_english=True,
-            fastalign_verbose=True,
             permuter_class=permuter_cls,
-            permuter_inplace=True,
             find_best_token_permutation=find_best_token_permutation,
-            analyze_unicode=False,
             preserve_fastalign_output=preserve_fastalign_output,
-            debug_mode=debug_mode,
-            out_folder=names_output_folder,
         )
+        corpora[language] = corpus
 
-        if write_permuted_names:
+    if write_permuted_names:
+        for _, corpus in corpora.items():
             print(
-                "[compute_crossing_alignments] Writing names out to {big_corpus.out_folder}:"
+                f"[compute_crossing_alignments] Writing names out to {corpus.out_folder}:"
             )
-            big_corpus.write_names_tsv()
+            corpus.write_names_tsv()
 
-        print(
-            "[compute_crossing_alignments] Avg. number of crossing alignments per language:"
-        )
+    print(
+        "[compute_crossing_alignments] Avg. number of crossing alignments per language:"
+    )
 
-        for lang, stats_per_lang in big_corpus.stats.items():
-            lang_long = human_readable_lang_names.get(lang, lang)
-            avg_alignments = stats_per_lang.mean_cross_alignments
-            print(f"{lang_long}\t{avg_alignments}")
-
-    else:
-        corpora = {}
-
-        for language, names_subset in transliterated_names.items():
-            # names_subset = [n for n in names if n.language == language]
-
-            print(f"[{language}] Creating corpus...")
-            corpus = sa.Corpus(
-                names=names_subset,
-                language=language,
-                normalize_histogram=True,
-                ignore_punctuation=True,
-                ignore_numbers=False,
-                align_with_english=True,
-                permuter_class=permuter_cls,
-                find_best_token_permutation=find_best_token_permutation,
-                preserve_fastalign_output=preserve_fastalign_output,
-            )
-            corpora[language] = corpus
-
-        mean_cross_alignments = {
-            language: corpora[language].stats[language].mean_cross_alignments
-
-            for language in unique_languages
-        }
-
-        print(
-            "[compute_crossing_alignments] Avg. number of crossing alignments per language:"
-        )
-        avg_cross_alignments_per_language = pd.Series(mean_cross_alignments)
-
-        for (
-            lang,
-            avg_alignments,
-        ) in avg_cross_alignments_per_language.sort_values(
-            ascending=False
-        ).items():
-            lang_long = human_readable_lang_names.get(lang)
-            print(f"{lang_long}\t{avg_alignments}")
+    for lang, corpus in corpora.items():
+        lang_long = human_readable_lang_names.get(lang, lang)
+        avg_alignments = corpus.stats["global"].mean_cross_alignments
+        print(f"{lang_long}\t{avg_alignments}")
 
 
 @click.command()
@@ -233,27 +233,43 @@ def main(
     print(f"Name Loader: {name_loader}")
 
     print(f"Loading names using p_map and {num_workers} workers...")
-    nested_names = p_map(
-        name_loader, list(corpus_chunks), num_cpus=num_workers
+    names = list(
+        it.chain.from_iterable(
+            p_map(name_loader, corpus_chunks, num_cpus=num_workers)
+        )
     )
 
-    transliterated_names = defaultdict(list)
+    if pool_languages:
+        compute_crossing_alignments_pooled(
+            names,
+            permuter_class,
+            language_column,
+            human_readable_lang_names=human_readable_lang_names,
+            pool_languages=pool_languages,
+            find_best_token_permutation=permute_tokens,
+            preserve_fastalign_output=preserve_fastalign_output,
+            debug_mode=debug_mode,
+            write_permuted_names=write_permuted_names,
+            names_output_folder=names_output_folder,
+        )
+    else:
+        transliterated_names = defaultdict(list)
 
-    for name in it.chain.from_iterable(nested_names):
-        transliterated_names[name.language].append(name)
+        for name in names:
+            transliterated_names[name.language].append(name)
 
-    compute_crossing_alignments(
-        transliterated_names,
-        permuter_class,
-        language_column,
-        human_readable_lang_names=human_readable_lang_names,
-        pool_languages=pool_languages,
-        find_best_token_permutation=permute_tokens,
-        preserve_fastalign_output=preserve_fastalign_output,
-        debug_mode=debug_mode,
-        write_permuted_names=write_permuted_names,
-        names_output_folder=names_output_folder,
-    )
+        compute_crossing_alignments_unpooled(
+            transliterated_names,
+            permuter_class,
+            language_column,
+            human_readable_lang_names=human_readable_lang_names,
+            pool_languages=pool_languages,
+            find_best_token_permutation=permute_tokens,
+            preserve_fastalign_output=preserve_fastalign_output,
+            debug_mode=debug_mode,
+            write_permuted_names=write_permuted_names,
+            names_output_folder=names_output_folder,
+        )
 
 
 if __name__ == "__main__":

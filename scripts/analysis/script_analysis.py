@@ -123,7 +123,7 @@ class UnicodeAnalyzer:
         return histogram
 
 
-@attr.s
+@attr.s(frozen=False, slots=True)
 class TransliteratedName:
     text: str = attr.ib()
     language: str = attr.ib()
@@ -149,46 +149,28 @@ class TransliteratedName:
         self.alignment = alignment
 
 
+@attr.s(frozen=False, slots=True)
 class Alignment:
-    def __init__(
+
+    alignment_str: str = attr.ib(repr=False)
+    n_cross_alignments: int = attr.ib(repr=False, default=0)
+
+    def __attrs_post_init__(
         self,
-        alignment_str: Optional[str] = None,
-        src: Optional[str] = None,
-        tgt: Optional[str] = None,
-        name: Optional[TransliteratedName] = None,
     ) -> None:
 
-        self._n_cross_alignments = 0
+        self.alignment_str = self.alignment_str.strip()
+        self.n_cross_alignments = self.compute_cross_alignments()
 
-        if alignment_str:
-            alignment_str = alignment_str.strip()
-
-        # self.alignment_str = alignment_str
-        # self.name = name
-
-        src_tgt_not_none = src or tgt
-
-        # self.cross_alignments = set([])
-
-        if not alignment_str and not src_tgt_not_none:
-            # print(
-            # "Must either give an alignment string or a (src_ix, tgt_ix) pair!"
-            # )
-
-            # if name:
-            # print(f"Word: {name}")
-
-            return
-
+    def compute_cross_alignments(self) -> int:
+        n_cross_alignments = 0
         max_tgt_seen = 0
-
-        # self.alignment_map: Dict[int, int] = {}
 
         alignment_tokens: List[Tuple[int, ...]] = sorted(
             [
                 tuple([int(x) for x in at.split("-")])
 
-                for at in alignment_str.split(" ")
+                for at in self.alignment_str.split(" ")
             ],
             key=lambda t: t[0],
         )
@@ -197,24 +179,15 @@ class Alignment:
 
             try:
                 source, target = tok
-                # self.alignment_map[source] = target
 
                 if target < max_tgt_seen:
-                    # self.cross_alignments.add(f"{source}->{target}")
-                    self._n_cross_alignments += 1
+                    n_cross_alignments += 1
 
                 max_tgt_seen = max(max_tgt_seen, target)
             except:
                 continue
 
-    @property
-    def n_cross_alignments(self) -> int:
-        # return len(self.cross_alignments)
-
-        return self._n_cross_alignments
-
-    def __repr__(self) -> str:
-        return f"Alignment(n_crossing={self.n_cross_alignments})"
+        return n_cross_alignments
 
 
 @attr.s
@@ -270,11 +243,6 @@ class NameWriter:
                         f.write(row)
                     elif name_processor_mode:
 
-                        writer = csv.DictWriter(
-                            f,
-                            fieldnames=["language", "text", "english_text"],
-                            extrasaction="ignore",
-                        )
                         writer.writerow(
                             {
                                 "language": name.language,
@@ -287,41 +255,39 @@ class NameWriter:
                 print(f"[{category}] Names written to {path}")
 
 
+@attr.s(frozen=False, slots=True)
 class CorpusStatistics:
-    def __init__(
-        self,
-        names: Iterable[TransliteratedName],
-        alignments: Optional[Iterable[Optional[Alignment]]] = None,
-    ) -> None:
-        """Cross-alignment statistics for a transliterated name corpus
+    """Cross-alignment statistics for a transliterated name corpus
 
-        Notes
-        -----
-        - if alignments is None, names is assumed to contain alignments
-        - if names doesn't, then alignments must be passed
-        """
+    Notes
+    -----
+    - if alignments is None, names is assumed to contain alignments
+    - if names doesn't, then alignments must be passed
+    """
 
-        self.mce: Optional[float] = None
-        self.tce: Optional[int] = None
+    names: Iterable[TransliteratedName] = attr.ib(repr=False)
+    alignments: Optional[Iterable[Optional[Alignment]]] = attr.ib(
+        default=None, repr=False
+    )
 
-        self.names = names
-        self.alignments = (
-            alignments if alignments else (n.alignment for n in names)
+    mean_cross_alignments: float = attr.ib(default=0.0)
+    total_cross_alignments: float = attr.ib(default=0)
+
+    def __attrs_post_init__(self) -> None:
+
+        self.alignments: Iterable[Optional[Alignment]] = (
+            self.alignments
+
+            if self.alignments
+            else (n.alignment for n in self.names)
         )
 
-    @property
-    def mean_cross_alignments(self) -> Optional[float]:
-        if not self.mce:
-            self.mce = np.mean([a.n_cross_alignments for a in self.alignments])
-
-        return self.mce
-
-    @property
-    def total_cross_alignments(self) -> Optional[float]:
-        if not self.tce:
-            self.tce = sum([a.n_cross_alignments for a in self.alignments])
-
-        return self.tce
+        self.mean_cross_alignments = np.mean(
+            [a.n_cross_alignments if a else 0 for a in self.alignments]
+        )
+        self.total_cross_alignments = sum(
+            [a.n_cross_alignments if a else 0 for a in self.alignments]
+        )
 
 
 @attr.s
@@ -524,41 +490,41 @@ class NameProcessor:
         raise NotImplementedError
 
     def __call__(
-        self, names: Iterable[TransliteratedName]
-    ) -> Iterable[TransliteratedName]:
+        self, names: List[TransliteratedName]
+    ) -> List[TransliteratedName]:
         if self.inplace:
             return self._call_inplace(names)
         else:
             return self._call_immutable(names)
 
     def _call_immutable(
-        self, names: Iterable[TransliteratedName]
-    ) -> Iterable[TransliteratedName]:
+        self, names: List[TransliteratedName]
+    ) -> List[TransliteratedName]:
 
         for name in names:
-            if self.debug_mode:
-                print(f"[{name.english_text}] {name.text}".strip())
             processed_name = self.process(name.text)
 
-            if self.debug_mode:
-                print(f"[{name.english_text}] {processed_name}".strip())
+            if self.debug_mode and name.text != processed_name:
+                print(
+                    f"[{name.english_text}] {name.text} => {processed_name}".strip()
+                )
             name.text = processed_name
 
         return names
 
     def _call_inplace(
-        self, names: Iterable[TransliteratedName]
-    ) -> Iterable[TransliteratedName]:
+        self, names: List[TransliteratedName]
+    ) -> List[TransliteratedName]:
 
         output = []
 
         for name in names:
-            if self.debug_mode:
-                print(f"[{name.english_text}] {name.text}".strip())
             processed_name = self.process(name.text)
 
-            if self.debug_mode:
-                print(f"[{name.english_text}] {processed_name}".strip())
+            if self.debug_mode and name.text != processed_name:
+                print(
+                    f"[{name.english_text}] {name.text} => {processed_name}".strip()
+                )
             output.append(
                 TransliteratedName(
                     text=processed_name,
@@ -635,13 +601,11 @@ class PermuteLowestDistance(NameProcessor):
         self.romanizer = UniversalRomanizer(num_workers=self.num_workers)
 
     def romanize(self, names: List[str]) -> List[str]:
-        romanizer = UniversalRomanizer()
-
-        return romanizer(names)
+        return self.romanizer(names)
 
     def _call_immutable(
-        self, names: Iterable[TransliteratedName]
-    ) -> Iterable[TransliteratedName]:
+        self, names: List[TransliteratedName]
+    ) -> List[TransliteratedName]:
 
         output = []
 
@@ -649,7 +613,6 @@ class PermuteLowestDistance(NameProcessor):
 
         for name, romanized_name in zip(names, romanized_names):
             tokens = name.text.split()
-            print(tokens)
             romanized_tokens = romanized_name.split()
 
             # skip over names that have too few or too many tokens
@@ -704,8 +667,8 @@ class PermuteLowestDistance(NameProcessor):
         return output
 
     def _call_inplace(
-        self, names: Iterable[TransliteratedName]
-    ) -> Iterable[TransliteratedName]:
+        self, names: List[TransliteratedName]
+    ) -> List[TransliteratedName]:
 
         romanized_names = self.romanize([n.text for n in names])
 
@@ -843,7 +806,7 @@ class Corpus:
         if self.find_best_token_permutation:
             if self.debug_mode:
                 print("[Corpus] Applying NameProcessor...")
-            self.names = list(self.permuter(self.names))
+            self.names = self.permuter(self.names)
 
         if self.debug_mode:
             print("[Corpus] Filtering out names with blank text...")
