@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 usage () {
     echo "Usage: bash separate_folder_dump.sh LANGUAGES OUTPUT_FOLDER [ENTITY_TYPES=PER,LOC,ORG]"
@@ -14,8 +14,7 @@ format="tsv"
 mkdir --verbose -p $output_folder/combined
 entity_types=$(echo "${3:-PER,LOC,ORG}" | tr "," " ")
 
-# NOTE: these are not enabled post-emnlp
-#exclude_these_langs=$(cat ./data/languages_to_drop.txt)
+# NOTE: add comma separted list here to exclude languages
 exclude_these_langs=""
 
 dump () {
@@ -35,8 +34,8 @@ dump () {
 
     if [ -z "${exclude_these_langs}" ]
     then
-        echo "[INFO] No languages being excluded."
-        exclude_langs_flag=""
+        echo "[INFO] No languages being excluded except English (en)."
+        exclude_langs_flag="-L en"
     else
         echo "[INFO] Excluding ${exclude_these_langs//,/, }."
         exclude_langs_flag="-L ${exclude_these_langs}"
