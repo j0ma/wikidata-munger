@@ -5,7 +5,10 @@ from typing import Generator, Set, List
 import multiprocessing as mp
 
 import click
-from wikidata_helpers import WikidataMongoIngesterWorker, DEFAULT_MONGODB_PORT
+from scripts.io.wikidata_helpers import (
+    WikidataMongoIngesterWorker,
+    DEFAULT_MONGODB_PORT,
+)
 from pymongo import MongoClient
 
 

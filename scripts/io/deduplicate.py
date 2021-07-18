@@ -7,7 +7,7 @@ import pandas as pd
 import wikidata_helpers as wh
 
 
-def deduplicate(data: pd.DataFrame) -> pd.DataFrame:
+def apply_trumping_rules(data: pd.DataFrame) -> pd.DataFrame:
 
     # count how many types for each id
     id_to_ntypes_df = (
@@ -100,7 +100,7 @@ def filter_am_ti(data: pd.DataFrame) -> pd.DataFrame:
             try:
                 alias_not_latin = bool(not row.is_latin)
             except AttributeError:
-                alias_not_latin = True # if is_latin not found
+                alias_not_latin = True  # if is_latin not found
 
             return id_is_suitable and alias_not_latin
 
@@ -130,17 +130,21 @@ def main(input_file, output_file, io_format, alias_column, english_column):
     # read in data
     data = wh.read(input_file, io_format=io_format)
 
+    # drop rows that are not entities (e.g. P-ids)
+    data = data[data.id.str.startswith("Q")]
+
     # change <english_column> to "eng"
     data = data.rename(columns={english_column: "eng"})
 
     # deduplicate rows using trumping rules
-    data = deduplicate(data)
+    data = apply_trumping_rules(data)
 
     # filter amharic & tigrinya
     data = filter_am_ti(data)
 
     # write to disk
     wh.write(data, output_file, io_format=io_format)
+
 
 if __name__ == "__main__":
     main()

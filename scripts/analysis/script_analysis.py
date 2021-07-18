@@ -123,16 +123,28 @@ class UnicodeAnalyzer:
         return histogram
 
 
-@attr.s(frozen=False, slots=True)
+@attr.s(frozen=False, slots=True, hash=True)
 class TransliteratedName:
     text: str = attr.ib()
     language: str = attr.ib()
     unicode_analyzer: UnicodeAnalyzer = attr.ib(repr=False)
+    wikidata_id: str = attr.ib(default="Q0")  # fake default
+    conll_type: Optional[str] = attr.ib(default="NONE")  # fake default
     anomalous: Optional[bool] = attr.ib(default=None)
     noise_sample: Optional[bool] = attr.ib(default=False)
     english_text: Optional[str] = attr.ib(default=None)
     analyze_unicode: bool = attr.ib(default=True, repr=False)
     alignment: Optional["Alignment"] = attr.ib(default=None, repr=False)
+    _original_text: Optional[str] = attr.ib(default=None, repr=False)
+    is_unchanged: bool = attr.ib(default=True)
+
+    @property
+    def original_text(self) -> str:
+        return self._original_text or self.text
+
+    @original_text.setter
+    def original_text(self, text) -> None:
+        self._original_text = text
 
     @property
     def most_common_unicode_block(self) -> str:
@@ -148,6 +160,49 @@ class TransliteratedName:
     def add_alignment(self, alignment: "Alignment") -> None:
         self.alignment = alignment
 
+    def to_dict(
+        self,
+        english_text_key: str = "eng",
+        text_key: str = "alias",
+        wikidata_id_key: str = "id",
+        conll_type_key: str = "type",
+        unicode_block_key: str = "most_common_unicode_block",
+        original_text_key: str = "original_text",
+        language_key: str = "language",
+    ) -> Dict[str, str]:
+        return {
+            english_text_key: self.english_text or "",
+            text_key: self.text,
+            wikidata_id_key: self.wikidata_id,
+            conll_type_key: self.conll_type or "",
+            unicode_block_key: self.most_common_unicode_block,
+            original_text_key: self.original_text or "",
+            language_key: self.language,
+        }
+
+    def to_series(
+        self,
+        english_text_key: str = "eng",
+        text_key: str = "alias",
+        wikidata_id_key: str = "id",
+        conll_type_key: str = "type",
+        unicode_block_key: str = "most_common_unicode_block",
+        original_text_key: str = "original_text",
+        language_key: str = "language",
+    ):
+
+        return pd.Series(
+            self.to_dict(
+                english_text_key,
+                text_key,
+                wikidata_id_key,
+                conll_type_key,
+                unicode_block_key,
+                original_text_key,
+                language_key,
+            )
+        )
+
 
 @attr.s(frozen=False, slots=True)
 class Alignment:
@@ -160,7 +215,9 @@ class Alignment:
     ) -> None:
 
         self.alignment_str = self.alignment_str.strip()
-        self.n_cross_alignments = self.compute_cross_alignments()
+
+        if self.alignment_str:
+            self.n_cross_alignments = self.compute_cross_alignments()
 
     def compute_cross_alignments(self) -> int:
         n_cross_alignments = 0
@@ -200,10 +257,35 @@ class NameWriter:
         self,
         splits: Dict[str, List[TransliteratedName]],
         unicode_block_mode: bool = True,
-        name_processor_mode: bool = False,
+        write_permutations_mode: bool = False,
+        field_name_map: Optional[Dict[str, str]] = None,
     ) -> None:
 
-        assert unicode_block_mode or name_processor_mode
+        assert unicode_block_mode or write_permutations_mode
+
+        if not field_name_map:
+            field_name_map = {
+                "wikidata_id": "id",
+                "conll_type": "type",
+                "text": "alias",
+                "english_text": "eng",
+                "unicode_block": "most_common_unicode_block",
+                "original_text": "original_text",
+                "language": "language",
+            }
+
+        field_names = [
+            field_name_map["wikidata_id"],
+            field_name_map["language"],
+            field_name_map["conll_type"],
+            field_name_map["text"],
+        ]
+        field_names.append(
+            field_name_map["original_text"]
+
+            if write_permutations_mode
+            else field_name_map["unicode_block"]
+        )
 
         if not self.out_folder:
             self.out_folder = Path(tf.mkdtemp())
@@ -224,32 +306,19 @@ class NameWriter:
             path = self.out_folder / f"{category}.{extension}"
 
             with open(path, "w", encoding="utf-8") as f:
-                if name_processor_mode:
-                    writer = csv.DictWriter(
-                        f,
-                        fieldnames=["language", "text", "english_text"],
-                        extrasaction="ignore",
-                        delimiter="\t",
-                    )
-                    writer.writeheader()
+                writer = csv.DictWriter(
+                    f,
+                    fieldnames=field_names,
+                    extrasaction="ignore",
+                    delimiter="\t",
+                )
+
+                writer.writeheader()
 
                 for name in tqdm(
                     sorted(names, key=lambda name: name.text), total=len(names)
                 ):
-                    if unicode_block_mode:
-                        row = (
-                            f"{name.text}\t{name.most_common_unicode_block}\n"
-                        )
-                        f.write(row)
-                    elif name_processor_mode:
-
-                        writer.writerow(
-                            {
-                                "language": name.language,
-                                "text": name.text,
-                                "english_text": name.english_text,
-                            }
-                        )
+                    writer.writerow(name.to_dict())
 
             if self.debug_mode:
                 print(f"[{category}] Names written to {path}")
@@ -271,7 +340,8 @@ class CorpusStatistics:
     )
 
     mean_cross_alignments: float = attr.ib(default=0.0)
-    total_cross_alignments: float = attr.ib(default=0)
+    total_cross_alignments: int = attr.ib(default=0)
+    total_permuted: int = attr.ib(default=0)
 
     def __attrs_post_init__(self) -> None:
 
@@ -288,6 +358,8 @@ class CorpusStatistics:
         self.total_cross_alignments = sum(
             [a.n_cross_alignments if a else 0 for a in self.alignments]
         )
+
+        self.total_permuted = sum(not n.is_unchanged for n in self.names)
 
 
 @attr.s
@@ -376,11 +448,12 @@ class FastAligner:
         self,
         iterable: Iterable[str],
     ) -> List[Alignment]:
-        alignments = [
-            Alignment(alignment_str=alignment_string)
 
-            for alignment_string in iterable
-        ]
+        alignments = []
+
+        for alignment_string in tqdm(iterable):
+            a = Alignment(alignment_str=alignment_string)
+            alignments.append(a)
 
         return alignments
 
@@ -497,7 +570,7 @@ class NameProcessor:
         else:
             return self._call_immutable(names)
 
-    def _call_immutable(
+    def _call_inplace(
         self, names: List[TransliteratedName]
     ) -> List[TransliteratedName]:
 
@@ -508,11 +581,13 @@ class NameProcessor:
                 print(
                     f"[{name.english_text}] {name.text} => {processed_name}".strip()
                 )
+            name.is_unchanged = bool(name.text == processed_name)
+            name.original_text = name.text
             name.text = processed_name
 
         return names
 
-    def _call_inplace(
+    def _call_immutable(
         self, names: List[TransliteratedName]
     ) -> List[TransliteratedName]:
 
@@ -534,6 +609,8 @@ class NameProcessor:
                     noise_sample=name.noise_sample,
                     english_text=name.english_text,
                     alignment=name.alignment,
+                    original_text=name.text,
+                    is_unchanged=bool(name.text == processed_name),
                 )
             )
 
@@ -709,6 +786,8 @@ class PermuteLowestDistance(NameProcessor):
 class TransliteratedNameLoader:
     language_column: str = attr.ib(default="language")
     name_column: str = attr.ib(default="alias", repr=False)
+    wikidata_id_column: str = attr.ib(default="id", repr=False)
+    conll_type_column: str = attr.ib(default="type", repr=False)
     english_column: Optional[str] = attr.ib(default="eng", repr=False)
     unicode_analyzer = UnicodeAnalyzer()
     debug_mode: bool = attr.ib(default=False)
@@ -726,6 +805,8 @@ class TransliteratedNameLoader:
             english_text=str(row[self.english_column]),
             language=row[self.language_column],
             unicode_analyzer=self.unicode_analyzer,
+            conll_type=row[self.conll_type_column],
+            wikidata_id=row[self.wikidata_id_column],
         )
 
     def __call__(self, corpus: pd.DataFrame) -> List[TransliteratedName]:
@@ -836,7 +917,7 @@ class Corpus:
         self.names = _names
 
     def compute_stats(self) -> None:
-        self.languages = sorted(
+        self.languages: List[str] = sorted(
             list(set(name.language for name in self.names))
         )
         self.stats: Dict[str, CorpusStatistics] = {}
@@ -847,7 +928,7 @@ class Corpus:
             names=self.names, alignments=self.alignments
         )
 
-        for language in self.languages:
+        for language in tqdm(self.languages):
             if self.debug_mode:
                 print(f"[compute_stats] Computing stats for {language}...")
             names_subset = [n for n in self.names if n.language == language]
@@ -873,14 +954,14 @@ class Corpus:
         self.name_writer.write(
             self.split_names(write_noise_samples),
             unicode_block_mode=True,
-            name_processor_mode=False,
+            write_permutations_mode=False,
         )
 
-    def write_names_tsv(self):
+    def write_permutations(self):
         self.name_writer.write(
             {"all_names": self.names},
             unicode_block_mode=False,
-            name_processor_mode=True,
+            write_permutations_mode=True,
         )
 
 

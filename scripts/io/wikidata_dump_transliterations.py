@@ -35,7 +35,7 @@ def output_jsonl(
             continue
         row = wh.orjson_dump(
             {
-                "id": wikidata_id,
+                "wikidata_id": wikidata_id,
                 "name": name,
                 "alias": alias,
                 "language": lang,
@@ -64,7 +64,7 @@ def output_csv(
     writer = csv.DictWriter(
         f,
         delimiter=delimiter,
-        fieldnames=["id", "name", "alias", "language", "type"],
+        fieldnames=["wikidata_id", "name", "alias", "language", "type"],
         extrasaction="ignore",
     )
 
@@ -73,7 +73,7 @@ def output_csv(
 
     rows = (
         {
-            "id": wikidata_id,
+            "wikidata_id": wikidata_id,
             "name": name,
             "alias": alias,
             "language": lang,
@@ -209,7 +209,10 @@ def main(
 
     # form connections to mongo db
     client = (
-        MongoClient(mongodb_uri) if mongodb_uri else MongoClient(mongodb_port)
+        MongoClient(mongodb_uri)
+
+        if mongodb_uri
+        else MongoClient(host=None, port=mongodb_port)
     )
     subclasses = client[database_name][subclass_coll_name]
     db = client[database_name][collection_name]

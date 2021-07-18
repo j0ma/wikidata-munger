@@ -1,5 +1,5 @@
 from typing import Dict, Tuple, Type, List, Iterable
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 import script_analysis as sa
 import pandas as pd
@@ -57,7 +57,7 @@ def compute_crossing_alignments_pooled(
         print(
             f"[compute_crossing_alignments] Writing names out to {big_corpus.out_folder}:"
         )
-        big_corpus.write_names_tsv()
+        big_corpus.write_permutations()
 
     print(
         "[compute_crossing_alignments] Avg. number of crossing alignments per language:"
@@ -67,6 +67,15 @@ def compute_crossing_alignments_pooled(
         lang_long = human_readable_lang_names.get(lang, lang)
         avg_alignments = stats_per_lang.mean_cross_alignments
         print(f"{lang_long}\t{avg_alignments}")
+
+    print(
+        "[compute_crossing_alignments] Number of permuted words per language:"
+    )
+
+    for lang, stats_per_lang in big_corpus.stats.items():
+        lang_long = human_readable_lang_names.get(lang, lang)
+        total_permuted = stats_per_lang.total_permuted
+        print(f"{lang_long}\t{total_permuted}")
 
 
 def compute_crossing_alignments_unpooled(
