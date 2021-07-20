@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -euo pipefail
 
 # Creates training data for the name permutation transformer by first
 # outputting all names with all permutations applied to them and then
@@ -73,7 +73,6 @@ main () {
         # get header for combined output; this will only execute once 
         if [ "${need_header}" = "true" ]
         then
-            echo "ANANASAKAAMA"
             head -1 ${data_output_folder}/*.tsv | tee -a "${temp_combined_output}"
             need_header="false"
         else
