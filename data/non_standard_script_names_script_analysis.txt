@@ -1,0 +1,95 @@
+./ady-cyrl
+    158 BASIC_LATIN
+      1 CYRILLIC
+./aeb-arab
+   2840 ARABIC
+    166 BASIC_LATIN
+./aeb-latn
+   1673 BASIC_LATIN
+./bbc-latn
+   1672 BASIC_LATIN
+./gom-deva
+    157 BASIC_LATIN
+    257 DEVANAGARI
+./gom-latn
+   1936 BASIC_LATIN
+./hif-latn
+  26815 BASIC_LATIN
+      2 DIGIT
+      1 LATIN_EXTENDED_A
+      1 LATIN_EXTENDED_LETTER
+./ike-latn
+  26712 BASIC_LATIN
+      2 DIGIT
+      1 LATIN_EXTENDED_A
+      1 LATIN_EXTENDED_LETTER
+./kbd-cyrl
+    205 BASIC_LATIN
+      1 CYRILLIC
+./kk-cyrl
+    233 BASIC_LATIN
+  50741 CYRILLIC
+      2 DIGIT
+./kk-latn
+  76660 BASIC_LATIN
+      1 CYRILLIC
+      4 DIGIT
+     15 LATIN_EXTENDED_A
+    161 LATIN_EXTENDED_LETTER
+./ks-arab
+      2 ARABIC
+    204 BASIC_LATIN
+./ks-deva
+    206 BASIC_LATIN
+      2 DEVANAGARI
+./ku-latn
+      4 ARMENIAN
+  28422 BASIC_LATIN
+      1 CYRILLIC
+      3 DIGIT
+      3 LATIN_EXTENDED_A
+     22 LATIN_EXTENDED_LETTER
+./ruq-cyrl
+    217 BASIC_LATIN
+      1 CYRILLIC
+./ruq-latn
+  25695 BASIC_LATIN
+      2 DIGIT
+      1 LATIN_EXTENDED_A
+      1 LATIN_EXTENDED_LETTER
+./shi-latn
+  25690 BASIC_LATIN
+      2 DIGIT
+      1 LATIN_EXTENDED_A
+      1 LATIN_EXTENDED_LETTER
+./shi-tfng
+    205 BASIC_LATIN
+./shy-latn
+     26 BASIC_LATIN
+./skr-arab
+      3 ARABIC
+      1 BASIC_LATIN
+./sr-el
+ 202836 BASIC_LATIN
+     30 CYRILLIC
+     59 DIGIT
+     36 LATIN_EXTENDED_A
+      5 LATIN_EXTENDED_LETTER
+./tg-cyrl
+    219 BASIC_LATIN
+    556 CYRILLIC
+./tg-latn
+  28102 BASIC_LATIN
+      2 CYRILLIC
+      2 DIGIT
+      3 LATIN_EXTENDED_A
+      1 LATIN_EXTENDED_LETTER
+./tt-cyrl
+    427 BASIC_LATIN
+   1261 CYRILLIC
+     24 DIGIT
+./tt-latn
+  25902 BASIC_LATIN
+      2 DIGIT
+      1 LATIN_EXTENDED_A
+      1 LATIN_EXTENDED_LETTER
