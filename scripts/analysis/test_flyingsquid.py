@@ -82,7 +82,6 @@ def main(
         try:
             anomalous[language] = {
                 line.split("\t")[0].strip()
-
                 for line in open(
                     Path(anomalous_data_folder) / f"{language}_anomalous.txt"
                 )
@@ -129,6 +128,7 @@ def main(
                 anomalous_words = np.random.choice(
                     np.array(list(non_overlapping_names)),
                     size=n_noise_words,
+                    replace=False,
                 )
 
             corpus.add_words(
@@ -140,7 +140,6 @@ def main(
                         unicode_analyzer=ua,
                         anomalous=True,
                     )
-
                     for w in anomalous_words
                 ]
             )
@@ -203,19 +202,10 @@ def main(
                     yield -1
 
         ibt_preds = get_preds(incorrect_block_tagger)
-        # print(f"[{language}] IncorrectBlockTagger: {cr(ibt_preds)}")
-
         mbt_preds = get_preds(missing_block_tagger)
-        # print(f"[{language}] MissingBlockTagger: {cr(mbt_preds)}")
-
         dbt_preds = get_preds(distance_based_tagger)
-        # print(f"[{language}] DistanceBasedTagger: {cr(dbt_preds)}")
-
         hk_preds = get_preds(hiragana_katakana_tagger)
-        # print(f"[{language}] HiraganaKatakanaTagger: {cr(hk_preds)}")
-
         cjk_preds = get_preds(hiragana_katakana_tagger)
-        # print(f"[{language}] CJKTagger: {cr(cjk_preds)}")
 
         noisy_votes = np.vstack(
             [ibt_preds, mbt_preds, dbt_preds, hk_preds, cjk_preds]
@@ -239,7 +229,6 @@ def main(
                 language=w.language,
                 noise_sample=w.noise_sample,
             )
-
             for w, pred in zip(corpus.words, majority_vote_preds)
         ]
 
