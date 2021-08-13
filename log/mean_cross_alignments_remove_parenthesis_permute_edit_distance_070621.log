@@ -1,0 +1,2290 @@
+Name Loader: TransliteratedNameLoader(language_column='language', num_workers=2, parallelize=True, debug_mode=False)
+Loading names using p_map and 5 workers...
+[compute_crossing_alignments] Creating pooled corpus...
+[FastAligner] Saving alignment training data to: /tmp/tmpoh4n7px1
+[FastAligner] Saving fast_align output to: /tmp/tmp74o7awoo
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='jae b', language='fr', anomalous=None, noise_sample=False, english_text='JB')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Chad Lail', language='fr', anomalous=None, noise_sample=False, english_text='Gunner')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='elly', language='fr', anomalous=None, noise_sample=False, english_text='ELLY')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='fr', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Deborah Dyer', language='fr', anomalous=None, noise_sample=False, english_text='Skin')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cowkeeper', language='fr', anomalous=None, noise_sample=False, english_text='Ahaya')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='ENASA', language='fr', anomalous=None, noise_sample=False, english_text='Pegaso')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='fr', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='you', language='fr', anomalous=None, noise_sample=False, english_text='Chen Ya Lan')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='fr', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bilpun', language='fr', anomalous=None, noise_sample=False, english_text='Koba LaD')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irmgard Schlögl', language='fr', anomalous=None, noise_sample=False, english_text='Myokyo-ni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='fr', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='fr', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pinga', language='fr', anomalous=None, noise_sample=False, english_text='José Lázaro Robles')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Winnebagos', language='fr', anomalous=None, noise_sample=False, english_text='Ho-Chunk')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Sidney', language='fr', anomalous=None, noise_sample=False, english_text='Paul Ramboux')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Quinn Ojinnaka', language='fr', anomalous=None, noise_sample=False, english_text='Moose')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Marta Nael', language='fr', anomalous=None, noise_sample=False, english_text='oof')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='fr', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jamie', language='fr', anomalous=None, noise_sample=False, english_text='Esposa:')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Rama IV', language='fr', anomalous=None, noise_sample=False, english_text='Mongkut')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bulâki', language='fr', anomalous=None, noise_sample=False, english_text='Dawar')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pétrodollars', language='fr', anomalous=None, noise_sample=False, english_text='L.I.O.')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Emjay', language='fr', anomalous=None, noise_sample=False, english_text='Marie Josée Riel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ken Johnson', language='fr', anomalous=None, noise_sample=False, english_text='Slick')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='D-Pryde', language='fr', anomalous=None, noise_sample=False, english_text='RUSSELL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Emperor X', language='fr', anomalous=None, noise_sample=False, english_text='Chad R. Matheny')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cane', language='fr', anomalous=None, noise_sample=False, english_text='Tomoyuki Nishita')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='heppy twin burn', language='fr', anomalous=None, noise_sample=False, english_text='RIP')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='fr', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Léo', language='fr', anomalous=None, noise_sample=False, english_text='Arakel Babakhanian')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Koji Tano', language='fr', anomalous=None, noise_sample=False, english_text='MSBR')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eskimo', language='fr', anomalous=None, noise_sample=False, english_text='Joyryde')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Zōki', language='fr', anomalous=None, noise_sample=False, english_text='Masumoto')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ptolémée XV', language='fr', anomalous=None, noise_sample=False, english_text='Caesarion')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='T', language='fr', anomalous=None, noise_sample=False, english_text='Yoon Mi-rae')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Frank Renger', language='fr', anomalous=None, noise_sample=False, english_text='SAMNV')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='kusi', language='fr', anomalous=None, noise_sample=False, english_text='Nayanthara')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='fr', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cha Hakyeon', language='fr', anomalous=None, noise_sample=False, english_text='N')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='C.J. Perry', language='fr', anomalous=None, noise_sample=False, english_text='Lana')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Robert Card', language='fr', anomalous=None, noise_sample=False, english_text='Blackmill')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Herzog', language='fr', anomalous=None, noise_sample=False, english_text='Duke')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Nam-joon', language='fr', anomalous=None, noise_sample=False, english_text='RM')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='fr', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Derek Rowen', language='fr', anomalous=None, noise_sample=False, english_text='Guggi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Be-B', language='fr', anomalous=None, noise_sample=False, english_text='Yō Izumi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yusaf Parvez', language='fr', anomalous=None, noise_sample=False, english_text='Vicotnik')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Mudge', language='fr', anomalous=None, noise_sample=False, english_text='Peiter Zatko')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='dog', language='fr', anomalous=None, noise_sample=False, english_text='Daniël Allewaert')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Patachon', language='fr', anomalous=None, noise_sample=False, english_text='Axel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='ru', anomalous=None, noise_sample=False, english_text='name unknown')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='ru', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Адельгейда', language='ru', anomalous=None, noise_sample=False, english_text='?')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='PartinG', language='ru', anomalous=None, noise_sample=False, english_text='Won Lee Sak')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='arapic', language='ar', anomalous=None, noise_sample=False, english_text='Renzo Rosso')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='محمد محمد زرد', language='ar', anomalous=None, noise_sample=False, english_text='en')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='ARA', language='ar', anomalous=None, noise_sample=False, english_text='Vijay Eswaran')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='bulgarski', language='bg', anomalous=None, noise_sample=False, english_text='Sophie Schütt')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='T', language='bg', anomalous=None, noise_sample=False, english_text='Yoon Mi-rae')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='br', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='br', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Robert Pešut', language='br', anomalous=None, noise_sample=False, english_text='Magnifico')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Chad Lail', language='ca', anomalous=None, noise_sample=False, english_text='Gunner')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eduardo Mendes', language='ca', anomalous=None, noise_sample=False, english_text='Dito')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Orlene Crouse', language='ca', anomalous=None, noise_sample=False, english_text='Kay')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='ca', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Deborah Dyer', language='ca', anomalous=None, noise_sample=False, english_text='Skin')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='ca', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irmgard Schlögl', language='ca', anomalous=None, noise_sample=False, english_text='Myokyo-ni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='ca', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='ca', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JackoBond', language='ca', anomalous=None, noise_sample=False, english_text='RIET')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Dias Leandson da Silva', language='ca', anomalous=None, noise_sample=False, english_text='Rico')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Quinn Ojinnaka', language='ca', anomalous=None, noise_sample=False, english_text='Moose')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='ca', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Marta Nael', language='ca', anomalous=None, noise_sample=False, english_text='oof')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='ca', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ramon Tosas Fuentes', language='ca', anomalous=None, noise_sample=False, english_text='Iva')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pétrodollars', language='ca', anomalous=None, noise_sample=False, english_text='L.I.O.')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Emjay', language='ca', anomalous=None, noise_sample=False, english_text='Marie Josée Riel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ken Johnson', language='ca', anomalous=None, noise_sample=False, english_text='Slick')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='D-Pryde', language='ca', anomalous=None, noise_sample=False, english_text='RUSSELL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Emperor X', language='ca', anomalous=None, noise_sample=False, english_text='Chad R. Matheny')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Enrique Pérez Vergara', language='ca', anomalous=None, noise_sample=False, english_text='Flipy')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Chumbi', language='ca', anomalous=None, noise_sample=False, english_text='Rafael Fernández Martínez')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Taehyung', language='ca', anomalous=None, noise_sample=False, english_text='V')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='ca', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irene', language='ca', anomalous=None, noise_sample=False, english_text='Tzitzak')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='T', language='ca', anomalous=None, noise_sample=False, english_text='Yoon Mi-rae')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Frank Renger', language='ca', anomalous=None, noise_sample=False, english_text='SAMNV')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Anderson Rodney Oliveira de', language='ca', anomalous=None, noise_sample=False, english_text='Babù')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='ca', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ileana Cabra Joglar', language='ca', anomalous=None, noise_sample=False, english_text='iLe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='C.J. Perry', language='ca', anomalous=None, noise_sample=False, english_text='Lana')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Francisco Nicolás Veza Fragoso', language='ca', anomalous=None, noise_sample=False, english_text='Paqui')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Herzog', language='ca', anomalous=None, noise_sample=False, english_text='Duke')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='ca', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yung Berg', language='ca', anomalous=None, noise_sample=False, english_text='Hitmaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yusaf Parvez', language='ca', anomalous=None, noise_sample=False, english_text='Vicotnik')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Mudge', language='ca', anomalous=None, noise_sample=False, english_text='Peiter Zatko')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='dog', language='ca', anomalous=None, noise_sample=False, english_text='Daniël Allewaert')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Christopher Juel Barriere', language='ca', anomalous=None, noise_sample=False, english_text='3-2')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irene Crouse', language='ca', anomalous=None, noise_sample=False, english_text='Kit')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kevin Adams', language='ca', anomalous=None, noise_sample=False, english_text='YGTUT')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Černovous', language='cs', anomalous=None, noise_sample=False, english_text='Blackbeard')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='SEPAR', language='cs', anomalous=None, noise_sample=False, english_text='separ')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='kloboučník', language='cs', anomalous=None, noise_sample=False, english_text='hatter')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Dupuy', language='cs', anomalous=None, noise_sample=False, english_text='Agénor Altaroche')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joseph Aaron King', language='cs', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='cs', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='cs', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Vinnebagové', language='cs', anomalous=None, noise_sample=False, english_text='Ho-Chunk')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nguyen-Sen', language='cs', anomalous=None, noise_sample=False, english_text='Tô hoài')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pribigněv', language='cs', anomalous=None, noise_sample=False, english_text='Udo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Hector Hugh Munro', language='cs', anomalous=None, noise_sample=False, english_text='Saki')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='cs', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Max', language='cs', anomalous=None, noise_sample=False, english_text='Emil Weller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Whim-Wham', language='cs', anomalous=None, noise_sample=False, english_text='Allen Curnow')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Utekaj', language='cs', anomalous=None, noise_sample=False, english_text='Ivan Thurzo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kwon Hyuk', language='cs', anomalous=None, noise_sample=False, english_text='Dean')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Aquarius', language='cs', anomalous=None, noise_sample=False, english_text='Photek')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Vít z Dampierre', language='cs', anomalous=None, noise_sample=False, english_text='Guy')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Vlad I. Uzurpátor', language='cs', anomalous=None, noise_sample=False, english_text='Nenea')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Enzo Ghinazzi', language='cs', anomalous=None, noise_sample=False, english_text='Pupo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Google selv kørende bil', language='da', anomalous=None, noise_sample=False, english_text='Waymo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eduardo Mendes', language='da', anomalous=None, noise_sample=False, english_text='Dito')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ingo Kunzi', language='da', anomalous=None, noise_sample=False, english_text='Ayla')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Thierry Terrasson', language='da', anomalous=None, noise_sample=False, english_text='Jim')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Davide Salvadei', language='da', anomalous=None, noise_sample=False, english_text='Eron')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Moacyr', language='da', anomalous=None, noise_sample=False, english_text='Biguá')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='da', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='da', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irmgard Schlögl', language='da', anomalous=None, noise_sample=False, english_text='Myokyo-ni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='da', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='da', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JackoBond', language='da', anomalous=None, noise_sample=False, english_text='RIET')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='da', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='da', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Rama IV', language='da', anomalous=None, noise_sample=False, english_text='Mongkut')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Antoni Adrover Colom', language='da', anomalous=None, noise_sample=False, english_text='Tuni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Rob Wout', language='da', anomalous=None, noise_sample=False, english_text='Opland')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='GoToon', language='da', anomalous=None, noise_sample=False, english_text='Olivier Fallaix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pétrodollars', language='da', anomalous=None, noise_sample=False, english_text='L.I.O.')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='dødfødt tvilling Hepburn', language='da', anomalous=None, noise_sample=False, english_text='RIP')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='da', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='G-Spott', language='da', anomalous=None, noise_sample=False, english_text='Richard Durand')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='René Pawlowitz', language='da', anomalous=None, noise_sample=False, english_text='Shed')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='APOC', language='da', anomalous=None, noise_sample=False, english_text='Viktor')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Frank Renger', language='da', anomalous=None, noise_sample=False, english_text='SAMNV')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='da', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Roberto Gañán Ojea', language='da', anomalous=None, noise_sample=False, english_text='Pulpul')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='da', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Boundzound', language='da', anomalous=None, noise_sample=False, english_text='Demba Nabé')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yung Berg', language='da', anomalous=None, noise_sample=False, english_text='Hitmaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kenneth Åkesson', language='da', anomalous=None, noise_sample=False, english_text='Tjodalv')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Abaddon', language='da', anomalous=None, noise_sample=False, english_text='Tony Bray')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pac', language='da', anomalous=None, noise_sample=False, english_text='Neville')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Erez Safar', language='da', anomalous=None, noise_sample=False, english_text='Diwon')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Chad Lail', language='de', anomalous=None, noise_sample=False, english_text='Gunner')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pat', language='de', anomalous=None, noise_sample=False, english_text='Ole')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bewerber', language='de', anomalous=None, noise_sample=False, english_text='applicant')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ingo Kunzi', language='de', anomalous=None, noise_sample=False, english_text='Ayla')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cowkeeper', language='de', anomalous=None, noise_sample=False, english_text='Ahaya')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Thierry Terrasson', language='de', anomalous=None, noise_sample=False, english_text='Jim')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Davide Salvadei', language='de', anomalous=None, noise_sample=False, english_text='Eron')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='de', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='de', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Brian Fennell', language='de', anomalous=None, noise_sample=False, english_text='SYML')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bilpun', language='de', anomalous=None, noise_sample=False, english_text='Koba LaD')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luzbel', language='de', anomalous=None, noise_sample=False, english_text='Gronda')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irmgard Schlögl', language='de', anomalous=None, noise_sample=False, english_text='Myokyo-ni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='de', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pinga', language='de', anomalous=None, noise_sample=False, english_text='José Lázaro Robles')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Sidney', language='de', anomalous=None, noise_sample=False, english_text='Paul Ramboux')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='de', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Quinn Ojinnaka', language='de', anomalous=None, noise_sample=False, english_text='Moose')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jonathan Gray', language='de', anomalous=None, noise_sample=False, english_text='Spike')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pribignew', language='de', anomalous=None, noise_sample=False, english_text='Udo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JoHiro', language='de', anomalous=None, noise_sample=False, english_text='Xu Guang')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jamie', language='de', anomalous=None, noise_sample=False, english_text='Esposa:')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Rollfix', language='de', anomalous=None, noise_sample=False, english_text='haresh Kumar')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Tensai', language='de', anomalous=None, noise_sample=False, english_text='Matt Bloom')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='de', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Koji Tano', language='de', anomalous=None, noise_sample=False, english_text='MSBR')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='René Pawlowitz', language='de', anomalous=None, noise_sample=False, english_text='Shed')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Justinas Mikulskis', language='de', anomalous=None, noise_sample=False, english_text='S13')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Frank Renger', language='de', anomalous=None, noise_sample=False, english_text='SAMNV')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jorge López', language='de', anomalous=None, noise_sample=False, english_text='Giro')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yoh', language='de', anomalous=None, noise_sample=False, english_text='Nyô')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Liu', language='de', anomalous=None, noise_sample=False, english_text='Mǎ Zǐ')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='de', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='icekiid', language='de', anomalous=None, noise_sample=False, english_text='ICEKIID')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eje II.', language='de', anomalous=None, noise_sample=False, english_text='Ay')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Stier', language='de', anomalous=None, noise_sample=False, english_text='Bull')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Herzog', language='de', anomalous=None, noise_sample=False, english_text='Duke')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Nam-joon', language='de', anomalous=None, noise_sample=False, english_text='RM')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jessica Kresa', language='de', anomalous=None, noise_sample=False, english_text='ODB')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Derek Rowen', language='de', anomalous=None, noise_sample=False, english_text='Guggi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Boundzound', language='de', anomalous=None, noise_sample=False, english_text='Demba Nabé')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yung Berg', language='de', anomalous=None, noise_sample=False, english_text='Hitmaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kenneth Åkesson', language='de', anomalous=None, noise_sample=False, english_text='Tjodalv')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Hrant Markarjan', language='de', anomalous=None, noise_sample=False, english_text='Tousi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Erez Safar', language='de', anomalous=None, noise_sample=False, english_text='Diwon')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='dog', language='de', anomalous=None, noise_sample=False, english_text='Daniël Allewaert')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Patachon', language='de', anomalous=None, noise_sample=False, english_text='Axel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='de-ch', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='de-ch', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='de-ch', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JoHiro', language='de-ch', anomalous=None, noise_sample=False, english_text='Xu Guang')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Taehyung', language='de-ch', anomalous=None, noise_sample=False, english_text='V')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='tigrina', language='de-ch', anomalous=None, noise_sample=False, english_text='Theo Walcott')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='el', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='en-ca', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='en-ca', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='en-ca', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Taehyung', language='en-ca', anomalous=None, noise_sample=False, english_text='V')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pac', language='en-ca', anomalous=None, noise_sample=False, english_text='Neville')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naomi', language='en-ca', anomalous=None, noise_sample=False, english_text='Trinity Fatu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='en-gb', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='en-gb', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='en-gb', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Taehyung', language='en-gb', anomalous=None, noise_sample=False, english_text='V')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='UK', language='en-gb', anomalous=None, noise_sample=False, english_text='Ben Fero')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Radar Entertainment', language='en-gb', anomalous=None, noise_sample=False, english_text='TID')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pac', language='en-gb', anomalous=None, noise_sample=False, english_text='Neville')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naomi', language='en-gb', anomalous=None, noise_sample=False, english_text='Trinity Fatu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='MUNEHIRO', language='es', anomalous=None, noise_sample=False, english_text='Sarina Suzuki')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='barf', language='es', anomalous=None, noise_sample=False, english_text='Jim Otto')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Loco', language='es', anomalous=None, noise_sample=False, english_text='Madman')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cara', language='es', anomalous=None, noise_sample=False, english_text='Guy Finley')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='dfvu', language='es', anomalous=None, noise_sample=False, english_text='James Nicol')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Orlene Crouse', language='es', anomalous=None, noise_sample=False, english_text='Kay')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='yo', language='es', anomalous=None, noise_sample=False, english_text="I'll")
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='es', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cowkeeper', language='es', anomalous=None, noise_sample=False, english_text='Ahaya')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='es', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Daniel García Pérez', language='es', anomalous=None, noise_sample=False, english_text='Toti')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='retna', language='es', anomalous=None, noise_sample=False, english_text='RETNA')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Clearlove', language='es', anomalous=None, noise_sample=False, english_text='Ming Kai')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ali Al-Hassan', language='es', anomalous=None, noise_sample=False, english_text='hjj')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bilpun', language='es', anomalous=None, noise_sample=False, english_text='Koba LaD')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Devbor', language='es', anomalous=None, noise_sample=False, english_text='Yang Qingning')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yusuf Aktaş', language='es', anomalous=None, noise_sample=False, english_text='Reynmen')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Akrobeto', language='es', anomalous=None, noise_sample=False, english_text='Papi gavi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='es', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bnon', language='es', anomalous=None, noise_sample=False, english_text='Sheshi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='es', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Quinn Ojinnaka', language='es', anomalous=None, noise_sample=False, english_text='Moose')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cerezo Víctor López', language='es', anomalous=None, noise_sample=False, english_text='Huida')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='es', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Marta Nael', language='es', anomalous=None, noise_sample=False, english_text='oof')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='es', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Gytha', language='es', anomalous=None, noise_sample=False, english_text='Maria Drozdek')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jamie', language='es', anomalous=None, noise_sample=False, english_text='Esposa:')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Antoni Adrover Colom', language='es', anomalous=None, noise_sample=False, english_text='Tuni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Emjay', language='es', anomalous=None, noise_sample=False, english_text='Marie Josée Riel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Emperor X', language='es', anomalous=None, noise_sample=False, english_text='Chad R. Matheny')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Habarwadaag', language='es', anomalous=None, noise_sample=False, english_text='cousin')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Juan', language='es', anomalous=None, noise_sample=False, english_text='Almighty')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='es', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eskimo', language='es', anomalous=None, noise_sample=False, english_text='Joyryde')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Sōki', language='es', anomalous=None, noise_sample=False, english_text='Masumoto')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Victor Giro', language='es', anomalous=None, noise_sample=False, english_text='PC')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='researcher', language='es', anomalous=None, noise_sample=False, english_text='Yu Song')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Carlos Williams', language='es', anomalous=None, noise_sample=False, english_text='MIT')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Diddy', language='es', anomalous=None, noise_sample=False, english_text='Sean Combs')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='es', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nigga', language='es', anomalous=None, noise_sample=False, english_text='Flex')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bang Cheol Yong', language='es', anomalous=None, noise_sample=False, english_text='Mir')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='C.J. Perry', language='es', anomalous=None, noise_sample=False, english_text='Lana')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Niña mala', language='es', anomalous=None, noise_sample=False, english_text='Genie')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='mateo', language='es', anomalous=None, noise_sample=False, english_text='Ernő Rubik')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Roberto Gañán Ojea', language='es', anomalous=None, noise_sample=False, english_text='Pulpul')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jessica Kresa', language='es', anomalous=None, noise_sample=False, english_text='ODB')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='KAZMA', language='es', anomalous=None, noise_sample=False, english_text='Basrah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='dog', language='es', anomalous=None, noise_sample=False, english_text='Daniël Allewaert')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Isaac Sánchez', language='es', anomalous=None, noise_sample=False, english_text='Loulogio')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Loles Ballester', language='es', anomalous=None, noise_sample=False, english_text='SPENSER')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='J-Williams', language='es', anomalous=None, noise_sample=False, english_text='Lutendo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irene Crouse', language='es', anomalous=None, noise_sample=False, english_text='Kit')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='ویکتور هولمبری', language='fa', anomalous=None, noise_sample=False, english_text='1987')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Graham', language='fi', anomalous=None, noise_sample=False, english_text='Levi Roots')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Majakka', language='fi', anomalous=None, noise_sample=False, english_text='Ole')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ranskalaiset', language='fi', anomalous=None, noise_sample=False, english_text='French')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Deborah Dyer', language='fi', anomalous=None, noise_sample=False, english_text='Skin')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='fi', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='fi', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='fi', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Winnebagot', language='fi', anomalous=None, noise_sample=False, english_text='Ho-Chunk')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='fi', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nagako', language='fi', anomalous=None, noise_sample=False, english_text='Kōjun')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Aaron Foulds', language='fi', anomalous=None, noise_sample=False, english_text='SBTRKT')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Emperor X', language='fi', anomalous=None, noise_sample=False, english_text='Chad R. Matheny')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='fi', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='fi', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kibo', language='fi', anomalous=None, noise_sample=False, english_text='James Parry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='fi', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cabungula', language='fi', anomalous=None, noise_sample=False, english_text='Love')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yung Berg', language='fi', anomalous=None, noise_sample=False, english_text='Hitmaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naomi', language='fi', anomalous=None, noise_sample=False, english_text='Trinity Fatu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Erez Safar', language='fi', anomalous=None, noise_sample=False, english_text='Diwon')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Perävaunu', language='fi', anomalous=None, noise_sample=False, english_text='Axel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jesse Valentine', language='fi', anomalous=None, noise_sample=False, english_text='F-777')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='RAM', language='he', anomalous=None, noise_sample=False, english_text='Jay Wright Forrester')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Google vezető nélküli autó', language='hu', anomalous=None, noise_sample=False, english_text='Waymo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jurij Vascsuk', language='hu', anomalous=None, noise_sample=False, english_text='Teo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Zoro', language='hu', anomalous=None, noise_sample=False, english_text='Ole')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Hórni', language='hu', anomalous=None, noise_sample=False, english_text='Neheb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='hu', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='hu', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='hu', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='végrehajtó', language='hu', anomalous=None, noise_sample=False, english_text='bailiff')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='hu', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='hu', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Popo', language='hu', anomalous=None, noise_sample=False, english_text='Raffaella Mariani')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='hu', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ta-jü', language='hu', anomalous=None, noise_sample=False, english_text='Yu the Great')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='ya', language='id', anomalous=None, noise_sample=False, english_text='Kurt Hugo Schneider')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='id', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='id', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Clinton Loomis', language='id', anomalous=None, noise_sample=False, english_text='Fear')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Edouard Dubourdeaux', language='id', anomalous=None, noise_sample=False, english_text='Smithzz')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jaryd Lazar', language='id', anomalous=None, noise_sample=False, english_text='Summit1g')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Sekhen', language='id', anomalous=None, noise_sample=False, english_text='Ka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='kamu', language='id', anomalous=None, noise_sample=False, english_text='Judi Andersen')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='id', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='LOKJBH', language='id', anomalous=None, noise_sample=False, english_text='SAMNV')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Gustav Magnusson', language='id', anomalous=None, noise_sample=False, english_text='S4')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naomi', language='id', anomalous=None, noise_sample=False, english_text='Trinity Fatu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Dolk', language='it', anomalous=None, noise_sample=False, english_text='Andreas Hamran Færø')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eduardo José Gomes Camessele Mendes', language='it', anomalous=None, noise_sample=False, english_text='Dito')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='it', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Rodae', language='it', anomalous=None, noise_sample=False, english_text='Oltcit')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Giuseppe di Braganza', language='it', anomalous=None, noise_sample=False, english_text='José')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Tooru Niimura', language='it', anomalous=None, noise_sample=False, english_text='Kyo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='it', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='it', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irmgard Schlögl', language='it', anomalous=None, noise_sample=False, english_text='Myokyo-ni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luiz Antônio da Costa', language='it', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='it', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JackoBond', language='it', anomalous=None, noise_sample=False, english_text='RIET')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Gb', language='it', anomalous=None, noise_sample=False, english_text='KB')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='LITTLE', language='it', anomalous=None, noise_sample=False, english_text='Kenji Kojima')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='ENGIN', language='it', anomalous=None, noise_sample=False, english_text='Takahiro Fujita')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pribignew', language='it', anomalous=None, noise_sample=False, english_text='Udo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='it', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Marta Nael', language='it', anomalous=None, noise_sample=False, english_text='oof')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Rollfix', language='it', anomalous=None, noise_sample=False, english_text='haresh Kumar')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='GoToon', language='it', anomalous=None, noise_sample=False, english_text='Olivier Fallaix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Emjay', language='it', anomalous=None, noise_sample=False, english_text='Marie Josée Riel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cane', language='it', anomalous=None, noise_sample=False, english_text='Tomoyuki Nishita')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='v', language='it', anomalous=None, noise_sample=False, english_text='Comprecht Sanders')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='it', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='it', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Admilson Estaline Dias Barros', language='it', anomalous=None, noise_sample=False, english_text='Gégé')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lynn Cook', language='it', anomalous=None, noise_sample=False, english_text='Alma')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Giovanni di Novgorod', language='it', anomalous=None, noise_sample=False, english_text='Ilya')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='GONGON', language='it', anomalous=None, noise_sample=False, english_text='Yūta Sugahara')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Zubi', language='it', anomalous=None, noise_sample=False, english_text='Andrés González Jaén')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='it', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Boundzound', language='it', anomalous=None, noise_sample=False, english_text='Demba Nabé')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yung Berg', language='it', anomalous=None, noise_sample=False, english_text='Hitmaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pac', language='it', anomalous=None, noise_sample=False, english_text='Neville')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naomi', language='it', anomalous=None, noise_sample=False, english_text='Trinity Fatu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Erez Safar', language='it', anomalous=None, noise_sample=False, english_text='Diwon')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='HIBARI', language='it', anomalous=None, noise_sample=False, english_text='Kaori Kadoguchi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jorge Augusto Fernandes', language='it', anomalous=None, noise_sample=False, english_text='Djô')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='SOL', language='ja', anomalous=None, noise_sample=False, english_text='Taeyang')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Spiv states', language='ja', anomalous=None, noise_sample=False, english_text='Jun')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='ENWA', language='ja', anomalous=None, noise_sample=False, english_text='Bruce Gradkowski')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='KENTA', language='ja', anomalous=None, noise_sample=False, english_text='Hideo Itami')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='shungo.', language='ja', anomalous=None, noise_sample=False, english_text='HIMK')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='LITTLE', language='ja', anomalous=None, noise_sample=False, english_text='Kenji Kojima')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='ENGIN', language='ja', anomalous=None, noise_sample=False, english_text='Takahiro Fujita')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='TASHA', language='ja', anomalous=None, noise_sample=False, english_text='Yoon Mi-rae')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='K-ness.', language='ja', anomalous=None, noise_sample=False, english_text='Makoto Saito')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='GONGON', language='ja', anomalous=None, noise_sample=False, english_text='Yūta Sugahara')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='V.I', language='ja', anomalous=None, noise_sample=False, english_text='Seungri')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='KAZMA', language='ja', anomalous=None, noise_sample=False, english_text='Basrah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='HIBARI', language='ja', anomalous=None, noise_sample=False, english_text='Kaori Kadoguchi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='KENTA', language='ko', anomalous=None, noise_sample=False, english_text='Hideo Itami')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='MYK', language='ko', anomalous=None, noise_sample=False, english_text='SALTNPAPER')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kasatra', language='la', anomalous=None, noise_sample=False, english_text='Mom Men')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Caritas', language='la', anomalous=None, noise_sample=False, english_text='Love of Rome')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='lt', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='lt', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='lt', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='lt', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='lt', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ošo', language='lt', anomalous=None, noise_sample=False, english_text='Rajneesh')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Heopss', language='lv', anomalous=None, noise_sample=False, english_text='Khufu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='lv', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Diddy', language='lv', anomalous=None, noise_sample=False, english_text='Sean Combs')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ošo', language='lv', anomalous=None, noise_sample=False, english_text='Rajneesh')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Dineh', language='nl', anomalous=None, noise_sample=False, english_text='Navajo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Chad Lail', language='nl', anomalous=None, noise_sample=False, english_text='Gunner')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Brian Donnelly', language='nl', anomalous=None, noise_sample=False, english_text='KAWS')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='elly', language='nl', anomalous=None, noise_sample=False, english_text='ELLY')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Watt', language='nl', anomalous=None, noise_sample=False, english_text='Ole')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='nl', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cowkeeper', language='nl', anomalous=None, noise_sample=False, english_text='Ahaya')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Davide Salvadei', language='nl', anomalous=None, noise_sample=False, english_text='Eron')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='nl', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Clearlove', language='nl', anomalous=None, noise_sample=False, english_text='Ming Kai')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ali Al-Hassan', language='nl', anomalous=None, noise_sample=False, english_text='hjj')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='nl', anomalous=None, noise_sample=False, english_text='name unknown')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irmgard Schlögl', language='nl', anomalous=None, noise_sample=False, english_text='Myokyo-ni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='nl', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='nl', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Isabelle Geffroy', language='nl', anomalous=None, noise_sample=False, english_text='Zaz')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='leerstoel', language='nl', anomalous=None, noise_sample=False, english_text='chair')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='nl', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Charité', language='nl', anomalous=None, noise_sample=False, english_text='Love of Rome')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Blitzkrieg', language='nl', anomalous=None, noise_sample=False, english_text='Jay Ross')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Hammett', language='nl', anomalous=None, noise_sample=False, english_text='Mr. 450')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Quinn Ojinnaka', language='nl', anomalous=None, noise_sample=False, english_text='Moose')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='nl', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='nl', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Siggi', language='nl', anomalous=None, noise_sample=False, english_text='Jochen Krause')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Dr.', language='nl', anomalous=None, noise_sample=False, english_text='Jessy Shaji')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Rama IV', language='nl', anomalous=None, noise_sample=False, english_text='Mongkut')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Rollfix', language='nl', anomalous=None, noise_sample=False, english_text='haresh Kumar')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Emjay', language='nl', anomalous=None, noise_sample=False, english_text='Marie Josée Riel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='D-Pryde', language='nl', anomalous=None, noise_sample=False, english_text='RUSSELL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='stillborn twin Hepburn', language='nl', anomalous=None, noise_sample=False, english_text='RIP')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='nl', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='nl', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='G-Spott', language='nl', anomalous=None, noise_sample=False, english_text='Richard Durand')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Koji Tano', language='nl', anomalous=None, noise_sample=False, english_text='MSBR')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eskimo', language='nl', anomalous=None, noise_sample=False, english_text='Joyryde')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Color', language='nl', anomalous=None, noise_sample=False, english_text='Yiwen Li')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kido', language='nl', anomalous=None, noise_sample=False, english_text='Gao Hanyu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Tr3yway', language='nl', anomalous=None, noise_sample=False, english_text='Shotti')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Carlos Williams', language='nl', anomalous=None, noise_sample=False, english_text='MIT')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Robert', language='nl', anomalous=None, noise_sample=False, english_text='Buzz Baldwin')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='APOC', language='nl', anomalous=None, noise_sample=False, english_text='Viktor')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Curtis Hussey', language='nl', anomalous=None, noise_sample=False, english_text='Fandango')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='nl', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Igor Michaylovitsj Brikman', language='nl', anomalous=None, noise_sample=False, english_text='Gq')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='C.J. Perry', language='nl', anomalous=None, noise_sample=False, english_text='Lana')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Zubi', language='nl', anomalous=None, noise_sample=False, english_text='Andrés González Jaén')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='J (South Korean singer)', language='nl', anomalous=None, noise_sample=False, english_text='J')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Stier', language='nl', anomalous=None, noise_sample=False, english_text='Bull')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='PartinG', language='nl', anomalous=None, noise_sample=False, english_text='Won Lee Sak')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Li Mou', language='nl', anomalous=None, noise_sample=False, english_text='Guangde')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Robert Card', language='nl', anomalous=None, noise_sample=False, english_text='Blackmill')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Nam-joon', language='nl', anomalous=None, noise_sample=False, english_text='RM')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='unknown', language='nl', anomalous=None, noise_sample=False, english_text='Eadric')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='nl', anomalous=None, noise_sample=False, english_text='Eufimia')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jessica Kresa', language='nl', anomalous=None, noise_sample=False, english_text='ODB')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='nl', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Derek Rowen', language='nl', anomalous=None, noise_sample=False, english_text='Guggi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yung Berg', language='nl', anomalous=None, noise_sample=False, english_text='Hitmaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Loles Ballester', language='nl', anomalous=None, noise_sample=False, english_text='SPENSER')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Halfwatt', language='nl', anomalous=None, noise_sample=False, english_text='Axel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='J-Williams', language='nl', anomalous=None, noise_sample=False, english_text='Lutendo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eduardo Mendes', language='nn', anomalous=None, noise_sample=False, english_text='Dito')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Davide Salvadei', language='nn', anomalous=None, noise_sample=False, english_text='Eron')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Moacyr', language='nn', anomalous=None, noise_sample=False, english_text='Biguá')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='nn', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='nn', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irmgard Schlögl', language='nn', anomalous=None, noise_sample=False, english_text='Myokyo-ni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='nn', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='nn', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JackoBond', language='nn', anomalous=None, noise_sample=False, english_text='RIET')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='nn', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Antoni Adrover Colom', language='nn', anomalous=None, noise_sample=False, english_text='Tuni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='GoToon', language='nn', anomalous=None, noise_sample=False, english_text='Olivier Fallaix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pétrodollars', language='nn', anomalous=None, noise_sample=False, english_text='L.I.O.')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='nn', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='G-Spott', language='nn', anomalous=None, noise_sample=False, english_text='Richard Durand')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='René Pawlowitz', language='nn', anomalous=None, noise_sample=False, english_text='Shed')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='APOC', language='nn', anomalous=None, noise_sample=False, english_text='Viktor')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Frank Renger', language='nn', anomalous=None, noise_sample=False, english_text='SAMNV')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='nn', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Igor Brikman', language='nn', anomalous=None, noise_sample=False, english_text='Gq')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Roberto Gañán Ojea', language='nn', anomalous=None, noise_sample=False, english_text='Pulpul')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='nn', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Boundzound', language='nn', anomalous=None, noise_sample=False, english_text='Demba Nabé')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yung Berg', language='nn', anomalous=None, noise_sample=False, english_text='Hitmaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kenneth Åkesson', language='nn', anomalous=None, noise_sample=False, english_text='Tjodalv')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pac', language='nn', anomalous=None, noise_sample=False, english_text='Neville')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Deborah Dyer', language='pl', anomalous=None, noise_sample=False, english_text='Skin')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='pl', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Daruma-shū', language='pl', anomalous=None, noise_sample=False, english_text='Nōnin')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='pl', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='pl', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='pl', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pinga', language='pl', anomalous=None, noise_sample=False, english_text='José Lázaro Robles')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Winebagowie', language='pl', anomalous=None, noise_sample=False, english_text='Ho-Chunk')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas', language='pl', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Przybygniew', language='pl', anomalous=None, noise_sample=False, english_text='Udo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nagako', language='pl', anomalous=None, noise_sample=False, english_text='Kōjun')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='pl', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Adaukt', language='pl', anomalous=None, noise_sample=False, english_text='Felix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Sadako Kujō', language='pl', anomalous=None, noise_sample=False, english_text='Teimei')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Zaakir', language='pl', anomalous=None, noise_sample=False, english_text='Soup')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jessica Kresa', language='pl', anomalous=None, noise_sample=False, english_text='ODB')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yusaf Parvez', language='pl', anomalous=None, noise_sample=False, english_text='Vicotnik')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Olajide Olatunji', language='pl', anomalous=None, noise_sample=False, english_text='KSI')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eduardo Mendes', language='pt', anomalous=None, noise_sample=False, english_text='Dito')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Graham', language='pt', anomalous=None, noise_sample=False, english_text='Levi Roots')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Aspebedes', language='pt', anomalous=None, noise_sample=False, english_text='Bawi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='pt', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Deborah Dyer', language='pt', anomalous=None, noise_sample=False, english_text='Skin')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Askia', language='pt', anomalous=None, noise_sample=False, english_text='Muhammed Ture')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='sim', language='pt', anomalous=None, noise_sample=False, english_text='Robert Hoddle')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Buffy', language='pt', anomalous=None, noise_sample=False, english_text='Darren Robinson')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Moacyr', language='pt', anomalous=None, noise_sample=False, english_text='Biguá')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='pt', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Tonéx', language='pt', anomalous=None, noise_sample=False, english_text='B.Slade')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='pt', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='pt', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='pt', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='pt', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Dias Leandson da Silva', language='pt', anomalous=None, noise_sample=False, english_text='Rico')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='pt', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='pt', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='J (músico)', language='pt', anomalous=None, noise_sample=False, english_text='J')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Fup', language='pt', anomalous=None, noise_sample=False, english_text='Jim Dodge')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eskimo', language='pt', anomalous=None, noise_sample=False, english_text='Joyryde')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='nf', language='pt', anomalous=None, noise_sample=False, english_text='NF')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Diddy', language='pt', anomalous=None, noise_sample=False, english_text='Sean Combs')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='APOC', language='pt', anomalous=None, noise_sample=False, english_text='Viktor')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Snee-Oosh', language='pt', anomalous=None, noise_sample=False, english_text='Craig Bartlett')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Anderson Rodney Oliveira de', language='pt', anomalous=None, noise_sample=False, english_text='Babù')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='C.J. Perry', language='pt', anomalous=None, noise_sample=False, english_text='Lana')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Nam-joon', language='pt', anomalous=None, noise_sample=False, english_text='RM')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jessica Kresa', language='pt', anomalous=None, noise_sample=False, english_text='ODB')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='pt', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Erez Safar', language='pt', anomalous=None, noise_sample=False, english_text='Diwon')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eduardo Mendes', language='pt-br', anomalous=None, noise_sample=False, english_text='Dito')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='sim', language='pt-br', anomalous=None, noise_sample=False, english_text='Robert Hoddle')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Moacyr', language='pt-br', anomalous=None, noise_sample=False, english_text='Biguá')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='pt-br', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='pt-br', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='pt-br', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Dias Leandson da Silva', language='pt-br', anomalous=None, noise_sample=False, english_text='Rico')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='pt-br', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Fup', language='pt-br', anomalous=None, noise_sample=False, english_text='Jim Dodge')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Admilson Estaline Dias de Barros', language='pt-br', anomalous=None, noise_sample=False, english_text='Gégé')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Diddy', language='pt-br', anomalous=None, noise_sample=False, english_text='Sean Combs')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='APOC', language='pt-br', anomalous=None, noise_sample=False, english_text='Viktor')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='C.J. Perry', language='pt-br', anomalous=None, noise_sample=False, english_text='Lana')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Nam-joon', language='pt-br', anomalous=None, noise_sample=False, english_text='RM')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naomi', language='pt-br', anomalous=None, noise_sample=False, english_text='Trinity Fatu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='ro', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='ro', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Aaron Foulds', language='ro', anomalous=None, noise_sample=False, english_text='SBTRKT')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Tae-hyung', language='ro', anomalous=None, noise_sample=False, english_text='V')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='save', language='ro', anomalous=None, noise_sample=False, english_text='René Dumont')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Nam-joon', language='ro', anomalous=None, noise_sample=False, english_text='RM')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naomi', language='ro', anomalous=None, noise_sample=False, english_text='Trinity Fatu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nenad Aleksić', language='sr', anomalous=None, noise_sample=False, english_text='Sha')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eduardo Mendes', language='sv', anomalous=None, noise_sample=False, english_text='Dito')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='nnna', language='sv', anomalous=None, noise_sample=False, english_text='Nakash Aziz')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ingo Kunzi', language='sv', anomalous=None, noise_sample=False, english_text='Ayla')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Tooru Nishimura', language='sv', anomalous=None, noise_sample=False, english_text='Kyo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Davide Salvadei', language='sv', anomalous=None, noise_sample=False, english_text='Eron')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Moacyr', language='sv', anomalous=None, noise_sample=False, english_text='Biguá')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='sv', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='sv', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irmgard Schlögl', language='sv', anomalous=None, noise_sample=False, english_text='Myokyo-ni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='sv', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JackoBond', language='sv', anomalous=None, noise_sample=False, english_text='RIET')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='sv', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Alfabetsmästaren', language='sv', anomalous=None, noise_sample=False, english_text='Eghil')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='sv', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nagako', language='sv', anomalous=None, noise_sample=False, english_text='Kōjun')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Antoni Adrover Colom', language='sv', anomalous=None, noise_sample=False, english_text='Tuni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='GoToon', language='sv', anomalous=None, noise_sample=False, english_text='Olivier Fallaix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pétrodollars', language='sv', anomalous=None, noise_sample=False, english_text='L.I.O.')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Taehyung', language='sv', anomalous=None, noise_sample=False, english_text='V')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='sv', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='sv', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='King Philip', language='sv', anomalous=None, noise_sample=False, english_text='Metacomet')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='G-Spott', language='sv', anomalous=None, noise_sample=False, english_text='Richard Durand')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='René Pawlowitz', language='sv', anomalous=None, noise_sample=False, english_text='Shed')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='APOC', language='sv', anomalous=None, noise_sample=False, english_text='Viktor')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Frank Renger', language='sv', anomalous=None, noise_sample=False, english_text='SAMNV')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='sv', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='icekiid', language='sv', anomalous=None, noise_sample=False, english_text='ICEKIID')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Roberto Gañán Ojea', language='sv', anomalous=None, noise_sample=False, english_text='Pulpul')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Gustav Magnusson', language='sv', anomalous=None, noise_sample=False, english_text='S4')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jessica Kresa', language='sv', anomalous=None, noise_sample=False, english_text='ODB')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='sv', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Boundzound', language='sv', anomalous=None, noise_sample=False, english_text='Demba Nabé')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yung Berg', language='sv', anomalous=None, noise_sample=False, english_text='Hitmaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kenneth Åkesson', language='sv', anomalous=None, noise_sample=False, english_text='Tjodalv')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pac', language='sv', anomalous=None, noise_sample=False, english_text='Neville')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Erez Safar', language='sv', anomalous=None, noise_sample=False, english_text='Diwon')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='tr', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pinga', language='tr', anomalous=None, noise_sample=False, english_text='José Lázaro Robles')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='tr', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Aaron Foulds', language='tr', anomalous=None, noise_sample=False, english_text='SBTRKT')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Seyyid Ali Muhammed', language='tr', anomalous=None, noise_sample=False, english_text='Báb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='tr', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='tr', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Türkiye Cumhuriyeti tarihi belgeleri', language='tr', anomalous=None, noise_sample=False, english_text='B.G.')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naip', language='tr', anomalous=None, noise_sample=False, english_text='regent')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Tüzük', language='tr', anomalous=None, noise_sample=False, english_text='David Belle')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kowakuce', language='tr', anomalous=None, noise_sample=False, english_text='Wild Cat')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='uk', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Star', language='zh', anomalous=None, noise_sample=False, english_text='Byul')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NEO', language='zh', anomalous=None, noise_sample=False, english_text='Filip Kubski')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='洪承杓', language='zh', anomalous=None, noise_sample=False, english_text='Miti')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='oc', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='oc', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='oc', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eduardo Mendes', language='nb', anomalous=None, noise_sample=False, english_text='Dito')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ingo Kunzi', language='nb', anomalous=None, noise_sample=False, english_text='Ayla')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Davide Salvadei', language='nb', anomalous=None, noise_sample=False, english_text='Eron')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Moacyr', language='nb', anomalous=None, noise_sample=False, english_text='Biguá')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='nb', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='nb', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irmgard Schlögl', language='nb', anomalous=None, noise_sample=False, english_text='Myokyo-ni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='nb', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='nb', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Rama IV', language='nb', anomalous=None, noise_sample=False, english_text='Mongkut')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Antoni Adrover Colom', language='nb', anomalous=None, noise_sample=False, english_text='Tuni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='GoToon', language='nb', anomalous=None, noise_sample=False, english_text='Olivier Fallaix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pétrodollars', language='nb', anomalous=None, noise_sample=False, english_text='L.I.O.')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='nb', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='G-Spott', language='nb', anomalous=None, noise_sample=False, english_text='Richard Durand')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='René Pawlowitz', language='nb', anomalous=None, noise_sample=False, english_text='Shed')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='APOC', language='nb', anomalous=None, noise_sample=False, english_text='Viktor')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Frank Renger', language='nb', anomalous=None, noise_sample=False, english_text='SAMNV')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='nb', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nigga', language='nb', anomalous=None, noise_sample=False, english_text='Flex')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Igor Brikman', language='nb', anomalous=None, noise_sample=False, english_text='Gq')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Roberto Gañán Ojea', language='nb', anomalous=None, noise_sample=False, english_text='Pulpul')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='nb', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Boundzound', language='nb', anomalous=None, noise_sample=False, english_text='Demba Nabé')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yung Berg', language='nb', anomalous=None, noise_sample=False, english_text='Hitmaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kenneth Åkesson', language='nb', anomalous=None, noise_sample=False, english_text='Tjodalv')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pac', language='nb', anomalous=None, noise_sample=False, english_text='Neville')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yusaf Parvez', language='nb', anomalous=None, noise_sample=False, english_text='Vicotnik')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Erez Safar', language='nb', anomalous=None, noise_sample=False, english_text='Diwon')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='mg', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='mg', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='mg', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eduardo Mendes', language='sl', anomalous=None, noise_sample=False, english_text='Dito')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='sl', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Daniel García Pérez', language='sl', anomalous=None, noise_sample=False, english_text='Toti')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='sl', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='sl', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JackoBond', language='sl', anomalous=None, noise_sample=False, english_text='RIET')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='sl', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Marta Nael', language='sl', anomalous=None, noise_sample=False, english_text='oof')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='sl', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Hector Hugh Munro', language='sl', anomalous=None, noise_sample=False, english_text='Saki')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Antoni Adrover Colom', language='sl', anomalous=None, noise_sample=False, english_text='Tuni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pétrodollars', language='sl', anomalous=None, noise_sample=False, english_text='L.I.O.')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Emjay', language='sl', anomalous=None, noise_sample=False, english_text='Marie Josée Riel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='D-Pryde', language='sl', anomalous=None, noise_sample=False, english_text='RUSSELL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cane', language='sl', anomalous=None, noise_sample=False, english_text='Tomoyuki Nishita')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='katya', language='sl', anomalous=None, noise_sample=False, english_text='Angie Miller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='sl', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Diddy', language='sl', anomalous=None, noise_sample=False, english_text='Sean Combs')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='sl', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='pogba', language='sl', anomalous=None, noise_sample=False, english_text='Clementina Suárez')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Roberto Gañán Ojea', language='sl', anomalous=None, noise_sample=False, english_text='Pulpul')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bébé', language='sl', anomalous=None, noise_sample=False, english_text='Nicolas Ferry')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Yung Berg', language='sl', anomalous=None, noise_sample=False, english_text='Hitmaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Loles Ballester', language='sl', anomalous=None, noise_sample=False, english_text='SPENSER')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='ms', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='ms', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='ms', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='ms', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='WOWAKA', language='ms', anomalous=None, noise_sample=False, english_text='wowaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='an', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='an', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='an', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='elly', language='ast', anomalous=None, noise_sample=False, english_text='ELLY')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='ast', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='ast', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Clearlove', language='ast', anomalous=None, noise_sample=False, english_text='Ming Kai')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ali Al-Hassan', language='ast', anomalous=None, noise_sample=False, english_text='hjj')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='ast', anomalous=None, noise_sample=False, english_text='name unknown')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='ast', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JackoBond', language='ast', anomalous=None, noise_sample=False, english_text='RIET')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='ast', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Marta Nael', language='ast', anomalous=None, noise_sample=False, english_text='oof')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='ast', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Gytha', language='ast', anomalous=None, noise_sample=False, english_text='Maria Drozdek')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nagako', language='ast', anomalous=None, noise_sample=False, english_text='Kōjun')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eskimo', language='ast', anomalous=None, noise_sample=False, english_text='Joyryde')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Len', language='ast', anomalous=None, noise_sample=False, english_text='Itly am Hag')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='ast', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='J-Williams', language='ast', anomalous=None, noise_sample=False, english_text='Lutendo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lee Young-Ho', language='gl', anomalous=None, noise_sample=False, english_text='Flash')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='gl', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='gl', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Axeo', language='gl', anomalous=None, noise_sample=False, english_text='Haggai')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Casas Gris', language='gl', anomalous=None, noise_sample=False, english_text='Pepín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='gl', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Roberto Gañán Ojea', language='gl', anomalous=None, noise_sample=False, english_text='Pulpul')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ba', language='az', anomalous=None, noise_sample=False, english_text='Wujihoushizhudi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='fo', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='is', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='se', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Aaron Foulds', language='se', anomalous=None, noise_sample=False, english_text='SBTRKT')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='sje', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='sma', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='smj', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='sw', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='sw', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='sw', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Khalid Mohamed', language='sw', anomalous=None, noise_sample=False, english_text='TID')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='sq', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Clearlove', language='sq', anomalous=None, noise_sample=False, english_text='Ming Kai')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ali Al-Hassan', language='sq', anomalous=None, noise_sample=False, english_text='hjj')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Irmgard Schlögl', language='sq', anomalous=None, noise_sample=False, english_text='Myokyo-ni')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JackoBond', language='sq', anomalous=None, noise_sample=False, english_text='RIET')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='sq', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Marta Nael', language='sq', anomalous=None, noise_sample=False, english_text='oof')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='sq', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='sq', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eskimo', language='sq', anomalous=None, noise_sample=False, english_text='Joyryde')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='sq', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Maratonomaku', language='sq', anomalous=None, noise_sample=False, english_text='Pheidippides')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Joe King', language='ga', anomalous=None, noise_sample=False, english_text='POL')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ali Al-Hassan', language='ga', anomalous=None, noise_sample=False, english_text='hjj')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='ga', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='JackoBond', language='ga', anomalous=None, noise_sample=False, english_text='RIET')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Shane Schuller', language='ga', anomalous=None, noise_sample=False, english_text='RiskyKidd')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Marta Nael', language='ga', anomalous=None, noise_sample=False, english_text='oof')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Andreas Haukeland', language='ga', anomalous=None, noise_sample=False, english_text='Tix')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='ga', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ran Aharonson', language='ga', anomalous=None, noise_sample=False, english_text='רברבאי')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naomi', language='ga', anomalous=None, noise_sample=False, english_text='Trinity Fatu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='cy', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='cy', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Owen', language='cy', anomalous=None, noise_sample=False, english_text='Eugein I of Alt Clut')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='af', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='af', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Iota (sanger)', language='af', anomalous=None, noise_sample=False, english_text='iOTA')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='bar', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='bar', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Nam-joon', language='bar', anomalous=None, noise_sample=False, english_text='RM')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='bm', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='bm', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='co', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='co', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='de-at', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='de-at', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Taehyung', language='de-at', anomalous=None, noise_sample=False, english_text='V')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='eo', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='eo', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ru', language='et', anomalous=None, noise_sample=False, english_text='Beslan Bartsits')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='et', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='et', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Luís Antônio Corrêa da Costa', language='et', anomalous=None, noise_sample=False, english_text='Müller')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Õppetool', language='et', anomalous=None, noise_sample=False, english_text='chair')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nagako', language='et', anomalous=None, noise_sample=False, english_text='Kōjun')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Namjoon', language='et', anomalous=None, noise_sample=False, english_text='RM')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Daniel García Pérez', language='eu', anomalous=None, noise_sample=False, english_text='Toti')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='eu', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='eu', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Bnon', language='eu', anomalous=None, noise_sample=False, english_text='Sheshi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Hector Hugh Munro', language='eu', anomalous=None, noise_sample=False, english_text='Saki')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Aaron Foulds', language='eu', anomalous=None, noise_sample=False, english_text='SBTRKT')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Macia', language='eu', anomalous=None, noise_sample=False, english_text='Pepe')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='frc', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='frc', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='frp', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='frp', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='fur', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='fur', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='gd', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='gd', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='gsw', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='gsw', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ledeni čovjek', language='hr', anomalous=None, noise_sample=False, english_text='Ötzi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='kurac', language='hr', anomalous=None, noise_sample=False, english_text="David D'Ingeo")
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='hr', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='hr', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='ia', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='ia', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='ie', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='ie', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='io', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='io', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='jam', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='jam', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='kab', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='kab', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='kg', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='kg', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='lb', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='lb', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='li', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='li', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='lij', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='lij', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='min', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='min', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Soerjono', language='min', anomalous=None, noise_sample=False, english_text='Pak Kasur')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='nap', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='nap', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='caggafa', language='nap', anomalous=None, noise_sample=False, english_text='Kjell Lönnå')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='nds', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='nds', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Isabelle Geffroy', language='nds', anomalous=None, noise_sample=False, english_text='Zaz')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='nds-nl', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='nds-nl', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='nrm', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='nrm', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='pap', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='pap', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='pcd', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='pcd', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='pms', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='pms', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='José Pedroni', language='pms', anomalous=None, noise_sample=False, english_text='vgvbb')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='prg', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='prg', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='rgn', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='rgn', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='rm', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='rm', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='sc', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='sc', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='scn', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='scn', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='sco', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='sco', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='jack daniels fire', language='sco', anomalous=None, noise_sample=False, english_text='RIP')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='I Hjon-do', language='sk', anomalous=None, noise_sample=False, english_text='D.O')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='sk', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='sk', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Gareth Greenall', language='sk', anomalous=None, noise_sample=False, english_text='Audio')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pyréneus', language='sk', anomalous=None, noise_sample=False, english_text='Hugo Edward')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Jovan Novgorodski', language='sr-el', anomalous=None, noise_sample=False, english_text='Ilya')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='vec', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='vec', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Cái Lỗ Vương', language='vi', anomalous=None, noise_sample=False, english_text='Gaero')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Sát Tất', language='vi', anomalous=None, noise_sample=False, english_text='Chabi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='vi', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='vi', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Thạc Tái', language='vi', anomalous=None, noise_sample=False, english_text='Šose')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Rama IV', language='vi', anomalous=None, noise_sample=False, english_text='Mongkut')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='vi', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Xá Tề', language='vi', anomalous=None, noise_sample=False, english_text='She')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Tát Đáp Bát Lạt', language='vi', anomalous=None, noise_sample=False, english_text='Sadabala')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Thạc Thác', language='vi', anomalous=None, noise_sample=False, english_text='Šoto')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naomi', language='vi', anomalous=None, noise_sample=False, english_text='Trinity Fatu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='WOWAKA', language='vi', anomalous=None, noise_sample=False, english_text='wowaka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Eazzy', language='vi', anomalous=None, noise_sample=False, english_text='Mildred Ashong')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='vls', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='vls', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='vmf', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='vmf', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='vo', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='vo', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='wa', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='wa', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='wo', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='wo', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='FLORAA', language='zu', anomalous=None, noise_sample=False, english_text='Silver Catalano')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Solofa Fatu', language='zu', anomalous=None, noise_sample=False, english_text='Rikishi')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Ošo', language='sh', anomalous=None, noise_sample=False, english_text='Rajneesh')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='be', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='be', anomalous=None, noise_sample=False, english_text='name unknown')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='be', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='be', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='be', anomalous=None, noise_sample=False, english_text='unknown of Sweden')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='be', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='be', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='NN', language='be', anomalous=None, noise_sample=False, english_text='unknown wife (?)')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='ace', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='jv', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kí-bí', language='nan', anomalous=None, noise_sample=False, english_text='Jimmy Liao')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kang Hái-ka', language='nan', anomalous=None, noise_sample=False, english_text='AGA')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kīn', language='nan', anomalous=None, noise_sample=False, english_text='Jin of Xia')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Tiuⁿ Gē-heng', language='nan', anomalous=None, noise_sample=False, english_text='Lay')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='ویکتور هولمبری', language='azb', anomalous=None, noise_sample=False, english_text='1987')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='s', language='ang', anomalous=None, noise_sample=False, english_text='Madjid Boutemeur')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Hector Hugh Munro', language='bs', anomalous=None, noise_sample=False, english_text='Saki')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nitassinan', language='gv', anomalous=None, noise_sample=False, english_text='Innu people')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Zhang Yixing', language='tl', anomalous=None, noise_sample=False, english_text='Lay')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Diné', language='qu', anomalous=None, noise_sample=False, english_text='Navajo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Адэльгейда', language='be-tarask', anomalous=None, noise_sample=False, english_text='?')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kim Nam-joon', language='mk', anomalous=None, noise_sample=False, english_text='RM')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Heops', language='tk', anomalous=None, noise_sample=False, english_text='Khufu')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='tgwiki', language='tg', anomalous=None, noise_sample=False, english_text='Xoja')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='s', language='hi', anomalous=None, noise_sample=False, english_text='Sahibzada Ajit Singh')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='yes', language='hi', anomalous=None, noise_sample=False, english_text='Anil Tickoo')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='HIDNI', language='hi', anomalous=None, noise_sample=False, english_text='Santaji Ghorpade')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='reret', language='hi', anomalous=None, noise_sample=False, english_text='Jaz Dhami')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Watt', language='fy', anomalous=None, noise_sample=False, english_text='Ole')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Halfwatt', language='fy', anomalous=None, noise_sample=False, english_text='Axel')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Fuckly', language='ht', anomalous=None, noise_sample=False, english_text='Missié GG')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Djoha', language='lad', anomalous=None, noise_sample=False, english_text='Nasreddin')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='map-bms', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='su', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='pożegnanie', language='szl', anomalous=None, noise_sample=False, english_text='Rittz')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Udi', language='uz', anomalous=None, noise_sample=False, english_text='Emperor Wu of Han')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Noyib', language='uz', anomalous=None, noise_sample=False, english_text='regent')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Justinas Mikulskis', language='sgs', anomalous=None, noise_sample=False, english_text='S13')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='bjn', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='l', language='gan', anomalous=None, noise_sample=False, english_text='Lino Brocka')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='teligu', language='te', anomalous=None, noise_sample=False, english_text='V. Ramachandra Reddy')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='gor', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Naashtʼézhí', language='nv', anomalous=None, noise_sample=False, english_text='Zuni people')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='bug', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Habarwadaag', language='so', anomalous=None, noise_sample=False, english_text='cousin')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Lizzy', language='tet', anomalous=None, noise_sample=False, english_text='Park Soo-ah')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Pareja', language='es-419', anomalous=None, noise_sample=False, english_text='Yungblud')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Kiiiii', language='es-419', anomalous=None, noise_sample=False, english_text='Pedro Poveda Castroverde')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Nepe', language='es-419', anomalous=None, noise_sample=False, english_text='Margarita Simonyan')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Estado', language='es-419', anomalous=None, noise_sample=False, english_text='Jorge Olguín')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='mexico', language='es-419', anomalous=None, noise_sample=False, english_text='Iván Zuleta')
+Must either give an alignment string or a (src_ix, tgt_ix) pair!
+Word: TransliteratedName(text='Apodo', language='es-419', anomalous=None, noise_sample=False, english_text='Nigel Mansell')
+[compute_crossing_alignments] Avg. number of crossing alignments per language:
+global	0.22561644439585202
+Sirionó	0.06490872210953347
+Interlingua	0.10052606579855354
+Crimean Tatar Latin alphabet	0.02832611445436774
+Odia	1.2863561643835617
+Basque	0.2339288361749444
+Hiligaynon	0.02869757174392936
+Latvian	0.31669971717434414
+Batak Toba in Latin script	0.08143547273982056
+Hungarian	0.256147348722097
+Mazanderani	1.6956165505940188
+Austrian German	0.10032950036984735
+Lezgian	1.0721442885771544
+Tulu	1.3491773308957953
+Inupiat	0.012089407191448008
+Lule Sami	0.035849056603773584
+Marathi	1.438310537878251
+Friulian	0.10106718316812882
+Laki	0.05224787363304982
+formal Hungarian	0.0
+Icelandic	0.15705747335408948
+Tagalog	0.09328189187922713
+Kabiye	0.382089552238806
+Main-Franconian	0.11142248626835556
+Kazakh in Turkey	0.05790069545528061
+Singaporean Mandarin	1.356159420289855
+Lombard	0.16219931271477664
+Judaeo-Spanish	0.027262969588550984
+Silesian German	0.008828522920203734
+Crimean Tatar Cyrillic alphabet	0.10869565217391304
+Kildin Sami	0.4110429447852761
+Traditional Chinese	0.8750465120078122
+Mandailing	0.0
+Meadow Mari	0.7880434782608695
+Lingua Franca Nova	0.029274974515800203
+Pali	0.1307956496851746
+Faroese	0.04596341720266351
+Swedish	0.22338140686811564
+Bashkir language	2.815559932470456
+Abkhaz	0.9378238341968912
+Lingala	0.023050417838330232
+Ilocano	0.033164735258339205
+Turkmen	0.04370953775102058
+Arabic	1.1616550506741334
+Quechua	0.1705330780961033
+Burmese	0.21372835384936364
+Southern Luri	0.007348987273704965
+Kashubian	0.024519820187985288
+Pennsylvania German	0.028086772141575598
+Pangasinan	0.016133518776077885
+Cape Verdean Creole	0.05070422535211268
+Tachelhit in Tifinagh script	0.0903954802259887
+Swiss German	0.23846153846153847
+Avaric	1.5681159420289854
+Scottish Gaelic	0.11632045348545188
+Occitan	0.12387506617257808
+Inuktitut	0.011435449894673488
+Gan	0.7067448680351907
+Kurdish Arabic alphabet	0.8664529914529915
+Ancient Greek	1.5566218809980805
+Santali	0.046973582447999346
+Taraškievica	1.4243444365698086
+Tarantino	0.01475325088479739
+Goan Konkani in Devanagari script	0.44041450777202074
+Korean	0.9685873666406454
+Permyak	0.7913669064748201
+Sassarese	0.00874376953620005
+Louisiana French	0.1463866811064814
+Urdu	2.1615913052394133
+Tamil	1.6350745364198278
+Rinconada Bikol	0.05373134328358209
+Kazakh in Latin script	0.09311906175771971
+Siberian Tatar	0.5
+Kongo	0.09557848892255255
+Amharic	1.0293715846994536
+Old Church Slavonic	0.016044793676186893
+Finnish Kalo	0.0676818950930626
+Sindhi	2.2164343360234775
+Banjar	0.019218103743512738
+Ossetian	2.176470588235294
+Zamboanga Chavacano	0.015277088186991559
+Lozi	0.008003786737811438
+Kabardian	0.6062322946175638
+Nepali	1.290117572291071
+Mapudungun	0.011753683672600289
+Māori	0.019167217448777262
+Galician	0.17330296478564652
+Bengali	1.2061686427327751
+Afar	0.013425407970371513
+Dagbani	0.10687022900763359
+Koyraboro Senni	0.030303030303030304
+Võro	0.17060367454068243
+Nuosu	0.11797752808988764
+Tigrinya	1.1818181818181819
+Luxembourgish	0.1462209159931423
+Meänkieli	0.04916169366297243
+Zeelandic	0.04295864575488687
+Saraiki	4.041666666666667
+Samoan	0.01472777755422317
+Kyrgyz	1.9778509428314877
+Russia Buriat	0.9016393442622951
+Megleno-Romanian in Cyrillic script	0.08465608465608465
+Inari Sami	0.16287878787878787
+Malaysian Mandarin	0.9497875627655465
+Romani	0.014113772689849846
+Shona	0.013787761425251743
+Adyghe	0.3968253968253968
+Uyghur	1.3178717598908596
+Atayal	0.0
+Xhosa	0.018098474670038726
+Egyptian Arabic	0.7389623563467225
+Moksha	0.6327272727272727
+formal address in German	0.5454545454545454
+Indonesian	0.18231566530724402
+Norman	0.09797016072228981
+Komi	1.2926136363636365
+Tatar in Cyrillic script	0.6063960639606396
+Malay	0.13557124536704293
+Tuvan	1.9005291005291005
+Serbian written in Latin script	0.18310117302052786
+Votic	0.011832870899298189
+Sanskrit	1.6588744588744588
+formal Spanish	0.19444444444444445
+North Frisian	0.16346963319302465
+Emilian-Romagnol	0.031538056360284436
+Turkish	0.25061734088536536
+Gujarati	1.1915689698179097
+Maithili	1.0929881879869314
+Silesian	0.029273922775601566
+Sorani	1.6238095238095238
+Dutch Low Saxon	0.1619797387265219
+Italian	0.22760300852288834
+Meitei	1.8333333333333333
+Northern Luri	0.9973890339425587
+Luganda	0.011938202247191011
+Western Armenian	1.411685393258427
+South Azerbaijani	1.075553702510455
+Ambonese	0.0
+Kurdish in Latin script	0.02987647227808101
+Hebrew	1.3679012720253039
+Kwanyama	0.012159650965500526
+Waray	0.045719800691295956
+Bambara	0.1051644659739042
+Walloon	0.1297071129707113
+Newar	1.466728280961183
+Lojban	0.02042148094123066
+Kashmiri in Arabic script	0.11864406779661017
+Tachelhit in Latin script	0.011878127161046251
+Skolt Sami	0.1209563994374121
+Central Atlas Tamazight	0.5
+Jutlandic	0.07213930348258707
+Ladin	0.3708609271523179
+English	3.739320206953445e-05
+Ottoman Turkish	0.3793103448275862
+Manx	0.027104526524202907
+Goan Konkani	0.9026086956521739
+Toba Batak	0.06315789473684211
+French	0.19915789364299327
+Chuvash	2.5911513859275055
+Atikamekw	0.056555269922879174
+Nahuatl	0.03566554789215506
+Greenlandic	0.030710356374073187
+Ripuarian	0.03176285557986871
+Khmer	1.202127659574468
+Macedonian	1.2775691362239672
+Tajik in Latin script	0.03938328806518613
+Extremaduran	0.04203214222640843
+Sardinian	0.09857218624385887
+Bishnupriya Manipuri	0.8668831168831169
+Maltese	0.1978358344777379
+Noongar	0.07401774397972116
+Kapampangan	0.02363733252131547
+Kadazandusun	0.00834189439079515
+Haitian Creole	0.077563836412705
+Dzongkha	0.3553299492385787
+Yiddish	1.399588759424263
+German	0.16538191755319945
+Lak	0.3788546255506608
+Kazakh in Kazakhstan	1.120592383638928
+Tsonga	0.012815346175546062
+Banyumasan	0.01926025803722504
+Cantonese	1.1896970749066922
+Venda	0.013496195434521427
+Tibetan	1.6339193381592554
+Udmurt	1.5748373101952278
+Sranan Tongo	0.03640059127864006
+Uyghur Latin alphabet	0.012155953978127415
+Ndonga	0.012172360626470827
+Latin	0.7093932286968548
+Tetum	0.0266035645957104
+Sakha	1.6764705882352942
+Kichwa	0.009449290234308192
+Uzbek Cyrillic alphabet	0.0
+Venetian	0.12238096978112326
+Ukrainian	1.9708265901248894
+Twi	0.014282594452937322
+Northern Thai	0.11176470588235295
+Serbian written in Cyrillic	1.1656821118700387
+Tswana	0.01541930029389267
+Irish	0.028264253557333953
+Kotava	0.5078534031413613
+Zulu	0.09478903091474403
+Norwegian	0.0979381443298969
+Assamese	0.5167860340196956
+Asturian	0.1308118273707561
+Adyghe in Cyrillic script	0.033112582781456956
+Karelian	0.05357142857142857
+Persian	1.0103459832812796
+Mizo	0.007963497051353794
+Hiri Motu	0.012599160055996267
+informal Dutch	0.16666666666666666
+Southern Min	0.8798202034539863
+Ume Sami	0.08644067796610169
+Upper Sorbian	0.15823035936968596
+Canadian English	0.11634095493143952
+Krio	0.08011049723756906
+Hausa	0.041637641694636185
+Danish	0.2240404755675525
+Somali	0.03750342184505886
+Angika	0.0989010989010989
+Bislama Wiktionary	0.015229385533973244
+Romanian	0.3095380884497534
+Slovene	0.14815333083354107
+Turoyo	0.007806771619581626
+Kazakh Arabic alphabets	2.03586889301175
+Balinese	0.30359937402190923
+Cheyenne	0.012839410395655547
+Japanese	1.5874848941133894
+Armenian	1.157832235776746
+Eastern Canadian in Latin script	0.011982144255619078
+Kashmiri in Devanagari script	0.11797752808988764
+Gagauz	0.016081983572580026
+simplified Gan	0.38341968911917096
+Nynorsk	0.1427716842434927
+Chamorro	0.012641538700170622
+Central Bikol	0.029775422659601314
+Dhivehi	0.8260869565217391
+Croatian	0.24046731866177837
+Minangkabau	0.07288157223072997
+Aragonese	0.18292272835021142
+Classical Chinese	0.6686367198981091
+Cebuano	0.10169892982493917
+Tajik	0.7859520427417475
+Alemannic	0.18337221588709762
+Guianan Creole	0.8492063492063492
+Erzya	0.5171580473658772
+Ligurian	0.10662639713192541
+Pashto	2.0562770562770565
+Nias	0.0
+Uzbek Latin alphabet	1.0
+Shan	0.44651162790697674
+Interlingue	0.09636571305231538
+Javanese	0.04793672627235213
+Latgalian	0.016449096714222206
+Sundanese	0.025481436226405488
+Southern Balochi	0.08465608465608465
+Seri	0.009996611318197221
+Modern Greek	1.9067865518094722
+Fiji Hindi	0.040659790743567785
+Kalmyk Oirat	0.6395348837209303
+Tahitian	0.04273099434990019
+Tumbuka	0.01315207336202389
+Buginese	0.02357077996097297
+Northern Sotho	0.013429585417002742
+Kirundi	0.012245720040281974
+Afrikaans	0.21336343416158238
+N'Ko	2.338403041825095
+Plautdietsch	0.013691500860723007
+Hawaiian	0.025850875467243753
+Esperanto	0.2915797567904816
+Kumyk	0.0
+Estonian	0.2559312783887034
+Swiss Standard German	0.15626796695898984
+West Flemish	0.10790579191991419
+Swahili	0.12833552988603766
+Livonian	0.08327953518398967
+Northern Sami	0.034333257633627184
+Simple English	0.08361252731245448
+Old Prussian	0.10838879347359381
+Livvi-Karelian	0.1611799914493373
+Chinese	1.0323344044694838
+Capiznon	0.09763313609467456
+Ewe	0.11607548541483657
+Mirandese	0.049352317739000104
+Fijian	0.013372559507889811
+Kazakh	1.7508913715236512
+Welsh	0.08401755156195803
+Niuean	0.08923076923076922
+Aramaic	0.7916666666666666
+Putonghua	1.6343171317024248
+Saraiki in Arabic script	2.3333333333333335
+Madurese	0.019867549668874173
+Southern Sami	0.02076719260974387
+Kabyle	0.10969110570704196
+Gikuyu	0.012554415422885571
+Neapolitan	0.09910115957276491
+Chinese in Macau	1.0112796577207313
+Moroccan Arabic	1.4601699940699744
+Swazi	0.015582034830430797
+Russian	1.5267033185589272
+Tok Pisin	0.013715901276075495
+Sicilian	0.11156033967581765
+Doteli	0.90625
+Fiji Hindi in Latin script	0.011785825788323446
+Choctaw	0.012134411947728687
+Bhojpuri	1.114900314795383
+Finnish	0.21543572108889866
+Igbo	0.019461133021267184
+Bosnian	0.19664997006294085
+Awadhi	0.6028880866425993
+Saterland Frisian	0.031794669038911406
+Belarusian	2.5302681992337166
+Mongolian	0.8728710462287105
+Goan Konkani in Latin script	0.102
+Shawiya in Latin script	0.2222222222222222
+Herero	0.012079647741885205
+Aromanian	0.01949036857272865
+Oromo	0.014261982901827317
+Catalan	0.1989588533124153
+Laz	0.007761966364812419
+Uyghur Arabic alphabet	0.270042194092827
+Acehnese	0.02210900818045404
+Cree Wikiquote	0.011985164942416552
+Corsican	0.1291865558281183
+Kurdish	0.10207739009582327
+Megleno-Romanian	0.04574132492113565
+Ingush	0.6651376146788991
+Wu Chinese	1.336800906375528
+Algerian Arabic	1.0237580993520519
+Tongan	0.03410134568542108
+Vietnamese	0.25545574223031553
+Gorontalo	0.04197605697833005
+Khowar	0.12849162011173185
+Limburgish	0.11070863764920501
+Megleno-Romanian in Latin script	0.011672360501057426
+Muscogee	0.012995787298306971
+Cornish	0.024989955805544396
+Kabardian in Cyrillic script	0.0903954802259887
+Tajik in Cyrillic script	0.42214532871972316
+Romagnol	0.14994119209318207
+Bokmål	0.23079646739684676
+Old English	0.04397463002114165
+Gheg Albanian	0.008839451869396041
+Piedmontese	0.1383729662077597
+Tunisian Arabic	0.11042944785276074
+Latin American Spanish	0.5534188034188035
+Chewa	0.01478765412200822
+Emilian	0.04091754494730316
+Bavarian	0.12260548856394345
+Western Balochi	0.033112582781456956
+Sango	0.01218970736629667
+Veps	0.046042160021739977
+Kinyarwanda	0.014606426827804234
+Kinaray-a	0.00830550560835688
+Kazakh in Cyrillic script	1.6745527986151183
+Sesotho	0.014696485623003195
+Karakalpak	0.017673607160465735
+Wolof	0.09526779891689585
+Pitkern	0.014026304287360432
+Volapük	0.09681605580238457
+Albanian	0.036222719924224274
+Kazakh in China	1.812121212121212
+Marwari (India)	0.04938271604938271
+Dinka	0.1976190476190476
+Palatinate German	0.174573055028463
+Samogitian	0.04884561017747762
+Crimean Tatar	1.0398406374501992
+Gilaki	0.8546511627906976
+Aymara	0.052288533663474496
+traditional Gan	0.3941798941798942
+Scots	0.17974837047142642
+Rusyn	0.8505154639175257
+Hindi	1.4574751815083715
+Kanuri	0.01227291077916835
+kven	0.0
+Serbian	1.2041305765111296
+Kirmanjki	0.08465608465608465
+Georgian	1.8373396789545857
+Southern Kurdish	0.033112582781456956
+Standard Moroccan Berber	0.5
+Nauruan Wikiquote	0.013774104683195593
+Fula	0.01422072709201422
+Hunsrik	0.08201523140011717
+Papiamento	0.11443414405499713
+Kannada	1.5141597028783658
+Moldovan	0.01963262174482105
+Pontic Greek	0.12235817575083426
+Hakka	0.055450578898546744
+Jamaican Creole	0.10748743913307415
+Mon language spelling	1.4363636363636363
+Tunisian Arabic in Arabic script	2.185334407735697
+Polish	0.399742412272039
+Thai	2.679892477189263
+Karachay-Balkar	0.5875
+Min Dong	0.04238606610253102
+Slovak	0.1729702256033578
+Brahui language	0.008319324108797793
+Brazilian Portuguese	0.27001932215781504
+Lower Sorbian	0.16151795515132508
+Taiwanese Mandarin	1.4285381026438568
+Spanish	0.10204575165689411
+Zhuang	0.015871733774887927
+Talysh	0.08791208791208792
+Portuguese	0.2658115765487976
+Yoruba	0.08133367736016743
+Simplified Chinese	1.5038273082394382
+Navajo	0.01588133338707727
+North Korean standard language	0.10824742268041238
+Romansh	0.08408858354041807
+Tashelhit	0.0594855305466238
+Guarani	0.020744518879415346
+Zazaki	0.057802237898321576
+Pite Sami	0.03223455544343536
+Serbo-Croatian	0.43357952246054227
+Uzbek	0.2745251733494121
+Ido	0.1211139896373057
+Hill Mari	1.5631469979296067
+Eastern Pwo	1.1666666666666667
+Czech	0.3966966601633196
+Malayalam	1.430706855598329
+West Frisian	0.118748318148618
+Lithuanian	0.24689373700580933
+Azerbaijani	0.5435027856361838
+Sakizaya	0.27447833065810595
+Gothic	0.015064470828545895
+Marshallese	0.01130342635111268
+Cherokee	0.011646396493188362
+Telugu	1.946949214468396
+Chechen	1.6200274348422496
+Chinese (Hong Kong)	1.3212311943506294
+Bulgarian	2.37937159114129
+Lao	0.05380068347649395
+Franco-Provençal	0.09684020734730674
+British English	0.1089369056171534
+Tatar	0.44128998495453653
+Tunisian Arabic in Latin script	0.08149171270718232
+Eastern Canadian (Aboriginal syllabics)	0.05073649754500818
+Picard	0.0999720193213949
+Dutch	0.1713109495070187
+Mingrelian	0.8300443012484897
+Low German	0.14884479497023312
+Tatar in Latin script	0.012440035775266282
+Malagasy	0.1273076019135564
+Breton	0.18342598048005737
+Riffian	0.008218826248876333
+Western Punjabi	2.1644874476987446
+Eastern Punjabi	1.0705140640155189
+Bakhtiari	0.12105263157894737
+Novial	0.022581629539212694
+Kashmiri	0.7792642140468228
+Sinhala	2.0512581547064306
+Akan Wiktionary	0.017062146892655367
