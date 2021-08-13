@@ -8,7 +8,7 @@ set -euo pipefail
 # - permute based on first comma
 # - remove all parentheses
 # - remove all parentheses, then permute
-# - pick the best ordering of tokens based on ED(english, uroman(non_english))
+# - pick the best ordering of tokens based on edit_distance(english, uroman(non_english))
 
 # NOTE: execute from root of repository
 
@@ -16,7 +16,8 @@ set -euo pipefail
 experiment_script="scripts/analysis/test_alignments.py"
 
 # change these as needed
-input_dataset="$HOME/datasets/wikidata/per-all/combined/combined_dedup.tsv"
+#input_dataset="$HOME/datasets/wikidata/per-all/combined/combined_dedup.tsv"
+input_dataset="/home/jonne/datasets/wikidata/per-loc-org-everything/combined/combined_dedup.tsv"
 chunksize=4000000
 num_workers=16
 debug_mode="false"  # change to "true" to enable
@@ -27,12 +28,16 @@ mca_experiment () {
     local permuter_type=${1:-baseline}
     local debug_mode=${2:-false}
     log_file="./log/mean_cross_alignments_${permuter_type}_${current_date}.log"
+    names_folder="./data/name_reversal/permuted_names_by_model/${current_date}/${permuter_type}"
 
     if [ "${permuter_type}" = "baseline" ]
     then
         permute_flag=""
     else
+        mkdir -p -v $names_folder
         permute_flag="--permute-tokens --permuter-type ${permuter_type}"
+        permute_flag="${permute_flag} --write-permuted-names"
+        permute_flag="${permute_flag} --names-output-folder ${names_folder}"
     fi
 
     if [ "${debug_mode}" = "true" ]
@@ -57,8 +62,8 @@ main () {
         remove_parenthesis 
         remove_parenthesis_permute_comma 
         edit_distance
-        #baseline 
-        #comma 
+        baseline 
+        comma 
     )
     for permuter in "${permuters[@]}"
     do

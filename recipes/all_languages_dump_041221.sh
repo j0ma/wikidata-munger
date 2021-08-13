@@ -53,8 +53,8 @@ done
 
 combine_output
 
-# deduplicate the rows by using "trumping rules" to break ties etc.
-python scripts/io/deduplicate.py \
+# filter the rows by using "trumping rules" to break ties etc.
+python scripts/io/filtering.py \
     -i $COMBO_OUTPUT \
     -o $DEDUP_OUTPUT \
     -f $FORMAT

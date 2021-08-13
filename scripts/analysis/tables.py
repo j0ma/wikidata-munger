@@ -13,7 +13,11 @@ def add_commas(x):
 
 
 def create_count_table(
-    df, n_langs=50, use_log_y=False, stacked=False, save_path="",
+    df,
+    n_langs=50,
+    use_log_y=False,
+    stacked=False,
+    save_path="",
 ):
     out = df.set_index(
         "language" if not stacked else ["language", "type"]
@@ -27,6 +31,7 @@ def create_count_table(
         out["total"] = out.sum(axis=1)
         out.sort_values("total", ascending=False, inplace=True)
         out.drop("total", 1, inplace=True)
+
         return out.head(n_langs)
     else:
         return (
@@ -88,8 +93,14 @@ def create_entropy_table(df, n_langs=50, use_log_y=False, save_path=""):
     help="Number of languages to include in entropy table.",
     default=50,
 )
-@click.option("--longtable-counts", is_flag=True, help="Counts table in longtable format")
-@click.option("--longtable-entropy", is_flag=True, help="Entropy table in longtable format")
+@click.option(
+    "--longtable-counts", is_flag=True, help="Counts table in longtable format"
+)
+@click.option(
+    "--longtable-entropy",
+    is_flag=True,
+    help="Entropy table in longtable format",
+)
 def main(
     counts_table_path,
     entropy_table_path,
@@ -98,7 +109,7 @@ def main(
     n_languages_counts,
     n_languages_entropy,
     longtable_counts,
-    longtable_entropy
+    longtable_entropy,
 ):
 
     count_table = pd.read_csv(
@@ -133,16 +144,20 @@ def main(
             count_table.groupby("language_code")["count"].sum().reset_index()
         )
         count_table = create_count_table(
-            count_table, n_langs=n_languages_counts,
+            count_table,
+            n_langs=n_languages_counts,
         )
 
     else:
         count_table = create_count_table(
-            count_table, stacked=True, n_langs=n_languages_counts,
+            count_table,
+            stacked=True,
+            n_langs=n_languages_counts,
         )
 
     entropy_table = create_entropy_table(
-        entropy_table, n_langs=n_languages_entropy,
+        entropy_table,
+        n_langs=n_languages_entropy,
     )
     entropy_table.index.name = "Language"
     entropy_table.name = "Script entropy (bits)"

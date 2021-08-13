@@ -47,6 +47,10 @@ distance_measure_choices = [
 @click.option("--strip", is_flag=True)
 @click.option("--no-normalize", is_flag=True)
 @click.option("--ignore-punctuation", is_flag=True)
+@click.option("--language-column", default="language")
+@click.option("--alias-column", default="alias")
+@click.option("--english-text-column", default="alias")
+@click.option("--id-column", default="wikidata_id")
 def main(
     input_file: str,
     output_folder: str,
@@ -58,6 +62,10 @@ def main(
     strip: bool,
     no_normalize: bool,
     ignore_punctuation: bool,
+    language_column: str,
+    alias_column: str,
+    english_text_column: str,
+    id_column: str,
 ) -> None:
 
     # only csv/tsv supported for now
@@ -82,6 +90,7 @@ def main(
         try:
             anomalous[language] = {
                 line.split("\t")[0].strip()
+
                 for line in open(
                     Path(anomalous_data_folder) / f"{language}_anomalous.txt"
                 )
@@ -93,17 +102,29 @@ def main(
 
     for language in unique_languages:
         print(f"[{language}] Creating corpus...")
+        subset = data[data.language == language]
         corpora[language] = sa.Corpus(
             out_folder=(
                 Path(output_folder)
                 or Path(f"/tmp/flyingsquid-test/{language}")
             ),
-            corpus_df=data[data.language == language],
+            names=[
+                sa.TransliteratedName(
+                    text=row[alias_column],
+                    language=language,
+                    english_text=row[english_text_column],
+                    wikidata_id=row[id_column],
+                    unicode_analyzer=ua,
+                    is_unchanged=True,
+                )
+
+                for _, row in subset.iterrows()
+            ],
             language=language,
             normalize_histogram=True,
             ignore_punctuation=True,
             ignore_numbers=False,
-            # align_with_english=True,
+            # align_with_english=True
         )
 
     # add in data for negative sampling
@@ -115,10 +136,10 @@ def main(
 
             if not anomalous_words:
                 names_in_this_lang = set(
-                    data[data.language == language].alias.unique()
+                    data[data.language == language][alias_column].unique()
                 )
                 names_in_other_langs = set(
-                    data[data.language != language].alias.unique()
+                    data[data.language != language][alias_column].unique()
                 )
 
                 non_overlapping_names = (
@@ -139,7 +160,9 @@ def main(
                         noise_sample=True,
                         unicode_analyzer=ua,
                         anomalous=True,
+                        is_unchanged=True,
                     )
+
                     for w in anomalous_words
                 ]
             )
@@ -174,7 +197,7 @@ def main(
 
         true_labels = []
 
-        for name in corpus.words:
+        for name in corpus.names:
             if name.anomalous or name.text in anomalous.get(language, {}):
                 true_labels.append(1)
             elif name.anomalous == None:
@@ -193,7 +216,7 @@ def main(
             return list(yield_preds(tagger))
 
         def yield_preds(tagger):
-            for w in tagger(corpus.words):
+            for w in tagger(corpus.names):
                 if w.anomalous is None:
                     yield 0
                 elif w.anomalous:
@@ -228,8 +251,10 @@ def main(
                 anomalous=bool(pred > 0),
                 language=w.language,
                 noise_sample=w.noise_sample,
+                is_unchanged=w.is_unchanged,
             )
-            for w, pred in zip(corpus.words, majority_vote_preds)
+
+            for w, pred in zip(corpus.names, majority_vote_preds)
         ]
 
         # print(f"[{language}] FlyingSquid: {cr(preds)}")

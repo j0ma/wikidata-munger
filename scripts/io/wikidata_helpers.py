@@ -125,7 +125,7 @@ def english_dissimilarity(df: pd.DataFrame) -> Tuple[int, int]:
 
     # create masks
     english_alias_not_equal = df["alias"] != df["name"]
-    no_english_name = df["name"] == df["id"]
+    no_english_name = df["name"] == df["wikidata_id"]
 
     # compute quantities
     N_good = (english_alias_not_equal | no_english_name).sum()
@@ -194,7 +194,7 @@ class WikidataRecord:
         self.parse_ipa()
 
     def parse_ids(self) -> None:
-        self.id = self.record["id"]
+        self.wikidata_id = self.record["id"]
         try:
             self.mongo_id = self.record["_id"]
         except KeyError:
@@ -238,7 +238,7 @@ class WikidataRecord:
 
             return self._name
         except KeyError:
-            return self.id
+            return self.wikidata_id
 
     @property
     def languages(self) -> Set[str]:
@@ -254,7 +254,7 @@ class WikidataRecord:
     def to_dict(self, simple=False) -> dict:
         if simple:
             return {
-                "id": self.id,
+                "id": self.wikidata_id,
                 "name": self.name,
                 "aliases": self.aliases,
                 "instance_of": list(self.instance_ofs),
@@ -267,7 +267,7 @@ class WikidataRecord:
         return orjson_dump(self.to_dict(simple))
 
     def __str__(self) -> str:
-        return f'WikidataRecord(name="{self.name}", id="{self.id}, mongo_id={self.mongo_id} instance_of={self.instance_ofs})"'
+        return f'WikidataRecord(name="{self.name}", id="{self.wikidata_id}, mongo_id={self.mongo_id} instance_of={self.instance_ofs})"'
 
     def __repr__(self) -> str:
         return str(self)

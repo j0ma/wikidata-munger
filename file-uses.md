@@ -52,7 +52,7 @@
 - compare_am_ti.py
     - Compares am/ti data
     - Used for google sheets
-- [x] deduplicate.py
+- [x] data_cleaning.py
     - Deduplicates by applying AfricaNLP trumping rules & Am/Ti filtering
 - [x] create_matrix.py
     - Takes deduplicated dump data and turns it into matrix form

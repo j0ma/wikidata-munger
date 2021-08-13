@@ -34,8 +34,9 @@ dump () {
 
     if [ -z "${exclude_these_langs}" ]
     then
-        echo "[INFO] No languages being excluded except English (en)."
-        exclude_langs_flag="-L en"
+        echo "[INFO] No languages being excluded."
+        #exclude_langs_flag="-L en"
+        exclude_langs_flag=""
     else
         echo "[INFO] Excluding ${exclude_these_langs//,/, }."
         exclude_langs_flag="-L ${exclude_these_langs}"
@@ -56,7 +57,7 @@ deduplicate () {
     local dedup_file=$2
 
     # deduplicate the rows by using "trumping rules" to break ties etc.
-    python scripts/io/deduplicate.py \
+    python scripts/io/filtering.py \
         -i $input_file \
         -o $dedup_file \
         -f tsv

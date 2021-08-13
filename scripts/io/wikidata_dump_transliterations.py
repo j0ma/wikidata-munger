@@ -21,7 +21,7 @@ def output_jsonl(
     *args,
     **kwargs,
 ) -> None:
-    wikidata_id = document.id
+    wikidata_id = document.wikidata_id
     name = document.name
     language_set = set(languages)
     not_language_set = set(not_languages)
@@ -59,7 +59,7 @@ def output_csv(
 ) -> None:
     language_set = set(languages)
     not_language_set = set(not_languages)
-    wikidata_id = document.id
+    wikidata_id = document.wikidata_id
     name = document.name
     writer = csv.DictWriter(
         f,

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-"""
-Subsamples the input data to create a reasonable sized and less imbalanced training/dev/test set.
-"""
+"""Subsamples the input data to create a reasonably sized and less imbalanced training/dev/test set."""
 
 from collections import Counter
 from typing import Optional
@@ -14,7 +12,12 @@ import numpy as np
 import click
 import attr
 
-SUPPORTED_SAMPLERS = ["uniform", "empirical", "exponential_smoothing"]
+SUPPORTED_SAMPLERS = [
+    "uniform",
+    "empirical",
+    "exponential_smoothing",
+    "balanced_groupby",
+]
 SUPPORTED_FORMATS = ["tsv", "jsonl", "csv"]
 
 DEFAULT_SEED = 1917
@@ -31,6 +34,36 @@ class Sampler:
         self.random_state = np.random.RandomState(
             np.random.MT19937(np.random.SeedSequence(self.random_seed))
         )
+
+
+@attr.s
+class GroupBySampler(Sampler):
+    """Group by a column and uniformly sample n rows from each group."""
+
+    num_groups: int = attr.ib(default=-1)
+    groupby_column: str = attr.ib(default="language")
+
+    def __call__(self, df: pd.DataFrame, n: Optional[int]) -> pd.DataFrame:
+        if self.num_groups < 0:
+            self.num_groups = 1
+
+        if n is None:
+            n = df.shape[0]
+
+        rows = []
+        num_per_group = n // self.num_groups
+
+        for group_value in df[self.groupby_column].unique():
+            subset = df[df[self.groupby_column] == group_value]
+
+            if num_per_group > subset.shape[0]:
+                rows.append(subset)
+            else:
+                rows.append(subset.sample(num_per_group))
+
+        out = pd.concat(rows, ignore_index=True)
+
+        return out
 
 
 @attr.s
@@ -132,6 +165,7 @@ class ExponentSmoothedSampler(Sampler):
 @click.option("--random-seed", "-r", type=int, default=DEFAULT_SEED)
 @click.option("--num-samples", "-n", type=int, default=-1)
 @click.option("--smoothing-factor", "-S", type=float, default=0.7)
+@click.option("--groupby-column", "-g", default="is_unchanged")
 def main(
     input_file,
     output_file,
@@ -142,6 +176,7 @@ def main(
     random_seed,
     num_samples,
     smoothing_factor,
+    groupby_column,
 ):
 
     if debug_mode:
@@ -157,19 +192,18 @@ def main(
             print("Loading chunks...")
         data = pd.concat(tqdm(chunk for chunk in data))
 
-    if debug_mode:
-        print("Loading subsampler...")
-    subsampler = {
-        "empirical": EmpiricalDistributionSampler,
-        "uniform": UniformDistributionSampler,
-        "exponential_smoothing": ExponentSmoothedSampler,
-    }.get(sampler)(random_seed)
-
-    if debug_mode:
-        print("Setting smoothing factor...")
-
     if sampler == "exponential_smoothing":
-        subsampler.smoothing_factor = smoothing_factor
+        subsampler = ExponentSmoothedSampler(smoothing_factor)
+    elif sampler == "balanced_groupby":
+        subsampler = GroupBySampler(
+            groupby_column=groupby_column,
+            num_groups=data[groupby_column].nunique(),
+        )
+    else:
+        subsampler_cls = {
+            "empirical": EmpiricalDistributionSampler,
+            "uniform": UniformDistributionSampler,
+        }[sampler](random_seed)
 
     if debug_mode:
         print(f"Subsampling data with {subsampler}...")
@@ -181,27 +215,6 @@ def main(
     wh.write(
         data=sub, output_file=output_file, io_format=io_format, index=False
     )
-
-    if debug_mode:
-        print(f"Writing proportions to {output_file}...")
-
-        normalize = lambda s: s / s.sum()
-
-        orig_props = data.language.value_counts(normalize=True)
-        new_props = normalize(orig_props ** smoothing_factor)
-
-        prop_df = pd.DataFrame()
-        prop_df["orig"] = orig_props
-        prop_df["new"] = new_props
-        prop_df["delta"] = prop_df["new"] - prop_df["orig"]
-        prop_df = prop_df.round(5).sort_values("delta", ascending=False)
-
-        wh.write(
-            data=prop_df,
-            output_file="/dev/stdout",
-            io_format=io_format,
-            index=True,
-        )
 
 
 if __name__ == "__main__":

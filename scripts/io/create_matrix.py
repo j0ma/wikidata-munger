@@ -77,7 +77,7 @@ class ChunkProcessor:
         if not self.index_cols:
 
             # By default, use wikidata dumping columns
-            self.index_cols = ["id", "type", "eng", self.language_col]
+            self.index_cols = ["wikidata_id", "type", "eng", self.language_col]
 
         assert (
             self.index_cols[-1] == self.language_col
@@ -105,7 +105,7 @@ class ChunkProcessor:
         ] = defaultdict(dict)
 
         chunk_dict = (
-            data[data.id.str.startswith("Q")]
+            data[data.wikidata_id.str.startswith("Q")]
             .set_index(self.index_cols)[self.value_col]
             .to_dict()
         )
@@ -135,7 +135,7 @@ class ChunkProcessor:
 )
 @click.option("--chunksize", "-c", type=int, default=1000)
 @click.option("--n-jobs", "-n", type=int, default=10)
-@click.option("--index-columns", default="id,type,eng,language")
+@click.option("--index-columns", default="wikidata_id,type,eng,language")
 @click.option("--language-column", default="language")
 @click.option("--value-column", default="alias")
 def main(

@@ -126,6 +126,7 @@ class UnicodeAnalyzer:
 @attr.s(frozen=False, slots=True, hash=True)
 class TransliteratedName:
     text: str = attr.ib()
+    is_unchanged: bool = attr.ib()
     language: str = attr.ib()
     unicode_analyzer: UnicodeAnalyzer = attr.ib(repr=False)
     wikidata_id: str = attr.ib(default="Q0")  # fake default
@@ -136,7 +137,6 @@ class TransliteratedName:
     analyze_unicode: bool = attr.ib(default=True, repr=False)
     alignment: Optional["Alignment"] = attr.ib(default=None, repr=False)
     _original_text: Optional[str] = attr.ib(default=None, repr=False)
-    is_unchanged: bool = attr.ib(default=True)
 
     @property
     def original_text(self) -> str:
@@ -164,11 +164,12 @@ class TransliteratedName:
         self,
         english_text_key: str = "eng",
         text_key: str = "alias",
-        wikidata_id_key: str = "id",
+        wikidata_id_key: str = "wikidata_id",
         conll_type_key: str = "type",
         unicode_block_key: str = "most_common_unicode_block",
         original_text_key: str = "original_text",
         language_key: str = "language",
+        is_unchanged_key: str = "is_unchanged",
     ) -> Dict[str, str]:
         return {
             english_text_key: self.english_text or "",
@@ -178,13 +179,14 @@ class TransliteratedName:
             unicode_block_key: self.most_common_unicode_block,
             original_text_key: self.original_text or "",
             language_key: self.language,
+            is_unchanged_key: self.is_unchanged,
         }
 
     def to_series(
         self,
         english_text_key: str = "eng",
         text_key: str = "alias",
-        wikidata_id_key: str = "id",
+        wikidata_id_key: str = "wikidata_id",
         conll_type_key: str = "type",
         unicode_block_key: str = "most_common_unicode_block",
         original_text_key: str = "original_text",
@@ -265,13 +267,14 @@ class NameWriter:
 
         if not field_name_map:
             field_name_map = {
-                "wikidata_id": "id",
+                "wikidata_id": "wikidata_id",
                 "conll_type": "type",
                 "text": "alias",
                 "english_text": "eng",
                 "unicode_block": "most_common_unicode_block",
                 "original_text": "original_text",
                 "language": "language",
+                "is_unchanged": "is_unchanged",
             }
 
         field_names = [
@@ -280,12 +283,16 @@ class NameWriter:
             field_name_map["conll_type"],
             field_name_map["text"],
         ]
-        field_names.append(
-            field_name_map["original_text"]
 
-            if write_permutations_mode
-            else field_name_map["unicode_block"]
-        )
+        if write_permutations_mode:
+            field_names.extend(
+                [
+                    field_name_map["original_text"],
+                    field_name_map["is_unchanged"],
+                ]
+            )
+        else:
+            field_names.append(field_name_map["unicode_block"])
 
         if not self.out_folder:
             self.out_folder = Path(tf.mkdtemp())
@@ -342,6 +349,7 @@ class CorpusStatistics:
     mean_cross_alignments: float = attr.ib(default=0.0)
     total_cross_alignments: int = attr.ib(default=0)
     total_permuted: int = attr.ib(default=0)
+    total_surviving: int = attr.ib(default=0)
 
     def __attrs_post_init__(self) -> None:
 
@@ -360,6 +368,7 @@ class CorpusStatistics:
         )
 
         self.total_permuted = sum(not n.is_unchanged for n in self.names)
+        self.total_surviving = sum(n.is_unchanged for n in self.names)
 
 
 @attr.s
@@ -644,7 +653,7 @@ class PermuteFirstComma(NameProcessor):
             head = name_text[:comma_ix]
             tail = name_text[(comma_ix + 1) :]
 
-            return f"{tail} {head}".strip()
+            return f"{tail} {head}".strip(",").strip()
 
 
 @attr.s
@@ -658,7 +667,7 @@ class RemoveParenthesisPermuteComma(NameProcessor):
         processed = self.parenthesis_remover.process(name_text)
         processed = self.comma_permuter.process(processed)
 
-        return processed
+        return processed.strip(",")
 
 
 @attr.s
@@ -691,6 +700,7 @@ class PermuteLowestDistance(NameProcessor):
         for name, romanized_name in zip(names, romanized_names):
             tokens = name.text.split()
             romanized_tokens = romanized_name.split()
+            orig_text = name.text
 
             # skip over names that have too few or too many tokens
 
@@ -723,7 +733,7 @@ class PermuteLowestDistance(NameProcessor):
 
                     if ed < best_distance:
                         best_distance = ed
-                        best_name = permutation
+                        best_name = permutation.strip(",").strip()
 
                         if self.debug_mode:
                             print(
@@ -738,6 +748,8 @@ class PermuteLowestDistance(NameProcessor):
                         anomalous=name.anomalous,
                         noise_sample=name.noise_sample,
                         english_text=name.english_text,
+                        is_unchanged=bool(best_name == orig_text),
+                        original_text=orig_text,
                     )
                 )
 
@@ -752,6 +764,7 @@ class PermuteLowestDistance(NameProcessor):
         for name, romanized_name in zip(names, romanized_names):
             tokens = name.text.split()
             romanized_tokens = romanized_name.split()
+            orig_text = name.text
 
             if not (
                 self.length_lower_bound
@@ -778,15 +791,37 @@ class PermuteLowestDistance(NameProcessor):
                     best_name = permutation
 
             name.text = best_name
+            name.is_unchanged = bool(best_name == orig_text)
+            name.original_text = orig_text
 
         return names
+
+
+@attr.s
+class RemoveParenthesisPermuteLowestDistance(NameProcessor):
+    """Composes ParenthesisRemover and ED-based reordering"""
+
+    def __attrs_post_init__(self) -> None:
+        self.parenthesis_remover = ParenthesisRemover(
+            debug_mode=self.debug_mode
+        )
+        self.ed_permuter = PermuteLowestDistance(debug_mode=self.debug_mode)
+
+    def __call__(
+        self, names: List[TransliteratedName]
+    ) -> List[TransliteratedName]:
+
+        processed = self.parenthesis_remover(names)
+        processed = self.ed_permuter(processed)
+
+        return processed
 
 
 @attr.s
 class TransliteratedNameLoader:
     language_column: str = attr.ib(default="language")
     name_column: str = attr.ib(default="alias", repr=False)
-    wikidata_id_column: str = attr.ib(default="id", repr=False)
+    wikidata_id_column: str = attr.ib(default="wikidata_id", repr=False)
     conll_type_column: str = attr.ib(default="type", repr=False)
     english_column: Optional[str] = attr.ib(default="eng", repr=False)
     unicode_analyzer = UnicodeAnalyzer()
@@ -807,6 +842,7 @@ class TransliteratedNameLoader:
             unicode_analyzer=self.unicode_analyzer,
             conll_type=row[self.conll_type_column],
             wikidata_id=row[self.wikidata_id_column],
+            is_unchanged=True,
         )
 
     def __call__(self, corpus: pd.DataFrame) -> List[TransliteratedName]:
@@ -964,6 +1000,9 @@ class Corpus:
             write_permutations_mode=True,
         )
 
+    def add_words(self, additional_names: List[TransliteratedName]):
+        self.names.extend(additional_names)
+
 
 class AnomalousTagger:
     def classify(self, name: TransliteratedName) -> Optional[bool]:
@@ -978,6 +1017,7 @@ class AnomalousTagger:
                 unicode_analyzer=n.unicode_analyzer,
                 anomalous=self.classify(n),
                 language=n.language,
+                is_unchanged=n.is_unchanged,
             )
 
             for n in names

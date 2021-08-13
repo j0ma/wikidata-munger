@@ -72,7 +72,7 @@ def main(input_file, output_file, lang_column, alias_column, io_format):
         return f"https://www.wikidata.org/wiki/{_id}"
 
     aggregated = data.apply(alias_to_lang_col, axis=1)
-    aggregated["url"] = aggregated.id.apply(generate_url)
+    aggregated["url"] = aggregated.wikidata_id.apply(generate_url)
     column_ordering = (
         ["id", "type", "eng"] + [lang for lang in uniq_langs] + ["url"]
     )
@@ -83,9 +83,11 @@ def main(input_file, output_file, lang_column, alias_column, io_format):
     aggregated["ti_is_eng"] = aggregated.ti == aggregated.eng
     aggregated["am_is_eng"] = aggregated.am == aggregated.eng
     aggregated["ti_is_am"] = aggregated.am == aggregated.ti
-    
+
     final_column_ordering = (
-        ["id", "type", "eng"] + [lang for lang in uniq_langs] + ["ti_is_eng", "am_is_eng", "ti_is_am","url"]
+        ["id", "type", "eng"]
+        + [lang for lang in uniq_langs]
+        + ["ti_is_eng", "am_is_eng", "ti_is_am", "url"]
     )
     aggregated = aggregated[final_column_ordering]
 
