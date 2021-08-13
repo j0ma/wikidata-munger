@@ -13,7 +13,7 @@ set -euo pipefail
 # NOTE: execute from root of repository
 
 # TODO: change script path here once script is renamed
-experiment_script="scripts/analysis/test_alignments.py"
+experiment_script="paranames/analysis/test_alignments.py"
 
 # change these as needed
 #input_dataset="$HOME/datasets/wikidata/per-all/combined/combined_dedup.tsv"

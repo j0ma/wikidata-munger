@@ -43,7 +43,7 @@ dump () {
     fi
 
     # dump everything into one file
-    python scripts/io/wikidata_dump_transliterations.py \
+    python paranames/io/wikidata_dump_transliterations.py \
         $strict_flag \
         -t "${conll_type}" $langs_flag \
         -f "${format}" \
@@ -57,7 +57,7 @@ deduplicate () {
     local dedup_file=$2
 
     # deduplicate the rows by using "trumping rules" to break ties etc.
-    python scripts/io/filtering.py \
+    python paranames/io/filtering.py \
         -i $input_file \
         -o $dedup_file \
         -f tsv
@@ -67,7 +67,7 @@ deduplicate () {
 separate_by_language () {
     
     local dedup_file=$1
-    python scripts/io/separate_by_language.py \
+    python paranames/io/separate_by_language.py \
         --input-file $dedup_file \
         --lang-column language \
         --io-format tsv \

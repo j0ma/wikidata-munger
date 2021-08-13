@@ -13,7 +13,7 @@ main() {
         do
             echo $tsv_file
             cut -f3 $tsv_file \
-                | scripts/analysis/infer_script_most_common \
+                | paranames/analysis/infer_script_most_common \
                 | sort | uniq -c 
         done
     done

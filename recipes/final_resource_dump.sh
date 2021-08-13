@@ -17,7 +17,7 @@ run () {
     OUTPUT="${OUTPUT_FOLDER}/${CONLL_TYPE}.tsv"
 
     # dump everything into one file
-    python scripts/io/wikidata_dump_transliterations.py \
+    python paranames/io/wikidata_dump_transliterations.py \
         --strict \
         -t "${CONLL_TYPE}" \
         -l "${LANGS}" \
@@ -39,12 +39,12 @@ tail +2 $OUTPUT_FOLDER/LOC.tsv >> $COMBO_OUTPUT
 tail +2 $OUTPUT_FOLDER/ORG.tsv >> $COMBO_OUTPUT
 
 # deduplicate the rows by using "trumping rules" to break ties etc.
-python scripts/io/filtering.py \
+python paranames/io/filtering.py \
     -i $COMBO_OUTPUT \
     -o $DEDUP_OUTPUT \
     -f tsv
 
 # finally create the matrix form
-python scripts/io/create_matrix.py \
+python paranames/io/create_matrix.py \
     -i $DEDUP_OUTPUT \
     -o $MATRIX_OUTPUT 

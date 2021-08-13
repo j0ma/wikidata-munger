@@ -15,7 +15,7 @@ run () {
     OUTPUT="${OUTPUT_FOLDER}/${CONLL_TYPE}.csv"
 
     # dump everything into one file
-    python scripts/io/wikidata_dump_transliterations.py \
+    python paranames/io/wikidata_dump_transliterations.py \
         --strict \
         -t "${CONLL_TYPE}" \
         -l "${LANGS}" \
@@ -24,7 +24,7 @@ run () {
         -o - | tee "${OUTPUT}"
 
     # separate by language
-    #python scripts/io/separate_by_language.py \
+    #python paranames/io/separate_by_language.py \
         #--lang-column "language" \
         #--input-file "${OUTPUT}" 
 }

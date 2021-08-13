@@ -13,8 +13,8 @@ set -euo pipefail
 # NOTE: execute from root of repository
 
 # TODO: change script path here once script is renamed
-create_data_script="scripts/analysis/permute_names_and_dump.py"
-subsample_script="scripts/io/subsample.py"
+create_data_script="paranames/analysis/permute_names_and_dump.py"
+subsample_script="paranames/io/subsample.py"
 
 # change these as needed
 input_dataset="$HOME/datasets/wikidata/per-all/combined/combined_dedup.tsv"
