@@ -42,12 +42,13 @@ def apply_trumping_rules(
         .to_dict()
     )
 
+    # TODO: update these
     # encode actual trumping rules
     trumping_rules = {
-        "LOC-ORG": "LOC",  # countries
-        "LOC-ORG-PER": "ORG",  # native american tribes
-        "ORG-PER": "ORG",  # these are mostly manufacturers
-        "LOC-PER": "PER",  # jj thomson, Q47285
+        "LOC-ORG": "LOC",
+        "LOC-ORG-PER": "ORG",
+        "ORG-PER": "ORG",
+        "LOC-PER": "PER",
     }
 
     # compose the above two relations

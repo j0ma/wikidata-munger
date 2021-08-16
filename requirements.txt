@@ -1,0 +1,21 @@
+# flyingsquid
+git+https://github.com/cthoyt/p_tqdm@patch-1
+pymongo
+qwikidata
+sklearn
+tqdm
+attr
+bz2
+click
+cssselect
+dask
+dictances
+editdistance
+lxml
+matplotlib
+numpy
+orjson
+pandas
+requests
+scipy
+unicodeblocks

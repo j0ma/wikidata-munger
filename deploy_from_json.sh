@@ -13,7 +13,7 @@ usage () {
 [ $# -lt 5 ] && usage && exit 1
 
 ## Constant
-IO_SCRIPT_FOLDER=scripts/io
+IO_SCRIPT_FOLDER=paranames/io
 
 ## Command line arguments
 INPUT_JSON=${1}
