@@ -5,7 +5,7 @@ import os
 import math
 import csv
 
-import wikidata_helpers as wh
+import paranames.io.wikidata_helpers as wh
 import click
 
 

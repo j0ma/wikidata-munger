@@ -5,7 +5,7 @@
 from collections import Counter
 from typing import Optional
 
-import wikidata_helpers as wh
+import paranames.io.wikidata_helpers as wh
 from tqdm import tqdm
 import pandas as pd
 import numpy as np

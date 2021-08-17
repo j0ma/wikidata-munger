@@ -19,7 +19,7 @@ from collections import defaultdict, OrderedDict
 
 from p_tqdm import p_map
 from tqdm import tqdm
-import wikidata_helpers as wh
+import paranames.io.wikidata_helpers as wh
 import pandas as pd
 import numpy as np
 import click

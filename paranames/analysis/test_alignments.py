@@ -1,7 +1,7 @@
 from typing import Dict, Tuple, Type, List, Iterable
 from collections import defaultdict, Counter
 
-import script_analysis as sa
+import paranames.io.script_analysis as sa
 import pandas as pd
 import numpy as np
 import click
@@ -13,14 +13,6 @@ import itertools as it
 default_human_readable_langs_path = (
     "/home/jonne/wikidata-munger/data/human_readable_lang_names.json"
 )
-
-permuter_types = [
-    "comma",
-    "edit_distance",
-    "remove_parenthesis",
-    "remove_parenthesis_edit_distance",
-    "remove_parenthesis_permute_comma",
-]
 
 
 def compute_crossing_alignments_pooled(
@@ -93,7 +85,7 @@ def compute_crossing_alignments_unpooled(*args, **kwargs):
 )
 @click.option(
     "--permuter-type",
-    type=click.Choice(permuter_types),
+    type=click.Choice(sa.permuter_types),
     default="edit_distance",
 )
 @click.option(
@@ -195,7 +187,7 @@ def main(
         ]
 
     name_loader = sa.TransliteratedNameLoader(
-        language_column=language_column, debug_mode=False  # debug_mode,
+        language_column=language_column, debug_mode=False
     )
 
     print(f"Name Loader: {name_loader}")

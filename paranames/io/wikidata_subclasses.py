@@ -11,11 +11,12 @@ from typing import Dict, Any
 import click
 from qwikidata.sparql import get_subclasses_of_item
 
-from wikidata_helpers import WikidataMongoDB, orjson_dump
+from paranames.io.wikidata_helpers import WikidataMongoDB, orjson_dump
 
 
 def grab_subclasses(entity_id: str) -> Dict[str, Any]:
     subclasses = get_subclasses_of_item(entity_id)
+
     return {"id": entity_id, "subclasses": subclasses}
 
 
@@ -31,8 +32,11 @@ def grab_subclasses(entity_id: str) -> Dict[str, Any]:
 @click.option("--to-stdout", is_flag=True)
 def main(entity_ids, database_name, collection_name, to_stdout) -> None:
 
-    wdb = WikidataMongoDB(database_name=database_name, collection_name=collection_name)
+    wdb = WikidataMongoDB(
+        database_name=database_name, collection_name=collection_name
+    )
     documents = [grab_subclasses(eid) for eid in entity_ids.split(",")]
+
     if to_stdout:
         for document in documents:
             print(orjson_dump(document))

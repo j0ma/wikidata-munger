@@ -40,6 +40,14 @@ import multiprocessing as mp
 
 CACHE_MAX_SIZE = 10000
 
+permuter_types = [
+    "comma",
+    "edit_distance",
+    "remove_parenthesis",
+    "remove_parenthesis_edit_distance",
+    "remove_parenthesis_permute_comma",
+]
+
 
 def chunks(lst, n):
     """Yield successive n-sized chunks from lst.
@@ -742,7 +750,7 @@ class PermuteLowestDistance(NameProcessor):
 
                 output.append(
                     TransliteratedName(
-                        text=best_name,
+                        text=best_name.strip(","),
                         language=name.language,
                         unicode_analyzer=name.unicode_analyzer,
                         anomalous=name.anomalous,
@@ -790,7 +798,7 @@ class PermuteLowestDistance(NameProcessor):
                     best_distance = ed
                     best_name = permutation
 
-            name.text = best_name
+            name.text = best_name.strip(",")
             name.is_unchanged = bool(best_name == orig_text)
             name.original_text = orig_text
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from script_analysis import UnicodeAnalyzer
+from paranames.analysis.script_analysis import UnicodeAnalyzer
 import orjson
 import click
 
@@ -20,7 +20,7 @@ def main(input_file, output_file, strip, no_normalize):
             try:
                 json_obj = orjson.dumps(hist).decode("utf-8")
             except:
-                print(hist, file=open('/tmp/error_producing_hist', 'w'))
+                print(hist, file=open("/tmp/error_producing_hist", "w"))
                 raise ValueError
             output_file.write(f"{json_obj}\n")
 

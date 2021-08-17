@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from wikidata_helpers import orjson_dump
+from paranames.io.wikidata_helpers import orjson_dump
 
 
 def main():

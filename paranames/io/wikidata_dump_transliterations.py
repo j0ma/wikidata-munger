@@ -6,7 +6,7 @@ from collections import defaultdict
 from typing import IO, Generator, List, Dict, Any, Union, Iterable
 
 from pymongo import MongoClient
-import wikidata_helpers as wh
+import paranames.io.wikidata_helpers as wh
 import click
 
 
