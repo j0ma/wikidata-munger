@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -euo pipefail
 
 usage () {
-    echo "Usage: bash separate_folder_dump.sh LANGUAGES OUTPUT_FOLDER [ENTITY_TYPES=PER,LOC,ORG]"
+    echo "Usage: bash separate_folder_dump.sh LANGUAGES OUTPUT_FOLDER [ENTITY_TYPES=PER,LOC,ORG DB_NAME=wikidata_db COLLECTION_NAME=wikidata_simple]"
 }
 
 [ $# -lt 2 ] && usage && exit 1
 
 langs="${1}"
 output_folder="${2}"
+entity_types=$(echo "${3:-PER,LOC,ORG}" | tr "," " ")
+db_name="${4:-wikidata_db}"
+collection_name="${5:-wikidata_simple}"
 format="tsv"
 mkdir --verbose -p $output_folder/combined
-entity_types=$(echo "${3:-PER,LOC,ORG}" | tr "," " ")
 
 # NOTE: add comma separted list here to exclude languages
 exclude_these_langs=""
@@ -21,6 +23,8 @@ dump () {
 
     local conll_type=$1
     local langs=$2
+    local db_name=$3
+    local collection_name=$4
     local output="${output_folder}/${conll_type}.tsv"
 
     if [ "${langs}" = "all" ]
@@ -48,27 +52,30 @@ dump () {
         -t "${conll_type}" $langs_flag \
         -f "${format}" \
         -d "tab" \
+        --database-name "${db_name}" \
+        --collection-name "${collection_name}" \
         -o - $exclude_langs_flag | tee "${output}"
 
 }
 
-deduplicate () {
+filtering () {
     local input_file=$1
-    local dedup_file=$2
+    local filtered_file=$2
+    local permuter_type=$3
 
-    # deduplicate the rows by using "trumping rules" to break ties etc.
+    # apply script filtering, entity name disambiguation etc.
     python paranames/io/filtering.py \
-        -i $input_file \
-        -o $dedup_file \
-        -f tsv
+        -i $input_file -o $filtered_file -f tsv \
+        --human-readable-langs-path "./data/human_readable_lang_names.json" \
+        --permuter-type $permuter_type
 
 }
 
 separate_by_language () {
     
-    local dedup_file=$1
+    local filtered_file=$1
     python paranames/io/separate_by_language.py \
-        --input-file $dedup_file \
+        --input-file $filtered_file \
         --lang-column language \
         --io-format tsv \
         --use-subfolders \
@@ -90,29 +97,29 @@ separate_by_entity_type () {
 echo "Extract & clean everything for each type"
 for conll_type in $entity_types
 do
-    dump $conll_type $langs &
+    dump $conll_type $langs $db_name $collection_name &
 done
 wait
 
-echo "Combine everything into one big tsv"
-combined_output="${output_folder}/combined.tsv"
-echo "Combining everything to ${combined_output}"
-csvstack --verbose --tabs ${output_folder}/*.tsv | 
-    csvformat -T >> $combined_output
-
-echo "Deduplicate combined tsv"
-dedup_output="${output_folder}/combined_dedup.tsv"
-deduplicate $combined_output $dedup_output
-
-echo "Separate into one tsv per entity type and language"
+echo "Filter dumped TSVs for each entity type..."
 for conll_type in $entity_types
 do
-    dedup_output_typed="${output_folder}/${conll_type}_dedup.tsv"
-    separate_by_entity_type \
-        "${dedup_output}" "${conll_type}" | 
-        tee "${dedup_output_typed}" 
-
-    separate_by_language "${dedup_output_typed}"
+    if [ "$conll_type" = "PER" ]
+    then
+        permuter_type="remove_parenthesis_edit_distance"
+    else
+        permuter_type="remove_parenthesis"
+    fi
+    echo "Type: ${conll_type}	Permuter: ${permuter_type}"
+    dumped_tsv="${output_folder}/${conll_type}.tsv"
+    filtered_tsv="${output_folder}/${conll_type}_filtered.tsv"
+    filtering $dumped_tsv $filtered_tsv $permuter_type
+    separate_by_language "${filtered_tsv}"
 done
+
+echo "Combine everything into one big tsv"
+combined_output="${output_folder}/combined_filtered.tsv"
+echo "Combining everything to ${combined_output}"
+csvstack --verbose --tabs ${output_folder}/*.tsv | csvformat -T | tee $combined_output
 
 mv --verbose ${output_folder}/*.tsv ${output_folder}/combined

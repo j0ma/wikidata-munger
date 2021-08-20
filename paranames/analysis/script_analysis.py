@@ -84,38 +84,31 @@ class UnicodeAnalyzer:
     def maybe_strip(self, word: str) -> str:
         return str(word).strip() if self.strip else str(word)
 
-    # @lru_cache(maxsize=CACHE_MAX_SIZE)
     def unicode_blocks(self, word: str) -> Counter:
         punctuation_cond = (
             lambda w: not self.is_punctuation(str(w))
-
             if self.ignore_punctuation
             else True
         )
 
         digit_cond = (
             lambda w: not self.is_number(str(w))
-
             if self.ignore_numbers
             else True
         )
 
         return Counter(
             blocks.of(c)
-
             for c in self.maybe_strip(word)
-
             if blocks.of(c) and punctuation_cond(c) and digit_cond(c)
         )
 
-    # @lru_cache(maxsize=CACHE_MAX_SIZE)
     def most_common_unicode_block(self, word: str) -> str:
         try:
             return self.unicode_blocks(word).most_common(1)[0][0]
         except IndexError:
             return ""
 
-    # @lru_cache(maxsize=CACHE_MAX_SIZE)
     def unicode_block_histogram(
         self,
         word: str,
@@ -236,7 +229,6 @@ class Alignment:
         alignment_tokens: List[Tuple[int, ...]] = sorted(
             [
                 tuple([int(x) for x in at.split("-")])
-
                 for at in self.alignment_str.split(" ")
             ],
             key=lambda t: t[0],
@@ -363,7 +355,6 @@ class CorpusStatistics:
 
         self.alignments: Iterable[Optional[Alignment]] = (
             self.alignments
-
             if self.alignments
             else (n.alignment for n in self.names)
         )
@@ -424,7 +415,6 @@ class UniversalRomanizer:
 
             uroman_output = [
                 line
-
                 for string, line in zip(
                     strings, completed_pid.stdout.split("\n")
                 )
@@ -527,7 +517,6 @@ class FastAligner:
 
                 fastalign_stdout = [
                     line
-
                     for name, line in zip(
                         names, fastalign_completed_pid.stdout.split("\n")
                     )
@@ -697,6 +686,12 @@ class PermuteLowestDistance(NameProcessor):
     def romanize(self, names: List[str]) -> List[str]:
         return self.romanizer(names)
 
+    def strip_comma(self, string: str) -> str:
+        return string.strip(",")
+
+    def remove_comma(self, string: str) -> str:
+        return string.replace(",", "")
+
     def _call_immutable(
         self, names: List[TransliteratedName]
     ) -> List[TransliteratedName]:
@@ -706,8 +701,8 @@ class PermuteLowestDistance(NameProcessor):
         romanized_names = self.romanize([n.text for n in names])
 
         for name, romanized_name in zip(names, romanized_names):
-            tokens = name.text.split()
-            romanized_tokens = romanized_name.split()
+            tokens = self.remove_comma(name.text).split()
+            romanized_tokens = self.remove_comma(romanized_name).split()
             orig_text = name.text
 
             # skip over names that have too few or too many tokens
@@ -725,7 +720,6 @@ class PermuteLowestDistance(NameProcessor):
                 permuted = [" ".join(perm) for perm in it.permutations(tokens)]
                 permuted_romanized = [
                     " ".join(perm)
-
                     for perm in it.permutations(romanized_tokens)
                 ]
 
@@ -741,7 +735,7 @@ class PermuteLowestDistance(NameProcessor):
 
                     if ed < best_distance:
                         best_distance = ed
-                        best_name = permutation.strip(",").strip()
+                        best_name = self.strip_comma(permutation).strip()
 
                         if self.debug_mode:
                             print(
@@ -750,7 +744,7 @@ class PermuteLowestDistance(NameProcessor):
 
                 output.append(
                     TransliteratedName(
-                        text=best_name.strip(","),
+                        text=self.strip_comma(best_name),
                         language=name.language,
                         unicode_analyzer=name.unicode_analyzer,
                         anomalous=name.anomalous,
@@ -770,8 +764,8 @@ class PermuteLowestDistance(NameProcessor):
         romanized_names = self.romanize([n.text for n in names])
 
         for name, romanized_name in zip(names, romanized_names):
-            tokens = name.text.split()
-            romanized_tokens = romanized_name.split()
+            tokens = self.remove_comma(name.text).split()
+            romanized_tokens = self.remove_comma(romanized_name).split()
             orig_text = name.text
 
             if not (
@@ -798,7 +792,7 @@ class PermuteLowestDistance(NameProcessor):
                     best_distance = ed
                     best_name = permutation
 
-            name.text = best_name.strip(",")
+            name.text = self.strip_comma(best_name)
             name.is_unchanged = bool(best_name == orig_text)
             name.original_text = orig_text
 
@@ -889,11 +883,24 @@ class Corpus:
     find_best_token_permutation: bool = attr.ib(repr=False, default=False)
     analyze_unicode: bool = attr.ib(repr=False, default=True)
     debug_mode: bool = attr.ib(default=False)
+    require_english: bool = attr.ib(default=True)
+    filter_out_blank: bool = attr.ib(default=True)
+    placeholder_token: str = attr.ib(default="@")
 
     def filter_names(
         self, names: List[TransliteratedName]
     ) -> List[TransliteratedName]:
-        return [n for n in names if n.text.strip() and n.english_text]
+
+        output = []
+        for n in names:
+            if n.text.strip() and (
+                n.english_text if self.require_english else True
+            ):
+                output.append(n)
+            else:
+                print(f"Excluding: {n}")
+
+        return output
 
     def __attrs_post_init__(self) -> None:
 
@@ -933,9 +940,10 @@ class Corpus:
                 print("[Corpus] Applying NameProcessor...")
             self.names = self.permuter(self.names)
 
-        if self.debug_mode:
-            print("[Corpus] Filtering out names with blank text...")
-        self.names = self.filter_names(self.names)
+        if self.filter_out_blank:
+            if self.debug_mode:
+                print("[Corpus] Filtering out names with blank text...")
+            self.names = self.filter_names(self.names)
 
         if self.analyze_unicode:
             if self.debug_mode:
@@ -955,7 +963,12 @@ class Corpus:
 
     def compute_alignments(self) -> None:
 
-        _alignments, _names = self.fast_aligner(self.names)
+        aligner_input = (
+            self.names
+            if self.filter_out_blank
+            else [n if n else self.placeholder_token for n in self.names]
+        )
+        _alignments, _names = self.fast_aligner(aligner_input)
 
         self.alignments = _alignments
         self.names = _names
@@ -1027,7 +1040,6 @@ class AnomalousTagger:
                 language=n.language,
                 is_unchanged=n.is_unchanged,
             )
-
             for n in names
         ]
 

@@ -1,11 +1,9 @@
-# flyingsquid
 git+https://github.com/cthoyt/p_tqdm@patch-1
 pymongo
 qwikidata
 sklearn
 tqdm
-attr
-bz2
+attrs
 click
 cssselect
 dask
@@ -18,4 +16,7 @@ orjson
 pandas
 requests
 scipy
-unicodeblocks
+unicodeblock
+csvkit
+pgmpy
+flyingsquid

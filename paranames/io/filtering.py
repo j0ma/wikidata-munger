@@ -62,14 +62,12 @@ def standardize_script(
                     unicode_analyzer=ua,
                     is_unchanged=True,
                 )
-
                 for _, row in subset.iterrows()
             ],
             language=language,
             normalize_histogram=True,
             ignore_punctuation=True,
             ignore_numbers=False,
-            # align_with_english=True
         )
 
     for language, corpus in corpora.items():
@@ -101,7 +99,6 @@ def standardize_script(
                     anomalous=True,
                     is_unchanged=True,
                 )
-
                 for w in anomalous_words
             ]
         )
@@ -188,7 +185,6 @@ def standardize_script(
                 noise_sample=w.noise_sample,
                 is_unchanged=w.is_unchanged,
             )
-
             for w, pred in zip(corpus.names, preds)
         ]
 
@@ -220,6 +216,8 @@ def standardize_names(
     permuter_type: str,
     debug_mode: bool = False,
     chunk_rows: bool = False,
+    corpus_require_english: bool = False,
+    corpus_filter_blank: bool = False,
     *args,
     **kwargs,
 ) -> pd.DataFrame:
@@ -265,15 +263,22 @@ def standardize_names(
         find_best_token_permutation=True,
         analyze_unicode=False,
         preserve_fastalign_output=False,
+        require_english=corpus_require_english,
+        filter_out_blank=corpus_filter_blank,
     )
 
     print(f"[standardize_names] Replacing old names...")
+    print(data.shape, len(names), len(pooled_corpus.names))
     data[alias_column] = [n.text for n in pooled_corpus.names]
+
+    # finally mask out rows with now empty labels
+    labels_nonempty = data[alias_column].apply(lambda s: bool(s))
+    data = data[labels_nonempty]
 
     return data
 
 
-def apply_trumping_rules(
+def apply_entity_disambiguation_rules(
     data: pd.DataFrame,
     id_column: str = "wikidata_id",
     type_column: str = "type",
@@ -294,17 +299,22 @@ def apply_trumping_rules(
     data = data.merge(id_to_ntypes_df, on=id_column)
 
     # if id is in this dict, it will have several types
-    id_to_type_string = (
+    id_to_types = (
         data[data.n_types > 1][[id_column, type_column]]
         .drop_duplicates()
         .groupby(id_column)
         .apply(lambda df: "-".join(sorted(df.type.unique())))
-        .to_dict()
     )
 
-    # TODO: update these
-    # encode actual trumping rules
-    trumping_rules = {
+    # if there are no duplicates, get rid of n_types column and return
+    if id_to_types.empty:
+        data = data.drop(columns="n_types")
+        return data
+    else:
+        id_to_types = id_to_types.to_dict()
+
+    # encode actual disambiguation rules
+    entity_disambiguation_rules = {
         "LOC-ORG": "LOC",
         "LOC-ORG-PER": "ORG",
         "ORG-PER": "ORG",
@@ -313,9 +323,8 @@ def apply_trumping_rules(
 
     # compose the above two relations
     id_to_canonical_type = {
-        _id: trumping_rules.get(type_str)
-
-        for _id, type_str in id_to_type_string.items()
+        _id: entity_disambiguation_rules.get(type_str)
+        for _id, type_str in id_to_types.items()
     }
 
     # replace with canonical types, non-ambiguous ones get None
@@ -326,14 +335,13 @@ def apply_trumping_rules(
     # put the old non-ambiguous types back in
     new_types = [
         old_type if new_type is None else new_type
-
         for old_type, new_type in zip(data.type, canonical_types)
     ]
 
     data[type_column] = new_types
 
     # finally drop the extra column we created
-    data = data.drop("n_types", 1)
+    data = data.drop(columns="n_types")
 
     # also drop duplicate rows
     data = data.drop_duplicates()
@@ -350,7 +358,7 @@ def apply_trumping_rules(
     # print out some information to the user
     print("Deduplication complete")
     print(f"No. of rows, original: {old_nrows}")
-    print(f"No. of rows, deduplicated: {data.shape[0]}")
+    print(f"No. of rows, filtered: {data.shape[0]}")
     print(f"Rows removed = {old_nrows - data.shape[0]}")
 
     return data
@@ -413,6 +421,8 @@ def filter_am_ti(
 @click.option(
     "--permuter-type", required=True, type=click.Choice(sa.permuter_types)
 )
+@click.option("--corpus-require-english", is_flag=True)
+@click.option("--corpus-filter-blank", is_flag=True)
 def main(
     input_file,
     output_file,
@@ -426,6 +436,8 @@ def main(
     chunksize,
     human_readable_langs_path,
     permuter_type,
+    corpus_require_english,
+    corpus_filter_blank,
 ):
 
     # read in human readable language names
@@ -441,8 +453,8 @@ def main(
     # change <english_column> to "eng"
     data = data.rename(columns={english_column: "eng"})
 
-    # deduplicate rows using trumping rules
-    data = apply_trumping_rules(
+    # filter rows using entity disambiguation rules
+    data = apply_entity_disambiguation_rules(
         data, id_column=id_column, type_column=type_column
     )
 
@@ -458,6 +470,9 @@ def main(
     )
 
     # standardize names (permute tokens in PER)
+    # import ipdb
+
+    # ipdb.set_trace()
     data = standardize_names(
         data,
         id_column=id_column,
@@ -468,6 +483,8 @@ def main(
         permuter_type=permuter_type,
         language_column=language_column,
         human_readable_lang_names=human_readable_lang_names,
+        corpus_require_english=corpus_require_english,
+        corpus_filter_blank=corpus_filter_blank,
     )
 
     # write to disk

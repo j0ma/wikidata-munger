@@ -4,6 +4,7 @@ import pandas as pd
 import click
 import orjson
 
+import paranames.io.wikidata_helpers as wh
 
 from unicodeblock import blocks
 
@@ -22,17 +23,9 @@ def alias_script_tuples(f_cache):
             continue
 
 
-def load_cache(cache_path):
-    with open(cache_path, encoding="utf-8") as f:
-        return {k: v for k, v in alias_script_tuples(f)}
-
-
-def most_common_script(scripts):
-    return Counter(scripts).most_common(1)[0][0]
-
-
 def compute_entropy(series):
-    return sps.entropy(series.value_counts())
+    """Compute base-2 entropy of categorical distribution sample"""
+    return sps.entropy(series.value_counts(), base=2)
 
 
 @click.command()
@@ -45,44 +38,57 @@ def compute_entropy(series):
 )
 @click.option("--io-format", "-f", default="tsv")
 @click.option("--num-workers", "-w", default=12, type=int)
+@click.option("--human-readable-langs-path", required=True)
+@click.option("--id-column", "-id", default="wikidata_id")
+@click.option("--type-column", "-t", default="type")
+@click.option("--alias-column", "-a", default="alias")
+@click.option("--english-column", "-e", default="name")
+@click.option("--language-column", "-l", default="language")
 def main(
     input_file: str,
     output_file: str,
     cache_path: str,
     io_format: str,
     num_workers: int,
+    human_readable_langs_path: str,
+    id_column: str,
+    type_column: str,
+    alias_column: str,
+    english_column: str,
+    language_column: str,
 ) -> None:
+
+    script_column = "script"
 
     # only csv/tsv supported for now
     assert io_format in ["csv", "tsv"]
 
-    # alias_to_script = load_cache(cache_path)
     alias_to_script = pd.read_csv(
-        cache_path, sep="\t", names="alias,script".split(",")
+        cache_path, sep="\t", names=[alias_column, script_column]
     )
 
-    with open("./data/human_readable_lang_names.json", encoding="utf8") as f:
+    with open(human_readable_langs_path, encoding="utf8") as f:
         human_readable_names = orjson.loads(f.read())
 
-    data = pd.read_csv(input_file, sep="\t" if io_format == "tsv" else ",")
+    data = wh.read(input_file, io_format=io_format)
 
-    data["language_long"] = data.language.apply(
-        lambda l: human_readable_names.get(l)
+    data["language_long"] = data[language_column].apply(
+        lambda l: human_readable_names.get(l, l)
     )
 
-    data = pd.merge(data, alias_to_script, on="alias", how="left")
+    data = pd.merge(data, alias_to_script, on=alias_column, how="left")
 
     script_entropies = dd.from_pandas(
-        data.groupby(["language", "language_long"])
-        .script.apply(compute_entropy)
+        data.groupby([language_column, "language_long"])[script_column]
+        .apply(compute_entropy)
         .round(3)
         .sort_values(ascending=False)
         .reset_index()
         .rename(
             columns={
-                "language_long": "language",
+                "language_long": language_column,
                 "script": "script_entropy",
-                "language": "language_code",
+                language_column: "language_code",
             }
         ),
         chunksize=5000,

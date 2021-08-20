@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
+
+HUMAN_READABLE_LANGS_PATH="$HOME/paranames/data/human_readable_lang_names.json"
 
 usage () {
     echo "Usage: bash ./script_analysis.sh TSV_PATH OUTPUT_FILE ALIAS_COL_IX LANG_COL_IX"
@@ -12,17 +14,18 @@ analyze_most_common () {
     ## get all unique aliases
     tail +2 $DUMP | cut -f $ALIAS_COL_IX | sort | uniq > $ALIASES
 
-    ## infer all scripts
-    ./scripts/stat/infer_script_most_common < $ALIASES > $SCRIPTS
+    ## infer all paranames
+    ./paranames/analysis/infer_script_most_common < $ALIASES > $SCRIPTS
 
     ## combine into big flie
     paste $ALIASES $SCRIPTS > $TSV
 
     ## then use python script to analyze the script statistics, entropy etc
-    python scripts/stat/get_language_stats.py \
+    python paranames/analysis/get_language_stats.py \
         --input-file $DUMP \
         --cache-path $TSV \
-        --output-file $OUTPUT_FILE
+        --output-file $OUTPUT_FILE \
+        --human-readable-langs-path "$HUMAN_READABLE_LANGS_PATH"
 }
 
 analyze_histogram () {
@@ -35,7 +38,7 @@ analyze_histogram () {
             grep -P "${language}$" |
             cut -f1 | 
             tr -d '\n' | 
-            ./scripts/stat/infer_script_histogram --strip)
+            ./paranames/analysis/infer_script_histogram --strip)
         printf "${language}\t${script_histogram}\n"
 
     done > $LANG_SCRIPTS
@@ -43,18 +46,11 @@ analyze_histogram () {
     ## get all unique aliases
     tail +2 $DUMP | cut -f $ALIAS_COL_IX | sort | uniq > $ALIASES
 
-    ## infer all scripts
-    ./scripts/stat/infer_script_histogram --strip < $ALIASES > $SCRIPTS
+    ## infer all script histograms
+    ./paranames/analysis/infer_script_histogram --strip < $ALIASES > $SCRIPTS
     
     ## combine into big file
     paste $ALIASES $SCRIPTS > $TSV
-
-    ## then use python script to analyze the script statistics, entropy etc
-    #python scripts/stat/tag_anomalous_names.py \
-        #--input-file $DUMP \
-        #--cache-path $TSV \
-        #--language-script-histograms $LANG_SCRIPTS
-        #--output-file $OUTPUT_FILE
 
 }
 
@@ -75,7 +71,7 @@ TSV=$TMPDIR/all_aliases_with_script.tsv
 ## get unique languages
 LANGUAGES=$(tail +2 $DUMP | cut -f $LANG_COL_IX | sort | uniq | tr '\n' ' ')
 
-#analyze_most_common
-analyze_histogram
+analyze_most_common
+#analyze_histogram
 
 #rm -rf $TMPDIR
