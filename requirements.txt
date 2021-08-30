@@ -20,3 +20,7 @@ unicodeblock
 csvkit
 pgmpy
 flyingsquid
+black
+mypy
+ipython
+more-itertools

@@ -1,6 +1,6 @@
 from typing import List
 
-from wikidata_helpers import orjson_dump
+from paranames.io.wikidata_helpers import orjson_dump
 import requests
 import cssselect
 import lxml.html as html
@@ -48,8 +48,9 @@ def main(url, sel, columns, lang_col, value_col, african_only, abbrev_only):
         df = df[df.language.isin(african_langs)].reset_index(drop=True)
 
     lang_to_wikipedia_code = {
-        str(d[lang_col]).strip(): str(d[value_col].replace(" (closed)", "")).strip()
-
+        str(d[lang_col])
+        .strip(): str(d[value_col].replace(" (closed)", ""))
+        .strip()
         for d in df[[lang_col, value_col]].to_dict("records")
     }
 

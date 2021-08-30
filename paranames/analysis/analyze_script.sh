@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -euo pipefail
 
 HUMAN_READABLE_LANGS_PATH="$HOME/paranames/data/human_readable_lang_names.json"
 
@@ -28,31 +28,6 @@ analyze_most_common () {
         --human-readable-langs-path "$HUMAN_READABLE_LANGS_PATH"
 }
 
-analyze_histogram () {
-
-    ## first get the script histogram for each language
-    for language in $LANGUAGES
-    do
-        script_histogram=$(tail +2 $DUMP |
-            cut -f $ALIAS_COL_IX,$LANG_COL_IX  |
-            grep -P "${language}$" |
-            cut -f1 | 
-            tr -d '\n' | 
-            ./paranames/analysis/infer_script_histogram --strip)
-        printf "${language}\t${script_histogram}\n"
-
-    done > $LANG_SCRIPTS
-
-    ## get all unique aliases
-    tail +2 $DUMP | cut -f $ALIAS_COL_IX | sort | uniq > $ALIASES
-
-    ## infer all script histograms
-    ./paranames/analysis/infer_script_histogram --strip < $ALIASES > $SCRIPTS
-    
-    ## combine into big file
-    paste $ALIASES $SCRIPTS > $TSV
-
-}
 
 DUMP=$1
 OUTPUT_FILE=$2
@@ -72,6 +47,3 @@ TSV=$TMPDIR/all_aliases_with_script.tsv
 LANGUAGES=$(tail +2 $DUMP | cut -f $LANG_COL_IX | sort | uniq | tr '\n' ' ')
 
 analyze_most_common
-#analyze_histogram
-
-#rm -rf $TMPDIR

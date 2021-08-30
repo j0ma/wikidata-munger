@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 usage () {
-    echo "Usage: bash separate_folder_dump.sh LANGUAGES OUTPUT_FOLDER [ENTITY_TYPES=PER,LOC,ORG DB_NAME=wikidata_db COLLECTION_NAME=wikidata_simple]"
+    echo "Usage: bash separate_folder_dump.sh LANGUAGES OUTPUT_FOLDER [ENTITY_TYPES=PER,LOC,ORG DB_NAME=wikidata_db COLLECTION_NAME=wikidata_simple VOTING_METHOD=majority_vote]"
 }
 
-[ $# -lt 2 ] && usage && exit 1
+[ $# -lt 4 ] && usage && exit 1
 
 langs="${1}"
 output_folder="${2}"
@@ -14,7 +14,10 @@ entity_types=$(echo "${3:-PER,LOC,ORG}" | tr "," " ")
 db_name="${4:-wikidata_db}"
 collection_name="${5:-wikidata_simple}"
 format="tsv"
+voting_method=${6:-majority_vote}
 mkdir --verbose -p $output_folder/combined
+
+dump_stats_folder=$(mktemp -d /tmp/paranames_dump_stats_${voting_method}.XXXXXX)
 
 # NOTE: add comma separted list here to exclude languages
 exclude_these_langs=""
@@ -58,17 +61,47 @@ dump () {
 
 }
 
-filtering () {
+postprocess () {
     local input_file=$1
-    local filtered_file=$2
+    local output_file=$2
+
+    # apply things like entity name disambiguation rules
+    python paranames/io/postprocess.py \
+        -i $input_file -o $output_file -f tsv
+
+}
+
+standardize_script () {
+    local input_file=$1
+    local output_file=$2
+    local vote_aggregation_method=$3
+
+    # apply script standardization
+    python paranames/io/script_standardization.py \
+        -i $input_file -o $output_file -f tsv \
+        --vote-aggregation-method $vote_aggregation_method \
+        --filtered-names-output-file "${dump_stats_folder}/filtered_names.tsv" \
+        --write-filtered-names --compute-script-entropy
+}
+
+standardize_names () {
+    local input_file=$1
+    local output_file=$2
     local permuter_type=$3
 
-    # apply script filtering, entity name disambiguation etc.
-    python paranames/io/filtering.py \
-        -i $input_file -o $filtered_file -f tsv \
-        --human-readable-langs-path "./data/human_readable_lang_names.json" \
-        --permuter-type $permuter_type
+    # apply script standardization
+    python paranames/io/name_standardization.py \
+        -i $input_file -o $output_file -f tsv \
+        --human-readable-langs-path ~/paranames/data/human_readable_lang_names.json \
+        --permuter-type $permuter_type --corpus-stats-output ${dump_stats_folder}/standardize_names_stats \
+        --debug-mode --num-workers 8
+}
 
+compute_script_entropy () {
+    local input_file=$1
+    local output_file=$2
+    local script="paranames/analysis/analyze_script.sh"
+    bash $script $input_file $output_file
 }
 
 separate_by_language () {
@@ -94,10 +127,49 @@ separate_by_entity_type () {
     csvformat -T
 }
 
-echo "Extract & clean everything for each type"
+#echo "Extract & clean everything for each type"
+#for conll_type in $entity_types
+#do
+    #dump $conll_type $langs $db_name $collection_name &
+#done
+#wait
+
+# apply entity type disambiguation and other postprocessing
+#for conll_type in $entity_types
+#do
+    #dumped_tsv="${output_folder}/${conll_type}.tsv"
+    #postprocessed_tsv="${output_folder}/${conll_type}_postprocessed.tsv"
+    #postprocess $dumped_tsv $postprocessed_tsv &
+#done
+#wait
+
+# combine everything into one tsv for script standardization
+# this way we get interpretable entropy numbers by language, not just
+combined_postprocessed_tsv="${output_folder}/combined_postprocessed.tsv"
+#csvstack --verbose --tabs ${output_folder}/*_postprocessed.tsv \
+    #| csvformat -T \
+    #| tee $combined_postprocessed_tsv
+
+## compute script entropy (before)
+#script_entropy_results_before="${dump_stats_folder}/tacl_script_entropy_${voting_method}_before.tsv"
+#compute_script_entropy $combined_postprocessed_tsv $script_entropy_results_before
+
+## script standardization: remove parentheses from everything
+combined_script_standardized_tsv="${output_folder}/combined_script_standardized_${voting_method}.tsv"
+#standardize_script \
+    #$combined_postprocessed_tsv \
+    #$combined_script_standardized_tsv \
+    #$voting_method
+
+## compute script entropy (after)
+#script_entropy_results_after="${dump_stats_folder}/tacl_script_entropy_${voting_method}_after.tsv"
+#compute_script_entropy $combined_script_standardized_tsv $script_entropy_results_after
+
+# separate into PER,LOC,ORG for name permutations
 for conll_type in $entity_types
 do
-    dump $conll_type $langs $db_name $collection_name &
+    separate_by_entity_type $combined_script_standardized_tsv $conll_type \
+        > "${output_folder}/${conll_type}_script_standardized_${voting_method}.tsv" &
 done
 wait
 
@@ -111,15 +183,19 @@ do
         permuter_type="remove_parenthesis"
     fi
     echo "Type: ${conll_type}	Permuter: ${permuter_type}"
-    dumped_tsv="${output_folder}/${conll_type}.tsv"
-    filtered_tsv="${output_folder}/${conll_type}_filtered.tsv"
-    filtering $dumped_tsv $filtered_tsv $permuter_type
-    separate_by_language "${filtered_tsv}"
+    name_standardization_input_tsv="${output_folder}/${conll_type}_script_standardized_${voting_method}.tsv"
+    name_standardization_output_tsv="${output_folder}/${conll_type}_script_name_standardized_${voting_method}.tsv"
+    standardize_names $name_standardization_input_tsv $name_standardization_output_tsv $permuter_type
 done
 
 echo "Combine everything into one big tsv"
-combined_output="${output_folder}/combined_filtered.tsv"
-echo "Combining everything to ${combined_output}"
-csvstack --verbose --tabs ${output_folder}/*.tsv | csvformat -T | tee $combined_output
+final_combined_output="${output_folder}/combined_script_name_standardized_${voting_method}.tsv"
+echo "Combining everything to ${final_combined_output}"
 
-mv --verbose ${output_folder}/*.tsv ${output_folder}/combined
+final_combination_entity_types=$(echo $entity_types | tr " " ",")
+csvstack --verbose --tabs ${output_folder}/{PER,LOC,ORG}_script_name_standardized_${voting_method}.tsv \
+    | csvformat -T | tee $final_combined_output
+
+#separate_by_language $final_combined_output
+
+#mv --verbose ${output_folder}/{PER,LOC,ORG,combined}*.tsv ${output_folder}/combined

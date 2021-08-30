@@ -108,7 +108,6 @@ class UniformDistributionSampler(Sampler):
                 df[df[lc] == lang].sample(
                     n_samples, random_state=self.random_state
                 )
-
                 for lang, n_samples in n_samples_per_language.items()
             ],
             ignore_index=True,
@@ -166,6 +165,13 @@ class ExponentSmoothedSampler(Sampler):
 @click.option("--num-samples", "-n", type=int, default=-1)
 @click.option("--smoothing-factor", "-S", type=float, default=0.7)
 @click.option("--groupby-column", "-g", default="is_unchanged")
+@click.option(
+    "--languages-to-use",
+    "-l",
+    default="",
+    help="Comma separated list of languages to filter down to before sampling",
+)
+@click.option("--min-names-per-lang", type=int, default=-1)
 def main(
     input_file,
     output_file,
@@ -177,6 +183,8 @@ def main(
     num_samples,
     smoothing_factor,
     groupby_column,
+    languages_to_use,
+    min_names_per_lang,
 ):
 
     if debug_mode:
@@ -192,8 +200,16 @@ def main(
             print("Loading chunks...")
         data = pd.concat(tqdm(chunk for chunk in data))
 
+    if languages_to_use:
+        if debug_mode:
+            print("Filtering down languages...")
+        keep_these = set(languages_to_use.split(","))
+        data = data[data.language.isin(keep_these)]
+
     if sampler == "exponential_smoothing":
-        subsampler = ExponentSmoothedSampler(smoothing_factor)
+        subsampler = ExponentSmoothedSampler(
+            smoothing_factor=smoothing_factor, random_seed=random_seed
+        )
     elif sampler == "balanced_groupby":
         subsampler = GroupBySampler(
             groupby_column=groupby_column,
@@ -209,6 +225,16 @@ def main(
         print(f"Subsampling data with {subsampler}...")
 
     sub = subsampler(data, num_samples)
+
+    if min_names_per_lang > 0:
+        print(
+            f"Dropping languages that have fewer than {min_names_per_lang} names"
+        )
+        lang_counts = sub.language.value_counts().to_dict()
+        should_keep = sub.language.apply(
+            lambda l: lang_counts[l] >= min_names_per_lang
+        )
+        sub = sub[should_keep]
 
     if debug_mode:
         print(f"Writing to {output_file}...")

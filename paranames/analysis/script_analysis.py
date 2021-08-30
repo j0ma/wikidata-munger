@@ -30,6 +30,7 @@ from tqdm import tqdm
 from p_tqdm import p_map
 import pandas as pd
 import numpy as np
+import scipy.stats as sps
 import attr
 
 import editdistance
@@ -350,6 +351,7 @@ class CorpusStatistics:
     total_cross_alignments: int = attr.ib(default=0)
     total_permuted: int = attr.ib(default=0)
     total_surviving: int = attr.ib(default=0)
+    # script_entropy: float = attr.ib(default=0.0)
 
     def __attrs_post_init__(self) -> None:
 
@@ -368,6 +370,13 @@ class CorpusStatistics:
 
         self.total_permuted = sum(not n.is_unchanged for n in self.names)
         self.total_surviving = sum(n.is_unchanged for n in self.names)
+
+        # self.script_entropy = sps.entropy(
+            # pd.Series(
+                # [n.most_common_unicode_block for n in self.names]
+            # ).value_counts(),
+            # base=2,
+        # )
 
 
 @attr.s
@@ -970,6 +979,9 @@ class Corpus:
         )
         _alignments, _names = self.fast_aligner(aligner_input)
 
+        for old_name, new_name in zip(self.names, _names):
+            new_name.is_unchanged = bool(old_name.text == new_name.text)
+
         self.alignments = _alignments
         self.names = _names
 
@@ -1043,6 +1055,20 @@ class AnomalousTagger:
             for n in names
         ]
 
+    def _yield_preds(
+        self, names: List[TransliteratedName]
+    ) -> Generator[int, None, None]:
+        for w in self(names):
+            if w.anomalous is None:
+                yield 0
+            elif w.anomalous:
+                yield 1
+            else:
+                yield -1
+
+    def get_preds(self, names: List[TransliteratedName]) -> List[int]:
+        return [p for p in self._yield_preds(names)]
+
 
 @attr.s
 class IncorrectBlockTagger(AnomalousTagger):
@@ -1094,6 +1120,7 @@ class JSDTagger(AnomalousTagger):
         return observed_distance >= self.critical_value
 
 
+@attr.s
 class HiraganaKatakanaTagger(AnomalousTagger):
     """Tags names as anomalous/non-anomalous based on their Hiragana/Katakana characters.
 
@@ -1120,6 +1147,7 @@ class HiraganaKatakanaTagger(AnomalousTagger):
         return contains_kana if name.language != "ja" else not contains_kana
 
 
+@attr.s
 class CJKTagger(AnomalousTagger):
     """Tags names as anomalous/non-anomalous based on their Hiragana/Katakana characters.
 
@@ -1142,3 +1170,40 @@ class CJKTagger(AnomalousTagger):
         contains_cjk = any(block.startswith("CJK") for block in hist)
 
         return contains_cjk
+
+
+@attr.s
+class AggregatedTagger(AnomalousTagger):
+
+    vote_aggregation_methods = set(["all", "any", "majority_vote"])
+    taggers: List[AnomalousTagger] = attr.ib()
+    aggregation_method: str = attr.ib(default="all")
+
+    def __attrs_post_init__(self) -> None:
+        self.aggregator_function = {
+            "all": all,
+            "any": any,
+            "majority_vote": lambda preds: bool(np.mean(preds) > 0),
+        }.get(self.aggregation_method)
+
+    def __call__(
+        self, names: List[TransliteratedName]
+    ) -> List[TransliteratedName]:
+
+        preds_per_tagger = [t.get_preds(names) for t in self.taggers]
+        preds = list(zip(*preds_per_tagger))
+        boolean_preds = [self.aggregator_function(p) for p in preds]
+
+        tagged_names = [
+            TransliteratedName(
+                text=w.text,
+                unicode_analyzer=w.unicode_analyzer,
+                anomalous=pred,
+                language=w.language,
+                noise_sample=False,
+                is_unchanged=w.is_unchanged,
+            )
+            for w, pred in zip(names, boolean_preds)
+        ]
+
+        return tagged_names

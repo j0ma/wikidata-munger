@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from typing import Dict
+from typing import Dict, Tuple, Generator
 import itertools as it
-from p_tqdm import p_map
-import orjson
+from pathlib import Path
+import tempfile
 
 import click
 import numpy as np
@@ -13,115 +13,89 @@ from sklearn.metrics import classification_report
 from flyingsquid.label_model import LabelModel
 import paranames.io.wikidata_helpers as wh
 import paranames.analysis.script_analysis as sa
+from p_tqdm import p_map
+import orjson
+
+vote_aggregation_methods = set(["all", "any", "majority_vote", "none"])
+
+
+def slice_by_column(
+    data: pd.DataFrame, column: str
+) -> Generator[Tuple[str, pd.DataFrame], None, None]:
+    """Yields slices of data frame based on values of column.
+
+    Note: assumes values of column are in sorted order
+    """
+    unique_values = data[column].unique()
+    for val in unique_values:
+        yield val, data[data[column] == val]
 
 
 def standardize_script(
     data: pd.DataFrame,
-    language_column: str,
+    aggregation_method: str,
     critical_value: float = 0.1,
+    language_column: str = "language",
+    alias_column: str = "alias",
+    id_column: str = "wikidata_id",
+    english_text_column: str = "eng",
+    strip: bool = True,
     *args,
     **kwargs,
-) -> pd.DataFrame:
-
-    return data
+) -> Tuple[pd.DataFrame, pd.DataFrame]:
 
     unique_languages = set(data[language_column].unique())
+    ua = sa.UnicodeAnalyzer(
+        strip=strip,
+        ignore_punctuation=True,
+        ignore_numbers=True,
+        normalize_histogram=True,
+    )
 
-    anomalous = {}
-    corpora = {}
+    name_loader = sa.TransliteratedNameLoader(
+        language_column=language_column,
+        debug_mode=False,
+        name_column=alias_column,
+        wikidata_id_column=id_column,
+        english_column=english_text_column,
+    )
 
-    # TODO: implement this
-    # print("Reading in hand-labeled anomalous data, if any")
+    clean_names_all: List[str] = []
 
-    # for language in unique_languages:
-    # try:
-    # anomalous[language] = {
-    # line.split("\t")[0].strip()
+    output_chunks = []
+    filtered_chunks = []
 
-    # for line in open(
-    # Path(anomalous_data_folder) / f"{language}_anomalous.txt"
-    # )
-    # }
-    # except:
-    # continue
+    for language, subset in tqdm(
+        slice_by_column(data, language_column),
+    ):
 
-    for language in unique_languages:
-        print(f"[{language}] Creating corpus...")
-        subset = data[data.language == language]
-        corpora[language] = sa.Corpus(
-            out_folder=(
-                Path(output_folder)
-                or Path(f"/tmp/flyingsquid-test/{language}")
-            ),
-            names=[
-                sa.TransliteratedName(
-                    text=row[alias_column],
-                    language=language,
-                    english_text=row[english_text_column],
-                    wikidata_id=row[id_column],
-                    unicode_analyzer=ua,
-                    is_unchanged=True,
-                )
-                for _, row in subset.iterrows()
-            ],
-            language=language,
-            normalize_histogram=True,
-            ignore_punctuation=True,
-            ignore_numbers=False,
+        print(f"[{language}] Loading names...")
+
+        subset_names = name_loader(subset)
+
+        print(f"[{language}] Finding most common Unicode block")
+
+        most_common_block = (
+            subset[alias_column]
+            .apply(ua.most_common_unicode_block)
+            .value_counts()
+            .idxmax()
         )
-
-    for language, corpus in corpora.items():
-        anomalous_words = anomalous.get(language, {})
-
-        if not anomalous_words:
-            names_in_this_lang = set(
-                data[data.language == language][alias_column].unique()
-            )
-            names_in_other_langs = set(
-                data[data.language != language][alias_column].unique()
-            )
-
-            non_overlapping_names = names_in_other_langs - names_in_this_lang
-
-            anomalous_words = np.random.choice(
-                np.array(list(non_overlapping_names)),
-                size=n_noise_words,
-                replace=False,
-            )
-
-        corpus.add_words(
-            [
-                sa.TransliteratedName(
-                    text=w,
-                    language=language,
-                    noise_sample=True,
-                    unicode_analyzer=ua,
-                    anomalous=True,
-                    is_unchanged=True,
-                )
-                for w in anomalous_words
-            ]
-        )
-
-        anomalous[language] = set(anomalous_words)
-
-    for language, corpus in corpora.items():
-
-        print(f"[{language}] Done. Predicting...")
 
         # anomalous if most common unicode block is not expected one
         incorrect_block_tagger = sa.IncorrectBlockTagger(
-            expected_block=corpus.most_common_unicode_block
+            expected_block=most_common_block
         )
 
         # anomalous if given block is missing
         missing_block_tagger = sa.MissingBlockTagger(
-            missing_block=corpus.most_common_unicode_block
+            missing_block=most_common_block
         )
 
         # anomalous if JSD from language prototype is greater than a critical value
+        prototype = "".join(str(s) for s in subset[alias_column])
         distance_based_tagger = sa.JSDTagger(
-            per_language_distribution=corpus.prototype,
+            per_language_distribution=ua.unicode_block_histogram(prototype),
             critical_value=critical_value,
             distance_measure="jensen_shannon",
         )
@@ -129,80 +103,32 @@ def standardize_script(
         hiragana_katakana_tagger = sa.HiraganaKatakanaTagger()
         cjk_tagger = sa.CJKTagger()
 
-        true_labels = []
-
-        for name in corpus.names:
-            if name.anomalous or name.text in anomalous.get(language, {}):
-                true_labels.append(1)
-            elif name.anomalous == None:
-                true_labels.append(0)
-            else:
-                true_labels.append(-1)
-
-        label_priors = pd.Series(true_labels).value_counts(normalize=True)
-        print(f"Label priors:\n{label_priors}")
-
-        cr = lambda pred: classification_report(
-            y_true=true_labels, y_pred=pred
+        aggregated_tagger = sa.AggregatedTagger(
+            taggers=[
+                incorrect_block_tagger,
+                missing_block_tagger,
+                distance_based_tagger,
+                hiragana_katakana_tagger,
+                cjk_tagger,
+            ],
+            aggregation_method=aggregation_method,
         )
 
-        def get_preds(tagger):
-            return list(yield_preds(tagger))
+        print(f"[{language}] Tagging names...")
+        tagged_names = aggregated_tagger(subset_names)
+        subset[alias_column] = [n.text for n in tagged_names]
+        subset.loc[:, "anomalous"] = [n.anomalous for n in tagged_names]
 
-        def yield_preds(tagger):
-            for w in tagger(corpus.names):
-                if w.anomalous is None:
-                    yield 0
-                elif w.anomalous:
-                    yield 1
-                else:
-                    yield -1
+        filtered_names = subset[subset["anomalous"]]
+        filtered_chunks.append(filtered_names)
 
-        ibt_preds = get_preds(incorrect_block_tagger)
-        mbt_preds = get_preds(missing_block_tagger)
-        dbt_preds = get_preds(distance_based_tagger)
-        hk_preds = get_preds(hiragana_katakana_tagger)
-        cjk_preds = get_preds(hiragana_katakana_tagger)
+        kept_names = subset[~subset["anomalous"]]
+        output_chunks.append(kept_names)
 
-        noisy_votes = np.vstack(
-            [ibt_preds, mbt_preds, dbt_preds, hk_preds, cjk_preds]
-        ).T
-        num_labeling_functions = noisy_votes.shape[1]
+    output = pd.concat(output_chunks, ignore_index=True)
+    filtered = pd.concat(filtered_chunks, ignore_index=True)
 
-        label_model = LabelModel(num_labeling_functions)
-        label_model.fit(noisy_votes)
-
-        preds = label_model.predict(noisy_votes).reshape(
-            np.array(true_labels).shape
-        )
-
-        tagged_names = [
-            sa.TransliteratedName(
-                text=w.text,
-                unicode_analyzer=w.unicode_analyzer,
-                anomalous=bool(pred > 0),
-                language=w.language,
-                noise_sample=w.noise_sample,
-                is_unchanged=w.is_unchanged,
-            )
-            for w, pred in zip(corpus.names, preds)
-        ]
-
-        print("Here is what FlyingSquid missed:")
-
-        for (name, pred) in zip(corpus.names, preds):
-            gold = name.anomalous
-            neg = name.noise_sample
-            pred = bool(pred > 0)
-
-            if gold and not pred:
-                print(f"[{language}] Anomalous but not tagged: {name.text}")
-            elif pred and gold == False and not neg:
-                print(f"[{language}] Non-anomalous but tagged: {name.text}")
-
-        corpus.names = tagged_names
-
-    return data
+    return output, filtered
 
 
 def standardize_names(
@@ -268,7 +194,6 @@ def standardize_names(
     )
 
     print(f"[standardize_names] Replacing old names...")
-    print(data.shape, len(names), len(pooled_corpus.names))
     data[alias_column] = [n.text for n in pooled_corpus.names]
 
     # finally mask out rows with now empty labels
@@ -383,7 +308,6 @@ def filter_am_ti(
             return True
         else:
             id_is_suitable = row[id_column] in am_ti_kept_ids
-            # alias_not_eng = row.alias != row.eng
             try:
                 alias_not_latin = bool(not row.is_latin)
             except AttributeError:
@@ -423,6 +347,14 @@ def filter_am_ti(
 )
 @click.option("--corpus-require-english", is_flag=True)
 @click.option("--corpus-filter-blank", is_flag=True)
+@click.option(
+    "--vote-aggregation-method",
+    default="majority_vote",
+    type=click.Choice(vote_aggregation_methods),
+    help="Aggregation function to use in script standardization. (Default: majority vote)",
+)
+@click.option("--write-filtered-names", is_flag=True)
+@click.option("--filtered-names-output-file", default="")
 def main(
     input_file,
     output_file,
@@ -438,13 +370,16 @@ def main(
     permuter_type,
     corpus_require_english,
     corpus_filter_blank,
+    vote_aggregation_method,
+    write_filtered_names,
+    filtered_names_output_file,
 ):
 
     # read in human readable language names
     with open(human_readable_langs_path, encoding="utf8") as f:
         human_readable_lang_names = orjson.loads(f.read())
 
-    # read in data
+    # read in data and sort it by language
     data = wh.read(input_file, io_format=io_format)
 
     # drop rows that are not entities (e.g. P-ids)
@@ -458,21 +393,39 @@ def main(
         data, id_column=id_column, type_column=type_column
     )
 
-    # filter amharic & tigrinya
-    data = filter_am_ti(data, id_column=id_column, type_column=type_column)
+    # need to sort by language to ensure ordered chunks
+    data = data.sort_values(language_column)
 
     # remove wrong script / anomalous names
-    data = standardize_script(
-        data,
-        id_column=id_column,
-        type_column=type_column,
-        language_column=language_column,
-    )
+    if vote_aggregation_method != "none":
+        data, filtered = standardize_script(
+            data,
+            id_column=id_column,
+            type_column=type_column,
+            language_column=language_column,
+            aggregation_method=vote_aggregation_method,
+            num_workers=num_workers,
+            chunksize=chunksize,
+        )
 
-    # standardize names (permute tokens in PER)
-    # import ipdb
+        if write_filtered_names:
 
-    # ipdb.set_trace()
+            if not filtered_names_output_file:
+                _, filtered_names_output_file = tempfile.mkstemp()
+            filtered_names_path = Path(filtered_names_output_file)
+            containing_folder = filtered_names_path.parents[0]
+            if not containing_folder.exists():
+                filtered_names_path.mkdir(parents=True)
+
+            wh.write(
+                filtered,
+                filtered_names_path,
+                io_format="tsv",
+            )
+
+            print(f"Filtered names written to {filtered_names_output_file}")
+
+    # standardize names
     data = standardize_names(
         data,
         id_column=id_column,

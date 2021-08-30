@@ -54,7 +54,7 @@ done
 combine_output
 
 # filter the rows by using "trumping rules" to break ties etc.
-python paranames/io/filtering.py \
+python paranames/io/postprocessing.py \
     -i $COMBO_OUTPUT \
     -o $DEDUP_OUTPUT \
     -f $FORMAT

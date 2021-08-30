@@ -90,7 +90,6 @@ def main(
         try:
             anomalous[language] = {
                 line.split("\t")[0].strip()
-
                 for line in open(
                     Path(anomalous_data_folder) / f"{language}_anomalous.txt"
                 )
@@ -117,7 +116,6 @@ def main(
                     unicode_analyzer=ua,
                     is_unchanged=True,
                 )
-
                 for _, row in subset.iterrows()
             ],
             language=language,
@@ -162,7 +160,6 @@ def main(
                         anomalous=True,
                         is_unchanged=True,
                     )
-
                     for w in anomalous_words
                 ]
             )
@@ -228,7 +225,7 @@ def main(
         mbt_preds = get_preds(missing_block_tagger)
         dbt_preds = get_preds(distance_based_tagger)
         hk_preds = get_preds(hiragana_katakana_tagger)
-        cjk_preds = get_preds(hiragana_katakana_tagger)
+        cjk_preds = get_preds(cjk_tagger)
 
         noisy_votes = np.vstack(
             [ibt_preds, mbt_preds, dbt_preds, hk_preds, cjk_preds]
@@ -253,7 +250,6 @@ def main(
                 noise_sample=w.noise_sample,
                 is_unchanged=w.is_unchanged,
             )
-
             for w, pred in zip(corpus.names, majority_vote_preds)
         ]
 
