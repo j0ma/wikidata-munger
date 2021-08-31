@@ -1,0 +1,13 @@
+            {"Arabic": {"ORG": 4495, "PER": 9671, "LOC": 2809},
+             "Persian": {"ORG": 4421, "PER": 1910, "LOC": 7608},
+             "Hebrew": {"ORG": 1881, "PER": 913, "LOC": 387},
+             "Armenian": {"ORG": 1125, "PER": 264, "LOC": 1155},
+             "Japanese": {"ORG": 7421, "PER": 3659, "LOC": 2176},
+             "Georgian": {"ORG": 445, "PER": 53, "LOC": 367},
+             "Kazakh": {"ORG": 1693, "PER": 16, "LOC": 944},
+             "Korean": {"ORG": 2561, "PER": 825, "LOC": 425},
+             "Russian": {"ORG": 6734, "PER": 16508, "LOC": 13310},
+             "Swedish": {"ORG": 9624, "PER": 53334, "LOC": 50829},
+             "Tajik": {"ORG": 282, "PER": 180, "LOC": 137},
+             "Thai": {"ORG": 753, "PER": 77, "LOC": 250},
+             "Zulu": {"ORG": 1922, "PER": 658, "LOC": 1080}}
