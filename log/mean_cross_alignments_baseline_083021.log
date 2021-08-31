@@ -1,0 +1,963 @@
+Name Loader: TransliteratedNameLoader(language_column='language', debug_mode=False)
+Loading names using p_map and 20 workers...
+[compute_crossing_alignments] Creating pooled corpus...
+[FastAligner] Saving alignment training data to: /tmp/tmp0gob3ie4
+[FastAligner] Saving fast_align output to: /tmp/tmpga8ze2r3
+[compute_crossing_alignments] Avg. number of crossing alignments per language:
+global	0.5536188162314709
+Afar	0.04121130931396742
+Abkhaz	2.2161785216178522
+Ambonese	1.0
+Acehnese	0.13933754526950223
+Adyghe	1.1618852459016393
+Adyghe in Cyrillic script	0.03686635944700461
+Tunisian Arabic	0.03153153153153153
+Tunisian Arabic in Arabic script	1.8511016346837241
+Tunisian Arabic in Latin script	0.16931479642502484
+Afrikaans	0.2570941052539174
+Akan Wiktionary	0.06434123718074336
+Gheg Albanian	0.027106084243369733
+Swiss German	0.4967741935483871
+Southern Altai	4.508510638297873
+Amharic	1.4164976335361732
+Amis	1.1379310344827587
+Aragonese	0.239000353024241
+Old English	0.14853024730121706
+Angika	0.06716417910447761
+Arabic	2.03879398082642
+Aramaic	1.5416666666666667
+Mapudungun	0.034354545102443936
+Algerian Arabic	1.3988549618320612
+Moroccan Arabic	1.7318405243036592
+Egyptian Arabic	1.1682420521717853
+Assamese	2.4441760601180893
+American Sign Language	0.0
+Asturian	0.21612215590921213
+Atikamekw	0.4142222222222222
+Avaric	2.354014598540146
+Kotava	1.2920819490586932
+Awadhi	1.205992509363296
+Aymara	0.40586359979739595
+Azerbaijani	1.5854833906381136
+South Azerbaijani	1.321158024303806
+Bashkir	3.4086053253167274
+bag	3.0
+Balinese	1.005496183206107
+Balinese in Balinese script	2.0476190476190474
+Bavarian	0.16423395652347972
+bas	0.0
+bax	3.0
+Toba Batak	0.015979081929110982
+Batak Toba in Latin script	0.16973618715778996
+bbj	0.0
+Southern Balochi	0.037549407114624504
+Central Bikol	0.12757728591214362
+Belarusian	2.856769675411294
+Taraškievica	2.2303343844913024
+Bulgarian	1.6889479328957997
+Western Balochi	0.02304147465437788
+Bhojpuri	1.6485657309403283
+Bislama Wiktionary	0.04903865478662826
+Banjar	0.06529456343983088
+bkc	1.0
+bkh	2.0
+bkm	5.0
+Bambara	0.07179039080110428
+Bengali	1.7687498403898434
+Tibetan	1.6641698735568995
+Bishnupriya Manipuri	1.1657419326201783
+Bakhtiari	0.05731225296442688
+Breton	0.3030114965355929
+Brahui language	0.02851688342679871
+Bosnian	0.7099671842092374
+Mandailing	0.0
+Rinconada Bikol	0.019336294747844266
+Buginese	0.04843328235813328
+Russia Buriat	1.9156327543424319
+Catalan	0.4433278619704735
+Zamboanga Chavacano	0.08600246150151593
+Min Dong	0.5318772136953955
+Chechen	1.503546482018004
+Cebuano	0.5467900114813709
+Chamorro	0.04558945334069575
+Choctaw	0.03716732402373592
+Cherokee	0.02570725210864038
+Cheyenne	0.04741469541553276
+Sorani	2.452057428534803
+Corsican	0.13773497693121334
+Capiznon	0.023877498053464834
+Cree Wikiquote	0.037645868709129664
+Crimean Tatar	1.7951640759930916
+Crimean Tatar Cyrillic alphabet	0.14393939393939395
+Crimean Tatar Latin alphabet	0.18434721646856378
+Czech	0.7464537620871118
+Kashubian	0.20799122532121592
+Old Church Slavonic	0.025587767367862824
+Chuvash	2.1995281128967634
+Welsh	0.8065383793390475
+Danish	0.3278068989922624
+Dagbani	0.2958057395143488
+German	0.8025837378200098
+Austrian German	0.20818361270032454
+Swiss Standard German	0.2720506740211872
+formal address in German	3.5294117647058822
+Dinka	0.305744888023369
+Zazaki	0.2937465443667862
+Lower Sorbian	0.23010874170314927
+Kadazandusun	0.027977344433040636
+Doteli	1.4784377542717657
+Duala	1.0
+Dhivehi	1.5190641247833623
+Dzongkha	0.15636363636363637
+Ewe	0.13865298915328345
+Emilian	0.06637843336724314
+Modern Greek	2.7983058839378936
+Emilian-Romagnol	0.15366199927622973
+English	2.2180338997296916e-05
+Canadian English	0.15540328431871903
+British English	0.17427916761161466
+Esperanto	0.8741145227345595
+Spanish	0.4251627341905911
+Latin American Spanish	1.5099206349206349
+formal Spanish	0.5301204819277109
+Estonian	0.5058997715926223
+eto	6.0
+Basque	0.5794632132511027
+ewo	5.0
+Extremaduran	0.13142143340446572
+Persian	2.0671549900546204
+Fula	0.054312002197198575
+Finnish	0.38893855967626295
+Meänkieli	0.10197950923349355
+Fijian	0.0453500737539021
+kven	0.8674821610601428
+fmp	5.0
+Faroese	0.10512118473760167
+French	0.8141387043232584
+Louisiana French	0.10109911501774457
+Franco-Provençal	0.12502190929338788
+North Frisian	0.3691467489077358
+Friulian	0.1412357690565802
+West Frisian	0.4085214152700186
+Irish	0.19805697814656562
+Gagauz	0.07837900991421037
+Gan	0.8602140233189587
+simplified Gan	0.8550805472620493
+traditional Gan	0.9601873536299765
+Guianan Creole	1.3942196531791908
+Scottish Gaelic	0.2084436998501014
+Galician	0.37082045667528984
+Gilaki	3.0493398193189716
+Guarani	0.12368652200787274
+Goan Konkani	1.6152694610778444
+Goan Konkani in Devanagari script	0.8657407407407407
+Goan Konkani in Latin script	0.2523478971008575
+Gorontalo	0.26944790184921763
+Gothic	0.026545846473194683
+Ancient Greek	1.3995633187772927
+Alemannic	0.21487451371097827
+Gujarati	1.2722199637828449
+Wayuu	0.18181818181818182
+Manx	0.19220063786604813
+Hausa	0.2804968209374538
+Hakka	0.2916237741778187
+Hawaiian	0.07988505747126437
+Hebrew	2.50647977366197
+Hindi	2.610818237900286
+Fiji Hindi	0.12424849699398798
+Fiji Hindi in Latin script	0.038046198955874994
+Hiligaynon	0.03185214313802595
+Hiri Motu	0.03769361944010231
+Croatian	0.5007622667138718
+Hunsrik	0.162057044079516
+Upper Sorbian	0.2695722011029609
+Haitian Creole	0.4742916743077205
+Hungarian	0.856196144822787
+formal Hungarian	2.0
+Armenian	1.8321812782943094
+Western Armenian	2.856950294860994
+Herero	0.03719655442443226
+Interlingua	0.1287198214025424
+Indonesian	0.6423805889328668
+Interlingue	0.10615466973481308
+Igbo	0.09484928677467243
+Nuosu	0.06463878326996197
+Inupiat	0.0499492456858833
+Eastern Canadian (Aboriginal syllabics)	0.02368692070030896
+Eastern Canadian in Latin script	0.0394155867465987
+Ilocano	0.2585408150625542
+Ingush	2.7728237791932058
+Ido	0.1506682682804446
+Icelandic	0.19333490215954963
+Italian	0.6548968024215549
+Inuktitut	0.02529347694541934
+Japanese	2.573415142494689
+Jamaican Creole	0.0768485428096844
+Lojban	0.0625863021264844
+Jutlandic	0.07660818713450293
+Javanese	0.32598728098988844
+Georgian	2.2005802353296446
+Karakalpak	0.08814458630409551
+Kabyle	0.12198272680298221
+Kabardian	1.9150246305418719
+Kabardian in Cyrillic script	0.06513409961685823
+Kabiye	0.7755102040816326
+Tyap	0.0
+Cape Verdean Creole	0.22732626619552415
+Kongo	0.0981463112472743
+Khowar	0.0648854961832061
+Gikuyu	0.0693306885078065
+Kirmanjki	0.043137254901960784
+Kwanyama	0.037940479715724014
+Eastern Pwo	1.4883720930232558
+Kazakh	0.9911292378281927
+Kazakh Arabic alphabets	0.8429175503888378
+Kazakh in China	1.2610917142127225
+Kazakh in Cyrillic script	0.7474739480279646
+Kazakh in Kazakhstan	1.1027484143763213
+Kazakh in Latin script	0.776528317317522
+Kazakh in Turkey	0.472997443544951
+Greenlandic	0.03769884157520154
+Khmer	2.371313672922252
+Kannada	2.191363581802905
+Korean	2.2769253364774613
+North Korean standard language	0.0648854961832061
+Permyak	3.5467625899280577
+Kanuri	0.03810998083443904
+Karachay-Balkar	2.9402173913043477
+Krio	0.059718969555035126
+Kinaray-a	0.02348061443284474
+Karelian	0.05649717514124294
+Kashmiri	0.03718199608610567
+Kashmiri in Arabic script	0.06538461538461539
+Kashmiri in Devanagari script	0.0648854961832061
+Ripuarian	0.12032838386532706
+Kurdish	0.5721942208132825
+Kurdish Arabic alphabet	1.3657322504584752
+Kurdish in Latin script	0.19285882868606494
+Kumyk	0.0
+Komi	2.9066183136899366
+Cornish	0.2701136473391069
+Kyrgyz	1.013447152232778
+Latin	1.2348507827159858
+Judaeo-Spanish	0.36612903225806454
+Luxembourgish	0.23518466809145877
+Lak	1.2300469483568075
+Lezgian	2.1338762214983715
+Lingua Franca Nova	0.16397469927147457
+Luganda	0.062101029482306926
+Limburgish	0.13754464174443737
+Ligurian	0.1246028204042554
+Livonian	0.1794543904518329
+Laki	0.05944986690328305
+Ladin	0.9793438639125152
+Lombard	0.32181289340741476
+Lingala	0.21998445578346232
+Lao	0.027454609554027853
+Lozi	0.024538163827155568
+Northern Luri	2.318025258323766
+Lithuanian	0.6710881661023991
+Latgalian	0.07741213018820214
+Mizo	0.02446715095393949
+Southern Luri	0.025745257452574527
+Latvian	0.5702223738430187
+Classical Chinese	0.8233821411425828
+Laz	0.023978223449821864
+Madurese	0.24448818897637795
+Maithili	1.4323681936041486
+Banyumasan	0.14805641705662528
+Moksha	2.1054852320675104
+Malagasy	0.1920097424551775
+Marshallese	0.03853611245758604
+Meadow Mari	1.6775
+Māori	0.15798655433580122
+Minangkabau	0.1030315799910763
+Macedonian	2.08316226991263
+Malayalam	2.9421264985722377
+Mongolian	1.9150047076949415
+Meitei	1.0889570552147239
+Mon language spelling	2.610294117647059
+Moldovan	0.14737698251321676
+Marathi	2.4007829642928384
+Hill Mari	1.2119113573407203
+Malay	0.6890337114812133
+Malay in Jawi script	3.0153846153846153
+Maltese	0.406696916603022
+Muscogee	0.03795128316659417
+Mirandese	0.23490606189578647
+Burmese	0.033112582781456956
+Erzya	3.648170731707317
+Mazanderani	1.8007312614259599
+Nauruan Wikiquote	0.06028847151603196
+Nahuatl	0.3784619874507515
+Southern Min	1.3225649048390513
+Southern Min in Hanzi	0.0
+Neapolitan	0.11255443425530966
+Bokmål	0.5143538509625959
+Low German	0.1905501626753427
+Dutch Low Saxon	0.14719090580050137
+Nepali	2.251698248122989
+Newar	1.3510422339951478
+Ndonga	0.03594783453533126
+Nias	1.1896551724137931
+Niuean	0.07142857142857142
+Dutch	0.28437850471860826
+informal Dutch	0.0
+Nynorsk	0.27530719154849026
+Norwegian	0.08
+Northern Thai	0.04086021505376344
+Novial	0.21891988671506235
+N'Ko	2.3388646288209607
+Norman	0.10217871386664029
+Northern Sotho	0.2927513692609372
+Navajo	0.4792373566004201
+Chewa	0.07004201826579158
+Noongar	0.10331079909863061
+Occitan	0.2567987767812889
+Livvi-Karelian	0.5302606073659272
+Oromo	0.05974648603493989
+Odia	1.7429656247881213
+Ossetian	2.1542662116040954
+Ottoman Turkish	0.07264957264957266
+Eastern Punjabi	1.9896287306228277
+Pangasinan	0.048801756992442345
+Kapampangan	0.12602124716138968
+Papiamento	0.13498058602315832
+Picard	0.12153370410362992
+Pennsylvania German	0.08996510097831684
+Plautdietsch	0.032995765052476526
+Palatinate German	0.2312989598048029
+Pali	0.20817466362020817
+Pitkern	0.05960101508529536
+Polish	1.0860786548200547
+Piedmontese	0.17731445927340403
+Western Punjabi	2.8104352802772565
+Pontic Greek	0.07041072925398156
+Old Prussian	0.07080528223718281
+Pashto	2.0286458333333335
+Portuguese	0.6541373354564612
+Brazilian Portuguese	0.3200759990248507
+Paiwan	4.8
+Quechua	0.5508190393476635
+Kichwa	0.02832905898599329
+Romagnol	0.07892591266182555
+Riffian	0.024976213130352046
+Romansh	0.10672990913021808
+Carpathian Romani	1.0
+Finnish Kalo	0.23784261715296198
+Romani	0.052336971732437725
+Kirundi	0.049417131272174356
+Romanian	1.2444851228201859
+Tarantino	0.129714960520527
+Russian	3.914215304554114
+Rusyn	1.6333078686019862
+Aromanian	0.08591143291644915
+Megleno-Romanian	0.04742857142857143
+Megleno-Romanian in Cyrillic script	0.03762376237623762
+Megleno-Romanian in Latin script	0.03667809751006411
+Kinyarwanda	0.13545870325531342
+Marwari (India)	0.015250544662309368
+Okinawan	0.0
+Sanskrit	1.7819359481827997
+Sakha	3.2375235404896423
+Santali	0.023881668128538393
+Sardinian	0.19181494904819432
+Sicilian	0.1511464017080897
+Scots	0.19728407917310367
+Sindhi	2.3882892606583916
+Sassarese	0.065619700656197
+Southern Kurdish	0.02304147465437788
+Northern Sami	0.27932001209356017
+Seri	0.030374197588852358
+Koyraboro Senni	0.015086206896551725
+Sango	0.04768491555037857
+Samogitian	0.33932018464120856
+Serbo-Croatian	1.2527446153846153
+Tashelhit	0.7669971671388102
+Tachelhit in Latin script	0.03695830536287014
+Tachelhit in Tifinagh script	0.06513409961685823
+Shan	1.7194346289752651
+Shawiya	0.0
+Shawiya in Latin script	1.7333333333333334
+Sinhala	1.7621996796583022
+Simple English	0.1339069642376983
+Kildin Sami	0.3384879725085911
+Pite Sami	0.04553849401087014
+Ume Sami	0.2024866785079929
+Slovak	0.31956763681492456
+Saraiki	2.64
+Saraiki in Arabic script	2.0
+Slovene	0.20897832700934987
+Silesian German	0.025334326836346524
+Samoan	0.07919844065246384
+Southern Sami	0.05858053175126346
+Lule Sami	0.07549056963231092
+Inari Sami	0.9623904014766959
+Skolt Sami	1.5577264653641207
+Shona	0.04807692307692308
+Somali	0.18677455727266698
+Albanian	0.0708035668443436
+Serbian	1.717605185602575
+Serbian written in Cyrillic	1.463508261982244
+Serbian written in Latin script	0.43036613157212555
+Sranan Tongo	0.08557118850703482
+Sirionó	0.06113033448673587
+Swazi	0.06265939498567898
+Sesotho	0.09067652075042638
+Saterland Frisian	0.10364223657830252
+Siberian Tatar	4.0
+Sundanese	0.45490015689044777
+Swedish	0.4911644226730659
+Swahili	0.24403108407468618
+Silesian	0.35720375106564367
+Sakizaya	0.41741472172351884
+Tamil	3.0942791499138425
+Atayal	0.43079922027290446
+Tulu	1.7935779816513762
+Telugu	3.2733835407968157
+Tetum	0.06374813322682596
+Tajik	3.2547828305080815
+Tajik in Cyrillic script	1.1685082872928176
+Tajik in Latin script	0.28714979703200905
+Thai	3.270058000443464
+Tigrinya	0.9516728624535316
+Turkmen	0.19846192011907715
+Tagalog	0.3296184709005757
+Talysh	0.08856088560885608
+Tswana	0.07663786897048236
+Tongan	0.062493238613825684
+Tok Pisin	0.05330497490944136
+Turkish	0.6427660748255013
+Turoyo	0.024062137166192897
+Seediq	0.2890995260663507
+Tsonga	0.0515624434225296
+Tatar	1.2832279178199617
+Tatar in Cyrillic script	2.110945644080417
+Tatar in Latin script	0.04464219776973636
+Tumbuka	0.043779047078440415
+Twi	0.055287626837455146
+Tahitian	0.09020253403678266
+Tuvan	5.557553956834532
+Central Atlas Tamazight	1.0
+Udmurt	2.1969424460431655
+Uyghur	2.4783549783549783
+Uyghur Arabic alphabet	0.06538461538461539
+Uyghur Latin alphabet	0.03998066051770306
+Ukrainian	2.6459810743903556
+Urdu	2.3750528166614417
+Uzbek	0.3290371273476734
+Uzbek Cyrillic alphabet	0.0
+Uzbek Latin alphabet	0.8333333333333334
+Venda	0.04529201430274136
+Venetian	0.20312290599575725
+Veps	0.2908144175604889
+Vietnamese	1.0389882835098647
+West Flemish	0.11803397073439471
+Main-Franconian	0.0775317536722462
+Volapük	0.12654464368670446
+Votic	0.03461725987323257
+Võro	0.9511527940601797
+Walloon	0.1329441431986473
+Waray	0.2734480734547644
+Wallisian	0.0
+Wolof	0.09715651778649473
+Wu Chinese	1.2437347074961074
+Kalmyk Oirat	2.352272727272727
+Xhosa	0.05871949062610541
+Mingrelian	1.9119954519613416
+Saisiyat	0.4727272727272727
+Yiddish	1.6942260775277853
+Yoruba	0.2495435624041481
+Cantonese	1.8228489108132886
+Zhuang	0.0682423195913375
+Zeelandic	0.10084055347213242
+Standard Moroccan Berber	1.4545454545454546
+Chinese	1.8837237859931342
+Putonghua	2.224881945888153
+Simplified Chinese	2.002770029065798
+Traditional Chinese	1.4237617897362653
+Chinese (Hong Kong)	1.5743364342408466
+Chinese in Macau	1.5917058082254554
+Malaysian Mandarin	1.009521567396479
+Singaporean Mandarin	1.4176602384572297
+Taiwanese Mandarin	2.306784264565425
+Zulu	0.12233939079546743
+[compute_crossing_alignments] Number of permuted / surviving words per language:
+global	0	118479835
+Afar	0	28366
+Abkhaz	0	717
+Ambonese	0	3
+Acehnese	0	151316
+Adyghe	0	488
+Adyghe in Cyrillic script	0	217
+Tunisian Arabic	0	222
+Tunisian Arabic in Arabic script	0	2814
+Tunisian Arabic in Latin script	0	2014
+Afrikaans	0	364528
+Akan Wiktionary	0	30618
+Gheg Albanian	0	25640
+Swiss German	0	310
+Southern Altai	0	470
+Amharic	0	4437
+Amis	0	29
+Aragonese	0	339920
+Old English	0	33441
+Angika	0	268
+Arabic	0	805692
+Aramaic	0	840
+Mapudungun	0	25819
+Algerian Arabic	0	524
+Moroccan Arabic	0	9155
+Egyptian Arabic	0	899145
+Assamese	0	3726
+American Sign Language	0	2
+Asturian	0	5201091
+Atikamekw	0	2250
+Avaric	0	1096
+Kotava	0	3612
+Awadhi	0	534
+Aymara	0	33563
+Azerbaijani	0	110811
+South Azerbaijani	0	242102
+Bashkir	0	37256
+bag	0	1
+Balinese	0	9825
+Balinese in Balinese script	0	21
+Bavarian	0	374685
+bas	0	1
+bax	0	1
+Toba Batak	0	3442
+Batak Toba in Latin script	0	2009
+bbj	0	1
+Southern Balochi	0	506
+Central Bikol	0	38267
+Belarusian	0	143936
+Taraškievica	0	68813
+Bulgarian	0	226573
+Western Balochi	0	217
+Bhojpuri	0	6519
+Bislama Wiktionary	0	29854
+Banjar	0	100284
+bkc	0	1
+bkh	0	1
+bkm	0	1
+Bambara	0	157932
+Bengali	0	430737
+Tibetan	0	14552
+Bishnupriya Manipuri	0	22529
+Bakhtiari	0	506
+Breton	0	362544
+Brahui language	0	25143
+Bosnian	0	102085
+Mandailing	0	2
+Rinconada Bikol	0	3827
+Buginese	0	97433
+Russia Buriat	0	1612
+Catalan	0	2963308
+Zamboanga Chavacano	0	33313
+Min Dong	0	33880
+Chechen	0	296491
+Cebuano	0	1824695
+Chamorro	0	28976
+Choctaw	0	28143
+Cherokee	0	24779
+Cheyenne	0	28662
+Sorani	0	15602
+Corsican	0	352641
+Capiznon	0	3853
+Cree Wikiquote	0	27679
+Crimean Tatar	0	8685
+Crimean Tatar Cyrillic alphabet	0	264
+Crimean Tatar Latin alphabet	0	31381
+Czech	0	1240681
+Kashubian	0	31910
+Old Church Slavonic	0	22628
+Chuvash	0	22463
+Welsh	0	711216
+Danish	0	1718106
+Dagbani	0	453
+German	0	4433809
+Austrian German	0	298890
+Swiss Standard German	0	310376
+formal address in German	0	34
+Dinka	0	1027
+Zazaki	0	70537
+Lower Sorbian	0	70810
+Kadazandusun	0	26307
+Doteli	0	2458
+Duala	0	1
+Dhivehi	0	1154
+Dzongkha	0	275
+Ewe	0	35679
+Emilian	0	3932
+Modern Greek	0	178146
+Emilian-Romagnol	0	35923
+English	0	13705832
+Canadian English	0	481013
+British English	0	639365
+Esperanto	0	495919
+Spanish	0	6011183
+Latin American Spanish	0	1008
+formal Spanish	0	83
+Estonian	0	443068
+eto	0	1
+Basque	0	693497
+ewo	0	1
+Extremaduran	0	38426
+Persian	0	601787
+Fula	0	29128
+Finnish	0	1411516
+Meänkieli	0	31624
+Fijian	0	29151
+kven	0	981
+fmp	0	1
+Faroese	0	148286
+French	0	4804825
+Louisiana French	0	133562
+Franco-Provençal	0	233919
+North Frisian	0	77820
+Friulian	0	256132
+West Frisian	0	67125
+Irish	0	1887987
+Gagauz	0	29957
+Gan	0	31305
+simplified Gan	0	30479
+traditional Gan	0	427
+Guianan Creole	0	865
+Scottish Gaelic	0	283525
+Galician	0	659462
+Gilaki	0	1439
+Guarani	0	30739
+Goan Konkani	0	668
+Goan Konkani in Devanagari script	0	432
+Goan Konkani in Latin script	0	2449
+Gorontalo	0	44992
+Gothic	0	25051
+Ancient Greek	0	1374
+Alemannic	0	337248
+Gujarati	0	27059
+Wayuu	0	22
+Manx	0	34490
+Hausa	0	40578
+Hakka	0	36914
+Hawaiian	0	31320
+Hebrew	0	247771
+Hindi	0	71324
+Fiji Hindi	0	31936
+Fiji Hindi in Latin script	0	27966
+Hiligaynon	0	5086
+Hiri Motu	0	28148
+Croatian	0	415209
+Hunsrik	0	2314
+Upper Sorbian	0	93385
+Haitian Creole	0	87248
+Hungarian	0	1145317
+formal Hungarian	0	2
+Armenian	0	205430
+Western Armenian	0	5935
+Herero	0	28094
+Interlingua	0	260698
+Indonesian	0	719301
+Interlingue	0	250314
+Igbo	0	30986
+Nuosu	0	263
+Inupiat	0	28569
+Eastern Canadian (Aboriginal syllabics)	0	971
+Eastern Canadian in Latin script	0	27857
+Ilocano	0	40365
+Ingush	0	471
+Ido	0	263068
+Icelandic	0	276215
+Italian	0	2877490
+Inuktitut	0	24789
+Japanese	0	598303
+Jamaican Creole	0	158936
+Lojban	0	28968
+Jutlandic	0	1710
+Javanese	0	147653
+Georgian	0	92721
+Karakalpak	0	30155
+Kabyle	0	162564
+Kabardian	0	812
+Kabardian in Cyrillic script	0	261
+Kabiye	0	1862
+Tyap	0	1
+Cape Verdean Creole	0	849
+Kongo	0	238929
+Khowar	0	262
+Gikuyu	0	31256
+Kirmanjki	0	510
+Kwanyama	0	27016
+Eastern Pwo	0	43
+Kazakh	0	156920
+Kazakh Arabic alphabets	0	74967
+Kazakh in China	0	11743
+Kazakh in Cyrillic script	0	75810
+Kazakh in Kazakhstan	0	11825
+Kazakh in Latin script	0	102711
+Kazakh in Turkey	0	37552
+Greenlandic	0	124911
+Khmer	0	2984
+Kannada	0	33324
+Korean	0	245113
+North Korean standard language	0	262
+Permyak	0	1112
+Kanuri	0	27132
+Karachay-Balkar	0	552
+Krio	0	854
+Kinaray-a	0	28449
+Karelian	0	708
+Kashmiri	0	511
+Kashmiri in Arabic script	0	260
+Kashmiri in Devanagari script	0	262
+Ripuarian	0	33741
+Kurdish	0	43847
+Kurdish Arabic alphabet	0	3817
+Kurdish in Latin script	0	29659
+Kumyk	0	2
+Komi	0	1103
+Cornish	0	31061
+Kyrgyz	0	43578
+Latin	0	194515
+Judaeo-Spanish	0	35340
+Luxembourgish	0	372452
+Lak	0	426
+Lezgian	0	3070
+Lingua Franca Nova	0	35414
+Luganda	0	27101
+Limburgish	0	280847
+Ligurian	0	262161
+Livonian	0	2346
+Laki	0	1127
+Ladin	0	823
+Lombard	0	111049
+Lingala	0	29593
+Lao	0	22692
+Lozi	0	25063
+Northern Luri	0	1742
+Lithuanian	0	356214
+Latgalian	0	27683
+Mizo	0	25054
+Southern Luri	0	11808
+Latvian	0	222778
+Classical Chinese	0	416600
+Laz	0	24981
+Madurese	0	2540
+Maithili	0	9256
+Banyumasan	0	91249
+Moksha	0	474
+Malagasy	0	304646
+Marshallese	0	24756
+Meadow Mari	0	2800
+Māori	0	47004
+Minangkabau	0	322736
+Macedonian	0	58945
+Malayalam	0	86499
+Mongolian	0	11683
+Meitei	0	326
+Mon language spelling	0	136
+Moldovan	0	24590
+Marathi	0	40104
+Hill Mari	0	3610
+Malay	0	534447
+Malay in Jawi script	0	195
+Maltese	0	66777
+Muscogee	0	27588
+Mirandese	0	32894
+Burmese	0	22650
+Erzya	0	3280
+Mazanderani	0	9299
+Nauruan Wikiquote	0	28911
+Nahuatl	0	34265
+Southern Min	0	467261
+Southern Min in Hanzi	0	1
+Neapolitan	0	269132
+Bokmål	0	1727620
+Low German	0	449976
+Dutch Low Saxon	0	298388
+Nepali	0	16782
+Newar	0	20197
+Ndonga	0	26761
+Nias	0	116
+Niuean	0	714
+Dutch	0	9302637
+informal Dutch	0	4
+Nynorsk	0	1192497
+Norwegian	0	25
+Northern Thai	0	465
+Novial	0	30719
+N'Ko	0	1145
+Norman	0	242712
+Northern Sotho	0	29578
+Navajo	0	30945
+Chewa	0	28797
+Noongar	0	5769
+Occitan	0	427724
+Livvi-Karelian	0	4643
+Oromo	0	27533
+Odia	0	14749
+Ossetian	0	5860
+Ottoman Turkish	0	468
+Eastern Punjabi	0	18127
+Pangasinan	0	30962
+Kapampangan	0	38311
+Papiamento	0	982282
+Picard	0	258381
+Pennsylvania German	0	34958
+Plautdietsch	0	27155
+Palatinate German	0	62296
+Pali	0	3939
+Pitkern	0	28372
+Polish	0	1480367
+Piedmontese	0	289074
+Western Punjabi	0	31451
+Pontic Greek	0	1193
+Old Prussian	0	154480
+Pashto	0	5376
+Portuguese	0	2225019
+Brazilian Portuguese	0	1788444
+Paiwan	0	5
+Quechua	0	41451
+Kichwa	0	25345
+Romagnol	0	131237
+Riffian	0	25224
+Romansh	0	302961
+Carpathian Romani	0	1
+Finnish Kalo	0	1131
+Romani	0	28584
+Kirundi	0	27622
+Romanian	0	783381
+Tarantino	0	43187
+Russian	0	1271334
+Rusyn	0	3927
+Aromanian	0	44057
+Megleno-Romanian	0	1750
+Megleno-Romanian in Cyrillic script	0	505
+Megleno-Romanian in Latin script	0	26828
+Kinyarwanda	0	29736
+Marwari (India)	0	459
+Okinawan	0	33
+Sanskrit	0	5558
+Sakha	0	4248
+Santali	0	25082
+Sardinian	0	293022
+Sicilian	0	286636
+Scots	0	351483
+Sindhi	0	3706
+Sassarese	0	27126
+Southern Kurdish	0	217
+Northern Sami	0	72766
+Seri	0	25548
+Koyraboro Senni	0	464
+Sango	0	27472
+Samogitian	0	35745
+Serbo-Croatian	0	325000
+Tashelhit	0	1412
+Tachelhit in Latin script	0	26814
+Tachelhit in Tifinagh script	0	261
+Shan	0	1415
+Shawiya	0	6
+Shawiya in Latin script	0	45
+Sinhala	0	18730
+Simple English	0	7438
+Kildin Sami	0	582
+Pite Sami	0	18951
+Ume Sami	0	1126
+Slovak	0	624475
+Saraiki	0	200
+Saraiki in Arabic script	0	4
+Slovene	0	2659716
+Silesian German	0	25499
+Samoan	0	29243
+Southern Sami	0	45510
+Lule Sami	0	20996
+Inari Sami	0	4334
+Skolt Sami	0	2252
+Shona	0	29224
+Somali	0	30154
+Albanian	0	2765694
+Serbian	0	246683
+Serbian written in Cyrillic	0	63302
+Serbian written in Latin script	0	258459
+Sranan Tongo	0	30349
+Sirionó	0	867
+Swazi	0	25487
+Sesotho	0	28144
+Saterland Frisian	0	35912
+Siberian Tatar	0	7
+Sundanese	0	121741
+Swedish	0	2542788
+Swahili	0	284390
+Silesian	0	43401
+Sakizaya	0	1114
+Tamil	0	87050
+Atayal	0	513
+Tulu	0	654
+Telugu	0	51254
+Tetum	0	57586
+Tajik	0	86246
+Tajik in Cyrillic script	0	724
+Tajik in Latin script	0	30054
+Thai	0	85689
+Tigrinya	0	269
+Turkmen	0	28217
+Tagalog	0	167615
+Talysh	0	271
+Tswana	0	27780
+Tongan	0	27731
+Tok Pisin	0	30091
+Turkish	0	541981
+Turoyo	0	24977
+Seediq	0	211
+Tsonga	0	27617
+Tatar	0	249647
+Tatar in Cyrillic script	0	1343
+Tatar in Latin script	0	27082
+Tumbuka	0	28187
+Twi	0	25919
+Tahitian	0	74111
+Tuvan	0	1112
+Central Atlas Tamazight	0	14
+Udmurt	0	2224
+Uyghur	0	2310
+Uyghur Arabic alphabet	0	260
+Uyghur Latin alphabet	0	26888
+Ukrainian	0	632582
+Urdu	0	146734
+Uzbek	0	172245
+Uzbek Cyrillic alphabet	0	1
+Uzbek Latin alphabet	0	6
+Venda	0	27687
+Venetian	0	305933
+Veps	0	32072
+Vietnamese	0	554859
+West Flemish	0	268643
+Main-Franconian	0	161005
+Volapük	0	355179
+Votic	0	26663
+Võro	0	5118
+Walloon	0	274416
+Waray	0	328801
+Wallisian	0	9
+Wolof	0	237596
+Wu Chinese	0	53948
+Kalmyk Oirat	0	1144
+Xhosa	0	28270
+Mingrelian	0	8795
+Saisiyat	0	55
+Yiddish	0	7378
+Yoruba	0	41079
+Cantonese	0	45814
+Zhuang	0	27798
+Zeelandic	0	38665
+Standard Moroccan Berber	0	11
+Chinese	0	1286669
+Putonghua	0	168355
+Simplified Chinese	0	307578
+Traditional Chinese	0	759665
+Chinese (Hong Kong)	0	164038
+Chinese in Macau	0	8729
+Malaysian Mandarin	0	38229
+Singaporean Mandarin	0	74982
+Taiwanese Mandarin	0	67008
+Zulu	0	246748

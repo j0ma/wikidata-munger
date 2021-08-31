@@ -1,0 +1,1171 @@
+Name Loader: TransliteratedNameLoader(language_column='language', debug_mode=False)
+Loading names using p_map and 20 workers...
+[compute_crossing_alignments] Creating pooled corpus...
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ar', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Lao Statistics Bureau')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ast', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(LISP bulletin)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bg', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Ermengard')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bg', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Rotrude')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bg', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown son (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown son (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown son (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown daughter (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='bn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='unknown (?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ca', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ca', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Ermengard')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ca', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Rotrude')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ca', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='À Suivre')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ce', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Musayelyan')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='cv', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Burkhan')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='de', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='de', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(les Deux Concerts)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='de', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Rotrude')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='de', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='À Suivre')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='de', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Alytus city council (2000-2003)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='el', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='el', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Rotrude')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(NN de Caussade)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(unknown title)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Agnes Arderne)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Ricardis)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Formerly Fox And Duck Public House)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(LISP bulletin)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(JAPRA) Jurnal Pendidikan Raudhatul Athfal (JAPRA)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Jurnal Ilmiah Mahasiswa Kesehatan Masyarakat)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Johannes|Jon)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Katriina)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Peder)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(in brackets)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Mary) Lorraine Morgan-Jones (née Berry)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Elisabeth (Ida) van Gent)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Ingvord|Ingvar)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Margaret Murray)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Jannetje ?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Américo ?) Aragundo (Aragunde)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Maret)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Johanna Maria von der Weyhen)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Anne Bates)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(NN von der Milbe)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Marija)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Bely Willem Gijsbertsdr.?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(NN Bakewell or Blackwell)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(NN van Roermond)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Margaret ?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Gisela ?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Helga)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Poncia de Mison)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(NN von Irmtraut)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Kynna)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Thorkild|Tyrgils)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Bent)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Evert)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Elisif)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(NN Rayner)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Gloria Soudenbalch)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Elizabeth ?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Janneke Jans Houtlocx alias Loexkens)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Huldah Grey ?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Esther ?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(les Deux Concerts)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Mary Stewart)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(NN von Dobeneck)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Brita)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='en', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Mary Mallett ?)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='es', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='es', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Rotrude')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='es', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Américo ?) Aragundo (Aragunde)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='es', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(LISP bulletin)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='es', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='À Suivre')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='fa', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Salem Airport')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='fa', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Salem Airport')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='fa', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Samtengang')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='fr', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Rotrude')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='fr', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(les Deux Concerts)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='fr', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='fr', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='À Suivre')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='it', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Ermengard')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='it', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Rotrude')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='it', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='it', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(les Deux Concerts)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='jam', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Marion Frater')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='mzn', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Boundary Falls')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='nl', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Rotrude')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='nl', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='nl', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='À Suivre')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='nl', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Mary) Lorraine Morgan-Jones (née Berry)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='nl', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(JAPRA) Jurnal Pendidikan Raudhatul Athfal (JAPRA)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='nl', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Jurnal Ilmiah Mahasiswa Kesehatan Masyarakat)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='pl', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='pl', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Rotrude')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='pt', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Américo ?) Aragundo (Aragunde)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='pt', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='pt', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Ermengard')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='pt', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Rotrude')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='pt-br', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Américo ?) Aragundo (Aragunde)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ru', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Balka Kamenka')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ru', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Hildegard)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ru', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Aydatskaya Lesnaya Dacha')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='ru', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Balka Kholodnaya')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='sq', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(Américo ?) Aragundo (Aragunde)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='sq', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='(les Deux Concerts)')
+Excluding: TransliteratedName(text='', is_unchanged=False, language='uk', wikidata_id='Q0', conll_type='NONE', anomalous=None, noise_sample=False, english_text='Sacate Village')
+[FastAligner] Saving alignment training data to: /tmp/tmplxzm3on5
+[FastAligner] Saving fast_align output to: /tmp/tmpj5um9d96
+[compute_crossing_alignments] Avg. number of crossing alignments per language:
+global	0.4845780363572549
+Afar	0.03317351759148276
+Abkhaz	1.8772663877266387
+Ambonese	1.0
+Acehnese	0.13398450923894367
+Adyghe	0.9836065573770492
+Adyghe in Cyrillic script	0.03686635944700461
+Tunisian Arabic	0.03153153153153153
+Tunisian Arabic in Arabic script	1.8194740582800284
+Tunisian Arabic in Latin script	0.1643495531281033
+Afrikaans	0.23423440723346356
+Akan Wiktionary	0.05431445554902345
+Gheg Albanian	0.020514820592823713
+Swiss German	0.42258064516129035
+Southern Altai	3.8978723404255318
+Amharic	1.2983998196979942
+Amis	1.1379310344827587
+Aragonese	0.22070781360320074
+Old English	0.1368081098053288
+Angika	0.06716417910447761
+Arabic	1.9399211360186472
+Aramaic	1.3333333333333333
+Mapudungun	0.02684069871025214
+Algerian Arabic	1.3931297709923665
+Moroccan Arabic	1.6578918623702894
+Egyptian Arabic	1.0534763580957465
+Assamese	2.384326355340848
+American Sign Language	0.0
+Asturian	0.20828076422442218
+Atikamekw	0.27555555555555555
+Avaric	2.2883211678832116
+Kotava	1.1857696566998892
+Awadhi	1.2191011235955056
+Aymara	0.37255310907844946
+Azerbaijani	1.322161157285829
+South Azerbaijani	1.237379286416469
+Bashkir	2.539564097058192
+bag	2.0
+Balinese	0.8675826972010178
+Balinese in Balinese script	2.0
+Bavarian	0.1581782030238734
+bas	0.0
+bax	3.0
+Toba Batak	0.015979081929110982
+Batak Toba in Latin script	0.1647585863613738
+bbj	2.0
+Southern Balochi	0.037549407114624504
+Central Bikol	0.10345728695743069
+Belarusian	2.6468013561582926
+Taraškievica	2.129452283725459
+Bulgarian	1.6780112106633711
+Western Balochi	0.02304147465437788
+Bhojpuri	1.6373676944316613
+Bislama Wiktionary	0.042640852147115965
+Banjar	0.05613058912687966
+bkc	4.0
+bkh	1.0
+bkm	5.0
+Bambara	0.07056201403135527
+Bengali	1.7520905272006557
+Tibetan	1.678600879604178
+Bishnupriya Manipuri	1.1237516090372408
+Bakhtiari	0.05731225296442688
+Breton	0.28089556026303014
+Brahui language	0.021158970687666548
+Bosnian	0.6729881961110838
+Mandailing	0.0
+Rinconada Bikol	0.018813692187091717
+Buginese	0.04431763365594819
+Russia Buriat	1.781017369727047
+Catalan	0.38440774216887635
+Zamboanga Chavacano	0.06030678714015549
+Min Dong	0.49557260920897284
+Chechen	1.1869000640831058
+Cebuano	0.25105675195032595
+Chamorro	0.038273053561568196
+Choctaw	0.030167359556550474
+Cherokee	0.019048387747689577
+Cheyenne	0.04036703649431303
+Sorani	2.2711190872965004
+Corsican	0.1343207397891907
+Capiznon	0.023877498053464834
+Cree Wikiquote	0.030347917193540228
+Crimean Tatar	1.221070811744387
+Crimean Tatar Cyrillic alphabet	0.14393939393939395
+Crimean Tatar Latin alphabet	0.16226379019151715
+Czech	0.6638112455981836
+Kashubian	0.18934503290504545
+Old Church Slavonic	0.017898179246950682
+Chuvash	1.4230255542694328
+Welsh	0.5303747384760747
+Danish	0.2998889474805396
+Dagbani	0.26269315673289184
+German	0.733185093432186
+Austrian German	0.19556023955301283
+Swiss Standard German	0.24429079568007836
+formal address in German	3.235294117647059
+Dinka	0.2921129503407984
+Zazaki	0.24801168181238215
+Lower Sorbian	0.2122157887304053
+Kadazandusun	0.021287109894704833
+Doteli	1.484540276647681
+Duala	0.0
+Dhivehi	1.525996533795494
+Dzongkha	0.15636363636363637
+Ewe	0.13088931864682307
+Emilian	0.0633265513733469
+Modern Greek	2.5832584875157174
+Emilian-Romagnol	0.1407454833950394
+English	0.13715844347174885
+Canadian English	0.1499044724362959
+British English	0.18371978447365744
+Esperanto	0.7435508621367602
+Spanish	0.3676763522890189
+Latin American Spanish	1.2599206349206349
+formal Spanish	0.3855421686746988
+Estonian	0.4584601009325882
+eto	6.0
+Basque	0.3733051476790815
+ewo	1.0
+Extremaduran	0.10698485400510072
+Persian	1.8544394666524866
+Fula	0.04380664652567976
+Finnish	0.3519860915497947
+Meänkieli	0.09524411839109537
+Fijian	0.038111900106342834
+kven	0.8644240570846076
+fmp	2.0
+Faroese	0.10278785590008498
+French	0.6910184583359089
+Louisiana French	0.0934622123058954
+Franco-Provençal	0.11613849238411587
+North Frisian	0.33430994602929837
+Friulian	0.14024018865272594
+West Frisian	0.371098696461825
+Irish	0.11526244619269095
+Gagauz	0.06813098774910706
+Gan	0.8669541606772081
+simplified Gan	0.8632501066307949
+traditional Gan	0.9203747072599532
+Guianan Creole	1.0508670520231214
+Scottish Gaelic	0.1923851512212327
+Galician	0.31993200517998005
+Gilaki	2.3731758165392636
+Guarani	0.0998731253456521
+Goan Konkani	1.339820359281437
+Goan Konkani in Devanagari script	0.7083333333333334
+Goan Konkani in Latin script	0.245406288280931
+Gorontalo	0.261424253200569
+Gothic	0.019200830306175403
+Ancient Greek	1.433042212518195
+Alemannic	0.20736668564379923
+Gujarati	1.2219594220037695
+Wayuu	0.18181818181818182
+Manx	0.15363873586546825
+Hausa	0.22921287397111736
+Hakka	0.2716584493688032
+Hawaiian	0.0584610472541507
+Hebrew	2.3128372569832627
+Hindi	2.5723038528405584
+Fiji Hindi	0.11413451903807616
+Fiji Hindi in Latin script	0.03082314238718444
+Hiligaynon	0.026740070782540308
+Hiri Motu	0.030694898394202075
+Croatian	0.4395810302763187
+Hunsrik	0.15773552290406223
+Upper Sorbian	0.24110938587567596
+Haitian Creole	0.4365945351182835
+Hungarian	0.4781767842440128
+formal Hungarian	2.0
+Armenian	1.7278148274351361
+Western Armenian	2.690648694187026
+Herero	0.03018438100662063
+Interlingua	0.11488005278137922
+Indonesian	0.49929167344407976
+Interlingue	0.0991394808121
+Igbo	0.07383979861873104
+Nuosu	0.06463878326996197
+Inupiat	0.042773635759039516
+Eastern Canadian (Aboriginal syllabics)	0.02368692070030896
+Eastern Canadian in Latin script	0.03234375560900312
+Ilocano	0.19705190139972747
+Ingush	2.535031847133758
+Ido	0.14307327383034044
+Icelandic	0.19045308907915934
+Italian	0.5661966730680879
+Inuktitut	0.018153213118722013
+Japanese	2.564157291539571
+Jamaican Creole	0.07552143958221914
+Lojban	0.05509527754763877
+Jutlandic	0.0783625730994152
+Javanese	0.288277244620834
+Georgian	2.1361396016005005
+Karakalpak	0.0781628254020892
+Kabyle	0.11206048079525602
+Kabardian	1.6477832512315271
+Kabardian in Cyrillic script	0.06513409961685823
+Kabiye	0.6750805585392051
+Tyap	0.0
+Cape Verdean Creole	0.1790341578327444
+Kongo	0.09477710951789026
+Khowar	0.0648854961832061
+Gikuyu	0.06226004607115434
+Kirmanjki	0.045098039215686274
+Kwanyama	0.03090761030500444
+Eastern Pwo	1.5116279069767442
+Kazakh	0.9458258985470304
+Kazakh Arabic alphabets	0.8564968586177918
+Kazakh in China	1.2433790343183173
+Kazakh in Cyrillic script	0.7925075847513521
+Kazakh in Kazakhstan	1.1257505285412261
+Kazakh in Latin script	0.7690997069447284
+Kazakh in Turkey	0.4496431614827439
+Greenlandic	0.03560935385994828
+Khmer	2.4178954423592494
+Kannada	2.145180650582163
+Korean	2.01341830094691
+North Korean standard language	0.0648854961832061
+Permyak	2.743705035971223
+Kanuri	0.0310703228659885
+Karachay-Balkar	2.516304347826087
+Krio	0.059718969555035126
+Kinaray-a	0.017434707722591303
+Karelian	0.05649717514124294
+Kashmiri	0.03718199608610567
+Kashmiri in Arabic script	0.06538461538461539
+Kashmiri in Devanagari script	0.0648854961832061
+Ripuarian	0.10675439376426306
+Kurdish	0.5063060186557803
+Kurdish Arabic alphabet	1.3699240241026984
+Kurdish in Latin script	0.17296604740550928
+Kumyk	0.0
+Komi	2.089755213055304
+Cornish	0.19722481568526448
+Kyrgyz	0.7835834595438065
+Latin	1.173020075572578
+Judaeo-Spanish	0.3133842671194114
+Luxembourgish	0.22313747811798568
+Lak	1.028169014084507
+Lezgian	1.7579804560260586
+Lingua Franca Nova	0.10927881628734398
+Luganda	0.05372495479871591
+Limburgish	0.13605628687506008
+Ligurian	0.1213223934910227
+Livonian	0.17092924126172207
+Laki	0.062111801242236024
+Ladin	0.5905224787363305
+Lombard	0.2909526425271727
+Lingala	0.20832629338019126
+Lao	0.019390093424995595
+Lozi	0.017675457846227507
+Northern Luri	1.590126291618829
+Lithuanian	0.6009982763170454
+Latgalian	0.06621392190152801
+Mizo	0.0176019797237966
+Southern Luri	0.014142953929539296
+Latvian	0.5122139529037876
+Classical Chinese	0.23572011521843494
+Laz	0.017092990672911413
+Madurese	0.20393700787401575
+Maithili	1.4471694036300777
+Banyumasan	0.1365384826135081
+Moksha	1.4135021097046414
+Malagasy	0.19105781792638013
+Marshallese	0.03122475359508806
+Meadow Mari	1.5017857142857143
+Māori	0.14788103140158285
+Minangkabau	0.1019718903376134
+Macedonian	1.942234286198999
+Malayalam	2.975595093584897
+Mongolian	1.6709749208251305
+Meitei	1.0889570552147239
+Mon language spelling	2.3970588235294117
+Moldovan	0.08759658397722651
+Marathi	2.3499401555954518
+Hill Mari	1.0033240997229917
+Malay	0.5172524123065524
+Malay in Jawi script	2.6666666666666665
+Maltese	0.35404405708552344
+Muscogee	0.031064230824996375
+Mirandese	0.19912446038791268
+Burmese	0.025121412803532008
+Erzya	2.6823170731707315
+Mazanderani	1.7181114218111422
+Nauruan Wikiquote	0.052678911141088164
+Nahuatl	0.35391799212023933
+Southern Min	1.1613338155763053
+Southern Min in Hanzi	0.0
+Neapolitan	0.11128739800543971
+Bokmål	0.4831728042046283
+Low German	0.1791962237986026
+Dutch Low Saxon	0.14435567113959005
+Nepali	2.2504469074007867
+Newar	1.3262365697875922
+Ndonga	0.02914689286648481
+Nias	0.7413793103448276
+Niuean	0.07142857142857142
+Dutch	0.2622707489956336
+informal Dutch	0.0
+Nynorsk	0.26600150776060655
+Norwegian	0.08
+Northern Thai	0.04086021505376344
+Novial	0.19251928773723104
+N'Ko	2.3641921397379915
+Norman	0.09779079732357691
+Northern Sotho	0.25596727297315575
+Navajo	0.4937469704314106
+Chewa	0.060527138243567036
+Noongar	0.1111111111111111
+Occitan	0.22948677184352526
+Livvi-Karelian	0.49536937325005387
+Oromo	0.047542948461845785
+Odia	1.7774086378737541
+Ossetian	1.6650170648464164
+Ottoman Turkish	0.07051282051282051
+Eastern Punjabi	1.9165333480443538
+Pangasinan	0.04063045022931335
+Kapampangan	0.11176946568870559
+Papiamento	0.12547822315791188
+Picard	0.12075191287285056
+Pennsylvania German	0.0828136621088163
+Plautdietsch	0.02629350027619223
+Palatinate German	0.2125818672145884
+Pali	0.19471947194719472
+Pitkern	0.0529395178344847
+Polish	0.9374525877064103
+Piedmontese	0.17851484394999204
+Western Punjabi	2.4717179104003053
+Pontic Greek	0.07292539815590947
+Old Prussian	0.06974365613671672
+Pashto	1.9207589285714286
+Portuguese	0.532115963263169
+Brazilian Portuguese	0.29300514469848915
+Paiwan	4.8
+Quechua	0.5216279462497889
+Kichwa	0.021305977510357073
+Romagnol	0.07898687108056417
+Riffian	0.01811766571519188
+Romansh	0.10406289918504362
+Carpathian Romani	1.0
+Finnish Kalo	0.1794871794871795
+Romani	0.044710327455919394
+Kirundi	0.038302802114256754
+Romanian	0.6494604796388985
+Tarantino	0.11952670942644777
+Russian	2.14357641210386
+Rusyn	1.533231474407945
+Aromanian	0.05787956510883628
+Megleno-Romanian	0.04914285714285714
+Megleno-Romanian in Cyrillic script	0.03762376237623762
+Megleno-Romanian in Latin script	0.02963321902489936
+Kinyarwanda	0.1089588377723971
+Marwari (India)	0.015250544662309368
+Okinawan	0.0
+Sanskrit	1.7682619647355164
+Sakha	2.559086629001883
+Santali	0.016824814608085478
+Sardinian	0.16483062705189372
+Sicilian	0.14141629104508854
+Scots	0.1931672371067733
+Sindhi	2.3035617916891526
+Sassarese	0.05931578559315786
+Southern Kurdish	0.02304147465437788
+Northern Sami	0.2696176785861529
+Seri	0.022858932206043524
+Koyraboro Senni	0.015086206896551725
+Sango	0.039931566686080375
+Samogitian	0.30611274304098474
+Serbo-Croatian	1.1693353846153847
+Tashelhit	0.6203966005665722
+Tachelhit in Latin script	0.02987245468784963
+Tachelhit in Tifinagh script	0.06513409961685823
+Shan	1.759010600706714
+Shawiya	0.0
+Shawiya in Latin script	1.3111111111111111
+Sinhala	1.626908702616124
+Simple English	0.12516805592901317
+Kildin Sami	0.39862542955326463
+Pite Sami	0.04042003060524511
+Ume Sami	0.1438721136767318
+Slovak	0.29896473037351373
+Saraiki	2.345
+Saraiki in Arabic script	2.0
+Slovene	0.19995142338505315
+Silesian German	0.01858896427310875
+Samoan	0.0691105563724652
+Southern Sami	0.05194462755438365
+Lule Sami	0.07068012954848543
+Inari Sami	0.8537148131056761
+Skolt Sami	1.4000888099467141
+Shona	0.038564193813304136
+Somali	0.16515221861112953
+Albanian	0.07096271023671472
+Serbian	1.525540876347377
+Serbian written in Cyrillic	1.415737259486272
+Serbian written in Latin script	0.39905362165759367
+Sranan Tongo	0.07621338429602294
+Sirionó	0.06113033448673587
+Swazi	0.05222270176952956
+Sesotho	0.07088544627629335
+Saterland Frisian	0.09102806861216306
+Siberian Tatar	2.7142857142857144
+Sundanese	0.44683385219441274
+Swedish	0.40502314782042387
+Swahili	0.2130946939062555
+Silesian	0.2483813737010668
+Sakizaya	0.35816876122082586
+Tamil	3.2048477886272257
+Atayal	0.37037037037037035
+Tulu	1.8516819571865444
+Telugu	2.8223358176922777
+Tetum	0.05265168617372278
+Tajik	2.8655357929643115
+Tajik in Cyrillic script	0.8439226519337016
+Tajik in Latin script	0.20389964730152393
+Thai	3.4011016583225384
+Tigrinya	0.828996282527881
+Turkmen	0.17152780238863097
+Tagalog	0.2613847209378636
+Talysh	0.07380073800738007
+Tswana	0.06411087113030957
+Tongan	0.055172911182431214
+Tok Pisin	0.045528563357814626
+Turkish	0.5665955079606112
+Turoyo	0.01717580173759859
+Seediq	0.2796208530805687
+Tsonga	0.04211174276713618
+Tatar	1.0808020925546873
+Tatar in Cyrillic script	2.0134028294862247
+Tatar in Latin script	0.03659257071117347
+Tumbuka	0.036506190797176
+Twi	0.04595084686909217
+Tahitian	0.08500762369958575
+Tuvan	2.537769784172662
+Central Atlas Tamazight	1.0714285714285714
+Udmurt	1.7378597122302157
+Uyghur	2.343722943722944
+Uyghur Arabic alphabet	0.06538461538461539
+Uyghur Latin alphabet	0.03254239809580482
+Ukrainian	2.233614351363699
+Urdu	2.288276745675849
+Uzbek	0.24126099451362884
+Uzbek Cyrillic alphabet	0.0
+Uzbek Latin alphabet	0.8333333333333334
+Venda	0.03763499115108174
+Venetian	0.18390954882278146
+Veps	0.16500374158144177
+Vietnamese	0.8829612568238057
+West Flemish	0.11740860547269052
+Main-Franconian	0.07604111673550511
+Volapük	0.11490825752648665
+Votic	0.02779132130667967
+Võro	0.4785072293864791
+Walloon	0.1316650632616174
+Waray	0.23405950711828735
+Wallisian	0.0
+Wolof	0.09331386050270206
+Wu Chinese	1.2344850596871062
+Kalmyk Oirat	2.1337412587412588
+Xhosa	0.051326494517156
+Mingrelian	1.8851620238772029
+Saisiyat	0.4727272727272727
+Yiddish	1.7152344808891298
+Yoruba	0.21891964263979163
+Cantonese	1.8011743135286158
+Zhuang	0.06115547881142528
+Zeelandic	0.09253847148583991
+Standard Moroccan Berber	1.6363636363636365
+Chinese	1.665966149802319
+Putonghua	2.2337382317127497
+Simplified Chinese	2.0291405757238814
+Traditional Chinese	1.105921689165619
+Chinese (Hong Kong)	1.5957217230153988
+Chinese in Macau	1.5694810402107917
+Malaysian Mandarin	1.0165319521828977
+Singaporean Mandarin	1.4423328265450375
+Taiwanese Mandarin	2.3287070200573066
+Zulu	0.10638384100377714
+[compute_crossing_alignments] Number of permuted / surviving words per language:
+global	0	118479627
+Afar	0	28366
+Abkhaz	0	717
+Ambonese	0	3
+Acehnese	0	151316
+Adyghe	0	488
+Adyghe in Cyrillic script	0	217
+Tunisian Arabic	0	222
+Tunisian Arabic in Arabic script	0	2814
+Tunisian Arabic in Latin script	0	2014
+Afrikaans	0	364528
+Akan Wiktionary	0	30618
+Gheg Albanian	0	25640
+Swiss German	0	310
+Southern Altai	0	470
+Amharic	0	4437
+Amis	0	29
+Aragonese	0	339920
+Old English	0	33441
+Angika	0	268
+Arabic	0	805691
+Aramaic	0	840
+Mapudungun	0	25819
+Algerian Arabic	0	524
+Moroccan Arabic	0	9155
+Egyptian Arabic	0	899145
+Assamese	0	3726
+American Sign Language	0	2
+Asturian	0	5201090
+Atikamekw	0	2250
+Avaric	0	1096
+Kotava	0	3612
+Awadhi	0	534
+Aymara	0	33563
+Azerbaijani	0	110811
+South Azerbaijani	0	242102
+Bashkir	0	37256
+bag	0	1
+Balinese	0	9825
+Balinese in Balinese script	0	21
+Bavarian	0	374685
+bas	0	1
+bax	0	1
+Toba Batak	0	3442
+Batak Toba in Latin script	0	2009
+bbj	0	1
+Southern Balochi	0	506
+Central Bikol	0	38267
+Belarusian	0	143936
+Taraškievica	0	68813
+Bulgarian	0	226570
+Western Balochi	0	217
+Bhojpuri	0	6519
+Bislama Wiktionary	0	29854
+Banjar	0	100284
+bkc	0	1
+bkh	0	1
+bkm	0	1
+Bambara	0	157932
+Bengali	0	430633
+Tibetan	0	14552
+Bishnupriya Manipuri	0	22529
+Bakhtiari	0	506
+Breton	0	362544
+Brahui language	0	25143
+Bosnian	0	102085
+Mandailing	0	2
+Rinconada Bikol	0	3827
+Buginese	0	97433
+Russia Buriat	0	1612
+Catalan	0	2963304
+Zamboanga Chavacano	0	33313
+Min Dong	0	33880
+Chechen	0	296490
+Cebuano	0	1824695
+Chamorro	0	28976
+Choctaw	0	28143
+Cherokee	0	24779
+Cheyenne	0	28662
+Sorani	0	15602
+Corsican	0	352641
+Capiznon	0	3853
+Cree Wikiquote	0	27679
+Crimean Tatar	0	8685
+Crimean Tatar Cyrillic alphabet	0	264
+Crimean Tatar Latin alphabet	0	31381
+Czech	0	1240681
+Kashubian	0	31910
+Old Church Slavonic	0	22628
+Chuvash	0	22462
+Welsh	0	711216
+Danish	0	1718106
+Dagbani	0	453
+German	0	4433804
+Austrian German	0	298890
+Swiss Standard German	0	310376
+formal address in German	0	34
+Dinka	0	1027
+Zazaki	0	70537
+Lower Sorbian	0	70810
+Kadazandusun	0	26307
+Doteli	0	2458
+Duala	0	1
+Dhivehi	0	1154
+Dzongkha	0	275
+Ewe	0	35679
+Emilian	0	3932
+Modern Greek	0	178144
+Emilian-Romagnol	0	35923
+English	0	13705784
+Canadian English	0	481013
+British English	0	639365
+Esperanto	0	495919
+Spanish	0	6011178
+Latin American Spanish	0	1008
+formal Spanish	0	83
+Estonian	0	443068
+eto	0	1
+Basque	0	693497
+ewo	0	1
+Extremaduran	0	38426
+Persian	0	601784
+Fula	0	29128
+Finnish	0	1411516
+Meänkieli	0	31624
+Fijian	0	29151
+kven	0	981
+fmp	0	1
+Faroese	0	148286
+French	0	4804821
+Louisiana French	0	133562
+Franco-Provençal	0	233919
+North Frisian	0	77820
+Friulian	0	256132
+West Frisian	0	67125
+Irish	0	1887987
+Gagauz	0	29957
+Gan	0	31305
+simplified Gan	0	30479
+traditional Gan	0	427
+Guianan Creole	0	865
+Scottish Gaelic	0	283525
+Galician	0	659462
+Gilaki	0	1439
+Guarani	0	30739
+Goan Konkani	0	668
+Goan Konkani in Devanagari script	0	432
+Goan Konkani in Latin script	0	2449
+Gorontalo	0	44992
+Gothic	0	25051
+Ancient Greek	0	1374
+Alemannic	0	337248
+Gujarati	0	27059
+Wayuu	0	22
+Manx	0	34490
+Hausa	0	40578
+Hakka	0	36914
+Hawaiian	0	31320
+Hebrew	0	247771
+Hindi	0	71324
+Fiji Hindi	0	31936
+Fiji Hindi in Latin script	0	27966
+Hiligaynon	0	5086
+Hiri Motu	0	28148
+Croatian	0	415209
+Hunsrik	0	2314
+Upper Sorbian	0	93385
+Haitian Creole	0	87248
+Hungarian	0	1145317
+formal Hungarian	0	2
+Armenian	0	205430
+Western Armenian	0	5935
+Herero	0	28094
+Interlingua	0	260698
+Indonesian	0	719301
+Interlingue	0	250314
+Igbo	0	30986
+Nuosu	0	263
+Inupiat	0	28569
+Eastern Canadian (Aboriginal syllabics)	0	971
+Eastern Canadian in Latin script	0	27857
+Ilocano	0	40365
+Ingush	0	471
+Ido	0	263068
+Icelandic	0	276215
+Italian	0	2877486
+Inuktitut	0	24789
+Japanese	0	598303
+Jamaican Creole	0	158935
+Lojban	0	28968
+Jutlandic	0	1710
+Javanese	0	147653
+Georgian	0	92721
+Karakalpak	0	30155
+Kabyle	0	162564
+Kabardian	0	812
+Kabardian in Cyrillic script	0	261
+Kabiye	0	1862
+Tyap	0	1
+Cape Verdean Creole	0	849
+Kongo	0	238929
+Khowar	0	262
+Gikuyu	0	31256
+Kirmanjki	0	510
+Kwanyama	0	27016
+Eastern Pwo	0	43
+Kazakh	0	156920
+Kazakh Arabic alphabets	0	74967
+Kazakh in China	0	11743
+Kazakh in Cyrillic script	0	75810
+Kazakh in Kazakhstan	0	11825
+Kazakh in Latin script	0	102711
+Kazakh in Turkey	0	37552
+Greenlandic	0	124911
+Khmer	0	2984
+Kannada	0	33324
+Korean	0	245113
+North Korean standard language	0	262
+Permyak	0	1112
+Kanuri	0	27132
+Karachay-Balkar	0	552
+Krio	0	854
+Kinaray-a	0	28449
+Karelian	0	708
+Kashmiri	0	511
+Kashmiri in Arabic script	0	260
+Kashmiri in Devanagari script	0	262
+Ripuarian	0	33741
+Kurdish	0	43847
+Kurdish Arabic alphabet	0	3817
+Kurdish in Latin script	0	29659
+Kumyk	0	2
+Komi	0	1103
+Cornish	0	31061
+Kyrgyz	0	43578
+Latin	0	194515
+Judaeo-Spanish	0	35340
+Luxembourgish	0	372452
+Lak	0	426
+Lezgian	0	3070
+Lingua Franca Nova	0	35414
+Luganda	0	27101
+Limburgish	0	280847
+Ligurian	0	262161
+Livonian	0	2346
+Laki	0	1127
+Ladin	0	823
+Lombard	0	111049
+Lingala	0	29593
+Lao	0	22692
+Lozi	0	25063
+Northern Luri	0	1742
+Lithuanian	0	356214
+Latgalian	0	27683
+Mizo	0	25054
+Southern Luri	0	11808
+Latvian	0	222778
+Classical Chinese	0	416600
+Laz	0	24981
+Madurese	0	2540
+Maithili	0	9256
+Banyumasan	0	91249
+Moksha	0	474
+Malagasy	0	304646
+Marshallese	0	24756
+Meadow Mari	0	2800
+Māori	0	47004
+Minangkabau	0	322736
+Macedonian	0	58945
+Malayalam	0	86499
+Mongolian	0	11683
+Meitei	0	326
+Mon language spelling	0	136
+Moldovan	0	24590
+Marathi	0	40104
+Hill Mari	0	3610
+Malay	0	534447
+Malay in Jawi script	0	195
+Maltese	0	66777
+Muscogee	0	27588
+Mirandese	0	32894
+Burmese	0	22650
+Erzya	0	3280
+Mazanderani	0	9298
+Nauruan Wikiquote	0	28911
+Nahuatl	0	34265
+Southern Min	0	467261
+Southern Min in Hanzi	0	1
+Neapolitan	0	269132
+Bokmål	0	1727620
+Low German	0	449976
+Dutch Low Saxon	0	298388
+Nepali	0	16782
+Newar	0	20197
+Ndonga	0	26761
+Nias	0	116
+Niuean	0	714
+Dutch	0	9302631
+informal Dutch	0	4
+Nynorsk	0	1192497
+Norwegian	0	25
+Northern Thai	0	465
+Novial	0	30719
+N'Ko	0	1145
+Norman	0	242712
+Northern Sotho	0	29578
+Navajo	0	30945
+Chewa	0	28797
+Noongar	0	5769
+Occitan	0	427724
+Livvi-Karelian	0	4643
+Oromo	0	27533
+Odia	0	14749
+Ossetian	0	5860
+Ottoman Turkish	0	468
+Eastern Punjabi	0	18127
+Pangasinan	0	30962
+Kapampangan	0	38311
+Papiamento	0	982282
+Picard	0	258381
+Pennsylvania German	0	34958
+Plautdietsch	0	27155
+Palatinate German	0	62296
+Pali	0	3939
+Pitkern	0	28372
+Polish	0	1480365
+Piedmontese	0	289074
+Western Punjabi	0	31451
+Pontic Greek	0	1193
+Old Prussian	0	154480
+Pashto	0	5376
+Portuguese	0	2225015
+Brazilian Portuguese	0	1788443
+Paiwan	0	5
+Quechua	0	41451
+Kichwa	0	25345
+Romagnol	0	131237
+Riffian	0	25224
+Romansh	0	302961
+Carpathian Romani	0	1
+Finnish Kalo	0	1131
+Romani	0	28584
+Kirundi	0	27622
+Romanian	0	783381
+Tarantino	0	43187
+Russian	0	1271330
+Rusyn	0	3927
+Aromanian	0	44057
+Megleno-Romanian	0	1750
+Megleno-Romanian in Cyrillic script	0	505
+Megleno-Romanian in Latin script	0	26828
+Kinyarwanda	0	29736
+Marwari (India)	0	459
+Okinawan	0	33
+Sanskrit	0	5558
+Sakha	0	4248
+Santali	0	25082
+Sardinian	0	293022
+Sicilian	0	286636
+Scots	0	351483
+Sindhi	0	3706
+Sassarese	0	27126
+Southern Kurdish	0	217
+Northern Sami	0	72766
+Seri	0	25548
+Koyraboro Senni	0	464
+Sango	0	27472
+Samogitian	0	35745
+Serbo-Croatian	0	325000
+Tashelhit	0	1412
+Tachelhit in Latin script	0	26814
+Tachelhit in Tifinagh script	0	261
+Shan	0	1415
+Shawiya	0	6
+Shawiya in Latin script	0	45
+Sinhala	0	18730
+Simple English	0	7438
+Kildin Sami	0	582
+Pite Sami	0	18951
+Ume Sami	0	1126
+Slovak	0	624475
+Saraiki	0	200
+Saraiki in Arabic script	0	4
+Slovene	0	2659716
+Silesian German	0	25499
+Samoan	0	29243
+Southern Sami	0	45510
+Lule Sami	0	20996
+Inari Sami	0	4334
+Skolt Sami	0	2252
+Shona	0	29224
+Somali	0	30154
+Albanian	0	2765692
+Serbian	0	246683
+Serbian written in Cyrillic	0	63302
+Serbian written in Latin script	0	258459
+Sranan Tongo	0	30349
+Sirionó	0	867
+Swazi	0	25487
+Sesotho	0	28144
+Saterland Frisian	0	35912
+Siberian Tatar	0	7
+Sundanese	0	121741
+Swedish	0	2542788
+Swahili	0	284390
+Silesian	0	43401
+Sakizaya	0	1114
+Tamil	0	87050
+Atayal	0	513
+Tulu	0	654
+Telugu	0	51254
+Tetum	0	57586
+Tajik	0	86246
+Tajik in Cyrillic script	0	724
+Tajik in Latin script	0	30054
+Thai	0	85689
+Tigrinya	0	269
+Turkmen	0	28217
+Tagalog	0	167615
+Talysh	0	271
+Tswana	0	27780
+Tongan	0	27731
+Tok Pisin	0	30091
+Turkish	0	541981
+Turoyo	0	24977
+Seediq	0	211
+Tsonga	0	27617
+Tatar	0	249647
+Tatar in Cyrillic script	0	1343
+Tatar in Latin script	0	27082
+Tumbuka	0	28187
+Twi	0	25919
+Tahitian	0	74111
+Tuvan	0	1112
+Central Atlas Tamazight	0	14
+Udmurt	0	2224
+Uyghur	0	2310
+Uyghur Arabic alphabet	0	260
+Uyghur Latin alphabet	0	26888
+Ukrainian	0	632581
+Urdu	0	146734
+Uzbek	0	172245
+Uzbek Cyrillic alphabet	0	1
+Uzbek Latin alphabet	0	6
+Venda	0	27687
+Venetian	0	305933
+Veps	0	32072
+Vietnamese	0	554859
+West Flemish	0	268643
+Main-Franconian	0	161005
+Volapük	0	355179
+Votic	0	26663
+Võro	0	5118
+Walloon	0	274416
+Waray	0	328801
+Wallisian	0	9
+Wolof	0	237596
+Wu Chinese	0	53948
+Kalmyk Oirat	0	1144
+Xhosa	0	28270
+Mingrelian	0	8795
+Saisiyat	0	55
+Yiddish	0	7378
+Yoruba	0	41079
+Cantonese	0	45814
+Zhuang	0	27798
+Zeelandic	0	38665
+Standard Moroccan Berber	0	11
+Chinese	0	1286669
+Putonghua	0	168355
+Simplified Chinese	0	307578
+Traditional Chinese	0	759665
+Chinese (Hong Kong)	0	164038
+Chinese in Macau	0	8729
+Malaysian Mandarin	0	38229
+Singaporean Mandarin	0	74982
+Taiwanese Mandarin	0	67008
+Zulu	0	246748
