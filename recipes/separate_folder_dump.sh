@@ -194,7 +194,7 @@ echo "Combining everything to ${final_combined_output}"
 
 final_combination_entity_types=$(echo $entity_types | tr " " ",")
 csvstack --verbose --tabs ${output_folder}/{PER,LOC,ORG}_script_name_standardized_${voting_method}.tsv \
-    | csvformat -T | tee $final_combined_output
+    | csvformat -T > $final_combined_output
 
 #separate_by_language $final_combined_output
 

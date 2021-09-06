@@ -24,3 +24,4 @@ black
 mypy
 ipython
 more-itertools
+datasketch
