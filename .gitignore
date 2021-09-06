@@ -4,4 +4,6 @@
 **/data/name_reversal
 **/data/flyingsquid_experiments
 **/data/emnlp_supplementary_data
+**/data/anecdata
 **/*.egg-info
+staging/
