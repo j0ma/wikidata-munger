@@ -1,7 +1,7 @@
 from typing import Dict, Tuple, Type, List, Iterable
 from collections import defaultdict, Counter
 
-import paranames.io.script_analysis as sa
+import paranames.analysis.script_analysis as sa
 import pandas as pd
 import numpy as np
 import click
