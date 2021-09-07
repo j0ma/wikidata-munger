@@ -1,8 +1,5 @@
-from typing import List
-
-from paranames.io.wikidata_helpers import orjson_dump
+from paranames.util import orjson_dump
 import requests
-import cssselect
 import lxml.html as html
 import click
 import pandas as pd
@@ -51,6 +48,7 @@ def main(url, sel, columns, lang_col, value_col, african_only, abbrev_only):
         str(d[lang_col])
         .strip(): str(d[value_col].replace(" (closed)", ""))
         .strip()
+
         for d in df[[lang_col, value_col]].to_dict("records")
     }
 

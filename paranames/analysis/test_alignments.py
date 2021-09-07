@@ -1,7 +1,6 @@
-from typing import Dict, Tuple, Type, List, Iterable
-from collections import defaultdict, Counter
+from typing import Dict, Type, List
 
-import paranames.analysis.script_analysis as sa
+import paranames.util.script as s
 import pandas as pd
 import numpy as np
 import click
@@ -15,12 +14,11 @@ default_human_readable_langs_path = (
 )
 
 
-def compute_crossing_alignments_pooled(
-    names: List[sa.TransliteratedName],
-    permuter_cls: Type[sa.NameProcessor],
+def compute_crossing_alignments(
+    names: List[s.TransliteratedName],
+    permuter_cls: Type[s.NameProcessor],
     language_column: str,
     human_readable_lang_names: Dict[str, str],
-    pool_languages: bool = False,
     find_best_token_permutation: bool = False,
     preserve_fastalign_output: bool = False,
     debug_mode: bool = False,
@@ -29,7 +27,7 @@ def compute_crossing_alignments_pooled(
 ):
 
     print("[compute_crossing_alignments] Creating pooled corpus...")
-    big_corpus = sa.Corpus(
+    big_corpus = s.Corpus(
         names=names,
         language="all",
         normalize_histogram=True,
@@ -72,10 +70,6 @@ def compute_crossing_alignments_pooled(
         print(f"{lang_long}\t{total_permuted}\t{total_surviving}")
 
 
-def compute_crossing_alignments_unpooled(*args, **kwargs):
-    raise NotImplementedError("Unpooled mode deprecated!")
-
-
 @click.command()
 @click.option("--input-file", "-i")
 @click.option("--language-column", "-lc", default="language")
@@ -85,13 +79,8 @@ def compute_crossing_alignments_unpooled(*args, **kwargs):
 )
 @click.option(
     "--permuter-type",
-    type=click.Choice(sa.permuter_types),
+    type=click.Choice(s.permuter_types),
     default="edit_distance",
-)
-@click.option(
-    "--pool-languages",
-    is_flag=True,
-    help="Pool all languages when aligning so that only one big model is trained",
 )
 @click.option(
     "--debug-mode", is_flag=True, help="Debug mode: only use 10 rows of data"
@@ -124,7 +113,6 @@ def main(
     random_seed,
     permuter_type,
     human_readable_langs_path,
-    pool_languages,
     debug_mode,
     parallelize,
     permute_tokens,
@@ -145,11 +133,11 @@ def main(
 
     # get the right class for permuting tokens
     permuter_class = {
-        "comma": sa.PermuteFirstComma,
-        "edit_distance": sa.PermuteLowestDistance,
-        "remove_parenthesis_permute_comma": sa.RemoveParenthesisPermuteComma,
-        "remove_parenthesis_edit_distance": sa.RemoveParenthesisPermuteLowestDistance,
-        "remove_parenthesis": sa.ParenthesisRemover,
+        "comma": s.PermuteFirstComma,
+        "edit_distance": s.PermuteLowestDistance,
+        "remove_parenthesis_permute_comma": s.RemoveParenthesisPermuteComma,
+        "remove_parenthesis_edit_distance": s.RemoveParenthesisPermuteLowestDistance,
+        "remove_parenthesis": s.ParenthesisRemover,
     }[permuter_type]
 
     # read in corpus and subset
@@ -186,7 +174,7 @@ def main(
             chunk for chunk, _ in zip(corpus_chunks, range(num_debug_chunks))
         ]
 
-    name_loader = sa.TransliteratedNameLoader(
+    name_loader = s.TransliteratedNameLoader(
         language_column=language_column, debug_mode=False
     )
 
@@ -199,22 +187,17 @@ def main(
         )
     )
 
-    if pool_languages:
-        compute_crossing_alignments_pooled(
-            names,
-            permuter_class,
-            language_column,
-            human_readable_lang_names=human_readable_lang_names,
-            pool_languages=pool_languages,
-            find_best_token_permutation=permute_tokens,
-            preserve_fastalign_output=preserve_fastalign_output,
-            debug_mode=debug_mode,
-            write_permuted_names=write_permuted_names,
-            names_output_folder=names_output_folder,
-        )
-    else:
-
-        raise NotImplementedError("Unpooled mode deprecated!")
+    compute_crossing_alignments(
+        names,
+        permuter_class,
+        language_column,
+        human_readable_lang_names=human_readable_lang_names,
+        find_best_token_permutation=permute_tokens,
+        preserve_fastalign_output=preserve_fastalign_output,
+        debug_mode=debug_mode,
+        write_permuted_names=write_permuted_names,
+        names_output_folder=names_output_folder,
+    )
 
 
 if __name__ == "__main__":

@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
-"""Subsamples the input data to create a reasonably sized and less imbalanced training/dev/test set."""
+"""Subsamples the input data to create a reasonably sized
+and less imbalanced training/dev/test set."""
 
 from collections import Counter
 from typing import Optional
 
-import paranames.io.wikidata_helpers as wh
+from paranames.util import read, write
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
@@ -108,6 +109,7 @@ class UniformDistributionSampler(Sampler):
                 df[df[lc] == lang].sample(
                     n_samples, random_state=self.random_state
                 )
+
                 for lang, n_samples in n_samples_per_language.items()
             ],
             ignore_index=True,
@@ -189,7 +191,7 @@ def main(
 
     if debug_mode:
         print(f"Loading data from {input_file}")
-    data = wh.read(
+    data = read(
         input_file, io_format, chunksize=chunksize if chunksize > 0 else None
     )
 
@@ -238,9 +240,7 @@ def main(
 
     if debug_mode:
         print(f"Writing to {output_file}...")
-    wh.write(
-        data=sub, output_file=output_file, io_format=io_format, index=False
-    )
+    write(data=sub, output_file=output_file, io_format=io_format, index=False)
 
 
 if __name__ == "__main__":

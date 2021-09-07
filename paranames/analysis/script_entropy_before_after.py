@@ -1,4 +1,4 @@
-import paranames.io.wikidata_helpers as wh
+from paranames.util import read, write
 import pandas as pd
 import click
 
@@ -16,10 +16,10 @@ pd.set_option("display.max_columns", None)
 @click.option("--io-format", "-f", default="csv")
 def main(before_file, after_file, filtered_file, output_file, io_format):
 
-    before = wh.read(before_file, io_format).set_index(
+    before = read(before_file, io_format).set_index(
         ["language_code", "language"]
     )
-    after = wh.read(after_file, io_format).set_index(
+    after = read(after_file, io_format).set_index(
         ["language_code", "language"]
     )
 
@@ -36,7 +36,7 @@ def main(before_file, after_file, filtered_file, output_file, io_format):
     print("Summary statistics, change in script entropy")
     print(combined.change.describe())
 
-    filtered = wh.read(filtered_file, "tsv")
+    filtered = read(filtered_file, "tsv")
     print(f"There are {filtered.shape[0]} filtered names")
 
 

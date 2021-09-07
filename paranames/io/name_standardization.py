@@ -1,18 +1,13 @@
 #!/usr/bin/env python
 
-from typing import Dict, Tuple, Generator
+from typing import Dict
 import itertools as it
-from pathlib import Path
-import tempfile
 
 import click
 import numpy as np
 import pandas as pd
-from tqdm import tqdm
-from sklearn.metrics import classification_report
-from flyingsquid.label_model import LabelModel
-import paranames.io.wikidata_helpers as wh
-import paranames.analysis.script_analysis as sa
+from paranames.util import read, write
+import paranames.util.script as s
 from p_tqdm import p_map
 import orjson
 
@@ -36,11 +31,11 @@ def standardize_names(
 ) -> pd.DataFrame:
 
     permuter_class = {
-        "comma": sa.PermuteFirstComma,
-        "edit_distance": sa.PermuteLowestDistance,
-        "remove_parenthesis_permute_comma": sa.RemoveParenthesisPermuteComma,
-        "remove_parenthesis_edit_distance": sa.RemoveParenthesisPermuteLowestDistance,
-        "remove_parenthesis": sa.ParenthesisRemover,
+        "comma": s.PermuteFirstComma,
+        "edit_distance": s.PermuteLowestDistance,
+        "remove_parenthesis_permute_comma": s.RemoveParenthesisPermuteComma,
+        "remove_parenthesis_edit_distance": s.RemoveParenthesisPermuteLowestDistance,
+        "remove_parenthesis": s.ParenthesisRemover,
     }[permuter_type]
 
     num_rows, num_columns = data.shape
@@ -50,7 +45,7 @@ def standardize_names(
     else:
         corpus_chunks = (chunk for chunk in (data,))
 
-    name_loader = sa.TransliteratedNameLoader(
+    name_loader = s.TransliteratedNameLoader(
         language_column=language_column,
         wikidata_id_column=id_column,
         debug_mode=False,
@@ -63,7 +58,7 @@ def standardize_names(
 
     should_compute_stats = bool("edit_distance" in permuter_type)
     print("[standardize_names] Creating pooled corpus...")
-    pooled_corpus = sa.Corpus(
+    pooled_corpus = s.Corpus(
         names=names,
         language="all",
         permuter_class=permuter_class,
@@ -117,7 +112,7 @@ def standardize_names(
 @click.option("--chunksize", type=int, default=15000)
 @click.option("--human-readable-langs-path", required=True)
 @click.option(
-    "--permuter-type", required=True, type=click.Choice(sa.permuter_types)
+    "--permuter-type", required=True, type=click.Choice(s.permuter_types)
 )
 @click.option("--corpus-require-english", is_flag=True, help="deprecated")
 @click.option("--corpus-filter-blank", is_flag=True, help="deprecated")
@@ -149,11 +144,13 @@ def main(
         human_readable_lang_names = orjson.loads(f.read())
 
     # read in data and sort it by language
+
     if debug_mode:
         print("Reading data...")
-    data = wh.read(input_file, io_format=io_format)
+    data = read(input_file, io_format=io_format)
 
     # need to sort by language to ensure ordered chunks
+
     if debug_mode:
         print("Sorting by language column...")
     data = data.sort_values(language_column)
@@ -177,7 +174,7 @@ def main(
     )
 
     # write to disk
-    wh.write(data, output_file, io_format=io_format)
+    write(data, output_file, io_format=io_format)
 
 
 if __name__ == "__main__":

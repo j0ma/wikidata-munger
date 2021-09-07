@@ -3,15 +3,16 @@ import os
 import math
 import csv
 from collections import defaultdict
-from typing import IO, Generator, List, Dict, Any, Union, Iterable
+from typing import IO, Iterable
 
 from pymongo import MongoClient
-import paranames.io.wikidata_helpers as wh
+import paranames.util.wikidata as w
+from paranames.util import orjson_dump
 import click
 
 
 def output_jsonl(
-    document: wh.WikidataRecord,
+    document: w.WikidataRecord,
     f: IO,
     languages: Iterable[str],
     not_languages: Iterable[str],
@@ -33,7 +34,7 @@ def output_jsonl(
 
         if not_in_include_set or in_exclude_set:
             continue
-        row = wh.orjson_dump(
+        row = orjson_dump(
             {
                 "wikidata_id": wikidata_id,
                 "name": name,
@@ -46,7 +47,7 @@ def output_jsonl(
 
 
 def output_csv(
-    document: wh.WikidataRecord,
+    document: w.WikidataRecord,
     f: IO,
     languages: Iterable[str],
     not_languages: Iterable[str],
@@ -118,7 +119,7 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
 @click.option(
     "--mongodb-port",
     type=int,
-    default=wh.DEFAULT_MONGODB_PORT,
+    default=w.DEFAULT_MONGODB_PORT,
     help="MongoDB port",
 )
 @click.option("--database-name", default="wikidata_db", help="Database name")
@@ -238,7 +239,7 @@ def main(
         for ix, doc in enumerate(results):
             if ix < num_docs:
                 output(
-                    wh.WikidataRecord(doc, simple=True),
+                    w.WikidataRecord(doc, simple=True),
                     f=fout,
                     languages=language_list,
                     not_languages=not_language_list,

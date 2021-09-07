@@ -1,5 +1,3 @@
-usage () {
-    echo "Usage: ./counts_per_lang_and_type.sh TSV_PATH"
 }
 
 [ $# -lt 1 ] && usage && exit 1

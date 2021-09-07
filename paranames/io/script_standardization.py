@@ -1,26 +1,15 @@
 #!/usr/bin/env python
 
 from typing import Dict, Tuple, Generator
-import itertools as it
 from pathlib import Path
 import tempfile
 
 import click
-import numpy as np
 import pandas as pd
 from tqdm import tqdm
-from sklearn.metrics import classification_report
-from flyingsquid.label_model import LabelModel
-import paranames.io.wikidata_helpers as wh
-import paranames.analysis.script_analysis as sa
-from p_tqdm import p_map
-import orjson
+from paranames.util import read, write
+import paranames.util.script as s
 
-import pandas
-import click
-from tqdm import tqdm
-from p_tqdm import p_map
-from more_itertools import distribute
 
 vote_aggregation_methods = set(["baseline", "all", "any", "majority_vote"])
 
@@ -33,6 +22,7 @@ def slice_by_column(
     Note: assumes values of column are in sorted order
     """
     unique_values = data[column].unique()
+
     for val in unique_values:
         yield val, data[data[column] == val]
 
@@ -50,15 +40,14 @@ def standardize_script(
     **kwargs,
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
 
-    unique_languages = set(data[language_column].unique())
-    ua = sa.UnicodeAnalyzer(
+    ua = s.UnicodeAnalyzer(
         strip=strip,
         ignore_punctuation=True,
         ignore_numbers=True,
         normalize_histogram=True,
     )
 
-    name_loader = sa.TransliteratedNameLoader(
+    name_loader = s.TransliteratedNameLoader(
         language_column=language_column,
         debug_mode=False,
         name_column=alias_column,
@@ -89,27 +78,27 @@ def standardize_script(
         )
 
         # anomalous if most common unicode block is not expected one
-        incorrect_block_tagger = sa.IncorrectBlockTagger(
+        incorrect_block_tagger = s.IncorrectBlockTagger(
             expected_block=most_common_block
         )
 
         # anomalous if given block is missing
-        missing_block_tagger = sa.MissingBlockTagger(
+        missing_block_tagger = s.MissingBlockTagger(
             missing_block=most_common_block
         )
 
         # anomalous if JSD from language prototype is greater than a critical value
         prototype = "".join(str(s) for s in subset[alias_column])
-        distance_based_tagger = sa.JSDTagger(
+        distance_based_tagger = s.JSDTagger(
             per_language_distribution=ua.unicode_block_histogram(prototype),
             critical_value=critical_value,
             distance_measure="jensen_shannon",
         )
 
-        hiragana_katakana_tagger = sa.HiraganaKatakanaTagger()
-        cjk_tagger = sa.CJKTagger()
+        hiragana_katakana_tagger = s.HiraganaKatakanaTagger()
+        cjk_tagger = s.CJKTagger()
 
-        aggregated_tagger = sa.AggregatedTagger(
+        aggregated_tagger = s.AggregatedTagger(
             taggers=[
                 incorrect_block_tagger,
                 missing_block_tagger,
@@ -140,19 +129,21 @@ def standardize_script(
 def validate_name(
     name: str, language: str, allowed_scripts: Dict[str, Dict[str, str]]
 ) -> bool:
-    ua = sa.UnicodeAnalyzer()
+    ua = s.UnicodeAnalyzer()
+
     if language not in allowed_scripts:
         return True
+
     return ua.most_common_unicode_block(name) in allowed_scripts[language]
 
 
 def baseline_script_standardization(
     data, scripts_file, alias_column, language_column, *args, **kwargs
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    ua = sa.UnicodeAnalyzer()
-    scripts = wh.read(scripts_file, "tsv")
+    scripts = read(scripts_file, "tsv")
     allowed_scripts_per_lang = {
         lang: set(scr.split(", "))
+
         for lang, scr in zip(scripts.language_code, scripts.scripts_to_keep)
     }
 
@@ -163,6 +154,7 @@ def baseline_script_standardization(
                 language=row[language_column],
                 allowed_scripts=allowed_scripts_per_lang,
             )
+
             for ix, row in tqdm(data.iterrows(), total=data.shape[0])
         ],
         index=data.index,
@@ -224,7 +216,7 @@ def main(
 ):
 
     # read in data and sort it by language
-    data = wh.read(input_file, io_format=io_format)
+    data = read(input_file, io_format=io_format)
 
     # need to sort by language to ensure ordered chunks
     data = data.sort_values(language_column)
@@ -258,10 +250,11 @@ def main(
             _, filtered_names_output_file = tempfile.mkstemp()
         filtered_names_path = Path(filtered_names_output_file)
         containing_folder = filtered_names_path.parents[0]
+
         if not containing_folder.exists():
             filtered_names_path.mkdir(parents=True)
 
-        wh.write(
+        write(
             filtered,
             filtered_names_path,
             io_format="tsv",
@@ -270,7 +263,7 @@ def main(
         print(f"Filtered names written to {filtered_names_output_file}")
 
     # write to disk
-    wh.write(data, output_file, io_format=io_format)
+    write(data, output_file, io_format=io_format)
 
 
 if __name__ == "__main__":

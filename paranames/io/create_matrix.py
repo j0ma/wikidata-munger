@@ -1,15 +1,7 @@
-import sys
-import os
-import math
 import csv
 from typing import (
-    IO,
-    Generator,
     List,
     Dict,
-    Any,
-    Union,
-    Iterable,
     Optional,
     Tuple,
     Set,
@@ -17,9 +9,8 @@ from typing import (
 )
 from collections import defaultdict, OrderedDict
 
-from p_tqdm import p_map
 from tqdm import tqdm
-import paranames.io.wikidata_helpers as wh
+from paranames.util import read
 import pandas as pd
 import numpy as np
 import click
@@ -149,7 +140,7 @@ def main(
     value_column,
 ):
 
-    data_chunks = wh.read(input_file, io_format, chunksize=chunksize)
+    data_chunks = read(input_file, io_format, chunksize=chunksize)
     full_matrix_dict = defaultdict(dict)
     index_cols = index_columns.split(",")
 

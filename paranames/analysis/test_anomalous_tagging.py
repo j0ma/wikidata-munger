@@ -1,21 +1,10 @@
-from typing import Dict
 from pathlib import Path
 
+from paranames.util import read, maybe_infer_io_format
+import paranames.util.script as s
 import pandas as pd
-import click
-import orjson
-
-import script_analysis as sa
-
-from unicodeblock import blocks
-import dictances as dt
-
-import flyingsquid as fs
-
 import numpy as np
-
-from sklearn.metrics import recall_score, classification_report
-from flyingsquid.label_model import LabelModel
+import click
 
 pd.set_option("display.max_rows", None)
 pd.set_option("display.max_columns", None)
@@ -72,14 +61,14 @@ def main(
     assert io_format in ["csv", "tsv"]
 
     # unicode analyzer
-    ua = sa.UnicodeAnalyzer(
+    ua = s.UnicodeAnalyzer(
         strip=strip,
         normalize_histogram=not no_normalize,
         ignore_punctuation=ignore_punctuation,
     )
 
     print("Reading in corpus")
-    data = pd.read_csv(input_file, sep="\t" if io_format == "tsv" else ",")
+    data = read(input_file, io_format=maybe_infer_io_format(input_file))
     unique_languages = data.language.unique()
 
     anomalous = {}
@@ -90,6 +79,7 @@ def main(
         try:
             anomalous[language] = {
                 line.split("\t")[0].strip()
+
                 for line in open(
                     Path(anomalous_data_folder) / f"{language}_anomalous.txt"
                 )
@@ -102,13 +92,13 @@ def main(
     for language in unique_languages:
         print(f"[{language}] Creating corpus...")
         subset = data[data.language == language]
-        corpora[language] = sa.Corpus(
+        corpora[language] = s.Corpus(
             out_folder=(
                 Path(output_folder)
                 or Path(f"/tmp/flyingsquid-test/{language}")
             ),
             names=[
-                sa.TransliteratedName(
+                s.TransliteratedName(
                     text=row[alias_column],
                     language=language,
                     english_text=row[english_text_column],
@@ -116,6 +106,7 @@ def main(
                     unicode_analyzer=ua,
                     is_unchanged=True,
                 )
+
                 for _, row in subset.iterrows()
             ],
             language=language,
@@ -152,7 +143,7 @@ def main(
 
             corpus.add_words(
                 [
-                    sa.TransliteratedName(
+                    s.TransliteratedName(
                         text=w,
                         language=language,
                         noise_sample=True,
@@ -160,6 +151,7 @@ def main(
                         anomalous=True,
                         is_unchanged=True,
                     )
+
                     for w in anomalous_words
                 ]
             )
@@ -173,24 +165,24 @@ def main(
         print(f"[{language}] Done. Predicting...")
 
         # anomalous if most common unicode block is not expected one
-        incorrect_block_tagger = sa.IncorrectBlockTagger(
+        incorrect_block_tagger = s.IncorrectBlockTagger(
             expected_block=corpus.most_common_unicode_block
         )
 
         # anomalous if given block is missing
-        missing_block_tagger = sa.MissingBlockTagger(
+        missing_block_tagger = s.MissingBlockTagger(
             missing_block=corpus.most_common_unicode_block
         )
 
         # anomalous if JSD from language prototype is greater than a critical value
-        distance_based_tagger = sa.JSDTagger(
+        distance_based_tagger = s.JSDTagger(
             per_language_distribution=corpus.prototype,
             critical_value=critical_value,
             distance_measure="jensen_shannon",
         )
 
-        hiragana_katakana_tagger = sa.HiraganaKatakanaTagger()
-        cjk_tagger = sa.CJKTagger()
+        hiragana_katakana_tagger = s.HiraganaKatakanaTagger()
+        cjk_tagger = s.CJKTagger()
 
         true_labels = []
 
@@ -201,13 +193,6 @@ def main(
                 true_labels.append(0)
             else:
                 true_labels.append(-1)
-
-        label_priors = pd.Series(true_labels).value_counts(normalize=True)
-        print(f"Label priors:\n{label_priors}")
-
-        cr = lambda pred: classification_report(
-            y_true=true_labels, y_pred=pred
-        )
 
         def get_preds(tagger):
             return list(yield_preds(tagger))
@@ -230,19 +215,11 @@ def main(
         noisy_votes = np.vstack(
             [ibt_preds, mbt_preds, dbt_preds, hk_preds, cjk_preds]
         ).T
-        num_labeling_functions = noisy_votes.shape[1]
 
-        label_model = LabelModel(num_labeling_functions)
-        label_model.fit(noisy_votes)
-
-        preds = label_model.predict(noisy_votes).reshape(
-            np.array(true_labels).shape
-        )
         majority_vote_preds = (noisy_votes.mean(axis=1) > 0).astype(int)
-        # print(f"[{language}] Majority vote: {cr(majority_vote_preds)}")
 
         tagged_names = [
-            sa.TransliteratedName(
+            s.TransliteratedName(
                 text=w.text,
                 unicode_analyzer=w.unicode_analyzer,
                 anomalous=bool(pred > 0),
@@ -250,21 +227,18 @@ def main(
                 noise_sample=w.noise_sample,
                 is_unchanged=w.is_unchanged,
             )
+
             for w, pred in zip(corpus.names, majority_vote_preds)
         ]
 
-        # print(f"[{language}] FlyingSquid: {cr(preds)}")
-
-        print("Here is what FlyingSquid missed:")
-
-        for (name, pred) in zip(corpus.names, preds):
+        for (name, pred) in zip(corpus.names, majority_vote_preds):
             gold = name.anomalous
             neg = name.noise_sample
             pred = bool(pred > 0)
 
             if gold and not pred:
                 print(f"[{language}] Anomalous but not tagged: {name.text}")
-            elif pred and gold == False and not neg:
+            elif pred and gold is False and not neg:
                 print(f"[{language}] Non-anomalous but tagged: {name.text}")
 
         corpus.names = tagged_names

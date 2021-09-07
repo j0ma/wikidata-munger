@@ -9,10 +9,8 @@ import click
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-from sklearn.metrics import classification_report
-from flyingsquid.label_model import LabelModel
-import paranames.io.wikidata_helpers as wh
-import paranames.analysis.script_analysis as sa
+from paranames.util import read, write
+import paranames.util.script as s
 from p_tqdm import p_map
 import orjson
 
@@ -27,6 +25,7 @@ def slice_by_column(
     Note: assumes values of column are in sorted order
     """
     unique_values = data[column].unique()
+
     for val in unique_values:
         yield val, data[data[column] == val]
 
@@ -44,15 +43,14 @@ def standardize_script(
     **kwargs,
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
 
-    unique_languages = set(data[language_column].unique())
-    ua = sa.UnicodeAnalyzer(
+    ua = s.UnicodeAnalyzer(
         strip=strip,
         ignore_punctuation=True,
         ignore_numbers=True,
         normalize_histogram=True,
     )
 
-    name_loader = sa.TransliteratedNameLoader(
+    name_loader = s.TransliteratedNameLoader(
         language_column=language_column,
         debug_mode=False,
         name_column=alias_column,
@@ -83,27 +81,27 @@ def standardize_script(
         )
 
         # anomalous if most common unicode block is not expected one
-        incorrect_block_tagger = sa.IncorrectBlockTagger(
+        incorrect_block_tagger = s.IncorrectBlockTagger(
             expected_block=most_common_block
         )
 
         # anomalous if given block is missing
-        missing_block_tagger = sa.MissingBlockTagger(
+        missing_block_tagger = s.MissingBlockTagger(
             missing_block=most_common_block
         )
 
         # anomalous if JSD from language prototype is greater than a critical value
         prototype = "".join(str(s) for s in subset[alias_column])
-        distance_based_tagger = sa.JSDTagger(
+        distance_based_tagger = s.JSDTagger(
             per_language_distribution=ua.unicode_block_histogram(prototype),
             critical_value=critical_value,
             distance_measure="jensen_shannon",
         )
 
-        hiragana_katakana_tagger = sa.HiraganaKatakanaTagger()
-        cjk_tagger = sa.CJKTagger()
+        hiragana_katakana_tagger = s.HiraganaKatakanaTagger()
+        cjk_tagger = s.CJKTagger()
 
-        aggregated_tagger = sa.AggregatedTagger(
+        aggregated_tagger = s.AggregatedTagger(
             taggers=[
                 incorrect_block_tagger,
                 missing_block_tagger,
@@ -149,11 +147,11 @@ def standardize_names(
 ) -> pd.DataFrame:
 
     permuter_class = {
-        "comma": sa.PermuteFirstComma,
-        "edit_distance": sa.PermuteLowestDistance,
-        "remove_parenthesis_permute_comma": sa.RemoveParenthesisPermuteComma,
-        "remove_parenthesis_edit_distance": sa.RemoveParenthesisPermuteLowestDistance,
-        "remove_parenthesis": sa.ParenthesisRemover,
+        "comma": s.PermuteFirstComma,
+        "edit_distance": s.PermuteLowestDistance,
+        "remove_parenthesis_permute_comma": s.RemoveParenthesisPermuteComma,
+        "remove_parenthesis_edit_distance": s.RemoveParenthesisPermuteLowestDistance,
+        "remove_parenthesis": s.ParenthesisRemover,
     }[permuter_type]
 
     num_rows, num_columns = data.shape
@@ -163,7 +161,7 @@ def standardize_names(
     else:
         corpus_chunks = (chunk for chunk in (data,))
 
-    name_loader = sa.TransliteratedNameLoader(
+    name_loader = s.TransliteratedNameLoader(
         language_column=language_column,
         wikidata_id_column=id_column,
         debug_mode=False,
@@ -175,7 +173,7 @@ def standardize_names(
     )
 
     print("[standardize_names] Creating pooled corpus...")
-    pooled_corpus = sa.Corpus(
+    pooled_corpus = s.Corpus(
         names=names,
         language="all",
         permuter_class=permuter_class,
@@ -232,8 +230,10 @@ def apply_entity_disambiguation_rules(
     )
 
     # if there are no duplicates, get rid of n_types column and return
+
     if id_to_types.empty:
         data = data.drop(columns="n_types")
+
         return data
     else:
         id_to_types = id_to_types.to_dict()
@@ -249,6 +249,7 @@ def apply_entity_disambiguation_rules(
     # compose the above two relations
     id_to_canonical_type = {
         _id: entity_disambiguation_rules.get(type_str)
+
         for _id, type_str in id_to_types.items()
     }
 
@@ -260,6 +261,7 @@ def apply_entity_disambiguation_rules(
     # put the old non-ambiguous types back in
     new_types = [
         old_type if new_type is None else new_type
+
         for old_type, new_type in zip(data.type, canonical_types)
     ]
 
@@ -343,7 +345,7 @@ def filter_am_ti(
 @click.option("--chunksize", type=int, default=15000)
 @click.option("--human-readable-langs-path", required=True)
 @click.option(
-    "--permuter-type", required=True, type=click.Choice(sa.permuter_types)
+    "--permuter-type", required=True, type=click.Choice(s.permuter_types)
 )
 @click.option("--corpus-require-english", is_flag=True)
 @click.option("--corpus-filter-blank", is_flag=True)
@@ -380,7 +382,7 @@ def main(
         human_readable_lang_names = orjson.loads(f.read())
 
     # read in data and sort it by language
-    data = wh.read(input_file, io_format=io_format)
+    data = read(input_file, io_format=io_format)
 
     # drop rows that are not entities (e.g. P-ids)
     data = data[data[id_column].str.startswith("Q")]
@@ -397,6 +399,7 @@ def main(
     data = data.sort_values(language_column)
 
     # remove wrong script / anomalous names
+
     if vote_aggregation_method != "none":
         data, filtered = standardize_script(
             data,
@@ -414,10 +417,11 @@ def main(
                 _, filtered_names_output_file = tempfile.mkstemp()
             filtered_names_path = Path(filtered_names_output_file)
             containing_folder = filtered_names_path.parents[0]
+
             if not containing_folder.exists():
                 filtered_names_path.mkdir(parents=True)
 
-            wh.write(
+            write(
                 filtered,
                 filtered_names_path,
                 io_format="tsv",
@@ -441,7 +445,7 @@ def main(
     )
 
     # write to disk
-    wh.write(data, output_file, io_format=io_format)
+    write(data, output_file, io_format=io_format)
 
 
 if __name__ == "__main__":

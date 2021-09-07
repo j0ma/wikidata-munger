@@ -1,20 +1,8 @@
 #!/usr/bin/env python
 
-from typing import Dict, Tuple, Generator
-import itertools as it
-from pathlib import Path
-import tempfile
-
 import click
-import numpy as np
 import pandas as pd
-from tqdm import tqdm
-from sklearn.metrics import classification_report
-from flyingsquid.label_model import LabelModel
-import paranames.io.wikidata_helpers as wh
-import paranames.analysis.script_analysis as sa
-from p_tqdm import p_map
-import orjson
+import paranames.util.wikidata as w
 
 vote_aggregation_methods = set(["all", "any", "majority_vote", "none"])
 
@@ -48,8 +36,10 @@ def apply_entity_disambiguation_rules(
     )
 
     # if there are no duplicates, get rid of n_types column and return
+
     if id_to_types.empty:
         data = data.drop(columns="n_types")
+
         return data
     else:
         id_to_types = id_to_types.to_dict()
@@ -65,6 +55,7 @@ def apply_entity_disambiguation_rules(
     # compose the above two relations
     id_to_canonical_type = {
         _id: entity_disambiguation_rules.get(type_str)
+
         for _id, type_str in id_to_types.items()
     }
 
@@ -76,6 +67,7 @@ def apply_entity_disambiguation_rules(
     # put the old non-ambiguous types back in
     new_types = [
         old_type if new_type is None else new_type
+
         for old_type, new_type in zip(data.type, canonical_types)
     ]
 
@@ -167,7 +159,7 @@ def main(
 ):
 
     # read in data
-    data = wh.read(input_file, io_format=io_format)
+    data = w.read(input_file, io_format=io_format)
 
     # drop rows that are not entities (e.g. P-ids)
     data = data[data[id_column].str.startswith("Q")]
@@ -181,7 +173,7 @@ def main(
     )
 
     # write to disk
-    wh.write(data, output_file, io_format=io_format)
+    w.write(data, output_file, io_format=io_format)
 
 
 if __name__ == "__main__":

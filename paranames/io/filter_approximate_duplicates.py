@@ -1,20 +1,11 @@
 #!/usr/bin/env python
 
-from typing import Dict, Tuple, Generator
-import itertools as it
-from pathlib import Path
-import tempfile
+from typing import Tuple
 
 import click
-import numpy as np
 import pandas as pd
-from tqdm import tqdm
-from sklearn.metrics import classification_report
-from flyingsquid.label_model import LabelModel
-import paranames.io.wikidata_helpers as wh
-import paranames.analysis.script_analysis as sa
+from paranames.util import read, write
 from p_tqdm import p_map
-import orjson
 
 import datasketch as ds
 
@@ -23,10 +14,13 @@ pd.set_option("display.max_rows", None)
 
 def approximate_jaccard_similarity(word1: str, word2: str) -> float:
     m1, m2 = ds.MinHash(), ds.MinHash()
+
     for c in word1:
         m1.update(c.encode("utf-8"))
+
     for c in word2:
         m2.update(c.encode("utf-8"))
+
     return m1.jaccard(m2)
 
 
@@ -76,9 +70,10 @@ def main(
 ):
 
     # read in data and sort it by language
+
     if debug_mode:
         print("Reading data...")
-    data = wh.read(input_file, io_format=io_format)
+    data = read(input_file, io_format=io_format)
 
     if debug_mode:
         print("Filtering...")
@@ -101,7 +96,7 @@ def main(
         )
 
     # write to disk
-    wh.write(filtered_data, output_file, io_format=io_format)
+    write(filtered_data, output_file, io_format=io_format)
 
 
 if __name__ == "__main__":

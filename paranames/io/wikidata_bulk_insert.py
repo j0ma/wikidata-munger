@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 
 import math
-from typing import Generator, Set, List
 import multiprocessing as mp
 
 import click
-from paranames.io.wikidata_helpers import (
+from paranames.util.wikidata import (
     WikidataMongoIngesterWorker,
     DEFAULT_MONGODB_PORT,
 )

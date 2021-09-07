@@ -22,6 +22,7 @@ pgmpy
 flyingsquid
 black
 mypy
+flake8
 ipython
 more-itertools
 datasketch

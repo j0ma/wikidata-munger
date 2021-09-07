@@ -1,8 +1,8 @@
 from pathlib import Path
 
 import click
-import pandas as pd
 import matplotlib.pyplot as plt
+from paranames.util import read, maybe_infer_io_format
 
 rotation_angle = 90
 width, height = 12, 6
@@ -39,7 +39,7 @@ def plot_zipf_distribution(
             rot=rotation_angle,
             figsize=(width, height),
             xlabel="",
-            ylabel="Count"
+            ylabel="Count",
         )
     else:
         out.sort_values("count", ascending=False)["count"].head(n_langs).plot(
@@ -50,10 +50,11 @@ def plot_zipf_distribution(
             rot=rotation_angle,
             figsize=(width, height),
             xlabel="",
-            ylabel="Count"
+            ylabel="Count",
         )
 
     plt.tight_layout()
+
     if save_path:
         plt.savefig(save_path)
     else:
@@ -87,14 +88,16 @@ def plot_entropy_distribution(
         # rot=rotation_angle,
         figsize=(width, height),
         xlabel="",
-        bins=n_bins
+        bins=n_bins,
     )
 
     if not pruned:
         plt.axvline(x=entropy_threshold, linestyle="dashed", color="black")
+
     if disable_xticks:
         plt.xticks([])
     plt.tight_layout()
+
     if save_path:
         plt.savefig(save_path)
 
@@ -121,7 +124,9 @@ def plot_entropy_distribution(
     help="Collapse entity types & report aggregated counts per language",
 )
 @click.option(
-    "--log-scale", is_flag=True, help="Use log scale on the y-axis",
+    "--log-scale",
+    is_flag=True,
+    help="Use log scale on the y-axis",
 )
 @click.option(
     "--n-languages-counts",
@@ -161,17 +166,17 @@ def main(
     entropy_threshold,
     remove_xticks_entropy,
     prune_entropy_plot,
-    n_bins
+    n_bins,
 ):
 
-    count_table = pd.read_csv(
+    count_table = read(
         counts_table_path,
-        sep="," if counts_table_path.endswith("csv") else "\t",
+        io_format=maybe_infer_io_format(counts_table_path),
     )
 
-    entropy_table = pd.read_csv(
+    entropy_table = read(
         entropy_table_path,
-        sep="," if entropy_table_path.endswith("csv") else "\t",
+        io_format=maybe_infer_io_format(entropy_table_path),
     )
 
     count_table = count_table.merge(
@@ -183,6 +188,7 @@ def main(
     if output_folder:
 
         output_folder = Path(output_folder)
+
         if not output_folder.exists():
             output_folder.mkdir()
 
@@ -228,7 +234,7 @@ def main(
         disable_xticks=remove_xticks_entropy,
         pruned=prune_entropy_plot,
         entropy_threshold=entropy_threshold,
-        n_bins=n_bins
+        n_bins=n_bins,
     )
 
 

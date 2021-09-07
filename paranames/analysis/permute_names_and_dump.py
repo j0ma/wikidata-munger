@@ -1,7 +1,4 @@
-from typing import Dict, Tuple, Type, List, Iterable
-from collections import defaultdict, Counter
-
-import paranames.analysis.script_analysis as sa
+import paranames.util.script as s
 import pandas as pd
 import numpy as np
 import click
@@ -9,7 +6,6 @@ import orjson
 
 from p_tqdm import p_map
 import itertools as it
-import sys
 
 default_human_readable_langs_path = (
     "/home/jonne/wikidata-munger/data/human_readable_lang_names.json"
@@ -74,10 +70,10 @@ def main(
 
     # get the right class for permuting tokens
     permuter_class = {
-        "comma": sa.PermuteFirstComma,
-        "edit_distance": sa.PermuteLowestDistance,
-        "remove_parenthesis_permute_comma": sa.RemoveParenthesisPermuteComma,
-        "remove_parenthesis": sa.ParenthesisRemover,
+        "comma": s.PermuteFirstComma,
+        "edit_distance": s.PermuteLowestDistance,
+        "remove_parenthesis_permute_comma": s.RemoveParenthesisPermuteComma,
+        "remove_parenthesis": s.ParenthesisRemover,
     }[permuter_type]
     permuter = permuter_class(
         debug_mode=debug_mode,
@@ -118,7 +114,7 @@ def main(
             chunk for chunk, _ in zip(corpus_chunks, range(num_debug_chunks))
         ]
 
-    name_loader = sa.TransliteratedNameLoader(
+    name_loader = s.TransliteratedNameLoader(
         language_column=language_column, debug_mode=False  # debug_mode,
     )
 
@@ -136,7 +132,7 @@ def main(
     names = permuter(names)
 
     # write out
-    name_writer = sa.NameWriter(
+    name_writer = s.NameWriter(
         out_folder=names_output_folder, debug_mode=debug_mode
     )
     name_writer.write(

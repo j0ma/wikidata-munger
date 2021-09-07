@@ -1,7 +1,7 @@
 import time
 
 from pymongo import MongoClient
-import paranames.io.wikidata_helpers as wh
+import paranames.util.wikidata as w
 import click
 
 
@@ -10,7 +10,7 @@ import click
 @click.option("--collection-name", "-c", default="wikidata_simple")
 @click.option("--index-field", "-f", required=True)
 @click.option(
-    "--mongodb-port", "-p", type=int, default=wh.DEFAULT_MONGODB_PORT
+    "--mongodb-port", "-p", type=int, default=w.DEFAULT_MONGODB_PORT
 )
 def main(
     database_name: str,

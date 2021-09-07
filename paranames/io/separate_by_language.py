@@ -1,11 +1,7 @@
-from typing import IO, Generator, List, Dict, Any, Union, Iterable
 import pathlib
-import sys
 import os
-import math
-import csv
 
-import paranames.io.wikidata_helpers as wh
+from paranames.util import read, write
 import click
 
 
@@ -17,7 +13,9 @@ def get_output_filename(
     prefix, extension = os.path.splitext(input_file)
 
     if use_subfolders:
-        output_path = f"{input_folder}/{language}/{prefix}_{language}{extension}"
+        output_path = (
+            f"{input_folder}/{language}/{prefix}_{language}{extension}"
+        )
     else:
         output_path = f"{input_folder}/{prefix}_{language}{extension}"
 
@@ -45,7 +43,7 @@ def get_output_filename(
 @click.option("--verbose", "-v", is_flag=True)
 def main(lang_column, input_file, io_format, use_subfolders, verbose):
 
-    data = wh.read(input_file, io_format)
+    data = read(input_file, io_format)
 
     for lang in data[lang_column].unique():
         filtered = data[data[lang_column] == lang]
@@ -58,7 +56,7 @@ def main(lang_column, input_file, io_format, use_subfolders, verbose):
                 print(f"{output_folder} not found. Creating with mkdir...")
             output_folder.mkdir()
 
-        wh.write(filtered, output_file, io_format)
+        write(filtered, output_file, io_format)
 
 
 if __name__ == "__main__":

@@ -21,7 +21,7 @@ analyze_most_common () {
     paste $ALIASES $SCRIPTS > $TSV
 
     ## then use python script to analyze the script statistics, entropy etc
-    python paranames/analysis/get_language_stats.py \
+    python paranames/analysis/compute_script_entropy.py \
         --input-file $DUMP \
         --cache-path $TSV \
         --output-file $OUTPUT_FILE \

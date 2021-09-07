@@ -1,16 +1,9 @@
-from collections import Counter
-
 import pandas as pd
 import click
 import orjson
 
-import paranames.io.wikidata_helpers as wh
-
-from unicodeblock import blocks
-
+from paranames.util import read
 import dask.dataframe as dd
-
-import numpy as np
 import scipy.stats as sps
 
 
@@ -25,6 +18,7 @@ def alias_script_tuples(f_cache):
 
 def compute_entropy(series):
     """Compute base-2 entropy of categorical distribution sample"""
+
     return sps.entropy(series.value_counts(), base=2)
 
 
@@ -70,7 +64,7 @@ def main(
     with open(human_readable_langs_path, encoding="utf8") as f:
         human_readable_names = orjson.loads(f.read())
 
-    data = wh.read(input_file, io_format=io_format)
+    data = read(input_file, io_format=io_format)
 
     data["language_long"] = data[language_column].apply(
         lambda l: human_readable_names.get(l, l)

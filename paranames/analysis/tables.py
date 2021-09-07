@@ -1,8 +1,5 @@
-from pathlib import Path
-
+from paranames.util import read, write, maybe_infer_io_format
 import click
-import pandas as pd
-import matplotlib.pyplot as plt
 
 
 def add_commas(x):
@@ -101,6 +98,7 @@ def create_entropy_table(df, n_langs=50, use_log_y=False, save_path=""):
     is_flag=True,
     help="Entropy table in longtable format",
 )
+@click.option("--io-format", "-f", default="")
 def main(
     counts_table_path,
     entropy_table_path,
@@ -110,16 +108,17 @@ def main(
     n_languages_entropy,
     longtable_counts,
     longtable_entropy,
+    io_format,
 ):
 
-    count_table = pd.read_csv(
+    count_table = read(
         counts_table_path,
-        sep="," if counts_table_path.endswith("csv") else "\t",
+        io_format=maybe_infer_io_format(counts_table_path, io_format),
     )
 
-    entropy_table = pd.read_csv(
+    entropy_table = read(
         entropy_table_path,
-        sep="," if entropy_table_path.endswith("csv") else "\t",
+        io_format=maybe_infer_io_format(entropy_table_path, io_format),
     )
 
     count_table = count_table.merge(
@@ -128,9 +127,9 @@ def main(
         how="left",
     )[["language", "language_code", "type", "count"]]
 
-    english_match_table = pd.read_csv(
+    english_match_table = read(
         english_match_table_path,
-        sep="," if english_match_table_path.endswith(".csv") else "\t",
+        io_format=maybe_infer_io_format(english_match_table_path),
     )
 
     english_match_table = english_match_table.merge(

@@ -1,13 +1,9 @@
-from functools import lru_cache
 from collections import Counter
 from typing import (
     Generator,
-    Set,
     List,
     Union,
     Dict,
-    Any,
-    IO,
     Tuple,
     Type,
     Callable,
@@ -18,10 +14,8 @@ from pathlib import Path
 import itertools as it
 import tempfile as tf
 import subprocess
-import sys
 import csv
 import re
-import io
 import os
 
 import unicodedata as ud
@@ -30,14 +24,14 @@ from tqdm import tqdm
 from p_tqdm import p_map
 import pandas as pd
 import numpy as np
-import scipy.stats as sps
 import attr
 
 import editdistance
 
 import dictances as dt
 
-import multiprocessing as mp
+from paranames.util import chunks
+
 
 CACHE_MAX_SIZE = 10000
 
@@ -48,16 +42,6 @@ permuter_types = [
     "remove_parenthesis_edit_distance",
     "remove_parenthesis_permute_comma",
 ]
-
-
-def chunks(lst, n):
-    """Yield successive n-sized chunks from lst.
-
-    Note: taken from SO (https://anon.to/vc1xVW)
-    """
-
-    for i in range(0, len(lst), n):
-        yield lst[i : i + n]
 
 
 class UnicodeAnalyzer:
@@ -88,19 +72,23 @@ class UnicodeAnalyzer:
     def unicode_blocks(self, word: str) -> Counter:
         punctuation_cond = (
             lambda w: not self.is_punctuation(str(w))
+
             if self.ignore_punctuation
             else True
         )
 
         digit_cond = (
             lambda w: not self.is_number(str(w))
+
             if self.ignore_numbers
             else True
         )
 
         return Counter(
             blocks.of(c)
+
             for c in self.maybe_strip(word)
+
             if blocks.of(c) and punctuation_cond(c) and digit_cond(c)
         )
 
@@ -230,6 +218,7 @@ class Alignment:
         alignment_tokens: List[Tuple[int, ...]] = sorted(
             [
                 tuple([int(x) for x in at.split("-")])
+
                 for at in self.alignment_str.split(" ")
             ],
             key=lambda t: t[0],
@@ -351,12 +340,12 @@ class CorpusStatistics:
     total_cross_alignments: int = attr.ib(default=0)
     total_permuted: int = attr.ib(default=0)
     total_surviving: int = attr.ib(default=0)
-    # script_entropy: float = attr.ib(default=0.0)
 
     def __attrs_post_init__(self) -> None:
 
         self.alignments: Iterable[Optional[Alignment]] = (
             self.alignments
+
             if self.alignments
             else (n.alignment for n in self.names)
         )
@@ -370,13 +359,6 @@ class CorpusStatistics:
 
         self.total_permuted = sum(not n.is_unchanged for n in self.names)
         self.total_surviving = sum(n.is_unchanged for n in self.names)
-
-        # self.script_entropy = sps.entropy(
-            # pd.Series(
-                # [n.most_common_unicode_block for n in self.names]
-            # ).value_counts(),
-            # base=2,
-        # )
 
 
 @attr.s
@@ -424,6 +406,7 @@ class UniversalRomanizer:
 
             uroman_output = [
                 line
+
                 for string, line in zip(
                     strings, completed_pid.stdout.split("\n")
                 )
@@ -526,6 +509,7 @@ class FastAligner:
 
                 fastalign_stdout = [
                     line
+
                     for name, line in zip(
                         names, fastalign_completed_pid.stdout.split("\n")
                     )
@@ -729,6 +713,7 @@ class PermuteLowestDistance(NameProcessor):
                 permuted = [" ".join(perm) for perm in it.permutations(tokens)]
                 permuted_romanized = [
                     " ".join(perm)
+
                     for perm in it.permutations(romanized_tokens)
                 ]
 
@@ -901,6 +886,7 @@ class Corpus:
     ) -> List[TransliteratedName]:
 
         output = []
+
         for n in names:
             if n.text.strip() and (
                 n.english_text if self.require_english else True
@@ -974,6 +960,7 @@ class Corpus:
 
         aligner_input = (
             self.names
+
             if self.filter_out_blank
             else [n if n else self.placeholder_token for n in self.names]
         )
@@ -1052,6 +1039,7 @@ class AnomalousTagger:
                 language=n.language,
                 is_unchanged=n.is_unchanged,
             )
+
             for n in names
         ]
 
@@ -1203,6 +1191,7 @@ class AggregatedTagger(AnomalousTagger):
                 noise_sample=False,
                 is_unchanged=w.is_unchanged,
             )
+
             for w, pred in zip(names, boolean_preds)
         ]
 
