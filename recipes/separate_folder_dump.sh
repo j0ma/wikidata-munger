@@ -135,35 +135,35 @@ separate_by_entity_type () {
 #wait
 
 # apply entity type disambiguation and other postprocessing
-#for conll_type in $entity_types
-#do
-    #dumped_tsv="${output_folder}/${conll_type}.tsv"
-    #postprocessed_tsv="${output_folder}/${conll_type}_postprocessed.tsv"
-    #postprocess $dumped_tsv $postprocessed_tsv &
-#done
-#wait
+for conll_type in $entity_types
+do
+    dumped_tsv="${output_folder}/${conll_type}.tsv"
+    postprocessed_tsv="${output_folder}/${conll_type}_postprocessed.tsv"
+    postprocess $dumped_tsv $postprocessed_tsv &
+done
+wait
 
 # combine everything into one tsv for script standardization
 # this way we get interpretable entropy numbers by language, not just
 combined_postprocessed_tsv="${output_folder}/combined_postprocessed.tsv"
-#csvstack --verbose --tabs ${output_folder}/*_postprocessed.tsv \
-    #| csvformat -T \
-    #| tee $combined_postprocessed_tsv
+csvstack --verbose --tabs ${output_folder}/*_postprocessed.tsv \
+    | csvformat -T \
+    | tee $combined_postprocessed_tsv
 
-## compute script entropy (before)
-#script_entropy_results_before="${dump_stats_folder}/tacl_script_entropy_${voting_method}_before.tsv"
-#compute_script_entropy $combined_postprocessed_tsv $script_entropy_results_before
+# compute script entropy (before)
+script_entropy_results_before="${dump_stats_folder}/tacl_script_entropy_${voting_method}_before.tsv"
+compute_script_entropy $combined_postprocessed_tsv $script_entropy_results_before
 
-## script standardization: remove parentheses from everything
+# script standardization: remove parentheses from everything
 combined_script_standardized_tsv="${output_folder}/combined_script_standardized_${voting_method}.tsv"
-#standardize_script \
-    #$combined_postprocessed_tsv \
-    #$combined_script_standardized_tsv \
-    #$voting_method
+standardize_script \
+    $combined_postprocessed_tsv \
+    $combined_script_standardized_tsv \
+    $voting_method
 
-## compute script entropy (after)
-#script_entropy_results_after="${dump_stats_folder}/tacl_script_entropy_${voting_method}_after.tsv"
-#compute_script_entropy $combined_script_standardized_tsv $script_entropy_results_after
+# compute script entropy (after)
+script_entropy_results_after="${dump_stats_folder}/tacl_script_entropy_${voting_method}_after.tsv"
+compute_script_entropy $combined_script_standardized_tsv $script_entropy_results_after
 
 # separate into PER,LOC,ORG for name permutations
 for conll_type in $entity_types
@@ -196,6 +196,6 @@ final_combination_entity_types=$(echo $entity_types | tr " " ",")
 csvstack --verbose --tabs ${output_folder}/{PER,LOC,ORG}_script_name_standardized_${voting_method}.tsv \
     | csvformat -T > $final_combined_output
 
-#separate_by_language $final_combined_output
+separate_by_language $final_combined_output
 
-#mv --verbose ${output_folder}/{PER,LOC,ORG,combined}*.tsv ${output_folder}/combined
+mv --verbose ${output_folder}/{PER,LOC,ORG,combined}*.tsv ${output_folder}/combined

@@ -2,7 +2,7 @@
 
 import click
 import pandas as pd
-import paranames.util.wikidata as w
+from paranames.util import read, write
 
 vote_aggregation_methods = set(["all", "any", "majority_vote", "none"])
 
@@ -55,7 +55,6 @@ def apply_entity_disambiguation_rules(
     # compose the above two relations
     id_to_canonical_type = {
         _id: entity_disambiguation_rules.get(type_str)
-
         for _id, type_str in id_to_types.items()
     }
 
@@ -67,7 +66,6 @@ def apply_entity_disambiguation_rules(
     # put the old non-ambiguous types back in
     new_types = [
         old_type if new_type is None else new_type
-
         for old_type, new_type in zip(data.type, canonical_types)
     ]
 
@@ -159,7 +157,7 @@ def main(
 ):
 
     # read in data
-    data = w.read(input_file, io_format=io_format)
+    data = read(input_file, io_format=io_format)
 
     # drop rows that are not entities (e.g. P-ids)
     data = data[data[id_column].str.startswith("Q")]
@@ -173,7 +171,7 @@ def main(
     )
 
     # write to disk
-    w.write(data, output_file, io_format=io_format)
+    write(data, output_file, io_format=io_format)
 
 
 if __name__ == "__main__":
