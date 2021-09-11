@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -euo pipefail
 
 usage () {
     echo "Usage: bash separate_folder_dump.sh LANGUAGES OUTPUT_FOLDER [ENTITY_TYPES=PER,LOC,ORG DB_NAME=wikidata_db COLLECTION_NAME=wikidata_simple VOTING_METHOD=majority_vote]"
@@ -115,24 +115,30 @@ separate_by_language () {
         --verbose
 }
 
+
+csv2tsv () {
+    xsv fmt -t"\t"
+}
+
+combine_tsv_files () {
+    local glob="$@"
+    xsv cat rows -d"\t" ${glob} | csv2tsv
+}
+
 separate_by_entity_type () {
     local input_file=$1
     local conll_type=$2
     local folder=$(dirname "${input_file}")
     local type_column=${3:-type}
-    csvgrep \
-        -v -t -c "${type_column}" \
-        -r "${conll_type}" \
-        < "${input_file}" |
-    csvformat -T
+    xsv search -d"\t" -s "${type_column}" "${conll_type}" < "${input_file}" | csv2tsv
 }
 
-#echo "Extract & clean everything for each type"
-#for conll_type in $entity_types
-#do
-    #dump $conll_type $langs $db_name $collection_name &
-#done
-#wait
+echo "Extract & clean everything for each type"
+for conll_type in $entity_types
+do
+    dump $conll_type $langs $db_name $collection_name &
+done
+wait
 
 # apply entity type disambiguation and other postprocessing
 for conll_type in $entity_types
@@ -146,9 +152,7 @@ wait
 # combine everything into one tsv for script standardization
 # this way we get interpretable entropy numbers by language, not just
 combined_postprocessed_tsv="${output_folder}/combined_postprocessed.tsv"
-csvstack --verbose --tabs ${output_folder}/*_postprocessed.tsv \
-    | csvformat -T \
-    | tee $combined_postprocessed_tsv
+combine_tsv_files ${output_folder}/*_postprocessed.tsv > $combined_postprocessed_tsv
 
 # compute script entropy (before)
 script_entropy_results_before="${dump_stats_folder}/tacl_script_entropy_${voting_method}_before.tsv"
@@ -193,8 +197,7 @@ final_combined_output="${output_folder}/combined_script_name_standardized_${voti
 echo "Combining everything to ${final_combined_output}"
 
 final_combination_entity_types=$(echo $entity_types | tr " " ",")
-csvstack --verbose --tabs ${output_folder}/{PER,LOC,ORG}_script_name_standardized_${voting_method}.tsv \
-    | csvformat -T > $final_combined_output
+combine_tsv_files ${output_folder}/{PER,LOC,ORG}_script_name_standardized_${voting_method}.tsv > $final_combined_output
 
 separate_by_language $final_combined_output
 
