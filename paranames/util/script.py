@@ -72,23 +72,19 @@ class UnicodeAnalyzer:
     def unicode_blocks(self, word: str) -> Counter:
         punctuation_cond = (
             lambda w: not self.is_punctuation(str(w))
-
             if self.ignore_punctuation
             else True
         )
 
         digit_cond = (
             lambda w: not self.is_number(str(w))
-
             if self.ignore_numbers
             else True
         )
 
         return Counter(
             blocks.of(c)
-
             for c in self.maybe_strip(word)
-
             if blocks.of(c) and punctuation_cond(c) and digit_cond(c)
         )
 
@@ -218,7 +214,6 @@ class Alignment:
         alignment_tokens: List[Tuple[int, ...]] = sorted(
             [
                 tuple([int(x) for x in at.split("-")])
-
                 for at in self.alignment_str.split(" ")
             ],
             key=lambda t: t[0],
@@ -345,7 +340,6 @@ class CorpusStatistics:
 
         self.alignments: Iterable[Optional[Alignment]] = (
             self.alignments
-
             if self.alignments
             else (n.alignment for n in self.names)
         )
@@ -406,7 +400,6 @@ class UniversalRomanizer:
 
             uroman_output = [
                 line
-
                 for string, line in zip(
                     strings, completed_pid.stdout.split("\n")
                 )
@@ -491,7 +484,7 @@ class FastAligner:
         try:
             with open(fastalign_output, "w", encoding="utf-8") as f_out, open(
                 "/dev/null", "w"
-            ) as null:
+            ) as _:
 
                 fastalign_completed_pid = subprocess.run(
                     [
@@ -509,7 +502,6 @@ class FastAligner:
 
                 fastalign_stdout = [
                     line
-
                     for name, line in zip(
                         names, fastalign_completed_pid.stdout.split("\n")
                     )
@@ -574,14 +566,18 @@ class NameProcessor:
     ) -> List[TransliteratedName]:
 
         for name in names:
+            orig_text = name.text
             processed_name = self.process(name.text)
 
-            if self.debug_mode and name.text != processed_name:
+            if self.debug_mode and orig_text != processed_name:
                 print(
-                    f"[{name.english_text}] {name.text} => {processed_name}".strip()
+                    f"[{name.english_text}] {orig_text} => {processed_name}".strip()
                 )
-            name.is_unchanged = bool(name.text == processed_name)
-            name.original_text = name.text
+                name_is_unchanged = False
+            else:
+                name_is_unchanged = True
+            name.is_unchanged = name_is_unchanged
+            name.original_text = orig_text
             name.text = processed_name
 
         return names
@@ -593,12 +589,16 @@ class NameProcessor:
         output = []
 
         for name in names:
+            orig_text = name.text
             processed_name = self.process(name.text)
 
-            if self.debug_mode and name.text != processed_name:
+            if self.debug_mode and orig_text != processed_name:
                 print(
-                    f"[{name.english_text}] {name.text} => {processed_name}".strip()
+                    f"[{name.english_text}] {orig_text} => {processed_name}".strip()
                 )
+                name_is_unchanged = False
+            else:
+                name_is_unchanged = True
             output.append(
                 TransliteratedName(
                     text=processed_name,
@@ -608,8 +608,8 @@ class NameProcessor:
                     noise_sample=name.noise_sample,
                     english_text=name.english_text,
                     alignment=name.alignment,
-                    original_text=name.text,
-                    is_unchanged=bool(name.text == processed_name),
+                    original_text=orig_text,
+                    is_unchanged=name_is_unchanged,
                 )
             )
 
@@ -713,7 +713,6 @@ class PermuteLowestDistance(NameProcessor):
                 permuted = [" ".join(perm) for perm in it.permutations(tokens)]
                 permuted_romanized = [
                     " ".join(perm)
-
                     for perm in it.permutations(romanized_tokens)
                 ]
 
@@ -736,6 +735,11 @@ class PermuteLowestDistance(NameProcessor):
                                 f"[{name.english_text}] {best_name} (ed={best_distance})"
                             )
 
+                if best_name == orig_text:
+                    name_is_unchanged = True
+                else:
+                    name_is_unchanged = False
+
                 output.append(
                     TransliteratedName(
                         text=self.strip_comma(best_name),
@@ -744,7 +748,7 @@ class PermuteLowestDistance(NameProcessor):
                         anomalous=name.anomalous,
                         noise_sample=name.noise_sample,
                         english_text=name.english_text,
-                        is_unchanged=bool(best_name == orig_text),
+                        is_unchanged=name_is_unchanged,
                         original_text=orig_text,
                     )
                 )
@@ -786,8 +790,13 @@ class PermuteLowestDistance(NameProcessor):
                     best_distance = ed
                     best_name = permutation
 
+            if best_name == orig_text:
+                name_is_unchanged = True
+            else:
+                name_is_unchanged = False
+
             name.text = self.strip_comma(best_name)
-            name.is_unchanged = bool(best_name == orig_text)
+            name.is_unchanged = name_is_unchanged
             name.original_text = orig_text
 
         return names
@@ -960,14 +969,10 @@ class Corpus:
 
         aligner_input = (
             self.names
-
             if self.filter_out_blank
             else [n if n else self.placeholder_token for n in self.names]
         )
         _alignments, _names = self.fast_aligner(aligner_input)
-
-        for old_name, new_name in zip(self.names, _names):
-            new_name.is_unchanged = bool(old_name.text == new_name.text)
 
         self.alignments = _alignments
         self.names = _names
@@ -1039,7 +1044,6 @@ class AnomalousTagger:
                 language=n.language,
                 is_unchanged=n.is_unchanged,
             )
-
             for n in names
         ]
 
@@ -1191,7 +1195,6 @@ class AggregatedTagger(AnomalousTagger):
                 noise_sample=False,
                 is_unchanged=w.is_unchanged,
             )
-
             for w, pred in zip(names, boolean_preds)
         ]
 

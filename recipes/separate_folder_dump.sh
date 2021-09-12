@@ -17,7 +17,9 @@ format="tsv"
 voting_method=${6:-majority_vote}
 mkdir --verbose -p $output_folder/combined
 
-dump_stats_folder=$(mktemp -d /tmp/paranames_dump_stats_${voting_method}.XXXXXX)
+dump_stats_folder="${output_folder}"/extra_data
+
+mkdir -p $dump_stats_folder
 
 # NOTE: add comma separted list here to exclude languages
 exclude_these_langs=""

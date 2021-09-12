@@ -14,6 +14,89 @@ import paranames.util.script as s
 vote_aggregation_methods = set(["baseline", "all", "any", "majority_vote"])
 
 
+def tag_and_split_names(
+    language,
+    subset,
+    aggregation_method: str,
+    critical_value: float = 0.1,
+    language_column: str = "language",
+    alias_column: str = "alias",
+    id_column: str = "wikidata_id",
+    english_text_column: str = "eng",
+    strip: bool = True,
+):
+
+    unicode_analyzer = s.UnicodeAnalyzer(
+        strip=strip,
+        ignore_punctuation=True,
+        ignore_numbers=True,
+        normalize_histogram=True,
+    )
+
+    name_loader = s.TransliteratedNameLoader(
+        language_column=language_column,
+        debug_mode=False,
+        name_column=alias_column,
+        wikidata_id_column=id_column,
+        english_column=english_text_column,
+    )
+
+    print(f"[{language}] Loading names...")
+    subset_names = name_loader(subset)
+
+    print(f"[{language}] Finding most common Unicode block")
+
+    most_common_block = (
+        subset[alias_column]
+        .apply(unicode_analyzer.most_common_unicode_block)
+        .value_counts()
+        .idxmax()
+    )
+
+    # anomalous if most common unicode block is not expected one
+    incorrect_block_tagger = s.IncorrectBlockTagger(
+        expected_block=most_common_block
+    )
+
+    # anomalous if given block is missing
+    missing_block_tagger = s.MissingBlockTagger(
+        missing_block=most_common_block
+    )
+
+    # anomalous if JSD from language prototype is greater than a critical value
+    prototype = "".join(str(s) for s in subset[alias_column])
+    distance_based_tagger = s.JSDTagger(
+        per_language_distribution=unicode_analyzer.unicode_block_histogram(
+            prototype
+        ),
+        critical_value=critical_value,
+        distance_measure="jensen_shannon",
+    )
+
+    hiragana_katakana_tagger = s.HiraganaKatakanaTagger()
+    cjk_tagger = s.CJKTagger()
+
+    aggregated_tagger = s.AggregatedTagger(
+        taggers=[
+            incorrect_block_tagger,
+            missing_block_tagger,
+            distance_based_tagger,
+            hiragana_katakana_tagger,
+            cjk_tagger,
+        ],
+        aggregation_method=aggregation_method,
+    )
+
+    print(f"[{language}] Tagging names...")
+    tagged_names = aggregated_tagger(subset_names)
+    subset[alias_column] = [n.text for n in tagged_names]
+    subset.loc[:, "anomalous"] = [n.anomalous for n in tagged_names]
+
+    filtered_names = subset[subset["anomalous"]]
+    kept_names = subset[~subset["anomalous"]]
+    return filtered_names, kept_names
+
+
 def slice_by_column(
     data: pd.DataFrame, column: str
 ) -> Generator[Tuple[str, pd.DataFrame], None, None]:
@@ -40,23 +123,6 @@ def standardize_script(
     **kwargs,
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
 
-    ua = s.UnicodeAnalyzer(
-        strip=strip,
-        ignore_punctuation=True,
-        ignore_numbers=True,
-        normalize_histogram=True,
-    )
-
-    name_loader = s.TransliteratedNameLoader(
-        language_column=language_column,
-        debug_mode=False,
-        name_column=alias_column,
-        wikidata_id_column=id_column,
-        english_column=english_text_column,
-    )
-
-    clean_names_all: List[str] = []
-
     output_chunks = []
     filtered_chunks = []
 
@@ -64,60 +130,19 @@ def standardize_script(
         slice_by_column(data, language_column),
     ):
 
-        print(f"[{language}] Loading names...")
-
-        subset_names = name_loader(subset)
-
-        print(f"[{language}] Finding most common Unicode block")
-
-        most_common_block = (
-            subset[alias_column]
-            .apply(ua.most_common_unicode_block)
-            .value_counts()
-            .idxmax()
+        filtered_names, kept_names = tag_and_split_names(
+            language,
+            subset,
+            aggregation_method,
+            critical_value,
+            language_column,
+            alias_column,
+            id_column,
+            english_text_column,
+            strip,
         )
 
-        # anomalous if most common unicode block is not expected one
-        incorrect_block_tagger = s.IncorrectBlockTagger(
-            expected_block=most_common_block
-        )
-
-        # anomalous if given block is missing
-        missing_block_tagger = s.MissingBlockTagger(
-            missing_block=most_common_block
-        )
-
-        # anomalous if JSD from language prototype is greater than a critical value
-        prototype = "".join(str(s) for s in subset[alias_column])
-        distance_based_tagger = s.JSDTagger(
-            per_language_distribution=ua.unicode_block_histogram(prototype),
-            critical_value=critical_value,
-            distance_measure="jensen_shannon",
-        )
-
-        hiragana_katakana_tagger = s.HiraganaKatakanaTagger()
-        cjk_tagger = s.CJKTagger()
-
-        aggregated_tagger = s.AggregatedTagger(
-            taggers=[
-                incorrect_block_tagger,
-                missing_block_tagger,
-                distance_based_tagger,
-                hiragana_katakana_tagger,
-                cjk_tagger,
-            ],
-            aggregation_method=aggregation_method,
-        )
-
-        print(f"[{language}] Tagging names...")
-        tagged_names = aggregated_tagger(subset_names)
-        subset[alias_column] = [n.text for n in tagged_names]
-        subset.loc[:, "anomalous"] = [n.anomalous for n in tagged_names]
-
-        filtered_names = subset[subset["anomalous"]]
         filtered_chunks.append(filtered_names)
-
-        kept_names = subset[~subset["anomalous"]]
         output_chunks.append(kept_names)
 
     output = pd.concat(output_chunks, ignore_index=True)
@@ -143,7 +168,6 @@ def baseline_script_standardization(
     scripts = read(scripts_file, "tsv")
     allowed_scripts_per_lang = {
         lang: set(scr.split(", "))
-
         for lang, scr in zip(scripts.language_code, scripts.scripts_to_keep)
     }
 
@@ -154,7 +178,6 @@ def baseline_script_standardization(
                 language=row[language_column],
                 allowed_scripts=allowed_scripts_per_lang,
             )
-
             for ix, row in tqdm(data.iterrows(), total=data.shape[0])
         ],
         index=data.index,
