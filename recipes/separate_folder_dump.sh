@@ -62,7 +62,7 @@ dump () {
         -d "tab" \
         --database-name "${db_name}" \
         --collection-name "${collection_name}" \
-        -o - $exclude_langs_flag | tee "${output}"
+        -o - $exclude_langs_flag > "${output}"
 
 }
 
