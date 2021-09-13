@@ -344,11 +344,15 @@ class CorpusStatistics:
             else (n.alignment for n in self.names)
         )
 
-        self.mean_cross_alignments = np.mean(
-            [a.n_cross_alignments if a else 0 for a in self.alignments]
+        self.mean_cross_alignments = (
+            np.mean(
+                [a.n_cross_alignments if a else 0 for a in self.alignments]
+            )
+            or -np.inf
         )
-        self.total_cross_alignments = sum(
-            [a.n_cross_alignments if a else 0 for a in self.alignments]
+        self.total_cross_alignments = (
+            sum([a.n_cross_alignments if a else 0 for a in self.alignments])
+            or -np.inf
         )
 
         self.total_permuted = sum(not n.is_unchanged for n in self.names)
@@ -963,7 +967,9 @@ class Corpus:
             if self.debug_mode:
                 print("[Corpus] Aligning with English...")
             self.compute_alignments()
-            self.compute_stats()
+
+        # Always compute stats
+        self.compute_stats()
 
     def compute_alignments(self) -> None:
 
@@ -973,9 +979,10 @@ class Corpus:
             else [n if n else self.placeholder_token for n in self.names]
         )
         _alignments, _names = self.fast_aligner(aligner_input)
-
-        self.alignments = _alignments
         self.names = _names
+
+        for n, a in zip(self.names, _alignments):
+            n.add_alignment(a)
 
     def compute_stats(self) -> None:
         self.languages: List[str] = sorted(
@@ -985,9 +992,7 @@ class Corpus:
 
         if self.debug_mode:
             print("[compute_stats] Computing global corpus stats...")
-        self.stats["global"] = CorpusStatistics(
-            names=self.names, alignments=self.alignments
-        )
+        self.stats["global"] = CorpusStatistics(names=self.names)
 
         for language in tqdm(self.languages):
             if self.debug_mode:

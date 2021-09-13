@@ -1,14 +1,14 @@
+import csv
 import json
 import orjson
 import itertools
 import pandas as pd
 from pathlib import Path
-from typing import Union, Optional
+from typing import Union, Optional, Dict, Any, Iterable, List
+from tqdm import tqdm
 
 
-def maybe_infer_io_format(
-    file_path: str, io_format: Optional[str] = None
-) -> str:
+def maybe_infer_io_format(file_path: str, io_format: Optional[str] = None) -> str:
     if io_format:
         return io_format
     else:
@@ -59,12 +59,34 @@ def read(
             chunksize=chunksize,
         )
     elif io_format == "json":
-        return pd.read_json(
-            input_file, encoding="utf-8", typ=typ, chunksize=chunksize
+        return pd.read_json(input_file, encoding="utf-8", typ=typ, chunksize=chunksize)
+
+
+def write_csv_writer(
+    data: Union[Iterable[Dict[str, Any]], pd.DataFrame],
+    output_file: str,
+    io_format: str,
+    index: bool = False,
+    *,
+    dict_writer_field_names: Optional[List[str]] = None,
+    verbose: bool = False,
+    n_rows: Optional[int] = None,
+) -> None:
+
+    with open(output_file, "w") as f_out:
+        writer = csv.DictWriter(
+            f_out,
+            fieldnames=dict_writer_field_names,
+            extrasaction="ignore",
+            delimiter="\t" if io_format == "tsv" else ",",
         )
+        writer.writeheader()
+        rows = tqdm(data, total=(n_rows or None)) if verbose else data
+        for row in rows:
+            writer.writerow(row)
 
 
-def write(
+def write_pandas(
     data: pd.DataFrame, output_file: str, io_format: str, index: bool = False
 ) -> None:
     if io_format in ["csv", "tsv"]:
@@ -75,9 +97,33 @@ def write(
             index=index,
         )
     else:
-        return data.to_json(
-            output_file, "records", encoding="utf-8", index=False
+        return data.to_json(output_file, "records", encoding="utf-8", index=False)
+
+
+def write(
+    data: Union[Iterable[Dict[str, Any]], pd.DataFrame],
+    output_file: str,
+    io_format: str,
+    index: bool = False,
+    *,
+    mode: Optional[str] = "pandas",
+    dict_writer_field_names: Optional[List[str]] = None,
+    verbose: bool = False,
+    n_rows: Optional[int] = None,
+) -> None:
+    if mode == "pandas":
+        write_pandas(data, output_file, io_format, index)
+    elif mode in "dict_writer":
+        write_csv_writer(
+            data=data,
+            output_file=output_file,
+            io_format=io_format,
+            dict_writer_field_names=dict_writer_field_names,
+            verbose=verbose,
+            n_rows=n_rows,
         )
+    else:
+        raise ValueError(f"[write] Mode {mode} not supported!")
 
 
 def orjson_dump(d: dict) -> str:

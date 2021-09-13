@@ -56,7 +56,9 @@ def standardize_names(
         )
     )
 
-    should_compute_stats = bool("edit_distance" in permuter_type)
+    # Only measure alignments when edit distance is involved
+    should_align = bool("edit_distance" in permuter_type)
+
     print("[standardize_names] Creating pooled corpus...")
     pooled_corpus = s.Corpus(
         names=names,
@@ -66,7 +68,7 @@ def standardize_names(
         normalize_histogram=True,
         ignore_punctuation=True,
         ignore_numbers=False,
-        align_with_english=True,
+        align_with_english=should_align,
         fastalign_verbose=True,
         permuter_inplace=True,
         find_best_token_permutation=True,
@@ -76,19 +78,38 @@ def standardize_names(
         filter_out_blank=False,
     )
 
-    print(f"[standardize_names] Computing corpus statistics...")
-    with open(corpus_stats_output, "w", encoding="utf8") as f_stats:
+    print("[standardize_names] Computing corpus statistics...")
+
+    def corpus_stats_rows():
         for lang, stats_per_lang in pooled_corpus.stats.items():
             lang_long = human_readable_lang_names.get(lang, lang)
             avg_alignments = stats_per_lang.mean_cross_alignments
             total_permuted = stats_per_lang.total_permuted
             total_surviving = stats_per_lang.total_surviving
-            print(
-                f"{lang_long}\t{avg_alignments}\t{total_permuted}\t{total_surviving}",
-                file=f_stats,
-            )
+            yield {
+                "language": lang_long,
+                "mean_crossing_alignments": avg_alignments,
+                "n_changed": total_permuted,
+                "n_unchanged": total_surviving,
+            }
 
-    print(f"[standardize_names] Replacing old names...")
+    write(
+        data=corpus_stats_rows(),
+        output_file=corpus_stats_output,
+        io_format="tsv",
+        index=False,
+        mode="dict_writer",
+        dict_writer_field_names=[
+            "language",
+            "mean_crossing_alignments",
+            "n_changed",
+            "n_unchanged",
+        ],
+        verbose=debug_mode,
+        n_rows=len(pooled_corpus.stats.items()),
+    )
+
+    print("[standardize_names] Replacing old names...")
     data[alias_column] = [n.text for n in pooled_corpus.names]
     data["unchanged"] = [n.is_unchanged for n in pooled_corpus.names]
 

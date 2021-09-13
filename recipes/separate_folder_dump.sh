@@ -94,13 +94,14 @@ standardize_names () {
     local input_file=$1
     local output_file=$2
     local permuter_type=$3
+    local conll_type=$4
 
     # apply script standardization
     python paranames/io/name_standardization.py \
         -i $input_file -o $output_file -f tsv \
         --human-readable-langs-path ~/paranames/data/human_readable_lang_names.json \
-        --permuter-type $permuter_type --corpus-stats-output ${extra_data_folder}/standardize_names_stats \
-        --debug-mode --num-workers 8
+        --permuter-type $permuter_type --corpus-stats-output ${extra_data_folder}/standardize_names_stats_$conll_type \
+        --debug-mode --num-workers $num_workers
 }
 
 compute_script_entropy () {
@@ -195,7 +196,7 @@ do
     echo "Type: ${conll_type}	Permuter: ${permuter_type}"
     name_standardization_input_tsv="${output_folder}/${conll_type}_script_standardized_${voting_method}.tsv"
     name_standardization_output_tsv="${output_folder}/${conll_type}_script_name_standardized_${voting_method}.tsv"
-    standardize_names $name_standardization_input_tsv $name_standardization_output_tsv $permuter_type
+    standardize_names $name_standardization_input_tsv $name_standardization_output_tsv $permuter_type $conll_type
 done
 
 echo "Combine everything into one big tsv"
