@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from typing import Dict, Tuple, Generator
+from functools import partial
 from pathlib import Path
 import tempfile
 
@@ -9,14 +10,14 @@ import pandas as pd
 from tqdm import tqdm
 from paranames.util import read, write
 import paranames.util.script as s
+from p_tqdm import p_map
 
 
 vote_aggregation_methods = set(["baseline", "all", "any", "majority_vote"])
 
 
 def tag_and_split_names(
-    language,
-    subset,
+    language_subset,
     aggregation_method: str,
     critical_value: float = 0.1,
     language_column: str = "language",
@@ -25,6 +26,8 @@ def tag_and_split_names(
     english_text_column: str = "eng",
     strip: bool = True,
 ):
+
+    language, subset = language_subset
 
     unicode_analyzer = s.UnicodeAnalyzer(
         strip=strip,
@@ -119,29 +122,31 @@ def standardize_script(
     id_column: str = "wikidata_id",
     english_text_column: str = "eng",
     strip: bool = True,
+    num_workers: int = 32,
     *args,
     **kwargs,
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
 
+    _tag_and_split_names = partial(
+        tag_and_split_names,
+        aggregation_method=aggregation_method,
+        critical_value=critical_value,
+        language_column=language_column,
+        alias_column=alias_column,
+        id_column=id_column,
+        english_text_column=english_text_column,
+        strip=strip,
+    )
+
     output_chunks = []
     filtered_chunks = []
-
-    for language, subset in tqdm(
+    tag_and_split_names_output = p_map(
+        _tag_and_split_names,
         slice_by_column(data, language_column),
-    ):
+        num_cpus=num_workers,
+    )
 
-        filtered_names, kept_names = tag_and_split_names(
-            language,
-            subset,
-            aggregation_method,
-            critical_value,
-            language_column,
-            alias_column,
-            id_column,
-            english_text_column,
-            strip,
-        )
-
+    for filtered_names, kept_names in tag_and_split_names_output:
         filtered_chunks.append(filtered_names)
         output_chunks.append(kept_names)
 
