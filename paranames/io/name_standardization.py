@@ -76,6 +76,7 @@ def standardize_names(
         preserve_fastalign_output=False,
         require_english=False,
         filter_out_blank=False,
+        num_workers=num_workers
     )
 
     print("[standardize_names] Computing corpus statistics...")

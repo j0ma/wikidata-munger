@@ -341,7 +341,7 @@ class CorpusStatistics:
         self.alignments: Iterable[Optional[Alignment]] = (
             self.alignments
             if self.alignments
-            else (n.alignment for n in self.names)
+            else [n.alignment for n in self.names]
         )
 
         self.mean_cross_alignments = (
@@ -930,7 +930,7 @@ class Corpus:
         )
 
         if self.debug_mode:
-            print("[Corpus] Setting up token processor...")
+            print("[Corpus] Setting up name processor...")
         self.permuter = self.permuter_class(
             inplace=self.permuter_inplace,
             debug_mode=self.debug_mode,
