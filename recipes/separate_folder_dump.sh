@@ -204,7 +204,7 @@ final_combined_output="${output_folder}/combined_script_name_standardized_${voti
 echo "Destination: ${final_combined_output}"
 
 final_combination_entity_types=$(echo $entity_types | tr " " ",")
-combine_tsv_files ${output_folder}/{PER,LOC,ORG}_script_name_standardized_${voting_method}.tsv > $final_combined_output
+combine_tsv_files ${output_folder}/*_script_name_standardized_${voting_method}.tsv > $final_combined_output
 
 separate_by_language $final_combined_output
 
