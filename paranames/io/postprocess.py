@@ -7,6 +7,22 @@ from paranames.util import read, write
 vote_aggregation_methods = set(["all", "any", "majority_vote", "none"])
 
 
+def keep_above_threshold(
+    data: pd.DataFrame, language_column: str, threshold: int
+) -> pd.DataFrame:
+    num_names_per_lang = data[language_column].value_counts().to_dict()
+    lang_big_enough = data[language_column].apply(
+        lambda l: num_names_per_lang.get(l, 0) >= threshold
+    )
+
+    filtered_out_langs = data[~lang_big_enough][language_column].unique()
+    for lang in filtered_out_langs:
+        print(
+            f'[keep_above_threshold] Filtering out "{lang}" based on threshold of {threshold}'
+        )
+    return data[lang_big_enough]
+
+
 def apply_entity_disambiguation_rules(
     data: pd.DataFrame,
     id_column: str = "wikidata_id",
@@ -145,6 +161,7 @@ def filter_am_ti(
 @click.option("--alias-column", "-a", default="alias")
 @click.option("--english-column", "-e", default="name")
 @click.option("--language-column", "-l", default="language")
+@click.option("--min-names-threshold", "-m", default=0)
 def main(
     input_file,
     output_file,
@@ -154,6 +171,7 @@ def main(
     alias_column,
     english_column,
     language_column,
+    min_names_threshold,
 ):
 
     # read in data
@@ -164,6 +182,9 @@ def main(
 
     # change <english_column> to "eng"
     data = data.rename(columns={english_column: "eng"})
+
+    # drop languages with fewer than minimum threshold of names
+    data = keep_above_threshold(data, language_column, min_names_threshold)
 
     # filter rows using entity disambiguation rules
     data = apply_entity_disambiguation_rules(

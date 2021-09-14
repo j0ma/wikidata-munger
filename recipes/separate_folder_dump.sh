@@ -24,6 +24,9 @@ extra_data_folder="${output_folder}"/extra_data
 mkdir --verbose -p $output_folder/combined
 mkdir --verbose -p $extra_data_folder
 
+# NOTE: edit this to increase/decrease threshold for excluding small languages
+default_name_threshold=1000
+
 # NOTE: add comma separted list here to exclude languages
 exclude_these_langs=""
 
@@ -72,7 +75,7 @@ postprocess () {
 
     # apply things like entity name disambiguation rules
     python paranames/io/postprocess.py \
-        -i $input_file -o $output_file -f tsv
+        -i $input_file -o $output_file -f $default_format -m $default_name_threshold
 
 }
 
@@ -147,23 +150,17 @@ do
 done
 wait
 
-# apply entity type disambiguation and other postprocessing
-for conll_type in $entity_types
-do
-    dumped_tsv="${output_folder}/${conll_type}.tsv"
-    postprocessed_tsv="${output_folder}/${conll_type}_postprocessed.tsv"
-    postprocess $dumped_tsv $postprocessed_tsv &
-done
-wait
-
 # combine everything into one tsv for script standardization
 # this way we get interpretable entropy numbers by language, not just
+combined_tsv="${output_folder}/combined_postprocessed.tsv"
+combine_tsv_files ${output_folder}/*.tsv > $combined_tsv
+
 combined_postprocessed_tsv="${output_folder}/combined_postprocessed.tsv"
-combine_tsv_files ${output_folder}/*_postprocessed.tsv > $combined_postprocessed_tsv
+postprocess $combined_tsv $combined_postprocessed_tsv
 
 # compute script entropy (before)
-script_entropy_results_before="${extra_data_folder}/tacl_script_entropy_${voting_method}_before.tsv"
-compute_script_entropy $combined_postprocessed_tsv $script_entropy_results_before
+#script_entropy_results_before="${extra_data_folder}/tacl_script_entropy_${voting_method}_before.tsv"
+#compute_script_entropy $combined_postprocessed_tsv $script_entropy_results_before
 
 # script standardization: remove parentheses from everything
 combined_script_standardized_tsv="${output_folder}/combined_script_standardized_${voting_method}.tsv"
@@ -173,8 +170,8 @@ standardize_script \
     $voting_method $num_workers
 
 # compute script entropy (after)
-script_entropy_results_after="${extra_data_folder}/tacl_script_entropy_${voting_method}_after.tsv"
-compute_script_entropy $combined_script_standardized_tsv $script_entropy_results_after
+#script_entropy_results_after="${extra_data_folder}/tacl_script_entropy_${voting_method}_after.tsv"
+#compute_script_entropy $combined_script_standardized_tsv $script_entropy_results_after
 
 # separate into PER,LOC,ORG for name permutations
 for conll_type in $entity_types
