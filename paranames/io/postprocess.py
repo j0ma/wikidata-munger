@@ -10,6 +10,7 @@ vote_aggregation_methods = set(["all", "any", "majority_vote", "none"])
 def keep_above_threshold(
     data: pd.DataFrame, language_column: str, threshold: int
 ) -> pd.DataFrame:
+    old_nrows = data.shape[0]
     num_names_per_lang = data[language_column].value_counts().to_dict()
     lang_big_enough = data[language_column].apply(
         lambda l: num_names_per_lang.get(l, 0) >= threshold
@@ -17,10 +18,17 @@ def keep_above_threshold(
 
     filtered_out_langs = data[~lang_big_enough][language_column].unique()
     for lang in filtered_out_langs:
-        print(
-            f'[keep_above_threshold] Filtering out "{lang}" based on threshold of {threshold}'
-        )
-    return data[lang_big_enough]
+        cnt = num_names_per_lang[lang]
+        print(f'[postprocess] Filtered out: "{lang}" ({cnt} <= {threshold})')
+    output = data[lang_big_enough]
+    new_nrows = output.shape[0]
+
+    print("Small language filtering complete")
+    print(f"No. of rows, original: {old_nrows}")
+    print(f"No. of rows, filtered: {new_nrows}")
+    print(f"Rows removed = {old_nrows - new_nrows}")
+
+    return output
 
 
 def apply_entity_disambiguation_rules(
@@ -101,55 +109,15 @@ def apply_entity_disambiguation_rules(
         .type.size()
         == 1
     )
+    new_nrows = data.shape[0]
 
     # print out some information to the user
-    print("Deduplication complete")
+    print("Disambiguation complete")
     print(f"No. of rows, original: {old_nrows}")
-    print(f"No. of rows, filtered: {data.shape[0]}")
-    print(f"Rows removed = {old_nrows - data.shape[0]}")
+    print(f"No. of rows, filtered: {new_nrows}")
+    print(f"Rows removed = {old_nrows - new_nrows}")
 
     return data
-
-
-def filter_am_ti(
-    data: pd.DataFrame,
-    id_column: str = "wikidata_id",
-    type_column: str = "type",
-) -> pd.DataFrame:
-    with open("./data/am_ti_kept_ids.txt", encoding="utf8") as f:
-        am_ti_kept_ids = set([l.strip() for l in f])
-
-        print(
-            f"Loaded {len(am_ti_kept_ids)} IDs to keep for Amharic/Tigrinya..."
-        )
-
-    # construct a mask for items that are to be excluded
-
-    def should_keep(row):
-        if row.language not in ["am", "ti"]:
-            return True
-        else:
-            id_is_suitable = row[id_column] in am_ti_kept_ids
-            try:
-                alias_not_latin = bool(not row.is_latin)
-            except AttributeError:
-                alias_not_latin = True  # if is_latin not found
-
-            return id_is_suitable and alias_not_latin
-
-    keep_these = data.apply(should_keep, axis=1)
-
-    filtered = data[keep_these]
-
-    print("Amharic/Tigrinya filtering complete")
-    print(f"No. of rows, original: {data.shape[0]}")
-    print(f"No. of rows, filtered: {filtered.shape[0]}")
-    print(
-        f"No of. am/ti rows in filtered: {filtered[filtered.language.isin(['am', 'ti'])].shape[0]}"
-    )
-    print(f"Rows removed = {data.shape[0] - filtered.shape[0]}")
-
-    return filtered
 
 
 @click.command()
