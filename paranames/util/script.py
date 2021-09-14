@@ -327,9 +327,6 @@ class CorpusStatistics:
     """
 
     names: Iterable[TransliteratedName] = attr.ib(repr=False)
-    alignments: Optional[Iterable[Optional[Alignment]]] = attr.ib(
-        default=None, repr=False
-    )
 
     mean_cross_alignments: float = attr.ib(default=0.0)
     total_cross_alignments: int = attr.ib(default=0)
@@ -338,22 +335,16 @@ class CorpusStatistics:
 
     def __attrs_post_init__(self) -> None:
 
-        self.alignments: Iterable[Optional[Alignment]] = (
-            self.alignments
-            if self.alignments
-            else [n.alignment for n in self.names]
-        )
+        for n in self.names:
+            if n.alignment:
+                self.total_cross_alignments += n.alignment.n_cross_alignments
 
-        self.mean_cross_alignments = (
-            np.mean(
-                [a.n_cross_alignments if a else 0 for a in self.alignments]
+        try:
+            self.mean_cross_alignments = self.total_cross_alignments / len(
+                self.names
             )
-            or -np.inf
-        )
-        self.total_cross_alignments = (
-            sum([a.n_cross_alignments if a else 0 for a in self.alignments])
-            or -np.inf
-        )
+        except ZeroDivisionError:
+            self.mean_cross_alignments = 0.0
 
         self.total_permuted = sum(not n.is_unchanged for n in self.names)
         self.total_surviving = sum(n.is_unchanged for n in self.names)
