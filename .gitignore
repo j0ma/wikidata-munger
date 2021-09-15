@@ -7,4 +7,4 @@
 **/data/anecdata
 **/*.egg-info
 staging/
-**/log/dump_log_091421.log
+log/dump_log_091421.log
