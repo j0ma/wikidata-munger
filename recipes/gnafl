@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+
+# Get name anecdata for language
+
+lang=$1
+
+# change the file below to alter what file is used as the input data
+input_file="$(pwd)/combined/combined_postprocessed.tsv"
+output_folder="moveme_name_standardization_anecdata"
+chunk_size=1000
+n_examples_per_class=30 # number of positive/negative examples
+add_uroman_column_script=$HOME/paranames/paranames/io/add_romanized_column.py
+remove_uroman_column_script=$HOME/paranames/paranames/io/remove_romanized_column.py
+
+# get all the data for the given language
+lang_data=$(
+    xsv search -d '\t' -s type PER $input_file  \
+        | xsv search -s language "\b$lang\b" \
+        | xsv sort -s alias \
+        | xsv fmt -t '\t')
+
+
+
+# in case we don't get enough rows, exit instead of piping to vim
+n_lines=$(echo "$lang_data" | wc -l | cut -d' ' -f1)
+
+[ $n_lines -lt 2 ] && echo "No data found for $lang! Exiting..." && exit 1
+
+# otherwise create temporary folder to store data 
+temp_folder=$(mktemp -d "/tmp/name_anecdata_${lang}_XXXXXX")
+dumped_tsv=$temp_folder/anecdata_$lang.tsv
+header=$(echo "$lang_data" | head -n 1)
+echo "$header" > $dumped_tsv
+echo "$lang_data" | tail +2 | shuf >> $dumped_tsv
+
+# if we have more than one chunk of rows, let's chunk
+if [ $n_lines -gt $chunk_size ]
+then
+    # split the big file into several small ones
+    xsv split \
+        --filename 'chunk_{}.csv' \
+        -s $chunk_size \
+        -d '\t' \
+        $temp_folder \
+        $dumped_tsv
+
+    for chunked_csv in $temp_folder/chunk_*.csv
+    do
+        # make sure we are using tab separated files
+        chunked_tsv=$(echo $chunked_csv | sed "s/\.csv/.tsv/g")
+        xsv fmt -d , -t '\t' < $chunked_csv > $chunked_tsv
+
+        # get rid of unnecessary tsv
+        rm -v $chunked_csv
+
+        # add romanized column
+        cat $chunked_tsv | python $add_uroman_column_script -ed >> $chunked_tsv.with_romanized_column
+        mv $chunked_tsv.with_romanized_column $chunked_tsv
+
+        # perform necessary munging on the chunk
+        vim $chunked_tsv
+
+        header=$(head -n 1 $chunked_tsv)
+        
+        # split off first half into positive and second half into negative
+        head -n $(($n_examples_per_class + 1)) $chunked_tsv | tail +2 > $chunked_tsv.pos
+        cat $chunked_tsv.pos
+
+        tail -n $n_examples_per_class $chunked_tsv > $chunked_tsv.neg
+        cat $chunked_tsv.neg
+
+        # if user wants to stop, stop. otherwise loop around.
+        read -p "Process next chunk? [y/n] " want_more_chunks
+        [ $want_more_chunks = "n" ] && break
+        
+
+    done
+
+    # clean up all the remaining C/TSV chunks
+    rm -fv $temp_folder/chunk_*.{c,t}sv
+
+    # create a new concatenated TSV for positives
+    all_pos_tsv="${temp_folder}/all_pos.tsv"
+    all_neg_tsv="${temp_folder}/all_neg.tsv"
+    xsv cat rows -n -d '\t' ${temp_folder}/chunk*.pos | xsv fmt -t '\t' > $all_pos_tsv
+    xsv cat rows -n -d '\t' ${temp_folder}/chunk*.neg | xsv fmt -t '\t' > $all_neg_tsv
+    final_tsv="${dumped_tsv//.tsv/_final.tsv}"
+    echo "$header" > $final_tsv
+    xsv cat rows -n -d '\t' ${temp_folder}/all_{pos,neg}.tsv | xsv fmt -t '\t' >> $final_tsv
+
+    # remove romanized column
+    cat $final_tsv | python $remove_uroman_column_script >> $final_tsv.without_romanized_column
+    mv $final_tsv.without_romanized_column $final_tsv
+
+    # final cleanup: remove intermediate files
+    rm -fv ${temp_folder}/chunk*.{pos,neg}
+    rm -fv ${temp_folder}/all_{pos,neg}.tsv
+
+else
+    cat $dumped_tsv | python $add_uroman_column_script -ed >> $dumped_tsv.with_romanized_column
+    mv $dumped_tsv.with_romanized_column $dumped_tsv
+    vim $dumped_tsv
+    final_tsv=$dumped_tsv
+    cat $final_tsv | python $remove_uroman_column_script >> $final_tsv.without_romanized_column
+    mv $final_tsv.without_romanized_column $final_tsv
+fi
+
+cp $final_tsv $output_folder/anecdata_$lang.tsv
+
+rm -rv $temp_folder
