@@ -16,12 +16,8 @@ pd.set_option("display.max_columns", None)
 @click.option("--io-format", "-f", default="csv")
 def main(before_file, after_file, filtered_file, output_file, io_format):
 
-    before = read(before_file, io_format).set_index(
-        ["language_code", "language"]
-    )
-    after = read(after_file, io_format).set_index(
-        ["language_code", "language"]
-    )
+    before = read(before_file, io_format).set_index(["language_code", "language"])
+    after = read(after_file, io_format).set_index(["language_code", "language"])
 
     combined = before.join(after, lsuffix="_before", rsuffix="_after").rename(
         columns={

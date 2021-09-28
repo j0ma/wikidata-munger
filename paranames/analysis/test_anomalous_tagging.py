@@ -79,7 +79,6 @@ def main(
         try:
             anomalous[language] = {
                 line.split("\t")[0].strip()
-
                 for line in open(
                     Path(anomalous_data_folder) / f"{language}_anomalous.txt"
                 )
@@ -94,8 +93,7 @@ def main(
         subset = data[data.language == language]
         corpora[language] = s.Corpus(
             out_folder=(
-                Path(output_folder)
-                or Path(f"/tmp/flyingsquid-test/{language}")
+                Path(output_folder) or Path(f"/tmp/flyingsquid-test/{language}")
             ),
             names=[
                 s.TransliteratedName(
@@ -106,7 +104,6 @@ def main(
                     unicode_analyzer=ua,
                     is_unchanged=True,
                 )
-
                 for _, row in subset.iterrows()
             ],
             language=language,
@@ -131,9 +128,7 @@ def main(
                     data[data.language != language][alias_column].unique()
                 )
 
-                non_overlapping_names = (
-                    names_in_other_langs - names_in_this_lang
-                )
+                non_overlapping_names = names_in_other_langs - names_in_this_lang
 
                 anomalous_words = np.random.choice(
                     np.array(list(non_overlapping_names)),
@@ -151,7 +146,6 @@ def main(
                         anomalous=True,
                         is_unchanged=True,
                     )
-
                     for w in anomalous_words
                 ]
             )
@@ -227,7 +221,6 @@ def main(
                 noise_sample=w.noise_sample,
                 is_unchanged=w.is_unchanged,
             )
-
             for w, pred in zip(corpus.names, majority_vote_preds)
         ]
 

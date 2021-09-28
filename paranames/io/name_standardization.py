@@ -51,9 +51,7 @@ def standardize_names(
         debug_mode=False,
     )
     names = list(
-        it.chain.from_iterable(
-            p_map(name_loader, corpus_chunks, num_cpus=num_workers)
-        )
+        it.chain.from_iterable(p_map(name_loader, corpus_chunks, num_cpus=num_workers))
     )
 
     # Only measure alignments when edit distance is involved
@@ -76,7 +74,7 @@ def standardize_names(
         preserve_fastalign_output=False,
         require_english=False,
         filter_out_blank=False,
-        num_workers=num_workers
+        num_workers=num_workers,
     )
 
     print("[standardize_names] Computing corpus statistics...")
@@ -133,9 +131,7 @@ def standardize_names(
 @click.option("--num-workers", type=int, default=2)
 @click.option("--chunksize", type=int, default=15000)
 @click.option("--human-readable-langs-path", required=True)
-@click.option(
-    "--permuter-type", required=True, type=click.Choice(s.permuter_types)
-)
+@click.option("--permuter-type", required=True, type=click.Choice(s.permuter_types))
 @click.option("--corpus-require-english", is_flag=True, help="deprecated")
 @click.option("--corpus-filter-blank", is_flag=True, help="deprecated")
 @click.option("--debug-mode", is_flag=True)

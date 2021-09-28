@@ -106,10 +106,7 @@ class UniformDistributionSampler(Sampler):
         # sample the prescribed number of names for each language
         sampled_rows = pd.concat(
             [
-                df[df[lc] == lang].sample(
-                    n_samples, random_state=self.random_state
-                )
-
+                df[df[lc] == lang].sample(n_samples, random_state=self.random_state)
                 for lang, n_samples in n_samples_per_language.items()
             ],
             ignore_index=True,
@@ -141,13 +138,9 @@ class ExponentSmoothedSampler(Sampler):
 
         lc = language_column or self.language_column
         language_distribution = df[lc].value_counts(normalize=True)
-        smoothed_language_weights = (
-            language_distribution ** self.smoothing_factor
-        )
+        smoothed_language_weights = language_distribution ** self.smoothing_factor
 
-        weights_for_sampling = df[lc].apply(
-            lambda l: smoothed_language_weights[l]
-        )
+        weights_for_sampling = df[lc].apply(lambda l: smoothed_language_weights[l])
 
         sampled_rows = df.sample(
             n=n, weights=weights_for_sampling, random_state=self.random_state
@@ -191,9 +184,7 @@ def main(
 
     if debug_mode:
         print(f"Loading data from {input_file}")
-    data = read(
-        input_file, io_format, chunksize=chunksize if chunksize > 0 else None
-    )
+    data = read(input_file, io_format, chunksize=chunksize if chunksize > 0 else None)
 
     if chunksize > 0 and debug_mode:
         data = next(data)
@@ -229,13 +220,9 @@ def main(
     sub = subsampler(data, num_samples)
 
     if min_names_per_lang > 0:
-        print(
-            f"Dropping languages that have fewer than {min_names_per_lang} names"
-        )
+        print(f"Dropping languages that have fewer than {min_names_per_lang} names")
         lang_counts = sub.language.value_counts().to_dict()
-        should_keep = sub.language.apply(
-            lambda l: lang_counts[l] >= min_names_per_lang
-        )
+        should_keep = sub.language.apply(lambda l: lang_counts[l] >= min_names_per_lang)
         sub = sub[should_keep]
 
     if debug_mode:

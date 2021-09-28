@@ -16,15 +16,13 @@ def create_count_table(
     stacked=False,
     save_path="",
 ):
-    out = df.set_index(
-        "language" if not stacked else ["language", "type"]
-    ).drop("language_code", 1)
+    out = df.set_index("language" if not stacked else ["language", "type"]).drop(
+        "language_code", 1
+    )
 
     if stacked:
         out = out.unstack(-1).fillna(0).astype(int)
-        out.columns = [
-            entity_type for _, entity_type in out.columns.to_flat_index()
-        ]
+        out.columns = [entity_type for _, entity_type in out.columns.to_flat_index()]
         out["total"] = out.sum(axis=1)
         out.sort_values("total", ascending=False, inplace=True)
         out.drop("total", 1, inplace=True)
@@ -32,16 +30,12 @@ def create_count_table(
         return out.head(n_langs)
     else:
         return (
-            out.sort_values("count", ascending=False)["count"]
-            .head(n_langs)
-            .to_latex()
+            out.sort_values("count", ascending=False)["count"].head(n_langs).to_latex()
         )
 
 
 def add_english_match(count_table, english_match_table):
-    english_match_table[
-        "english_match"
-    ] = english_match_table.english_match.apply(
+    english_match_table["english_match"] = english_match_table.english_match.apply(
         lambda x: f"{round(100*x, 3)}%"
     )
 
@@ -139,9 +133,7 @@ def main(
     )[["language", "english_match"]].set_index("language")
 
     if collapse_types:
-        count_table = (
-            count_table.groupby("language_code")["count"].sum().reset_index()
-        )
+        count_table = count_table.groupby("language_code")["count"].sum().reset_index()
         count_table = create_count_table(
             count_table,
             n_langs=n_languages_counts,

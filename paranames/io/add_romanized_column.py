@@ -22,9 +22,7 @@ import click
 @click.option("-f", "--io-format", default="tsv")
 @click.option("-n", "--num-workers", default=1, type=int)
 @click.option("-ed", "--with-edit-distance", is_flag=True)
-def main(
-    alias_column, english_column, io_format, num_workers, with_edit_distance
-):
+def main(alias_column, english_column, io_format, num_workers, with_edit_distance):
     uroman = UniversalRomanizer(num_workers=num_workers)
     with sys.stdin as standard_input, sys.stdout as standard_output:
         data = read(input_file=standard_input, io_format=io_format)

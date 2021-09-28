@@ -74,20 +74,14 @@ def compute_crossing_alignments(
 @click.option("--input-file", "-i")
 @click.option("--language-column", "-lc", default="language")
 @click.option("--random-seed", "-s", type=int, default=1917)
-@click.option(
-    "--human-readable-langs-path", default=default_human_readable_langs_path
-)
+@click.option("--human-readable-langs-path", default=default_human_readable_langs_path)
 @click.option(
     "--permuter-type",
     type=click.Choice(s.permuter_types),
     default="edit_distance",
 )
-@click.option(
-    "--debug-mode", is_flag=True, help="Debug mode: only use 10 rows of data"
-)
-@click.option(
-    "--parallelize", is_flag=True, help="Parallelize using num_workers CPUs"
-)
+@click.option("--debug-mode", is_flag=True, help="Debug mode: only use 10 rows of data")
+@click.option("--parallelize", is_flag=True, help="Parallelize using num_workers CPUs")
 @click.option(
     "--permute-tokens",
     is_flag=True,
@@ -182,9 +176,7 @@ def main(
 
     print(f"Loading names using p_map and {num_workers} workers...")
     names = list(
-        it.chain.from_iterable(
-            p_map(name_loader, corpus_chunks, num_cpus=num_workers)
-        )
+        it.chain.from_iterable(p_map(name_loader, corpus_chunks, num_cpus=num_workers))
     )
 
     compute_crossing_alignments(

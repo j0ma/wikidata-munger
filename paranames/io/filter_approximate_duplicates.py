@@ -86,13 +86,11 @@ def main(
     )
 
     if debug_mode:
+        print(f"{too_similar.shape[0]} / {data.shape[0]} flagged as duplicates")
         print(
-            f"{too_similar.shape[0]} / {data.shape[0]} flagged as duplicates"
-        )
-        print(
-            too_similar[
-                too_similar[english_column] != too_similar[alias_column]
-            ][[english_column, alias_column]]
+            too_similar[too_similar[english_column] != too_similar[alias_column]][
+                [english_column, alias_column]
+            ]
         )
 
     # write to disk

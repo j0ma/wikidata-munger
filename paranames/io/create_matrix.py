@@ -42,14 +42,11 @@ def output_matrix(matrix_dict, delimiter, languages, f, index_cols=None):
             row = {
                 # TODO: update dumps to use wikidata_id column and remove this if-else
                 (col if col != "id" else "wikidata_id"): value
-
                 for col, value in zip(index_cols, index_values)
             }
 
             ## use sorted(languages) to make sure order is preserved
-            row.update(
-                {l: d.get(l, "") for l in sorted(str(l) for l in languages)}
-            )
+            row.update({l: d.get(l, "") for l in sorted(str(l) for l in languages)})
 
             yield row
 
@@ -91,9 +88,7 @@ class ChunkProcessor:
     def __call__(self, data: pd.DataFrame):
 
         unique_langs: Set[str] = set()
-        matrix_dict: DefaultDict[
-            Tuple[str, ...], Dict[str, str]
-        ] = defaultdict(dict)
+        matrix_dict: DefaultDict[Tuple[str, ...], Dict[str, str]] = defaultdict(dict)
 
         chunk_dict = (
             data[data.wikidata_id.str.startswith("Q")]

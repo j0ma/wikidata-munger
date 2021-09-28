@@ -103,10 +103,7 @@ def apply_entity_disambiguation_rules(
 
     # final check to make sure no id has more than 1 type
     assert all(
-        data[[id_column, type_column]]
-        .drop_duplicates()
-        .groupby(id_column)
-        .type.size()
+        data[[id_column, type_column]].drop_duplicates().groupby(id_column).type.size()
         == 1
     )
     new_nrows = data.shape[0]

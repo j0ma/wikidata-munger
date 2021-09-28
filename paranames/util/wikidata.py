@@ -34,7 +34,6 @@ class WikidataRecord:
             try:
                 self.instance_ofs = set(
                     iof["mainsnak"]["datavalue"]["value"]["id"]
-
                     for iof in self.record["claims"]["P31"]
                 )
             except KeyError:
@@ -211,9 +210,7 @@ class WikidataMongoIngesterWorker:
             return False
 
     def error_summary(self) -> None:
-        print(
-            f"Worker {self.name}, JSON decode errors: {self.n_decode_errors}"
-        )
+        print(f"Worker {self.name}, JSON decode errors: {self.n_decode_errors}")
 
     def __call__(self) -> None:
         """Main method for invoking the read procedure.
@@ -244,9 +241,7 @@ class WikidataMongoIngesterWorker:
                     try:
                         doc = orjson.loads(line.rstrip(",\n"))
                         record = WikidataRecord(doc)
-                        self.cache.append(
-                            record.to_dict(simple=self.simple_records)
-                        )
+                        self.cache.append(record.to_dict(simple=self.simple_records))
                         self.cache_used += 1
                     except orjson.JSONDecodeError:
                         # in case of decode error, log it and keep going

@@ -57,21 +57,15 @@ def tag_and_split_names(
     )
 
     # anomalous if most common unicode block is not expected one
-    incorrect_block_tagger = s.IncorrectBlockTagger(
-        expected_block=most_common_block
-    )
+    incorrect_block_tagger = s.IncorrectBlockTagger(expected_block=most_common_block)
 
     # anomalous if given block is missing
-    missing_block_tagger = s.MissingBlockTagger(
-        missing_block=most_common_block
-    )
+    missing_block_tagger = s.MissingBlockTagger(missing_block=most_common_block)
 
     # anomalous if JSD from language prototype is greater than a critical value
     prototype = "".join(str(s) for s in subset[alias_column])
     distance_based_tagger = s.JSDTagger(
-        per_language_distribution=unicode_analyzer.unicode_block_histogram(
-            prototype
-        ),
+        per_language_distribution=unicode_analyzer.unicode_block_histogram(prototype),
         critical_value=critical_value,
         distance_measure="jensen_shannon",
     )
@@ -188,11 +182,7 @@ def baseline_script_standardization(
         index=data.index,
     )
 
-    print(
-        "No. of valid rows: {} / {}".format(
-            sum(valid_rows_mask), data.shape[0]
-        )
-    )
+    print("No. of valid rows: {} / {}".format(sum(valid_rows_mask), data.shape[0]))
 
     valid = data[valid_rows_mask]
     filtered = data[~valid_rows_mask]

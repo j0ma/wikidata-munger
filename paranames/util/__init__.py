@@ -8,9 +8,7 @@ from typing import Union, Optional, Dict, Any, Iterable, List
 from tqdm import tqdm
 
 
-def maybe_infer_io_format(
-    file_path: str, io_format: Optional[str] = None
-) -> str:
+def maybe_infer_io_format(file_path: str, io_format: Optional[str] = None) -> str:
     if io_format:
         return io_format
     else:
@@ -61,9 +59,7 @@ def read(
             chunksize=chunksize,
         )
     elif io_format == "json":
-        return pd.read_json(
-            input_file, encoding="utf-8", typ=typ, chunksize=chunksize
-        )
+        return pd.read_json(input_file, encoding="utf-8", typ=typ, chunksize=chunksize)
 
 
 def write_csv_writer(
@@ -101,9 +97,7 @@ def write_pandas(
             index=index,
         )
     else:
-        return data.to_json(
-            output_file, "records", encoding="utf-8", index=False
-        )
+        return data.to_json(output_file, "records", encoding="utf-8", index=False)
 
 
 def write(

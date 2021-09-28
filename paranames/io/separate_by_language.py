@@ -13,9 +13,7 @@ def get_output_filename(
     prefix, extension = os.path.splitext(input_file)
 
     if use_subfolders:
-        output_path = (
-            f"{input_folder}/{language}/{prefix}_{language}{extension}"
-        )
+        output_path = f"{input_folder}/{language}/{prefix}_{language}{extension}"
     else:
         output_path = f"{input_folder}/{prefix}_{language}{extension}"
 
@@ -23,9 +21,7 @@ def get_output_filename(
 
 
 @click.command()
-@click.option(
-    "--lang-column", "-c", default="language", help="Language column"
-)
+@click.option("--lang-column", "-c", default="language", help="Language column")
 @click.option("--input-file", "-i", required=True)
 @click.option(
     "--io-format",

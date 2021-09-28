@@ -80,16 +80,13 @@ def output_csv(
             "language": lang,
             "type": conll_type,
         }
-
         for lang, alias in document.aliases.items()
     )
 
     if strict:
         rows = (
             row
-
             for row in rows
-
             if row["language"] in language_set
             and row["language"] not in not_language_set
         )
@@ -123,9 +120,7 @@ conll_type_to_wikidata_id = {"PER": "Q5", "LOC": "Q82794", "ORG": "Q43229"}
     help="MongoDB port",
 )
 @click.option("--database-name", default="wikidata_db", help="Database name")
-@click.option(
-    "--collection-name", default="wikidata_simple", help="Collection name"
-)
+@click.option("--collection-name", default="wikidata_simple", help="Collection name")
 @click.option(
     "--subclass-coll-name",
     default="subclasses",
@@ -211,7 +206,6 @@ def main(
     # form connections to mongo db
     client = (
         MongoClient(mongodb_uri)
-
         if mongodb_uri
         else MongoClient(host=None, port=mongodb_port)
     )

@@ -20,9 +20,7 @@ def write(data: pd.DataFrame, output_file: str, io_format: str) -> None:
     if io_format == "csv":
         return data.to_csv(output_file, encoding="utf-8", index=False)
     else:
-        return data.to_json(
-            output_file, "records", encoding="utf-8", index=False
-        )
+        return data.to_json(output_file, "records", encoding="utf-8", index=False)
 
 
 def get_output_filename(input_file: str, language: str) -> str:
@@ -34,9 +32,7 @@ def get_output_filename(input_file: str, language: str) -> str:
 @click.command()
 @click.option("--input-file", "-i", required=True)
 @click.option("--output-file", "-o", required=True)
-@click.option(
-    "--lang-column", "-c", default="language", help="Language column"
-)
+@click.option("--lang-column", "-c", default="language", help="Language column")
 @click.option("--alias-column", "-c", default="alias", help="Alias column")
 @click.option(
     "--io-format",
@@ -73,9 +69,7 @@ def main(input_file, output_file, lang_column, alias_column, io_format):
 
     aggregated = data.apply(alias_to_lang_col, axis=1)
     aggregated["url"] = aggregated.wikidata_id.apply(generate_url)
-    column_ordering = (
-        ["id", "type", "eng"] + [lang for lang in uniq_langs] + ["url"]
-    )
+    column_ordering = ["id", "type", "eng"] + [lang for lang in uniq_langs] + ["url"]
     aggregated = aggregated[column_ordering + ["language"]]
     rows = aggregated.groupby(["id", "type"]).apply(deduplicate).tolist()
     aggregated = pd.DataFrame(rows)[column_ordering]

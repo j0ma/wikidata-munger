@@ -32,9 +32,7 @@ def grab_subclasses(entity_id: str) -> Dict[str, Any]:
 @click.option("--to-stdout", is_flag=True)
 def main(entity_ids, database_name, collection_name, to_stdout) -> None:
 
-    wdb = WikidataMongoDB(
-        database_name=database_name, collection_name=collection_name
-    )
+    wdb = WikidataMongoDB(database_name=database_name, collection_name=collection_name)
     documents = [grab_subclasses(eid) for eid in entity_ids.split(",")]
 
     if to_stdout:

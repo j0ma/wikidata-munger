@@ -25,9 +25,7 @@ def plot_zipf_distribution(
 
     if stacked:
         out = out.unstack(-1).fillna(0).astype(int)
-        out.columns = [
-            entity_type for _, entity_type in out.columns.to_flat_index()
-        ]
+        out.columns = [entity_type for _, entity_type in out.columns.to_flat_index()]
         out["total"] = out.sum(axis=1)
         out.sort_values("total", ascending=False, inplace=True)
         out.drop("total", 1, inplace=True)
@@ -200,9 +198,7 @@ def main(
         entropy_output_file = ""
 
     if collapse_types:
-        count_table = (
-            count_table.groupby("language")["count"].sum().reset_index()
-        )
+        count_table = count_table.groupby("language")["count"].sum().reset_index()
         plot_zipf_distribution(
             count_table,
             stacked=False,
