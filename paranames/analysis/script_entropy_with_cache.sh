@@ -8,7 +8,7 @@ usage () {
     echo "Usage: bash ./script_analysis.sh TSV_PATH OUTPUT_FILE ALIAS_COL_IX LANG_COL_IX"
 }
 
-[ $# -lt 1 ] && usage && exit 1
+[ $# -lt 2 ] && usage && exit 1
 
 analyze_most_common () {
     ## get all unique aliases
