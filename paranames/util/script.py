@@ -77,9 +77,7 @@ class UnicodeAnalyzer:
         )
 
         digit_cond = (
-            lambda w: not self.is_number(str(w))
-            if self.ignore_numbers
-            else True
+            lambda w: not self.is_number(str(w)) if self.ignore_numbers else True
         )
 
         return Counter(
@@ -332,19 +330,16 @@ class CorpusStatistics:
     total_cross_alignments: int = attr.ib(default=0)
     total_permuted: int = attr.ib(default=0)
     total_surviving: int = attr.ib(default=0)
+    total_names: int = attr.ib(default=0)
 
     def __attrs_post_init__(self) -> None:
 
         for n in self.names:
+            self.total_names += 1
             if n.alignment:
                 self.total_cross_alignments += n.alignment.n_cross_alignments
 
-        try:
-            self.mean_cross_alignments = self.total_cross_alignments / len(
-                self.names
-            )
-        except ZeroDivisionError:
-            self.mean_cross_alignments = 0.0
+        self.mean_cross_alignments = self.total_cross_alignments / self.total_names
 
         self.total_permuted = sum(not n.is_unchanged for n in self.names)
         self.total_surviving = sum(n.is_unchanged for n in self.names)
@@ -394,10 +389,7 @@ class UniversalRomanizer:
             )
 
             uroman_output = [
-                line
-                for string, line in zip(
-                    strings, completed_pid.stdout.split("\n")
-                )
+                line for string, line in zip(strings, completed_pid.stdout.split("\n"))
             ]
 
             assert len(uroman_output) == len(
@@ -417,7 +409,7 @@ class UniversalRomanizer:
 class FastAligner:
 
     verbose: bool = attr.ib(repr=False, default=False)
-    preserve_raw_output: bool = attr.ib(repr=False, default=False)
+    preserve_data: bool = attr.ib(repr=False, default=False)
     debug_mode: bool = attr.ib(repr=False, default=False)
 
     def load_alignment_file(
@@ -453,54 +445,48 @@ class FastAligner:
               so no extensive checking is performed to validate
               that names and fast_align output strings match"""
 
-        alignment_train_data = Path(tf.mktemp())
-        fastalign_output = Path(tf.mktemp())
+        # create temporary files for alignment training data in /tmp
+        _, alignment_train_data_fname = tf.mkstemp(
+            dir=Path("/tmp"), prefix="fast_align_train_data_", text=True
+        )
+        alignment_train_data_path = Path(alignment_train_data_fname)
 
         if self.verbose:
             print(
-                f"[FastAligner] Saving alignment training data to: {alignment_train_data}"
-            )
-            print(
-                f"[FastAligner] Saving fast_align output to: {fastalign_output}"
+                f"[FastAligner] Saving alignment training data to: {alignment_train_data_fname}"
             )
 
         # first we write our words into a temporary file for fast_align
-        with open(alignment_train_data, "w") as f_out:
+        with open(alignment_train_data_path, "w") as alignment_f_out:
             for name in names:
 
                 # if name.english_text and name_text:
                 name_text = name.text.replace(" ", "▁").strip()
                 english_text = name.english_text.replace(" ", "▁")
-                f_out.write(
+                alignment_f_out.write(
                     f"{' '.join(name_text)} ||| {' '.join(english_text)}\n"
                 )
 
         # then perform the actual call to fast_align
         try:
-            with open(fastalign_output, "w", encoding="utf-8") as f_out, open(
-                "/dev/null", "w"
-            ) as _:
+            fastalign_completed_pid = subprocess.run(
+                [
+                    "fast_align",
+                    "-v",
+                    "-d",
+                    "-o",
+                    "-i",
+                    alignment_train_data_fname,
+                ],
+                capture_output=True,
+                encoding="utf-8",
+                text=True,
+            )
 
-                fastalign_completed_pid = subprocess.run(
-                    [
-                        "fast_align",
-                        "-v",
-                        "-d",
-                        "-o",
-                        "-i",
-                        alignment_train_data,
-                    ],
-                    capture_output=True,
-                    encoding="utf-8",
-                    text=True,
-                )
-
-                fastalign_stdout = [
-                    line
-                    for name, line in zip(
-                        names, fastalign_completed_pid.stdout.split("\n")
-                    )
-                ]
+            fastalign_stdout = [
+                line
+                for name, line in zip(names, fastalign_completed_pid.stdout.split("\n"))
+            ]
 
         except subprocess.CalledProcessError as err:
             print(err)
@@ -509,17 +495,13 @@ class FastAligner:
             raise ValueError("fast_align must be installed!")
 
         # get all the alignments out as a collection
-        alignments = self.load_alignments_from_iterable(
-            iterable=fastalign_stdout
-        )
+        alignments = self.load_alignments_from_iterable(iterable=fastalign_stdout)
 
         # then link the names with the alignments
 
         if self.debug_mode:
             print("Adding alignments to names...")
-            name_alignment_iter = tqdm(
-                zip(names, alignments), total=len(names)
-            )
+            name_alignment_iter = tqdm(zip(names, alignments), total=len(names))
         else:
             name_alignment_iter = zip(names, alignments)
 
@@ -531,9 +513,8 @@ class FastAligner:
 
         # finally remove the temporary files unless told otherwise
 
-        if not self.preserve_raw_output:
-            alignment_train_data.unlink()
-            fastalign_output.unlink()
+        if not self.preserve_data:
+            alignment_train_data_path.unlink(missing_ok=True)
 
         return alignments, names
 
@@ -548,9 +529,7 @@ class NameProcessor:
     def process(self, string: str) -> str:
         raise NotImplementedError
 
-    def __call__(
-        self, names: List[TransliteratedName]
-    ) -> List[TransliteratedName]:
+    def __call__(self, names: List[TransliteratedName]) -> List[TransliteratedName]:
         if self.inplace:
             return self._call_inplace(names)
         else:
@@ -565,12 +544,11 @@ class NameProcessor:
             processed_name = self.process(name.text)
 
             if self.debug_mode and orig_text != processed_name:
-                print(
-                    f"[{name.english_text}] {orig_text} => {processed_name}".strip()
-                )
+                print(f"[{name.english_text}] {orig_text} => {processed_name}".strip())
                 name_is_unchanged = False
             else:
-                name_is_unchanged = True
+                # Don't auto-set to True here to avoid overwriting a previous False
+                name_is_unchanged = name.is_unchanged
             name.is_unchanged = name_is_unchanged
             name.original_text = orig_text
             name.text = processed_name
@@ -588,16 +566,17 @@ class NameProcessor:
             processed_name = self.process(name.text)
 
             if self.debug_mode and orig_text != processed_name:
-                print(
-                    f"[{name.english_text}] {orig_text} => {processed_name}".strip()
-                )
+                print(f"[{name.english_text}] {orig_text} => {processed_name}".strip())
                 name_is_unchanged = False
             else:
-                name_is_unchanged = True
+                # Don't auto-set to True here to avoid overwriting a previous False
+                name_is_unchanged = name.is_unchanged
             output.append(
                 TransliteratedName(
+                    wikidata_id=name.wikidata_id,
                     text=processed_name,
                     language=name.language,
+                    conll_type=name.conll_type,
                     unicode_analyzer=name.unicode_analyzer,
                     anomalous=name.anomalous,
                     noise_sample=name.noise_sample,
@@ -661,9 +640,7 @@ class PermuteLowestDistance(NameProcessor):
     between the name and its romanized version.
     """
 
-    distance_function: Callable[[str, str], float] = attr.ib(
-        default=editdistance.eval
-    )
+    distance_function: Callable[[str, str], float] = attr.ib(default=editdistance.eval)
 
     length_lower_bound: int = attr.ib(repr=False, default=2)
     length_upper_bound: int = attr.ib(repr=False, default=4)
@@ -695,11 +672,7 @@ class PermuteLowestDistance(NameProcessor):
 
             # skip over names that have too few or too many tokens
 
-            if not (
-                self.length_lower_bound
-                <= len(tokens)
-                <= self.length_upper_bound
-            ):
+            if not (self.length_lower_bound <= len(tokens) <= self.length_upper_bound):
                 output.append(name)
 
             # otherwise find the best permutation
@@ -707,19 +680,14 @@ class PermuteLowestDistance(NameProcessor):
 
                 permuted = [" ".join(perm) for perm in it.permutations(tokens)]
                 permuted_romanized = [
-                    " ".join(perm)
-                    for perm in it.permutations(romanized_tokens)
+                    " ".join(perm) for perm in it.permutations(romanized_tokens)
                 ]
 
                 best_distance = np.inf
                 best_name = name.text
 
-                for permutation, rom_permutation in zip(
-                    permuted, permuted_romanized
-                ):
-                    ed = self.distance_function(
-                        rom_permutation, name.english_text
-                    )
+                for permutation, rom_permutation in zip(permuted, permuted_romanized):
+                    ed = self.distance_function(rom_permutation, name.english_text)
 
                     if ed < best_distance:
                         best_distance = ed
@@ -737,8 +705,10 @@ class PermuteLowestDistance(NameProcessor):
 
                 output.append(
                     TransliteratedName(
+                        wikidata_id=name.wikidata_id,
                         text=self.strip_comma(best_name),
                         language=name.language,
+                        conll_type=name.conll_type,
                         unicode_analyzer=name.unicode_analyzer,
                         anomalous=name.anomalous,
                         noise_sample=name.noise_sample,
@@ -761,11 +731,7 @@ class PermuteLowestDistance(NameProcessor):
             romanized_tokens = self.remove_comma(romanized_name).split()
             orig_text = name.text
 
-            if not (
-                self.length_lower_bound
-                <= len(tokens)
-                <= self.length_upper_bound
-            ):
+            if not (self.length_lower_bound <= len(tokens) <= self.length_upper_bound):
                 continue
 
             permuted = [" ".join(perm) for perm in it.permutations(tokens)]
@@ -776,9 +742,7 @@ class PermuteLowestDistance(NameProcessor):
             best_distance = np.inf
             best_name = name.text
 
-            for permutation, rom_permutation in zip(
-                permuted, permuted_romanized
-            ):
+            for permutation, rom_permutation in zip(permuted, permuted_romanized):
                 ed = self.distance_function(rom_permutation, name.english_text)
 
                 if ed < best_distance:
@@ -802,14 +766,10 @@ class RemoveParenthesisPermuteLowestDistance(NameProcessor):
     """Composes ParenthesisRemover and ED-based reordering"""
 
     def __attrs_post_init__(self) -> None:
-        self.parenthesis_remover = ParenthesisRemover(
-            debug_mode=self.debug_mode
-        )
+        self.parenthesis_remover = ParenthesisRemover(debug_mode=self.debug_mode)
         self.ed_permuter = PermuteLowestDistance(debug_mode=self.debug_mode)
 
-    def __call__(
-        self, names: List[TransliteratedName]
-    ) -> List[TransliteratedName]:
+    def __call__(self, names: List[TransliteratedName]) -> List[TransliteratedName]:
 
         processed = self.parenthesis_remover(names)
         processed = self.ed_permuter(processed)
@@ -822,7 +782,7 @@ class TransliteratedNameLoader:
     language_column: str = attr.ib(default="language")
     name_column: str = attr.ib(default="alias", repr=False)
     wikidata_id_column: str = attr.ib(default="wikidata_id", repr=False)
-    conll_type_column: str = attr.ib(default="type", repr=False)
+    conll_type_column: str = attr.ib(default="type", repr=True)
     english_column: Optional[str] = attr.ib(default="eng", repr=False)
     unicode_analyzer = UnicodeAnalyzer()
     debug_mode: bool = attr.ib(default=False)
@@ -831,9 +791,7 @@ class TransliteratedNameLoader:
         row_ix, row = tupl
 
         if self.debug_mode:
-            print(
-                f"[NameLoader] Creating TransliteratedName from row {row_ix}..."
-            )
+            print(f"[NameLoader] Creating TransliteratedName from row {row_ix}...")
 
         return TransliteratedName(
             text=str(row[self.name_column]),
@@ -843,6 +801,7 @@ class TransliteratedNameLoader:
             conll_type=row[self.conll_type_column],
             wikidata_id=row[self.wikidata_id_column],
             is_unchanged=True,
+            anomalous=False,
         )
 
     def __call__(self, corpus: pd.DataFrame) -> List[TransliteratedName]:
@@ -874,7 +833,7 @@ class Corpus:
     ignore_punctuation: bool = attr.ib(default=True)
     ignore_numbers: bool = attr.ib(default=True)
     normalize_histogram: bool = attr.ib(default=True)
-    preserve_fastalign_output: bool = attr.ib(repr=False, default=False)
+    preserve_fastalign_data: bool = attr.ib(repr=False, default=False)
     fastalign_verbose: bool = attr.ib(repr=False, default=False)
     permuter_debug_mode: bool = attr.ib(repr=False, default=False)
     permuter_inplace: bool = attr.ib(repr=False, default=False)
@@ -885,16 +844,16 @@ class Corpus:
     filter_out_blank: bool = attr.ib(default=True)
     placeholder_token: str = attr.ib(default="@")
 
-    def filter_names(
-        self, names: List[TransliteratedName]
-    ) -> List[TransliteratedName]:
+    def filter_names(self, names: List[TransliteratedName]) -> List[TransliteratedName]:
 
         output = []
 
         for n in names:
-            if n.text.strip() and (
-                n.english_text if self.require_english else True
-            ):
+            transliteration_not_blank = bool(n.text.strip())
+            has_english_if_needed = (
+                n.english_text != n.wikidata_id if self.require_english else True
+            )
+            if transliteration_not_blank and has_english_if_needed:
                 output.append(n)
             else:
                 print(f"Excluding: {n}")
@@ -916,7 +875,7 @@ class Corpus:
             print("[Corpus] Setting up aligner...")
         self.fast_aligner = FastAligner(
             verbose=self.fastalign_verbose,
-            preserve_raw_output=self.preserve_fastalign_output,
+            preserve_data=self.preserve_fastalign_data,
             debug_mode=self.debug_mode,
         )
 
@@ -964,6 +923,7 @@ class Corpus:
 
     def compute_alignments(self) -> None:
 
+        # we can just take the names if blanks have been filtered out
         aligner_input = (
             self.names
             if self.filter_out_blank
@@ -1034,10 +994,12 @@ class AnomalousTagger:
     ) -> Iterable[TransliteratedName]:
         return [
             TransliteratedName(
+                wikidata_id=n.wikidata_id,
                 text=n.text,
                 unicode_analyzer=n.unicode_analyzer,
                 anomalous=self.classify(n),
                 language=n.language,
+                conll_type=n.conll_type,
                 is_unchanged=n.is_unchanged,
             )
             for n in names
@@ -1174,9 +1136,7 @@ class AggregatedTagger(AnomalousTagger):
             "majority_vote": lambda preds: bool(np.mean(preds) > 0),
         }.get(self.aggregation_method)
 
-    def __call__(
-        self, names: List[TransliteratedName]
-    ) -> List[TransliteratedName]:
+    def __call__(self, names: List[TransliteratedName]) -> List[TransliteratedName]:
 
         preds_per_tagger = [t.get_preds(names) for t in self.taggers]
         preds = list(zip(*preds_per_tagger))
@@ -1184,10 +1144,12 @@ class AggregatedTagger(AnomalousTagger):
 
         tagged_names = [
             TransliteratedName(
+                wikidata_id=w.wikidata_id,
                 text=w.text,
                 unicode_analyzer=w.unicode_analyzer,
                 anomalous=pred,
                 language=w.language,
+                conll_type=w.conll_type,
                 noise_sample=False,
                 is_unchanged=w.is_unchanged,
             )

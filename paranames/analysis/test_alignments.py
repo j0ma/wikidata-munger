@@ -20,7 +20,7 @@ def compute_crossing_alignments(
     language_column: str,
     human_readable_lang_names: Dict[str, str],
     find_best_token_permutation: bool = False,
-    preserve_fastalign_output: bool = False,
+    preserve_fastalign_data: bool = False,
     debug_mode: bool = False,
     write_permuted_names: bool = True,
     names_output_folder: str = "/tmp/test_alignments_names",
@@ -39,7 +39,7 @@ def compute_crossing_alignments(
         permuter_inplace=True,
         find_best_token_permutation=find_best_token_permutation,
         analyze_unicode=False,
-        preserve_fastalign_output=preserve_fastalign_output,
+        preserve_fastalign_data=preserve_fastalign_data,
         debug_mode=debug_mode,
         out_folder=names_output_folder,
     )
@@ -90,9 +90,9 @@ def compute_crossing_alignments(
 @click.option("--num-workers", type=int, default=2)
 @click.option("--chunksize", type=int, default=15000)
 @click.option(
-    "--preserve-fastalign-output",
+    "--preserve-fastalign-data",
     is_flag=True,
-    help="Do not delete the alignmer output",
+    help="Do not delete the aligner training data",
 )
 @click.option("--num-debug-chunks", type=int, default=pow(10, 10))
 @click.option(
@@ -112,7 +112,7 @@ def main(
     permute_tokens,
     num_workers,
     chunksize,
-    preserve_fastalign_output,
+    preserve_fastalign_data,
     num_debug_chunks,
     write_permuted_names,
     names_output_folder,
@@ -185,7 +185,7 @@ def main(
         language_column,
         human_readable_lang_names=human_readable_lang_names,
         find_best_token_permutation=permute_tokens,
-        preserve_fastalign_output=preserve_fastalign_output,
+        preserve_fastalign_data=preserve_fastalign_data,
         debug_mode=debug_mode,
         write_permuted_names=write_permuted_names,
         names_output_folder=names_output_folder,

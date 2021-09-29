@@ -10,6 +10,7 @@ from paranames.util import read, write
 import paranames.util.script as s
 from p_tqdm import p_map
 import orjson
+import attr
 
 
 def standardize_names(
@@ -17,6 +18,8 @@ def standardize_names(
     language_column: str,
     alias_column: str,
     id_column: str,
+    type_column: str,
+    english_column: str,
     num_workers: int,
     chunksize: int,
     human_readable_lang_names: Dict[str, str],
@@ -26,6 +29,7 @@ def standardize_names(
     chunk_rows: bool = False,
     corpus_require_english: bool = False,
     corpus_filter_blank: bool = False,
+    corpus_preserve_fastalign_data: bool = False,
     *args,
     **kwargs,
 ) -> pd.DataFrame:
@@ -71,9 +75,9 @@ def standardize_names(
         permuter_inplace=True,
         find_best_token_permutation=True,
         analyze_unicode=False,
-        preserve_fastalign_output=False,
-        require_english=False,
-        filter_out_blank=False,
+        preserve_fastalign_data=corpus_preserve_fastalign_data,
+        require_english=corpus_require_english,
+        filter_out_blank=corpus_filter_blank,
         num_workers=num_workers,
     )
 
@@ -109,8 +113,25 @@ def standardize_names(
     )
 
     print("[standardize_names] Replacing old names...")
-    data[alias_column] = [n.text for n in pooled_corpus.names]
-    data["unchanged"] = [n.is_unchanged for n in pooled_corpus.names]
+    clean_data = pd.DataFrame.from_records(
+        (attr.asdict(n) for n in pooled_corpus.names),
+        columns=[
+            id_column,
+            "english_text",
+            "text",
+            language_column,
+            "conll_type",
+            "anomalous",
+            "is_unchanged",
+        ],
+    ).rename(
+        columns={
+            "english_text": english_column,
+            "text": alias_column,
+            "conll_type": type_column,
+        }
+    )
+    data = clean_data
 
     # finally mask out rows with now empty labels
     labels_nonempty = data[alias_column].apply(lambda s: bool(s))
@@ -137,6 +158,7 @@ def standardize_names(
 @click.option("--debug-mode", is_flag=True)
 @click.option("--corpus-stats-output", required=True)
 @click.option("--chunk_rows", is_flag=True)
+@click.option("--preserve-fastalign-data", is_flag=True)
 def main(
     input_file,
     output_file,
@@ -155,6 +177,7 @@ def main(
     debug_mode,
     corpus_stats_output,
     chunk_rows,
+    preserve_fastalign_data,
 ):
 
     # read in human readable language names
@@ -174,21 +197,25 @@ def main(
     data = data.sort_values(language_column)
 
     # standardize names
+    if debug_mode:
+        print("Standardizing names...")
     data = standardize_names(
         data,
         id_column=id_column,
         type_column=type_column,
+        english_column=english_column,
+        alias_column=alias_column,
+        language_column=language_column,
         num_workers=num_workers,
         chunksize=chunksize,
-        alias_column=alias_column,
         permuter_type=permuter_type,
-        language_column=language_column,
         human_readable_lang_names=human_readable_lang_names,
-        corpus_require_english=corpus_require_english,
-        corpus_filter_blank=corpus_filter_blank,
         debug_mode=debug_mode,
         corpus_stats_output=corpus_stats_output,
         chunk_rows=chunk_rows,
+        corpus_require_english=True,  # corpus_require_english,
+        corpus_filter_blank=True,  # corpus_filter_blank,
+        corpus_preserve_fastalign_data=preserve_fastalign_data,
     )
 
     # write to disk

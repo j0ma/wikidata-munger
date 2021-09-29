@@ -104,7 +104,7 @@ standardize_names () {
         -i $input_file -o $output_file -f tsv \
         --human-readable-langs-path ~/paranames/data/human_readable_lang_names.json \
         --permuter-type $permuter_type --corpus-stats-output ${extra_data_folder}/standardize_names_stats_$conll_type \
-        --debug-mode --num-workers $num_workers
+        --debug-mode --num-workers $num_workers --corpus-require-english
 }
 
 compute_script_entropy () {
