@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+from typing import Pattern
+import re
+
 import click
 import pandas as pd
 from paranames.util import read, write
@@ -117,6 +120,16 @@ def apply_entity_disambiguation_rules(
     return data
 
 
+def remove_parentheses(
+    data: pd.DataFrame, english_column: str, alias_column: str, regex: Pattern
+) -> pd.DataFrame:
+    data[english_column] = data[english_column].apply(
+        lambda e: regex.sub("", e).strip()
+    )
+    data[alias_column] = data[alias_column].apply(lambda a: regex.sub("", a).strip())
+    return data
+
+
 @click.command()
 @click.option("--input-file", "-i")
 @click.option("--output-file", "-o")
@@ -154,6 +167,12 @@ def main(
     # filter rows using entity disambiguation rules
     data = apply_entity_disambiguation_rules(
         data, id_column=id_column, type_column=type_column
+    )
+
+    # remove parentheses from english and alias columns
+    re_parenthesis = re.compile(r"\(.*\)")  # compile only once
+    data = remove_parentheses(
+        data, english_column="eng", alias_column=alias_column, regex=re_parenthesis
     )
 
     # write to disk
