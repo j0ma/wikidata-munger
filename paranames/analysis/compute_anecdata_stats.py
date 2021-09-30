@@ -4,8 +4,10 @@
 
 from pathlib import Path
 
+from sklearn.metrics import confusion_matrix
 from paranames.util import read, orjson_dump
 import pandas as pd
+import numpy as np
 import click
 
 SCRIPT_STANDARDIZATION_CHUNKSIZE = 10
@@ -21,6 +23,7 @@ def script_standardization_stats(
     id_column: str,
     language_column: str,
 ) -> None:
+    confusion_matrices = []
     unique_languages = set()
     script_anecdata_path = Path(script_anecdata_folder)
     script_anecdata_files = script_anecdata_path.glob("anecdata_*.tsv")
@@ -62,7 +65,7 @@ def script_standardization_stats(
             "n_incorrectly_removed": n_incorrectly_removed,
             "n_unknown": n_unknown,
             "n_should_remove": len(should_remove_ids),
-            "n_should_not_remove": len(dont_remove_ids)
+            "n_should_not_remove": len(dont_remove_ids),
         }
         stats["global"]["n_correctly_removed"] += n_correctly_removed
         stats["global"]["n_incorrectly_removed"] += n_incorrectly_removed
@@ -70,18 +73,24 @@ def script_standardization_stats(
         stats["global"]["n_should_remove"] += len(should_remove_ids)
         stats["global"]["n_should_not_remove"] += len(dont_remove_ids)
 
-        # print(
-        # f"[{lang}] Correctly removed: {n_correctly_removed} / {SCRIPT_STANDARDIZATION_CHUNKSIZE}"
-        # )
-        # print(
-        # f"[{lang}] Incorrectly removed: {n_incorrectly_removed} / {SCRIPT_STANDARDIZATION_CHUNKSIZE}"
-        # )
-        # print(f"[{lang}] Unknown (not part of anecdata): {n_unknown}")
-        # print()
+        # scikit-learn confusion matrix
+        y_true = [False for _id in dont_remove_ids] + [
+            True for _id in should_remove_ids
+        ]
+        y_pred = [_id in removed_ids for _id in dont_remove_ids] + [
+            _id in removed_ids for _id in should_remove_ids
+        ]
 
-    print(orjson_dump(stats))
-    # stats_df = pd.DataFrame(stats).T
-    # print(stats_df)
+        C = confusion_matrix(y_true=y_true, y_pred=y_pred)
+        confusion_matrices.append(C)
+        print(f"[{lang}] Confusion matrix:")
+        print(C)
+        print()
+
+    # print(orjson_dump(stats))
+    confusion_matrices = np.array(confusion_matrices)
+    print("Average confusion matrix:")
+    print(confusion_matrices.mean(axis=0))
 
 
 @click.command()
