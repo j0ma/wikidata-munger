@@ -153,7 +153,7 @@ def main(
 ):
 
     # read in data
-    data = read(input_file, io_format=io_format)
+    data = read(input_file, io_format=io_format).astype(str)
 
     # drop rows that are not entities (e.g. P-ids)
     data = data[data[id_column].str.startswith("Q")]
