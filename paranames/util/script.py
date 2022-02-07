@@ -449,11 +449,18 @@ class FastAligner:
         _, alignment_train_data_fname = tf.mkstemp(
             dir=Path("/tmp"), prefix="fast_align_train_data_", text=True
         )
+        _, alignment_output_fname = tf.mkstemp(
+            dir=Path("/tmp"), prefix="fast_align_alignments_", text=True
+        )
         alignment_train_data_path = Path(alignment_train_data_fname)
+        alignment_output_path = Path(alignment_output_fname)
 
         if self.verbose:
             print(
                 f"[FastAligner] Saving alignment training data to: {alignment_train_data_fname}"
+            )
+            print(
+                f"[FastAligner] Saving alignment outputs data to: {alignment_output_fname}"
             )
 
         # first we write our words into a temporary file for fast_align
@@ -482,6 +489,10 @@ class FastAligner:
                 encoding="utf-8",
                 text=True,
             )
+
+            if self.preserve_data:
+                with alignment_output_path.open("a") as alignment_output_fout:
+                    alignment_output_fout.write(fastalign_completed_pid.stdout)
 
             fastalign_stdout = [
                 line
@@ -515,6 +526,7 @@ class FastAligner:
 
         if not self.preserve_data:
             alignment_train_data_path.unlink(missing_ok=True)
+            alignment_output_path.unlink(missing_ok=True)
 
         return alignments, names
 
