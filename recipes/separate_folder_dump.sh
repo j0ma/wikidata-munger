@@ -90,7 +90,7 @@ standardize_script () {
         -i $input_file -o $output_file -f tsv \
         --vote-aggregation-method $vote_aggregation_method \
         --filtered-names-output-file "${extra_data_folder}/filtered_names.tsv" \
-        --write-filtered-names --compute-script-entropy --num-workers $num_workers
+        --write-filtered-names --num-workers $num_workers
 }
 
 standardize_names () {
@@ -159,8 +159,8 @@ combined_postprocessed_tsv="${output_folder}/combined_postprocessed.tsv"
 postprocess $combined_tsv $combined_postprocessed_tsv
 
 # compute script entropy (before)
-script_entropy_results_before="${extra_data_folder}/tacl_script_entropy_${voting_method}_before.tsv"
-compute_script_entropy $combined_postprocessed_tsv $script_entropy_results_before
+#script_entropy_results_before="${extra_data_folder}/tacl_script_entropy_${voting_method}_before.tsv"
+#compute_script_entropy $combined_postprocessed_tsv $script_entropy_results_before
 
 # script standardization: remove parentheses from everything
 combined_script_standardized_tsv="${output_folder}/combined_script_standardized_${voting_method}.tsv"
@@ -170,8 +170,8 @@ standardize_script \
     $voting_method $num_workers
 
 # compute script entropy (after)
-script_entropy_results_after="${extra_data_folder}/tacl_script_entropy_${voting_method}_after.tsv"
-compute_script_entropy $combined_script_standardized_tsv $script_entropy_results_after
+#script_entropy_results_after="${extra_data_folder}/tacl_script_entropy_${voting_method}_after.tsv"
+#compute_script_entropy $combined_script_standardized_tsv $script_entropy_results_after
 
 # separate into PER,LOC,ORG for name permutations
 for conll_type in $entity_types
