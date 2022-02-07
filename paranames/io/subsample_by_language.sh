@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# NOTE: the use of "rg" with a relatively simple regex can cause other fields besides the language field
+# to be matched as well if another field has a value equal to the language in question
+
 input_tsv=$1
 output_tsv=${2:-subsampled.tsv}
 n_per_lang=${3:-10000}
