@@ -161,6 +161,7 @@ def main(
             ]
         ),
         keep_default_na=False,
+        dtype=str
     )
 
     if debug_mode:

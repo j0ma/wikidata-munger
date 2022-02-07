@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from typing import Dict, Tuple, Generator
+from typing import Dict, Tuple, Generator, Any, Iterable
 from functools import partial
 from pathlib import Path
 import tempfile
@@ -16,8 +16,21 @@ from p_tqdm import p_map
 vote_aggregation_methods = set(["baseline", "all", "any", "majority_vote"])
 
 
+def safe_concat(
+    df_iterable: Iterable[pd.DataFrame], ignore_index: bool = True
+) -> pd.DataFrame:
+    """Concatenates individual DataFrames in df_iterable.
+
+    In case there are no rows to concatenate, returns an empty DataFrame
+    """
+    try:
+        return pd.concat(df_iterable, ignore_index=ignore_index)
+    except ValueError:
+        return pd.DataFrame()
+
+
 def tag_and_split_names(
-    language_subset,
+    language_subset: Tuple[Any, pd.DataFrame],
     aggregation_method: str,
     critical_value: float = 0.1,
     language_column: str = "language",
@@ -28,6 +41,9 @@ def tag_and_split_names(
 ):
 
     language, subset = language_subset
+
+    if subset.empty:
+        return pd.DataFrame(), subset
 
     unicode_analyzer = s.UnicodeAnalyzer(
         strip=strip,
@@ -97,10 +113,7 @@ def tag_and_split_names(
 def slice_by_column(
     data: pd.DataFrame, column: str
 ) -> Generator[Tuple[str, pd.DataFrame], None, None]:
-    """Yields slices of data frame based on values of column.
-
-    Note: assumes values of column are in sorted order
-    """
+    """Yields slices of data frame based on values of column."""
     unique_values = data[column].unique()
 
     for val in unique_values:
@@ -144,8 +157,8 @@ def standardize_script(
         filtered_chunks.append(filtered_names)
         output_chunks.append(kept_names)
 
-    output = pd.concat(output_chunks, ignore_index=True)
-    filtered = pd.concat(filtered_chunks, ignore_index=True)
+    output = safe_concat(output_chunks, ignore_index=True)
+    filtered = safe_concat(filtered_chunks, ignore_index=True)
 
     return output, filtered
 
@@ -163,7 +176,7 @@ def validate_name(
 
 def baseline_script_standardization(
     data, scripts_file, alias_column, language_column, *args, **kwargs
-) -> Tuple[pd.DataFrame, pd.DataFrame]:
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     scripts = read(scripts_file, "tsv")
     allowed_scripts_per_lang = {
         lang: set(scr.split(", "))
@@ -182,12 +195,18 @@ def baseline_script_standardization(
         index=data.index,
     )
 
+    manually_intervened_mask = data[language_column].apply(
+        lambda l: l in allowed_scripts_per_lang
+    )
+    manually_not_intervened_mask = ~manually_intervened_mask
+
     print("No. of valid rows: {} / {}".format(sum(valid_rows_mask), data.shape[0]))
 
-    valid = data[valid_rows_mask]
+    valid_intervened = data[valid_rows_mask & manually_intervened_mask]
+    valid_not_intervened = data[valid_rows_mask & manually_not_intervened_mask]
     filtered = data[~valid_rows_mask]
 
-    return valid, filtered
+    return valid_intervened, valid_not_intervened, filtered
 
 
 @click.command()
@@ -239,28 +258,42 @@ def main(
     # need to sort by language to ensure ordered chunks
     data = data.sort_values(language_column)
 
-    if vote_aggregation_method == "baseline":
-        data, filtered = baseline_script_standardization(
-            data,
-            id_column=id_column,
-            type_column=type_column,
-            language_column=language_column,
-            aggregation_method=vote_aggregation_method,
-            num_workers=num_workers,
-            chunksize=chunksize,
-            scripts_file=scripts_file,
-            alias_column=alias_column,
-        )
-    else:
-        data, filtered = standardize_script(
-            data,
-            id_column=id_column,
-            type_column=type_column,
-            language_column=language_column,
-            aggregation_method=vote_aggregation_method,
-            num_workers=num_workers,
-            chunksize=chunksize,
-        )
+    (
+        data_manually_intervened,
+        data_not_intervened,
+        filtered_manual,
+    ) = baseline_script_standardization(
+        data,
+        id_column=id_column,
+        type_column=type_column,
+        language_column=language_column,
+        aggregation_method=vote_aggregation_method,
+        num_workers=num_workers,
+        chunksize=chunksize,
+        scripts_file=scripts_file,
+        alias_column=alias_column,
+    )
+
+    print(f"No. of rows manually intervened: {data_manually_intervened.shape[0]}")
+
+    data_heuristically_intervened, filtered_heuristic = standardize_script(
+        data_not_intervened,
+        id_column=id_column,
+        type_column=type_column,
+        language_column=language_column,
+        aggregation_method=vote_aggregation_method,
+        num_workers=num_workers,
+        chunksize=chunksize,
+    )
+
+    print(
+        f"No. of rows heuristically intervened using {vote_aggregation_method}: {data_heuristically_intervened.shape[0]}"
+    )
+
+    data = pd.concat(
+        [data_manually_intervened, data_heuristically_intervened], ignore_index=True
+    )
+    filtered = pd.concat([filtered_manual, filtered_heuristic], ignore_index=True)
 
     if write_filtered_names:
 
