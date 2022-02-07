@@ -172,17 +172,6 @@ def main(
         io_format=maybe_infer_io_format(counts_table_path),
     )
 
-    entropy_table = read(
-        entropy_table_path,
-        io_format=maybe_infer_io_format(entropy_table_path),
-    )
-
-    count_table = count_table.merge(
-        entropy_table[["language", "language_code"]],
-        on="language_code",
-        how="left",
-    )[["language", "language_code", "type", "count"]]
-
     if output_folder:
 
         output_folder = Path(output_folder)
@@ -191,11 +180,9 @@ def main(
             output_folder.mkdir()
 
         zipf_output_file = output_folder / "zipf_count_distribution.png"
-        entropy_output_file = output_folder / "entropy_distribution.png"
 
     else:
         zipf_output_file = ""
-        entropy_output_file = ""
 
     if collapse_types:
         count_table = count_table.groupby("language")["count"].sum().reset_index()
@@ -219,19 +206,6 @@ def main(
             width=counts_width,
             height=counts_height,
         )
-
-    plot_entropy_distribution(
-        entropy_table,
-        n_langs=n_languages_entropy,
-        save_path=entropy_output_file,
-        use_log_y=False,
-        width=entropy_width,
-        height=entropy_height,
-        disable_xticks=remove_xticks_entropy,
-        pruned=prune_entropy_plot,
-        entropy_threshold=entropy_threshold,
-        n_bins=n_bins,
-    )
 
 
 if __name__ == "__main__":
