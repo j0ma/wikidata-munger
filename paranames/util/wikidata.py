@@ -109,7 +109,7 @@ class WikidataMongoDB:
     ) -> None:
         self.database_name = database_name
         self.collection_name = collection_name
-        self.client = MongoClient(port=DEFAULT_MONGO_PORT)
+        self.client = MongoClient(port=DEFAULT_MONGODB_PORT)
         self.collection = self.client[self.database_name][self.collection_name]
 
     def find_matching_docs(
