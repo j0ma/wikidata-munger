@@ -6,6 +6,7 @@ import re
 import click
 import pandas as pd
 from paranames.util import read, write
+from rich import print
 
 vote_aggregation_methods = set(["all", "any", "majority_vote", "none"])
 
