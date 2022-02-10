@@ -25,7 +25,7 @@ mkdir --verbose -p $output_folder/combined
 mkdir --verbose -p $extra_data_folder
 
 # NOTE: edit this to increase/decrease threshold for excluding small languages
-default_name_threshold=1000
+default_name_threshold=0
 
 # NOTE: add comma separted list here to exclude languages
 exclude_these_langs=""

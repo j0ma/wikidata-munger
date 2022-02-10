@@ -163,7 +163,8 @@ def main(
     data = data.rename(columns={english_column: "eng"})
 
     # drop languages with fewer than minimum threshold of names
-    data = keep_above_threshold(data, language_column, min_names_threshold)
+    if min_names_threshold > 0:
+        data = keep_above_threshold(data, language_column, min_names_threshold)
 
     # filter rows using entity disambiguation rules
     data = apply_entity_disambiguation_rules(
