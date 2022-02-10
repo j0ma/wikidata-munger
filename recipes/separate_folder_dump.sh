@@ -172,10 +172,6 @@ standardize_script \
     $combined_script_standardized_tsv \
     $voting_method $num_workers
 
-# compute script entropy (after)
-#script_entropy_results_after="${extra_data_folder}/tacl_script_entropy_${voting_method}_after.tsv"
-#compute_script_entropy $combined_script_standardized_tsv $script_entropy_results_after
-
 # separate into PER,LOC,ORG for name permutations
 for conll_type in $entity_types
 do
