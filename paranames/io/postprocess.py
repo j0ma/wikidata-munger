@@ -141,6 +141,8 @@ def remove_parentheses(
 @click.option("--english-column", "-e", default="name")
 @click.option("--language-column", "-l", default="language")
 @click.option("--min-names-threshold", "-m", default=0)
+@click.option("--should-disambiguate-entity-types", "-d", is_flag=True, default=False)
+@click.option("--should-remove-parentheses", "-r", is_flag=True, default=False)
 def main(
     input_file,
     output_file,
@@ -151,6 +153,8 @@ def main(
     english_column,
     language_column,
     min_names_threshold,
+    should_disambiguate_entity_types,
+    should_remove_parentheses
 ):
 
     # read in data
@@ -167,15 +171,17 @@ def main(
         data = keep_above_threshold(data, language_column, min_names_threshold)
 
     # filter rows using entity disambiguation rules
-    data = apply_entity_disambiguation_rules(
-        data, id_column=id_column, type_column=type_column
-    )
+    if should_disambiguate_entity_types:
+        data = apply_entity_disambiguation_rules(
+            data, id_column=id_column, type_column=type_column
+        )
 
     # remove parentheses from english and alias columns
-    re_parenthesis = re.compile(r"\(.*\)")  # compile only once
-    data = remove_parentheses(
-        data, english_column="eng", alias_column=alias_column, regex=re_parenthesis
-    )
+    if should_remove_parentheses:
+        re_parenthesis = re.compile(r"\(.*\)")
+        data = remove_parentheses(
+            data, english_column="eng", alias_column=alias_column, regex=re_parenthesis
+        )
 
     # write to disk
     write(data, output_file, io_format=io_format)

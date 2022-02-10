@@ -75,7 +75,10 @@ postprocess () {
 
     # apply things like entity name disambiguation rules
     python paranames/io/postprocess.py \
-        -i $input_file -o $output_file -f $default_format -m $default_name_threshold
+        -i $input_file -o $output_file -f $default_format \
+        -m $default_name_threshold \
+        --should-disambiguate-entity-types \
+        --should-remove-parentheses
 
 }
 
