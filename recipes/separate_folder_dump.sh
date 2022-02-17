@@ -72,13 +72,17 @@ dump () {
 postprocess () {
     local input_file=$1
     local output_file=$2
+    local should_disambiguate=${3:-yes}
 
-    # apply things like entity name disambiguation rules
+    if [ "${should_disambiguate}"="yes"]
+    then
+        disamb_flag="--should-disambiguate-entity-types"
+    else
+        disamb_flag=""
+
     python paranames/io/postprocess.py \
         -i $input_file -o $output_file -f $default_format \
-        -m $default_name_threshold \
-        --should-disambiguate-entity-types \
-        --should-remove-parentheses
+        -m $default_name_threshold $disamb_flag --should-remove-parentheses 
 
 }
 
