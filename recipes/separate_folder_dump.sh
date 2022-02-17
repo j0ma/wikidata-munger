@@ -158,16 +158,12 @@ done
 wait
 
 # combine everything into one tsv for script standardization
-# this way we get interpretable entropy numbers by language, not just
 combined_tsv="${output_folder}/combined_postprocessed.tsv"
 combine_tsv_files ${output_folder}/*.tsv | tqdm > $combined_tsv
 
 combined_postprocessed_tsv="${output_folder}/combined_postprocessed.tsv"
 postprocess $combined_tsv $combined_postprocessed_tsv
 
-# compute script entropy (before)
-#script_entropy_results_before="${extra_data_folder}/tacl_script_entropy_${voting_method}_before.tsv"
-#compute_script_entropy $combined_postprocessed_tsv $script_entropy_results_before
 
 # script standardization: remove parentheses from everything
 combined_script_standardized_tsv="${output_folder}/combined_script_standardized_${voting_method}.tsv"
