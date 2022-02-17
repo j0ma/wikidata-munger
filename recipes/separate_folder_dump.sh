@@ -184,24 +184,8 @@ do
 done
 wait
 
-echo "Standardize names..."
-echo "WARNING: DEPRECATED! Will only link files..."
-for conll_type in $entity_types
-do
-    if [ "$conll_type" = "PER" ]
-    then
-        permuter_type="remove_parenthesis_edit_distance"
-    else
-        permuter_type="remove_parenthesis"
-    fi
-    echo "Type: ${conll_type}	Permuter: ${permuter_type} => DEPRECATED!!!"
-    name_standardization_input_tsv="${output_folder}/${conll_type}_script_standardized_${voting_method}.tsv"
-    name_standardization_output_tsv="${output_folder}/${conll_type}_script_name_standardized_${voting_method}.tsv"
-    ln -s $name_standardization_input_tsv $name_standardization_output_tsv
-done
-
 echo "Combine everything into one big tsv"
-final_combined_output="${output_folder}/combined_script_name_standardized_${voting_method}.tsv"
+final_combined_output="${output_folder}/combined_script_standardized_${voting_method}.tsv"
 echo "Destination: ${final_combined_output}"
 
 final_combination_entity_types=$(echo $entity_types | tr " " ",")
