@@ -160,7 +160,7 @@ wait
 # combine everything into one tsv for script standardization
 # this way we get interpretable entropy numbers by language, not just
 combined_tsv="${output_folder}/combined_postprocessed.tsv"
-combine_tsv_files ${output_folder}/*.tsv > $combined_tsv
+combine_tsv_files ${output_folder}/*.tsv | tqdm > $combined_tsv
 
 combined_postprocessed_tsv="${output_folder}/combined_postprocessed.tsv"
 postprocess $combined_tsv $combined_postprocessed_tsv
@@ -179,7 +179,7 @@ standardize_script \
 # separate into PER,LOC,ORG for name permutations
 for conll_type in $entity_types
 do
-    separate_by_entity_type $combined_script_standardized_tsv $conll_type \
+    separate_by_entity_type $combined_script_standardized_tsv $conll_type | tqdm \
         > "${output_folder}/${conll_type}_script_standardized_${voting_method}.tsv" &
 done
 wait
@@ -205,7 +205,7 @@ final_combined_output="${output_folder}/combined_script_name_standardized_${voti
 echo "Destination: ${final_combined_output}"
 
 final_combination_entity_types=$(echo $entity_types | tr " " ",")
-combine_tsv_files ${output_folder}/*_script_name_standardized_${voting_method}.tsv > $final_combined_output
+combine_tsv_files ${output_folder}/*_script_standardized_${voting_method}.tsv | tqdm > $final_combined_output
 
 separate_by_language $final_combined_output
 
