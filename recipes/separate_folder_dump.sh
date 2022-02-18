@@ -30,6 +30,9 @@ default_name_threshold=0
 # NOTE: add comma separted list here to exclude languages
 exclude_these_langs=""
 
+# Change to "yes" to disambiguate entity types
+should_disambiguate_types="no"
+
 dump () {
 
     local conll_type=$1
@@ -74,15 +77,18 @@ postprocess () {
     local output_file=$2
     local should_disambiguate=${3:-yes}
 
-    if [ "${should_disambiguate}"="yes"]
+    if [ "${should_disambiguate}" = "yes" ]
     then
+        echo "Disambiguating entity types!"
         disamb_flag="--should-disambiguate-entity-types"
     else
+        echo "Not disambiguating entity types!"
         disamb_flag=""
+    fi
 
     python paranames/io/postprocess.py \
         -i $input_file -o $output_file -f $default_format \
-        -m $default_name_threshold $disamb_flag --should-remove-parentheses 
+        -m $default_name_threshold --should-remove-parentheses $disamb_flag
 
 }
 
@@ -184,9 +190,8 @@ echo "Combine everything into one big tsv"
 final_combined_output="${output_folder}/combined_script_standardized_${voting_method}.tsv"
 echo "Destination: ${final_combined_output}"
 
-final_combination_entity_types=$(echo $entity_types | tr " " ",")
+rm -vrf $final_combined_output
 combine_tsv_files ${output_folder}/*_script_standardized_${voting_method}.tsv | tqdm > $final_combined_output
-
 separate_by_language $final_combined_output
 
 mv --verbose ${output_folder}/{PER,LOC,ORG,combined}*.tsv ${output_folder}/combined
