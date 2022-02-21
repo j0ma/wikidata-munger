@@ -1,8 +1,61 @@
-from paranames.util import orjson_dump
-import requests
-import lxml.html as html
+from urllib.parse import quote_plus
+
 import click
 import pandas as pd
+from qwikidata.sparql import return_sparql_query_results
+from paranames.util import orjson_dump
+
+
+def create_en_wikipedia_url(wikipedia_url: str):
+    tail = wikipedia_url.split("|")[-1].replace("]]", "").replace(" ", "_")
+
+    return f"https://en.wikipedia.org/wiki/{tail}"
+
+
+def get_language_codes_sparql():
+
+    lang_codes_query = """
+    SELECT
+      ?item 
+      ?c (CONTAINS(?c,"-") as ?subtag)
+      ?wdlabelen
+      (CONCAT("[[:en:",?enwikipeda,"\u007C",?enwikipeda,"]]") as ?wikipedia_link_en)
+      ?lang
+      ?wdlabelinlang
+      (CONCAT("[[:",?lang,":",?wikipeda,"\u007C",?wikipeda,"]]") as ?wikipedia_link)
+    WHERE
+    {
+      VALUES ?lang { "fr" }
+      ?item wdt:P424 ?c .
+      hint:Prior hint:rangeSafe true .
+      MINUS{?item wdt:P31 wd:Q47495990}
+      MINUS{?item wdt:P31/wdt:P279* wd:Q14827288} #exclude Wikimedia projects
+      MINUS{?item wdt:P31/wdt:P279* wd:Q17442446} #exclude Wikimedia internal stuff
+      OPTIONAL { ?item rdfs:label ?wdlabelinlang . FILTER( lang(?wdlabelinlang)= "fr" ) }
+      OPTIONAL { ?item rdfs:label ?wdlabelen . FILTER(lang(?wdlabelen)="en") }
+      OPTIONAL { [] schema:about ?item ; schema:inLanguage ?lang; schema:isPartOf / wikibase:wikiGroup "wikipedia" ; schema:name ?wikipeda } 
+      OPTIONAL { [] schema:about ?item ; schema:inLanguage "en"; schema:isPartOf / wikibase:wikiGroup "wikipedia" ; schema:name ?enwikipeda } 
+    }
+    ORDER BY ?c
+    """
+
+    lang_dicts = return_sparql_query_results(lang_codes_query)["results"]["bindings"]
+    output = []
+    for ld in lang_dicts:
+        row = {}
+        row["wikidata_url"] = ld["item"]["value"]
+        row["lang_code"] = ld["c"]["value"]
+        row["language"] = ld.get("wdlabelen", {}).get("value", row["lang_code"])
+        row["is_subtag"] = {"true": True, "false": False}.get(
+            ld["subtag"]["value"], False
+        )
+        row["en_wikipedia_link"] = create_en_wikipedia_url(
+            ld.get("wikipedia_link_en", {}).get("value", "")
+        )
+
+        output.append(row)
+
+    return output
 
 
 @click.command()
@@ -13,29 +66,18 @@ import pandas as pd
     help="URL to scrape",
 )
 @click.option(
-    "--sel",
-    "-s",
-    default="table.wikitable:nth-child(17)",
-    help="CSS Selector for table",
-)
-@click.option(
     "--columns",
     "-c",
-    default="name,language,script,wp_code,active_users,logo",
+    default="lang_code,language,is_subtag,en_wikipedia_link,wikidata_url",
     help="Comma-separated list of column names",
 )
-@click.option("--lang-col", default="language")
-@click.option("--value-col", default="wp_code")
 @click.option("--african-only", is_flag=True)
 @click.option("--abbrev-only", is_flag=True)
-def main(url, sel, columns, lang_col, value_col, african_only, abbrev_only):
-    column_names = columns.split(",")
-    tree = html.fromstring(requests.get(url).content)
-    table = tree.cssselect(sel)[0]
-    rows = table.cssselect("tr")
-    cells = [[td.text_content() for td in tr.cssselect("td")] for tr in rows]
-    table_rows = cells[1:]
-    df = pd.DataFrame.from_records(table_rows, columns=column_names)
+@click.option("--mapping-only", is_flag=True)
+def main(url, columns, african_only, abbrev_only, mapping_only):
+
+    output = get_language_codes_sparql()
+    df = pd.DataFrame.from_records(output, columns=columns.split(","))
 
     if african_only:
 
@@ -44,15 +86,16 @@ def main(url, sel, columns, lang_col, value_col, african_only, abbrev_only):
 
         df = df[df.language.isin(african_langs)].reset_index(drop=True)
 
-    lang_to_wikipedia_code = {
-        str(d[lang_col]).strip(): str(d[value_col].replace(" (closed)", "")).strip()
-        for d in df[[lang_col, value_col]].to_dict("records")
-    }
-
     if abbrev_only:
-        print("\n".join(lang_to_wikipedia_code.values()))
+        print("\n".join(df.lang_code.unique()))
+    elif mapping_only:
+        out = {}
+        for row in df.to_dict(orient="records"):
+            out[row["lang_code"]] = row["language"]
+        print(orjson_dump(out))
     else:
-        print(orjson_dump(lang_to_wikipedia_code))
+        for row in df.to_dict(orient="records"):
+            print(orjson_dump(row))
 
 
 if __name__ == "__main__":
