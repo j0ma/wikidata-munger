@@ -107,6 +107,7 @@ def tag_and_split_names(
 
     filtered_names = subset[subset["anomalous"]]
     kept_names = subset[~subset["anomalous"]]
+
     return filtered_names, kept_names
 
 
@@ -164,14 +165,22 @@ def standardize_script(
 
 
 def validate_name(
-    name: str, language: str, allowed_scripts: Dict[str, Dict[str, str]]
+    name: str,
+    language: str,
+    allowed_scripts: Dict[str, Dict[str, str]],
+    icu_mode: bool = False,
 ) -> bool:
     ua = s.UnicodeAnalyzer()
 
     if language not in allowed_scripts:
         return True
 
-    return ua.most_common_unicode_block(name) in allowed_scripts[language]
+    return (
+        ua.most_common_icu_script(name)
+
+        if icu_mode
+        else ua.most_common_unicode_block(name)
+    ) in allowed_scripts[language]
 
 
 def baseline_script_standardization(
@@ -180,6 +189,7 @@ def baseline_script_standardization(
     scripts = read(scripts_file, "tsv")
     allowed_scripts_per_lang = {
         lang: set(scr.split(", "))
+
         for lang, scr in zip(scripts.language_code, scripts.scripts_to_keep)
     }
 
@@ -190,6 +200,7 @@ def baseline_script_standardization(
                 language=row[language_column],
                 allowed_scripts=allowed_scripts_per_lang,
             )
+
             for ix, row in tqdm(data.iterrows(), total=data.shape[0])
         ],
         index=data.index,

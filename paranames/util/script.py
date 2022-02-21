@@ -25,6 +25,7 @@ from p_tqdm import p_map
 import pandas as pd
 import numpy as np
 import attr
+import icu
 
 import editdistance
 
@@ -57,6 +58,19 @@ class UnicodeAnalyzer:
         self.normalize_histogram = normalize_histogram
         self.ignore_numbers = ignore_numbers
 
+        # Skip punctuation depending on settings
+        self.punctuation_cond = (
+            lambda w: not self.is_punctuation(str(w))
+
+            if self.ignore_punctuation
+            else True
+        )
+
+        # Skip digits depending on settings
+        self.digit_cond = (
+            lambda w: not self.is_number(str(w)) if self.ignore_numbers else True
+        )
+
     def is_punctuation(self, s: str) -> bool:
         is_punc = ud.category(s).startswith("P")
         is_symb = ud.category(s).startswith("S")
@@ -69,21 +83,25 @@ class UnicodeAnalyzer:
     def maybe_strip(self, word: str) -> str:
         return str(word).strip() if self.strip else str(word)
 
-    def unicode_blocks(self, word: str) -> Counter:
-        punctuation_cond = (
-            lambda w: not self.is_punctuation(str(w))
-            if self.ignore_punctuation
-            else True
-        )
+    def histogram(self, word: str, icu_mode: bool = False) -> Counter:
+        histogram = self.icu_scripts(word) if icu_mode else self.unicode_blocks(word)
 
-        digit_cond = (
-            lambda w: not self.is_number(str(w)) if self.ignore_numbers else True
-        )
+        if self.normalize_histogram:
+            total = sum(histogram.values())
+
+            for block, count in histogram.items():
+                histogram[block] = count / total
+
+        return histogram
+
+    def unicode_blocks(self, word: str) -> Counter:
 
         return Counter(
             blocks.of(c)
+
             for c in self.maybe_strip(word)
-            if blocks.of(c) and punctuation_cond(c) and digit_cond(c)
+
+            if blocks.of(c) and self.punctuation_cond(c) and self.digit_cond(c)
         )
 
     def most_common_unicode_block(self, word: str) -> str:
@@ -96,15 +114,34 @@ class UnicodeAnalyzer:
         self,
         word: str,
     ) -> Counter:
-        histogram = self.unicode_blocks(word)
+        return self.histogram(word, icu_mode=False)
 
-        if self.normalize_histogram:
-            total = sum(histogram.values())
+    def get_icu_script(self, c: str) -> str:
+        return icu.Script.getScript(c).getName()
 
-            for block, count in histogram.items():
-                histogram[block] = count / total
+    def icu_scripts(self, word: str) -> Counter:
 
-        return histogram
+        return Counter(
+            self.get_icu_script(c)
+
+            for c in self.maybe_strip(word)
+
+            if self.get_icu_script(c)
+            and self.punctuation_cond(c)
+            and self.digit_cond(c)
+        )
+    
+    def most_common_icu_script(self, word: str) -> str:
+        try:
+            return self.icu_scripts(word).most_common(1)[0][0]
+        except IndexError:
+            return ""
+
+    def icu_script_histogram(
+        self,
+        word: str,
+    ) -> Counter:
+        return self.histogram(word, icu_mode=True)
 
 
 @attr.s(frozen=False, slots=True, hash=True)
@@ -137,6 +174,14 @@ class TransliteratedName:
     @property
     def unicode_block_histogram(self) -> Dict[str, float]:
         return self.unicode_analyzer.unicode_block_histogram(self.text)
+
+    @property
+    def most_common_icu_script(self) -> str:
+        return self.unicode_analyzer.most_common_icu_script(self.text)
+
+    @property
+    def icu_script_histogram(self) -> Dict[str, float]:
+        return self.unicode_analyzer.icu_script_histogram(self.text)
 
     def __hash__(self) -> int:
         return hash(self.text + self.language)
@@ -212,6 +257,7 @@ class Alignment:
         alignment_tokens: List[Tuple[int, ...]] = sorted(
             [
                 tuple([int(x) for x in at.split("-")])
+
                 for at in self.alignment_str.split(" ")
             ],
             key=lambda t: t[0],
@@ -336,6 +382,7 @@ class CorpusStatistics:
 
         for n in self.names:
             self.total_names += 1
+
             if n.alignment:
                 self.total_cross_alignments += n.alignment.n_cross_alignments
 
@@ -496,6 +543,7 @@ class FastAligner:
 
             fastalign_stdout = [
                 line
+
                 for name, line in zip(names, fastalign_completed_pid.stdout.split("\n"))
             ]
 
@@ -865,6 +913,7 @@ class Corpus:
             has_english_if_needed = (
                 n.english_text != n.wikidata_id if self.require_english else True
             )
+
             if transliteration_not_blank and has_english_if_needed:
                 output.append(n)
             else:
@@ -938,6 +987,7 @@ class Corpus:
         # we can just take the names if blanks have been filtered out
         aligner_input = (
             self.names
+
             if self.filter_out_blank
             else [n if n else self.placeholder_token for n in self.names]
         )
@@ -1014,6 +1064,7 @@ class AnomalousTagger:
                 conll_type=n.conll_type,
                 is_unchanged=n.is_unchanged,
             )
+
             for n in names
         ]
 
@@ -1165,6 +1216,7 @@ class AggregatedTagger(AnomalousTagger):
                 noise_sample=False,
                 is_unchanged=w.is_unchanged,
             )
+
             for w, pred in zip(names, boolean_preds)
         ]
 

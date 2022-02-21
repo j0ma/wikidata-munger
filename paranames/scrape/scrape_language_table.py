@@ -1,4 +1,4 @@
-from urllib.parse import quote_plus
+import sys
 
 import click
 import pandas as pd
@@ -74,7 +74,8 @@ def get_language_codes_sparql():
 @click.option("--african-only", is_flag=True)
 @click.option("--abbrev-only", is_flag=True)
 @click.option("--mapping-only", is_flag=True)
-def main(url, columns, african_only, abbrev_only, mapping_only):
+@click.option("--output-tsv", is_flag=True)
+def main(url, columns, african_only, abbrev_only, mapping_only, output_tsv):
 
     output = get_language_codes_sparql()
     df = pd.DataFrame.from_records(output, columns=columns.split(","))
@@ -93,6 +94,15 @@ def main(url, columns, african_only, abbrev_only, mapping_only):
         for row in df.to_dict(orient="records"):
             out[row["lang_code"]] = row["language"]
         print(orjson_dump(out))
+    elif output_tsv:
+        with sys.stdout as stdout:
+            df.to_csv(
+                stdout,
+                sep="\t",
+                encoding="utf-8",
+                index=False,
+            )
+
     else:
         for row in df.to_dict(orient="records"):
             print(orjson_dump(row))
