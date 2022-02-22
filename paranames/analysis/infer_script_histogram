@@ -16,7 +16,7 @@ def main(input_file, output_file, strip, no_normalize):
 
     with input_file, output_file:
         for line in input_file:
-            hist = ua.unicode_block_histogram(line)
+            hist = ua.icu_script_histogram(line)
             try:
                 json_obj = orjson.dumps(hist).decode("utf-8")
             except:

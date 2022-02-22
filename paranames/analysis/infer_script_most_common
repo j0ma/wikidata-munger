@@ -2,6 +2,7 @@
 
 from paranames.util.script import UnicodeAnalyzer
 import click
+import icu
 
 
 @click.command()
@@ -12,7 +13,7 @@ def main(input_file, output_file, strip):
     ua = UnicodeAnalyzer(strip=strip)
     with input_file, output_file:
         for line in input_file:
-            script = ua.most_common_unicode_block(line)
+            script = ua.most_common_icu_script(line)
             output_file.write(f"{script}\n")
 
 
