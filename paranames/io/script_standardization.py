@@ -287,24 +287,8 @@ def main(
 
     print(f"No. of rows manually intervened: {data_manually_intervened.shape[0]}")
 
-    data_heuristically_intervened, filtered_heuristic = standardize_script(
-        data_not_intervened,
-        id_column=id_column,
-        type_column=type_column,
-        language_column=language_column,
-        aggregation_method=vote_aggregation_method,
-        num_workers=num_workers,
-        chunksize=chunksize,
-    )
-
-    print(
-        f"No. of rows heuristically intervened using {vote_aggregation_method}: {data_heuristically_intervened.shape[0]}"
-    )
-
-    data = pd.concat(
-        [data_manually_intervened, data_heuristically_intervened], ignore_index=True
-    )
-    filtered = pd.concat([filtered_manual, filtered_heuristic], ignore_index=True)
+    data = data_manually_intervened
+    filtered = filtered_manual
 
     if write_filtered_names:
 
