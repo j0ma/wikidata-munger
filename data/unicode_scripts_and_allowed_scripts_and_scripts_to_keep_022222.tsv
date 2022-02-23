@@ -1,0 +1,667 @@
+lang_code	language	orthography	observed_scripts	keep_these_scripts	is_subtag
+aa	Afar	Latin	Common,Latin	Latin	FALSE
+ab	Abkhaz	Cyrillic	Cyrillic	Cyrillic	FALSE
+abe	Abenaki	Latin			FALSE
+abq	Abaza	Cyrillic			FALSE
+abs	Ambonese	Latin	Latin	Latin	FALSE
+ace	Acehnese	Latin	Common,Latin	Latin	FALSE
+adx	Amdo Tibetan	Tibetan			FALSE
+ady	Adyghe	Cyrillic	Cyrillic	Cyrillic	FALSE
+ady-cyrl	Adyghe in Cyrillic script	Cyrillic	Latin	Cyrillic	TRUE
+aeb	Tunisian Arabic	Arabic	Arabic	Arabic	FALSE
+aeb-arab	Tunisian Arabic in Arabic script	Arabic	Arabic	Arabic	TRUE
+aeb-latn	Tunisian Arabic in Latin script	Latin	Common,Latin	Latin	TRUE
+af	Afrikaans	Latin	Common,Latin	Latin	FALSE
+agq	Aghem	Latin	Latin	Latin	FALSE
+ak	Akan	Latin	Common,Latin	Latin	FALSE
+akl	Aklan	Latin			FALSE
+akz	Alabama	Latin			FALSE
+aln	Gheg Albanian	Latin	Common,Latin	Latin	FALSE
+als	Swiss German	Latin	Latin	Latin	FALSE
+alt	Altai	Cyrillic	Cyrillic	Cyrillic	FALSE
+am	Amharic	Ge'ez	Common,Ethiopic	FIXME	FALSE
+ami	Amis	Latin	Latin	Latin	FALSE
+an	Aragonese	Latin	Common,Latin	Latin	FALSE
+ang	Old English	Latin	Common,Latin	Latin	FALSE
+anp	Angika	Tirhuta	Devanagari	Tirhuta,Devanagari	FALSE
+aoc	Pemon	Latin			FALSE
+ar	Arabic	Arabic	Arabic,Common,Latin	Arabic	FALSE
+arc	Aramaic	Aramaic	Syriac	Syriac,Aramaic	FALSE
+arn	Mapudungun	Latin	Common,Latin	Latin	FALSE
+arq	Algerian Arabic	Arabic	Arabic	Arabic	FALSE
+ary	Moroccan Arabic	Arabic	Arabic,Common	Arabic	FALSE
+arz	Egyptian Arabic	Arabic	Arabic,Common	Arabic	FALSE
+as	Assamese	Assamese	Bengali	Bengali	FALSE
+ase	American Sign Language	Latin	Latin	Latin	FALSE
+ast	Asturian	Latin	Common,Latin	Latin	FALSE
+atj	Atikamekw	Latin	Common,Latin	Latin	FALSE
+av	Avaric	Cyrillic	Cyrillic	Cyrillic	FALSE
+avk	Kotava	Latin	Common,Latin	Latin	FALSE
+awa	Awadhi	Devanagari	Devanagari	Devanagari	FALSE
+ay	Aymara	Latin	Common,Latin	Latin	FALSE
+az	Azerbaijani	Latin	Common,Latin	Latin	FALSE
+az-cyrl	Azerbaijani in Cyrillic	Cyrillic			TRUE
+azb	South Azerbaijani	Arabic	Arabic,Common	Aarabic	FALSE
+ba	Bashkir	Cyrillic	Common,Cyrillic	Cyrillic	FALSE
+ban	Balinese	Latin	Common,Latin	Latin	FALSE
+ban-bali	Balinese in Balinese script	Balinese	Balinese	Balinese	TRUE
+bar	Bavarian	Latin	Common,Latin	Latin	FALSE
+bat-smg	Samogitian	Latin			TRUE
+bbc	Toba Batak	Latin, Batak	Common,Latin	Latin	FALSE
+bbc-latn	Batak Toba in Latin script	Latin	Common,Latin	Latin	TRUE
+bcc	Southern Balochi	Latin	Common,Latin	Latin	FALSE
+bcl	Central Bikol	Latin	Common,Latin	Latin	FALSE
+bdr	West Coast Bajau	Latin			FALSE
+be	Belarusian	Cyrillic	Common,Cyrillic	Cyrillic	FALSE
+be-tarask	Taraškievica	Cyrillic	Common,Cyrillic	Cyrillic	TRUE
+be-x-old	Taraškievica	Cyrillic	Cyrillic	Cyrillic	TRUE
+bej	Beja	Latin, Arabic			FALSE
+bfi	British Sign Language	Latin			FALSE
+bfq	Badaga	Tamil, Kannada, Malayalam			FALSE
+bg	Bulgarian	Cyrillic	Common,Cyrillic	Cyrillic	FALSE
+bgn	Western Balochi	Latin	Arabic	Arabic	FALSE
+bh	Bhojpuri	Devanagari	Devanagari	Devanagari	FALSE
+bi	Bislama	Latin	Common,Latin	Latin	FALSE
+bjn	Banjar	Latin	Common,Latin	Latin	FALSE
+bla	Blackfoot	Blackfoot, Latin			FALSE
+bm	Bambara	Latin	Common,Latin	Latin	FALSE
+bn	Bengali	Bengali	Bengali	Bengali	FALSE
+bnn	Bunun	Latin			FALSE
+bo	Tibetan	Tibetan	Tibetan	Tibetan	FALSE
+bpy	Bishnupriya Manipuri	Bengali	Bengali	Bengali	FALSE
+bqi	Bakhtiari	Arabic	Arabic	Arabic	FALSE
+br	Breton	Latin	Common,Latin	Latin	FALSE
+brh	Brahui	Arabic	Common,Latin	Arabic	FALSE
+brx	Bodo	Devanagari			FALSE
+bs	Bosnian	Latin, Cyrillic	Common,Latin	Latin, Cyrillic	FALSE
+bsk	Burushaski	Arabic			FALSE
+bss	Kose	Latin			FALSE
+btm	Mandailing	Latin	Latin	Latin	FALSE
+bto	Rinconada Bikol	Latin	Common,Latin	Latin	FALSE
+bug	Buginese	Latin	Common,Latin	Latin	FALSE
+bxr	Buryat	Cyrillic	Cyrillic	Cyrillic	FALSE
+bxr	Russia Buriat	Cyrillic	Cyrillic	Cyrillic	FALSE
+byq	Basay	Latin			FALSE
+bzg	Babuza	Latin			FALSE
+bzs	Brazilian Sign Language	Latin			FALSE
+ca	Catalan	Latin	Common,Latin	Latin	FALSE
+cak	Kaqchikel	Latin			FALSE
+cal	Carolinian	Latin			FALSE
+cbk-zam	Chavacano	Latin	Common,Latin	Latin	TRUE
+cbk-zam	Zamboanga Chavacano	Latin	Common,Latin	Latin	TRUE
+ccp	Chakma	Chakma			FALSE
+ccp-beng	Chakma in Bengali script	Bengali			TRUE
+cdo	Min Dong	CJK	Common,Latin	Latin	FALSE
+ce	Chechen	Cyrillic	Common,Cyrillic	Cyrillic	FALSE
+ceb	Cebuano	Latin	Common,Latin	Latin	FALSE
+ch	Chamorro	Latin	Common,Latin	Latin	FALSE
+chn	Chinook Jargon	Latin			FALSE
+cho	Choctaw	Latin	Common,Latin	Latin	FALSE
+chr	Cherokee	Cherokee	Cherokee,Common	Cherokee	FALSE
+chy	Cheyenne	Latin	Common,Latin	Latin	FALSE
+ckb	Kurdish Wikipedia	Arabic	Arabic	Arabic	FALSE
+ckb	Sorani	Arabic	Arabic	Arabic	FALSE
+ckt	Chukchi	Cyrillic			FALSE
+ckv	Kavalan	Latin			FALSE
+clc	Chilcotin	Latin			FALSE
+cnh	Hakha-Chin	Latin			FALSE
+cnr	Montenegrin	Latin			FALSE
+co	Corsican	Latin	Common,Latin	Latin	FALSE
+cop	Coptic	Coptic			FALSE
+cps	Capiznon	Latin	Common,Latin	Latin	FALSE
+cpx	Pu-Xian Min	CJK			FALSE
+cr	Cree	Latin	Common,Latin	Latin	FALSE
+crh	Crimean Tatar	Cyrillic, Latin	Common,Latin	Latin	FALSE
+crh-cyrl	Crimean Tatar in Cyrillic	Cyrillic	Cyrillic	Cyrillic	TRUE
+crh-latn	Crimean Tatar in Latin script	Latin	Common,Latin	Latin	TRUE
+crl	Northern East Cree	Latin			FALSE
+crs	Seychellois Creole	Latin			FALSE
+cs	Czech	Latin	Common,Latin	Latin	FALSE
+csb	Kashubian	Latin	Common,Latin	Latin	FALSE
+ctg	Chittagonian	Bengali			FALSE
+cu	Church Slavonic	Cyrillic	Cyrillic	Cyrillic	FALSE
+cu	Old Church Slavonic	Cyrillic	Cyrillic	Cyrillic	FALSE
+cu	Slavonic musical notation	Cyrillic	Cyrillic	Cyrillic	FALSE
+cu	Slavonic documents	Cyrillic	Cyrillic	Cyrillic	FALSE
+cv	Chuvash	Cyrillic	Common,Cyrillic,Latin	Cyrillic	FALSE
+cy	Welsh	Latin	Common,Latin	Latin	FALSE
+da	Danish	Latin	Common,Latin	Latin	FALSE
+dag	Dagbani	Latin	Latin	Latin	FALSE
+dar	Dargwa	Cyrillic			FALSE
+de	German	Latin	Common,Latin	Latin	FALSE
+de	Hauptseite	Latin	Common,Latin	Latin	FALSE
+de-at	Austrian German	Latin	Common,Latin	Latin	TRUE
+de-ch	Swiss High German	Latin	Common,Latin	Latin	TRUE
+de-formal	formal address in German	Latin	Latin	Latin	TRUE
+din	Dinka	Latin	Common,Latin	Latin	FALSE
+diq	Zazaki	Latin	Common,Latin	Latin	FALSE
+dlm	Dalmatian	Latin			FALSE
+dru	Rukai	Latin			FALSE
+dsb	Lower Sorbian	Latin	Common,Latin	Latin	FALSE
+dtp	Kadazandusun	Latin	Common,Latin	Latin	FALSE
+dty	Doteli	Devanagari	Devanagari	Devanagari	FALSE
+dua	Duala	Latin	Latin	Latin	FALSE
+dv	Dhivehi	Thaana	Thaana	Thaana	FALSE
+dz	Dzongkha	Tibetan	Tibetan	Tibetan	FALSE
+ee	Ewe	Latin	Common,Latin	Latin	FALSE
+egl	Emilian	Latin	Common,Latin	Latin	FALSE
+el	Modern Greek	Greek	Common,Greek,Latin	Greek	FALSE
+el	Greek	Greek	Common,Greek,Latin	Greek	FALSE
+eml	Emilian-Romagnol	Latin	Common,Latin	Latin	FALSE
+en	English	Latin	Common,Latin	Latin	FALSE
+en-ca	Canadian English	Latin	Common,Latin	Latin	TRUE
+en-gb	British English	Latin	Common,Latin	Latin	TRUE
+en-simple	Simple English	Latin			TRUE
+en-us	American English	Latin	Latin	Latin	TRUE
+en-x-simple	Simple English	Latin			TRUE
+enm	Middle English	Latin			FALSE
+eo	Esperanto	Latin	Common,Latin	Latin	FALSE
+eo-hsistemo	System H	Latin			TRUE
+eo-xsistemo	System X	Latin			TRUE
+es	Spanish	Latin	Common,Latin	Latin	FALSE
+es-419	Latin American Spanish	Latin	Common,Latin	Latin	TRUE
+es-formal	formal Spanish	Latin	Latin	Latin	TRUE
+esu	Central Alaskan Yup'ik	Latin			FALSE
+et	Estonian	Latin	Common,Latin	Latin	FALSE
+ett	Etruscan	Etruscan alphabet			FALSE
+eu	Basque	Latin	Common,Latin	Latin	FALSE
+ext	Extremaduran	Latin	Common,Latin	Latin	FALSE
+eya	Eyak	Latin			FALSE
+fa	Persian	Arabic	Arabic,Common	Arabic	FALSE
+fa-af	Dari	Arabic			TRUE
+ff	Fula	Latin	Common,Latin	Latin	FALSE
+fi	Finnish	Latin	Common,Latin	Latin	FALSE
+fit	Meänkieli	Latin	Common,Latin	Latin	FALSE
+fiu-vro	Võro	Latin			TRUE
+fj	Fijian	Latin	Common,Latin	Latin	FALSE
+fkv	Kven	Latin	Latin	Latin	FALSE
+fo	Faroese	Latin	Common,Latin	Latin	FALSE
+fon	Fon	Latin			FALSE
+fos	Siraya	Latin			FALSE
+fr	French	Latin	Common,Latin	Latin	FALSE
+fr-ca	Canadian French	Latin			TRUE
+frc	Louisiana French	Latin	Common,Latin	Latin	FALSE
+frm	Middle French	Latin			FALSE
+fro	Old French	Latin			FALSE
+frp	Franco-Provençal	Latin	Common,Latin	Latin	FALSE
+frr	North Frisian	Latin	Common,Latin	Latin	FALSE
+fuf	Pular	Latin			FALSE
+fur	Friulian	Latin	Common,Latin	Latin	FALSE
+fy	West Frisian	Latin	Common,Latin	Latin	FALSE
+ga	Irish	Latin	Common,Latin	Latin	FALSE
+gaa	Ga	Latin			FALSE
+gag	Gagauz	Latin	Common,Latin	Latin	FALSE
+gan	Gan	CJK	Common,Han	Han	FALSE
+gan-hans	simplified Gan	CJK	Common,Han	Han	TRUE
+gan-hant	traditional Gan	CJK	Common,Han	Han	TRUE
+gcf	Guadeloupe-Martinique Creole French	Latin			FALSE
+gcr	Guianan Creole	Latin	Latin	Latin	FALSE
+gd	Scottish Gaelic	Latin	Common,Latin	Latin	FALSE
+gez	Ge'ez	Ge'ez			FALSE
+gil	Gilbertese	Latin			FALSE
+gkm	Medieval Greek	Greek			FALSE
+gl	Galician	Latin	Common,Latin	Latin	FALSE
+glk	Gilaki	Arabic	Arabic	Arabic	FALSE
+gmh	Middle High German	Latin			FALSE
+gml	Middle Low German	Latin			FALSE
+gn	Guarani	Latin	Common,Latin	Latin	FALSE
+goh	Old High German	Latin			FALSE
+gom	Goan Konkani	Latin	Devanagari,Kannada,Latin	Devanagari, Kannada	FALSE
+gom-deva	Goan Konkani in Devanagari script	Devanagari	Devanagari	Devanagari	TRUE
+gom-latn	Goan Konkani in Latin script	Latin	Common,Latin	Latin	TRUE
+gor	Gorontalo	Latin	Common,Latin	Latin	FALSE
+got	Gothic	Gothic	Gothic,Latin	Gothic	FALSE
+grc	Ancient Greek	Greek	Common,Greek,Latin	Greek	FALSE
+gsg	German Sign Language	Latin			FALSE
+gsw	Alemannic	Latin	Common,Latin	Latin	FALSE
+gsw-fr	Alsatian	Latin			TRUE
+gu	Gujarati	Gujarati	Gujarati	Gujarati	FALSE
+guc	Wayuu	Latin	Latin	Latin	FALSE
+guw	Gun	Latin			FALSE
+gv	Manx	Latin	Common,Latin	Latin	FALSE
+ha	Hausa	Latin	Common,Latin	Latin	FALSE
+hai	Haida	Latin			FALSE
+hak	Hakka	CJK	Common,Latin	Latin	FALSE
+haw	Hawaiian	Latin	Common,Latin	Latin	FALSE
+hbo	Biblical Hebrew	Hebrew			FALSE
+he	Hebrew	Hebrew	Common,Hebrew	Hebrew	FALSE
+hi	Hindi	Devanagari	Common,Devanagari	Devanagari	FALSE
+hif	Fiji Hindi	Devanagari	Common,Latin	Devanagari	FALSE
+hif-latn	Fiji Hindi in Latin script	Latin	Common,Latin	Latin	TRUE
+hil	Hiligaynon	Latin	Common,Latin	Latin	FALSE
+ho	Hiri Motu	Latin	Common,Latin	Latin	FALSE
+hoc	Ho	Warang Citi			FALSE
+hr	Croatian	Latin	Common,Latin	Latin	FALSE
+hrx	Hunsrik	Latin	Common,Latin	Latin	FALSE
+hsb	Upper Sorbian	Latin	Common,Latin	Latin	FALSE
+ht	Haitian Creole	Latin	Common,Latin	Latin	FALSE
+hu	Hungarian	Latin	Common,Latin	Latin	FALSE
+hu-formal	formal Hungarian	Latin	Latin	Latin	TRUE
+hy	Armenian	Armenian	Armenian,Common	Armenian	FALSE
+hyw	Western Armenian	Armenian	Armenian,Common	Armenian	FALSE
+hz	Herero	Latin	Common,Latin	Latin	FALSE
+ia	Interlingua	Latin	Common,Latin	Latin	FALSE
+id	Indonesian	Latin	Common,Latin	Latin	FALSE
+ie	Interlingue	Latin	Common,Latin	Latin	FALSE
+ig	Igbo	Latin	Common,Latin	Latin	FALSE
+ii	Nuosu	Yi	Yi	Yi	FALSE
+ik	Inupiaq	Latin	Common,Latin	Latin	FALSE
+ike-cans	Eastern Canadian (Aboriginal syllabics)	Aboriginal syllabics	Canadian_Aboriginal	Canadian_Aboriginal	TRUE
+ike-latn	Eastern Canadian in Latin script	Latin	Common,Latin	Latin	TRUE
+ilo	Ilocano	Latin	Common,Latin	Latin	FALSE
+inh	Ingush	Cyrillic	Cyrillic	Cyrillic	FALSE
+ins	Indian Sign Language	Latin			FALSE
+io	Ido	Latin	Common,Latin	Latin	FALSE
+is	Icelandic	Latin	Common,Latin	Latin	FALSE
+it	Italian	Latin	Common,Latin	Latin	FALSE
+iu	Inuktitut	Inuktitut	Canadian_Aboriginal	Canadian_Aboriginal	FALSE
+ja	Japanese	CJK	Common,Han,Hiragana,Katakana,Latin	Han,Hiragana,Katakana	FALSE
+ja-hani	Japanese written in kanji	CJK			TRUE
+ja-hira	Japanese written in hiragana	Hiragana			TRUE
+ja-hrkt	Japanese written in kana	Hiragana,Katakana			TRUE
+ja-kana	Japanese written in katakana	Katakana			TRUE
+jam	Jamaican Creole	Latin	Common,Latin	Latin	FALSE
+jax	Jambi Malay	Latin			FALSE
+jbo	Lojban	Latin	Common,Latin	Latin	FALSE
+jut	Jutlandic	Latin	Common,Latin	Latin	FALSE
+jv	Javanese	Latin	Common,Latin	Latin	FALSE
+ka	Georgian	Georgian	Common,Georgian,Latin	Georgian	FALSE
+ka	მთავარი გვერდი	Georgian	Common,Georgian,Latin	Georgian	FALSE
+kaa	Karakalpak	Cyrillic, Latin	Common,Latin	Cyrillic, Latin	FALSE
+kab	Kabyle	Tifinagh,Latin	Common,Latin	Tifinagh,Latin	FALSE
+kae	Ketagalan	Latin			FALSE
+kbd	Kabardian	Cyrillic	Cyrillic	Cyrillic	FALSE
+kbd-cyrl	Kabardian in Cyrillic script	Cyrillic	Latin	Cyrillic	TRUE
+kbg	Khamba	Latin			FALSE
+kbp	Kabiye	Latin	Common,Latin	Latin	FALSE
+kcg	Tyap	Latin	Latin	Latin	FALSE
+kea	Cape Verdean Creole	Latin	Common,Latin	Latin	FALSE
+kg	Kongo	Latin	Common,Latin	Latin	FALSE
+kha	Khasi	Latin			FALSE
+khg	Khams Tibetan	Tibetan			FALSE
+khw	Khowar	Arabic	Arabic	Arabic	FALSE
+ki	Gikuyu	Latin	Common,Latin	Latin	FALSE
+kiu	Kirmanjki	Latin	Common,Latin	Latin	FALSE
+kj	Kwanyama	Latin	Common,Latin	Latin	FALSE
+kjh	Khakas	Latin			FALSE
+kjp	Eastern Pwo	Burmese	Myanmar	Myanmar	FALSE
+kk	Kazakh	Cyrillic, Latin	Common,Cyrillic	Cyrillic	FALSE
+kk-arab	Kazakh in Arabic script	Arabic	Arabic	Arabic	TRUE
+kk-cn	Kazakh in China	Arabic	Arabic	Arabic	TRUE
+kk-cyrl	Kazakh in Cyrillic script	Cyrillic	Cyrillic	Cyrillic	TRUE
+kk-kz	Kazakh in Kazakhstan	Cyrillic, Latin	Cyrillic	Cyrillic, Latin	TRUE
+kk-latn	Kazakh in Latin script	Latin	Common,Latin	Latin	TRUE
+kk-tr	Kazakh in Turkey	Cyrillic	Common,Latin	Latin	TRUE
+kl	Greenlandic	Latin	Common,Latin	Latin	FALSE
+km	Khmer	Khmer	Common,Khmer	Khmer	FALSE
+kn	Kannada	Kannada	Kannada	Kannada	FALSE
+ko	Korean	Korean	Common,Hangul,Latin	Hangul	FALSE
+ko-kp	North Korean standard language	Korean	Common,Hangul	Hangul	TRUE
+ko-kr	South Korean standard language	Korean			TRUE
+koi	Permyak	Cyrillic	Cyrillic	Cyrillic	FALSE
+koy	Koyukon	Latin			FALSE
+kr	Kanuri	Arabic, Latin	Common,Latin	Arabic, Latin	FALSE
+krc	Karachay-Balkar	Cyrillic	Cyrillic	Cyrillic	FALSE
+kri	Krio	Latin	Common,Latin	Latin	FALSE
+krj	Kinaray-a	Latin	Common,Latin	Latin	FALSE
+krl	Karelian	Cyrillic, Latin	Common,Latin	Cyrillic, Latin	FALSE
+krx	Karon	Latin			FALSE
+ks	Kashmiri	Arabic,Devanagari	Arabic,Devanagari	Arabic,Devanagari	FALSE
+ks-arab	Kashmiri in Arabic script	Arabic	Arabic	Arabic	TRUE
+ks-deva	Kashmiri in Devanagari script	Devanagari	Latin	Devanagari	TRUE
+ksh	Kölsch	Latin	Common,Latin	Latin	FALSE
+ksh	Ripuarian	Latin	Common,Latin	Latin	FALSE
+ksw	S'gaw Karen	Latin			FALSE
+ku	Kurdish Wikipedia	Arabic	Common,Latin	Latin	FALSE
+ku	Kurmanji	Arabic	Common,Latin	Latin	FALSE
+ku	Kurdish	Arabic	Common,Latin	Latin	FALSE
+ku-arab	Kurdish in Arabic script	Arabic	Arabic,Common	Arabic	TRUE
+ku-latn	Kurdish in Latin script	Latin	Common,Latin	Latin	TRUE
+kum	Kumyk	Cyrillic	Cyrillic	Cyrillic	FALSE
+kut	Kutenai	Latin			FALSE
+kv	Komi	Cyrillic	Cyrillic	Cyrillic	FALSE
+kw	Cornish	Latin	Common,Latin	Latin	FALSE
+ky	Kyrgyz	Cyrillic, Arabic	Common,Cyrillic	Cyrillic, Arabic	FALSE
+ky-arab	Kyrgyz in Arabic script	Cyrillic			TRUE
+ky-cyrl	Kyrgyz in Cyrillic script	Arabic			TRUE
+la	Latin	Latin	Common,Latin	Latin	FALSE
+lad	Judaeo-Spanish	Latin	Common,Latin	Latin	FALSE
+lag	Rangi	Latin			FALSE
+lb	Luxembourgish	Latin	Common,Latin	Latin	FALSE
+lbe	Lak	Cyrillic	Cyrillic	Cyrillic	FALSE
+lez	Lezgian	Cyrillic	Cyrillic	Cyrillic	FALSE
+lfn	Lingua Franca Nova	Latin, Cyrillic	Common,Latin	Latin	FALSE
+lg	Luganda	Latin	Common,Latin	Latin	FALSE
+li	Limburgish	Latin	Common,Latin	Latin	FALSE
+lij	Ligurian	Latin	Common,Latin	Latin	FALSE
+lij-mc	Monégasque	Latin			TRUE
+liv	Livonian	Latin	Common,Latin	Latin	FALSE
+lki	Laki	Latin	Common,Latin	Latin	FALSE
+lkt	Lakota	Latin			FALSE
+lld	Ladin	Latin	Latin	Latin	FALSE
+lmo	Lombard	Latin	Common,Latin	Latin	FALSE
+ln	Lingala	Latin	Common,Latin	Latin	FALSE
+lo	Lao	Lao, Khmer	Lao	Lao, Khmer	FALSE
+loz	Lozi	Latin	Common,Latin	Latin	FALSE
+lrc	Northern Luri	Arabic	Arabic	Arabic	FALSE
+lt	Lithuanian	Latin	Common,Latin	Latin	FALSE
+ltg	Latgalian	Latin	Common,Latin	Latin	FALSE
+lus	Mizo	Latin	Common,Latin	Latin	FALSE
+luz	Southern Luri	Arabic	Common,Latin	Arabic	FALSE
+lv	Latvian	Latin	Common,Latin	Latin	FALSE
+lzh	Classical Chinese	CJK	Common,Han	Han	FALSE
+lzz	Laz	Latin, Georgian	Common,Latin	Georgian, Latin	FALSE
+mad	Madurese	Latin, Arabic	Latin	Latin, Arabic	FALSE
+mai	Maithili	Devanagari, Tirhuta, Kaithi	Devanagari	Devanagari, Tirhuta, Kaithi	FALSE
+map-bms	Banyumasan	Latin	Common,Latin	Latin	TRUE
+mdf	Moksha	Cyrillic	Cyrillic	Cyrillic	FALSE
+mfe	Mauritian Creole	Latin			FALSE
+mg	Malagasy	Latin	Common,Latin	Latin	FALSE
+mh	Marshallese	Latin	Common,Latin	Latin	FALSE
+mhr	Meadow Mari	Cyrillic	Cyrillic	Cyrillic	FALSE
+mi	Māori	Latin	Common,Latin	Latin	FALSE
+mic	Mi'kmaq	Latin			FALSE
+min	Minangkabau	Latin	Common,Latin	Latin	FALSE
+mis	language without a specific language code	Latin			FALSE
+mis-x-Q2417210	Old Swedish	Latin			TRUE
+mk	Macedonian	Cyrillic	Common,Cyrillic	Cyrillic	FALSE
+ml	Malayalam	Malayalam	Common,Malayalam	Malayalam	FALSE
+mn	Mongolian	Cyrillic, Arabic, Mongolian	Common,Cyrillic,Latin,Mongolian	Cyrillic, Arabic, Mongolian	FALSE
+mnc	Manchu	Manchu			FALSE
+mni	Meitei	Meitei, Bengali	Meetei_Mayek	Meetei_Mayek	FALSE
+mnw	Mon	Burmese	Myanmar	Myanmar	FALSE
+mo	Moldovan	Latin, Cyrillic	Common,Latin	Latin, Cyrillic	FALSE
+moe	Innu-aimun	Latin			FALSE
+mr	Marathi	Devanagari	Devanagari	Devanagari	FALSE
+mrh	Mara	Latin			FALSE
+mrj	Hill Mari	Cyrillic	Cyrillic	Cyrillic	FALSE
+ms	Malay	Latin	Common,Latin	Latin	FALSE
+ms-arab	Malay in Jawi script	Arabic	Arabic	Arabic	TRUE
+mt	Maltese	Latin	Common,Latin	Latin	FALSE
+mui	Musi	Latin			FALSE
+mul	multiple languages	Latin			FALSE
+mus	Muscogee	Latin	Common,Latin	Latin	FALSE
+mwl	Mirandese	Latin	Common,Latin	Latin	FALSE
+mwv	Mentawai	Latin			FALSE
+my	Burmese	Burmese	Myanmar	Myanmar	FALSE
+myv	Erzya	Cyrillic	Cyrillic	Cyrillic	FALSE
+mzn	Mazanderani	Arabic	Arabic	Arabic	FALSE
+na	Nauruan	Latin	Common,Latin	Latin	FALSE
+nah	Nahuatl	Latin	Common,Latin	Latin	FALSE
+	Southern Min	CJK	Common,Latin	Latin	FALSE
+nan-hani	nan-hani	Latin	Han	Han	TRUE
+nap	Neapolitan	Latin	Common,Latin	Latin	FALSE
+nb	Bokmål	Latin	Common,Latin	Latin	FALSE
+nds	Low German	Latin	Common,Latin	Latin	FALSE
+nds-nl	Dutch Low Saxon	Latin	Common,Latin	Latin	TRUE
+ne	Nepali	Devanagari	Devanagari	Devanagari	FALSE
+new	Newar	Devanagari	Devanagari	Devanagari	FALSE
+ng	Ndonga	Latin	Common,Latin	Latin	FALSE
+nia	Nias	Latin	Latin	Latin	FALSE
+niu	Niuean	Latin	Common,Latin	Latin	FALSE
+nl	Dutch	Latin	Common,Latin	Latin	FALSE
+nl-be	Belgian Dutch	Latin			TRUE
+nl-informal	informal Dutch	Latin	Latin	Latin	TRUE
+nn	Nynorsk	Latin	Common,Latin	Latin	FALSE
+nn-hognorsk	Høgnorsk	Latin			TRUE
+no	Norwegian Wikipedias	Latin	Latin	Latin	FALSE
+no	Norwegian	Latin	Latin	Latin	FALSE
+nod	Northern Thai	Thai, Tai Tham	Tai_Tham,Thai	Tai_Tham,Thai	FALSE
+nog	Nogai	Cyrillic			FALSE
+non	Old Norse	Latin			FALSE
+nov	Novial	Latin	Common,Latin	Latin	FALSE
+nqo	N'Ko	NKo	Nko	Nko	FALSE
+nr	Southern Ndebele	Latin			FALSE
+nrf-gg	Guernésiais	Latin			TRUE
+nrf-je	Jèrriais	Latin			TRUE
+nrm	Norman	Latin	Common,Latin	Latin	FALSE
+nsk	Naskapi	Latin			FALSE
+nso	Northern Sotho	Latin	Common,Latin	Latin	FALSE
+nui	Kombe	Latin			FALSE
+nv	Navajo	Latin	Common,Latin	Latin	FALSE
+nxm	Numidian	Tifinagh			FALSE
+ny	Chewa	LatIn	Common,Latin	Latin	FALSE
+nys	Noongar	Latin	Common,Latin	Latin	FALSE
+oc	Occitan	Latin	Common,Latin	Latin	FALSE
+oj	Ojibwe	Latin			FALSE
+olo	Livvi-Karelian	Cyrillic	Common,Latin	Cyrillic	FALSE
+om	Oromo	Latin	Common,Latin	Latin	FALSE
+ood	O'odham	Latin			FALSE
+or	Odia	Odia	Oriya	Oriya	FALSE
+os	Ossetian	Cyrillic	Cyrillic	Cyrillic	FALSE
+osa	Osage	Latin			FALSE
+osa-latn	Osage in Latin script	Latin			TRUE
+ota	Ottoman Turkish	Arabic	Arabic,Common,Latin	Arabic	FALSE
+otk	Old Turkic	Arabic			FALSE
+ovd	Elfdalian	Latin			FALSE
+pa	Eastern Punjabi	Arabic, Gurmukhi, Devanagari	Arabic,Common,Gurmukhi	Arabic, Gurmukhi, Devanagari	FALSE
+pa	Punjabi	Arabic, Gurmukhi, Devanagari	Arabic,Common,Gurmukhi	Arabic, Gurmukhi, Devanagari	FALSE
+pag	Pangasinan	Latin	Common,Latin	Latin	FALSE
+pam	Kapampangan	Latin	Common,Latin	Latin	FALSE
+pap	Papiamento	Latin	Common,Latin	Latin	FALSE
+pcd	Picard	Latin	Common,Latin	Latin	FALSE
+pdc	Pennsylvania German	Latin	Common,Latin	Latin	FALSE
+pdt	Plautdietsch	Latin	Common,Latin	Latin	FALSE
+peo	Old Persian	Latin			FALSE
+pfl	Palatinate German	Latin	Common,Latin	Latin	FALSE
+pi	Pali	Brahmi	Devanagari,Latin	Devanagari	FALSE
+pih	Pitkern	Latin	Common,Latin	Latin	FALSE
+pis	Pijin	Latin			FALSE
+pjt	Pitjantjatjara	Latin			FALSE
+pko	Pökoot	Latin			FALSE
+pl	Polish	Latin	Common,Latin	Latin	FALSE
+pms	Piedmontese	Latin	Common,Latin	Latin	FALSE
+pmy	Papuan Malay	Latin			FALSE
+pnb	Punjabi	Arabic, Gurmukhi, Devanagari	Arabic,Common	Arabic, Gurmukhi, Devanagari	FALSE
+pnb	Western Punjabi	Arabic, Gurmukhi, Devanagari	Arabic,Common	Arabic, Gurmukhi, Devanagari	FALSE
+pnt	Pontic Greek	Greek	Common,Greek	Greek	FALSE
+ppu	Papora-Hoanya	Latin			FALSE
+prg	Old Prussian	Latin	Common,Latin	Latin	FALSE
+ps	Pashto	Arabic	Arabic	Arabic	FALSE
+pt	Portuguese	Latin	Common,Latin	Latin	FALSE
+pt-ao1990	Portuguese Language Orthographic Agreement of 1990	Latin			TRUE
+pt-br	Brazilian Portuguese	Latin	Common,Latin	Latin	TRUE
+pwn	Paiwan	Latin	Latin	Latin	FALSE
+pwn	katadrengan	Latin	Latin	Latin	FALSE
+pyu	Puyuma	Latin			FALSE
+qu	Quechua	Latin	Common,Latin	Latin	FALSE
+quc	K’iche’	Latin	Latin	Latin	FALSE
+qug	Kichwa	Latin	Common,Latin	Latin	FALSE
+qya	Quenya	Latin			FALSE
+rar	Cook Islands Maori	Latin			FALSE
+rcf	Réunion Creole	Latin			FALSE
+rgn	Romagnol	Latin	Common,Latin	Latin	FALSE
+rif	Tarifit	Latin	Common,Latin	Latin	FALSE
+rki	Arakanese	Burmese			FALSE
+rkt	Rangpuri	Bengali, Devanagari			FALSE
+rm	Romansh	Latin	Common,Latin	Latin	FALSE
+rm-puter	Putèr	Latin			TRUE
+rm-rumgr	Rumantsch Grischun	Latin			TRUE
+rm-surmiran	Surmiran	Latin			TRUE
+rm-sursilv	Sursilvan	Latin			TRUE
+rm-sutsilv	Sutsilvan	Latin			TRUE
+rm-vallader	Vallader	Latin			TRUE
+rmc	Carpathian Romani	Latin	Latin	Latin	FALSE
+rmf	Finnish Kalo	Latin	Latin	Latin	FALSE
+rmy	Romani	Latin	Common,Latin	Latin	FALSE
+rn	Kirundi	Latin	Common,Latin	Latin	FALSE
+ro	Romanian	Latin	Common,Latin	Latin	FALSE
+roa-tara	Tarantino	Latin	Common,Latin	Latin	TRUE
+ru	Russian	Cyrillic	Common,Cyrillic,Latin	Cyrillic	FALSE
+ru-sib	Siberian	Cyrillic			TRUE
+rue	Rusyn	Cyrillic	Cyrillic	Cyrillic	FALSE
+rup	Aromanian	Latin	Common,Latin	Latin	FALSE
+ruq	Megleno-Romanian	Latin	Common,Latin	Latin	FALSE
+ruq-cyrl	Megleno-Romanian in Cyrillic script	Cyrillic	Common,Latin	Cyrillic	TRUE
+ruq-latn	Megleno-Romanian in Latin script	Latin	Common,Latin	Latin	TRUE
+rw	Kinyarwanda	Latin	Common,Latin	Latin	FALSE
+rwr	Marwari	Devanagari, Arabic	Common,Latin	Devanagari, Arabic	FALSE
+ryu	Okinawan	CJK	Han,Hiragana	Han, Hiragana	FALSE
+sa	Sanskrit	Devanagari	Devanagari	Devanagari	FALSE
+sah	Sakha	Cyrillic	Cyrillic	Cyrillic	FALSE
+sat	Santali	Ol Chiki, Bengali	Ol_Chiki	Ol_Chiki	FALSE
+sat-beng	Santali in Bengali script	Bengali			TRUE
+sc	Sardinian	Latin	Common,Latin	Latin	FALSE
+scn	Sicilian	Latin	Common,Latin	Latin	FALSE
+sco	Scots	Latin	Common,Latin	Latin	FALSE
+sd	Sindhi	Arabic, Devanagari	Arabic,Common,Devanagari	Arabic, Devanagari	FALSE
+sdc	Sassarese	Latin	Common,Latin	Latin	FALSE
+sdh	Southern Kurdish	Arabic	Latin	Arabic	FALSE
+se	Northern Sami	Latin	Common,Latin	Latin	FALSE
+sei	Seri	Latin	Common,Latin	Latin	FALSE
+ses	Koyraboro Senni	Latin	Common,Latin	Latin	FALSE
+sg	Sango	Latin	Common,Latin	Latin	FALSE
+sh	Serbo-Croatian	Latin, Cyrillic	Common,Latin	Latin	FALSE
+shi	Tashelhit	Arabic, Latin, Tifinagh	Common,Latin,Tifinagh	Arabic, Latin, Tifinagh	FALSE
+shi-latn	Tachelhit in Latin script	Latin	Common,Latin	Latin	TRUE
+shi-tfng	Tachelhit in Tifinagh script	Tifinagh	Latin	Tifinagh	TRUE
+shn	Shan	Burmese	Myanmar	Myanmar	FALSE
+shy	Shawiya	Tifinagh	Tifinagh	Tifinagh	FALSE
+shy-latn	Shawiya in Latin script	Latin	Latin	Latin	TRUE
+si	Sinhala	Sinhala	Common,Sinhala	Sinhala	FALSE
+sid	Sidamo	Latin			FALSE
+simple	Simple English	Latin	Common,Latin	Latin	FALSE
+sjd	Kildin Sami	Latin	Cyrillic	Latin, Cyrillic	FALSE
+sje	Pite Sami	Latin	Common,Latin	Latin	FALSE
+sjm	Mapun	Latin			FALSE
+sjn	Sindarin	Tengwar			FALSE
+sjt	Ter Sami	Cyrillic, Latin			FALSE
+sju	Ume Sami	Latin	Latin	Latin	FALSE
+sk	Slovak	Latin	Common,Latin	Latin	FALSE
+skr	Saraiki	Arabic	Arabic	Arabic	FALSE
+skr-arab	Saraiki in Arabic script	Arabic	Arabic	Arabic	TRUE
+sl	Slovene	Latin	Common,Latin	Latin	FALSE
+sli	Silesian German	Latin	Common,Latin	Latin	FALSE
+sm	Samoan	Latin	Common,Latin	Latin	FALSE
+sma	Southern Sami	Latin	Common,Latin	Latin	FALSE
+smj	Lule Sami	Latin	Common,Latin	Latin	FALSE
+smn	Inari Sami	Latin	Latin	Latin	FALSE
+sms	Skolt Sami	Latin	Latin	Latin	FALSE
+sn	Shona	Latin	Common,Latin	Latin	FALSE
+so	Somali	Latin	Common,Latin	Latin	FALSE
+sou	Southern Thai	Thai			FALSE
+sq	Albanian	Latin	Common,Latin	Latin	FALSE
+sr	Serbian	Cyrillic, Latin	Common,Cyrillic,Latin	Cyrillic, Latin	FALSE
+sr-ec	Serbian written in Cyrillic	Cyillic	Common,Cyrillic	Cyrillic, Latin	TRUE
+sr-el	Serbian (Latin script)	Latin	Common,Latin	Latin	TRUE
+srn	Sranan Tongo	Latin	Common,Latin	Latin	FALSE
+srq	Sirionó	Latin	Common,Latin	Latin	FALSE
+ss	Swazi	Latin	Common,Latin	Latin	FALSE
+ssf	Thao	Latin			FALSE
+st	Sesotho	Latin	Common,Latin	Latin	FALSE
+stq	Saterland Frisian	Latin	Common,Latin	Latin	FALSE
+sty	Siberian Tatar	Cyrillic, Latin	Cyrillic,Latin	Cyrillic, Latin	FALSE
+su	Sundanese	Latin	Common,Latin	Latin	FALSE
+sux-latn	Sumerian in Latin script	Latin			TRUE
+sv	Swedish	Latin	Common,Latin	Latin	FALSE
+sw	Swahili	Latin	Common,Latin	Latin	FALSE
+sxr	Saaroa	Latin			FALSE
+syc	Syriac	Syriac			FALSE
+syl-beng	Sylheti in Bengali-Assamese script	Bengali			TRUE
+szl	Silesian	Latin	Common,Latin	Latin	FALSE
+szy	Sakizaya	Latin	Latin	Latin	FALSE
+ta	Tamil	Tamil	Common,Tamil	Tamil	FALSE
+tay	Atayal	Latin	Common,Latin	Latin	FALSE
+tce	Southern Tutchone	Latin			FALSE
+tcy	Tulu	Brahmi	Kannada	Kannada	FALSE
+te	Telugu	Telugu	Common,Telugu	Telugu	FALSE
+tet	Tetum	Latin	Common,Latin	Latin	FALSE
+tg	Tajik	Cyrillic, Arabic, Latin	Cyrillic	Cyrillic, Arabik, Latin	FALSE
+tg-cyrl	Tajik in Cyrillic script	Cyrillic	Cyrillic	Cyrillic	TRUE
+tg-latn	Tajik in Latin script	Latin	Common,Latin	Latin	TRUE
+th	Thai	Thai	Common,Thai	Thai	FALSE
+ti	Tigrinya	Ge'ez	Ethiopic	Ethiopic	FALSE
+tk	Turkmen	Latin	Common,Latin	Latin	FALSE
+tl	Tagalog	Latin	Common,Latin	Latin	FALSE
+tlh	Klingon	Latin			FALSE
+tlh-latn	Klingon in Okrand notation	Okrand			TRUE
+tlh-piqd	Klingon in pIqaD	PlqaD			TRUE
+tli	Tlingit	Latin			FALSE
+tly	Talysh	Arabic, Latin, Cyrillic	Latin	Arabic, Latin, Cyrillic	FALSE
+tly-cyrl	Talysh in Cyrillic script	Cyrillic			TRUE
+tn	Tswana	Latin	Common,Latin	Latin	FALSE
+to	Tongan	Latin	Common,Latin	Latin	FALSE
+tok	Toki Pona	Latin			FALSE
+tpi	Tok Pisin	Latin	Common,Latin	Latin	FALSE
+tr	Turkish	Latin	Common,Latin	Latin	FALSE
+tru	Turoyo	Syriac, Turoyo	Common,Latin	Latin	FALSE
+trv	Seediq	Latin	Latin	Latin	FALSE
+ts	Tsonga	Latin	Common,Latin	Latin	FALSE
+tsg	Tausug	Latin			FALSE
+tsk	Tseku	Tibetan			FALSE
+tsu	Tsou	Latin			FALSE
+tt	Tatar	Cyrillic, Latin	Common,Cyrillic,Latin	Cyrillic, Latin	FALSE
+tt-cyrl	Tatar in Cyrillic script	Cyrillic	Common,Cyrillic	Cyrillic	TRUE
+tt-latn	Tatar in Latin script	Latin	Common,Latin	Latin	TRUE
+ttm	Northern Tutchone	Latin			FALSE
+tum	Tumbuka	Latin	Common,Latin	Latin	FALSE
+tvl	Tuvaluan	Latin			FALSE
+tvn	Tavoyan dialects	Burmese			FALSE
+tvx	Taivoan	Latin			FALSE
+tw	Twi	Adinkra	Common,Latin	Latin	FALSE
+ty	Tahitian	Latin	Common,Latin	Latin	FALSE
+tyv	Tuvan	Cyrillic	Common,Cyrillic	Cyrillic	FALSE
+tzl	Talossan	Latin			FALSE
+tzm	Central Atlas Tamazight	TIfinagh, Arabic	Tifinagh	Tifinagh, Arabic	FALSE
+udm	Udmurt	Cyrillic	Cyrillic	Cyrillic	FALSE
+ug	Uyghur	Arabic, Cyrillic, Latin	Arabic,Common,Cyrillic,Latin	Arabic, Cyrillic, Latin	FALSE
+ug-arab	Uyghur in Arabic script	Arabic	Arabic	Arabic	TRUE
+ug-latn	Uyghur in Latin script	Latin	Common,Latin	Latin	TRUE
+uk	Ukrainian	Cyrillic	Common,Cyrillic,Latin	Cyrillic	FALSE
+umu	Munsee	Latin			FALSE
+und	undetermined language	Latin			FALSE
+ur	Urdu	Arabic	Arabic,Common	Arabic	FALSE
+uun	Pazeh	Latin			FALSE
+uz	Uzbek	Cyrillic, Latin	Common,Latin	Cyrillic	FALSE
+uz-cyrl	Uzbek in Cyrillic script	Cyrillic	Cyrillic	Cyrillic	TRUE
+uz-latn	Uzbek in Latin script	Latin	Latin	Latin	TRUE
+uzs	Southern Uzbek	Arabic			FALSE
+ve	Venda	Latin	Common,Latin	Latin	FALSE
+vec	Venetian	Latin	Common,Latin	Latin	FALSE
+vep	Veps	Cyrillic	Common,Latin	Latin	FALSE
+vi	Vietnamese	Latin	Common,Latin	Latin	FALSE
+vls	West Flemish	Latin	Common,Latin	Latin	FALSE
+vmf	Main-Franconian	Latin	Common,Latin	Latin	FALSE
+vo	Volapük	Latin	Common,Latin	Latin	FALSE
+vot	Votic	Latin, Cyrillic	Common,Latin	Latin, Cyrillic	FALSE
+wa	Walloon	Latin	Common,Latin	Latin	FALSE
+wal	Wolaytta	Latin			FALSE
+war	Waray	Latin	Common,Latin	Latin	FALSE
+wbl	Wakhi	Arabic, Cyrillic, Latin			FALSE
+wls	Wallisian	Latin	Latin	Latin	FALSE
+wo	Wolof	Latin, Arabic	Common,Latin	Latin	FALSE
+wuu	Wu Chinese	CJK	Common,Han	Han	FALSE
+wym	Vilamovian	Latin			FALSE
+xal	Kalmyk Oirat	Cyrillic	Cyrillic	Cyrillic	FALSE
+xh	Xhosa	Latin	Common,Latin	Latin	FALSE
+xmf	Mingrelian	Georgian	Common,Georgian	Georgian	FALSE
+xnb	Kanakanavu	Latin			FALSE
+xpu	Punic	Phoenician			FALSE
+xsy	Saisiyat	Latin	Latin	Latin	FALSE
+yai	Yaghnobi	Cyrillic, Latin, Arabic			FALSE
+yap	Yapese	Latin			FALSE
+yav	Yangben	Latin			FALSE
+ydg	Yidgha	Arabic			FALSE
+yi	Yiddish	Hebrew	Common,Hebrew	Hebrew	FALSE
+yo	Yoruba	Latin	Common,Latin	Latin	FALSE
+yrk	Nenets	Cyrillic			FALSE
+yrl	Nheengatu	Latin			FALSE
+za	Zhuang	CJK	Common,Latin	Han	FALSE
+zea	Zeelandic	Latin	Common,Latin	Latin	FALSE
+zgh	Standard Moroccan Berber	Neo-TIfinagh, Berber	Tifinagh	Tifinagh	FALSE
+zh	Chinese	CJK	Common,Han,Latin	Han	FALSE
+zh-cn	Putonghua	CJK	Common,Han,Latin	Han	TRUE
+zh-hans	Simplified Chinese	CJK	Common,Han,Latin	Han	TRUE
+zh-hant	Traditional Chinese	CJK	Common,Han,Latin	Han	TRUE
+zh-hk	Chinese (Hong Kong)	CJK	Common,Han	Han	TRUE
+zh-min-nan	Southern Min	CJK	Latin	Han	TRUE
+zh-mo	Chinese in Macau	CJK	Common,Han	Han	TRUE
+zh-my	Malaysian Mandarin	CJK	Common,Han	Han	TRUE
+zh-sg	Singaporean Mandarin	CJK	Common,Han	Han	TRUE
+zh-tw	Standard Taiwanese Mandarin	CJK	Common,Han	Han	TRUE
+zh-tw	Taiwanese Mandarin	CJK	Common,Han	Han	TRUE
+zh-yue	Yue Chinese	CJK	Han	Han	TRUE
+zh-yue	Cantonese	CJK	Han	Han	TRUE
+zu	Zulu	Latin	Common,Latin	Latin	FALSE
+zun	Zuni	Latin			FALSE
+zxx	no linguistic content	Latin			FALSE
