@@ -17,17 +17,22 @@ def plot_zipf_distribution(
     save_path="",
     width=12,
     height=6,
+    language_column="language",
+    language_code_column="language_code",
+    conll_type_column="type",
 ):
-    out = df.set_index("language" if not stacked else ["language", "type"])
+    out = df.set_index(
+        language_column if not stacked else [language_column, conll_type_column]
+    )
 
-    if "language_code" in out.columns:
-        out.drop("language_code", 1, inplace=True)
+    if language_code_column in out.columns:
+        out.drop(language_code_column, 1, inplace=True)
 
+    out = out.unstack(-1).fillna(0).astype(int)
+    out.columns = [entity_type for _, entity_type in out.columns.to_flat_index()]
+    out["total"] = out.sum(axis=1)
+    out.sort_values("total", ascending=False, inplace=True)
     if stacked:
-        out = out.unstack(-1).fillna(0).astype(int)
-        out.columns = [entity_type for _, entity_type in out.columns.to_flat_index()]
-        out["total"] = out.sum(axis=1)
-        out.sort_values("total", ascending=False, inplace=True)
         out.drop("total", 1, inplace=True)
         out.head(n_langs).plot(
             kind="bar",
@@ -40,7 +45,8 @@ def plot_zipf_distribution(
             ylabel="Count",
         )
     else:
-        out.sort_values("count", ascending=False)["count"].head(n_langs).plot(
+        out = out["total"]
+        out.head(n_langs).plot(
             kind="bar",
             title=title,
             logy=use_log_y,
@@ -149,6 +155,7 @@ def plot_entropy_distribution(
 @click.option("--remove-xticks-entropy", is_flag=True)
 @click.option("--prune-entropy-plot", is_flag=True, help="")
 @click.option("--n-bins", default=20)
+@click.option("--language-column", default="language")
 def main(
     counts_table_path,
     entropy_table_path,
@@ -165,6 +172,7 @@ def main(
     remove_xticks_entropy,
     prune_entropy_plot,
     n_bins,
+    language_column,
 ):
 
     count_table = read(
@@ -185,27 +193,17 @@ def main(
         zipf_output_file = ""
 
     if collapse_types:
-        count_table = count_table.groupby("language")["count"].sum().reset_index()
-        plot_zipf_distribution(
-            count_table,
-            stacked=False,
-            n_langs=n_languages_counts,
-            save_path=zipf_output_file,
-            use_log_y=log_scale,
-            width=counts_width,
-            height=counts_height,
-        )
+        count_table = count_table.groupby(language_column)["count"].sum().reset_index()
 
-    else:
-        plot_zipf_distribution(
-            count_table,
-            stacked=True,
-            n_langs=n_languages_counts,
-            save_path=zipf_output_file,
-            use_log_y=log_scale,
-            width=counts_width,
-            height=counts_height,
-        )
+    plot_zipf_distribution(
+        count_table,
+        stacked=not collapse_types,
+        n_langs=n_languages_counts,
+        save_path=zipf_output_file,
+        use_log_y=log_scale,
+        width=counts_width,
+        height=counts_height,
+    )
 
 
 if __name__ == "__main__":
