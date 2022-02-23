@@ -1,13 +1,16 @@
-}
+#!/usr/bin/env bash
 
 [ $# -lt 1 ] && usage && exit 1
 
 tsv_file=$1
+nlines=$(wc -l $tsv_file | cut -f1 -d' ')
 
 printf "count,language_code,type\n"
 tail +2 $tsv_file |         # skip header row of TSV file
     cut -f4,5 |             # grab language and type
+    tqdm --total=$nlines |  #
     sort |                  # sort alphabetically
+    tqdm |                  #
     uniq -c |               # count repeated lines
     sort -nr |              # numeric sort + reverse order
     sed 's/^\s*//' |        # get rid of leading whitespace
