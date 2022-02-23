@@ -177,7 +177,6 @@ def validate_name(
 
     return (
         ua.most_common_icu_script(name)
-
         if icu_mode
         else ua.most_common_unicode_block(name)
     ) in allowed_scripts[language]
@@ -189,7 +188,6 @@ def baseline_script_standardization(
     scripts = read(scripts_file, "tsv")
     allowed_scripts_per_lang = {
         lang: set(scr.split(", "))
-
         for lang, scr in zip(scripts.language_code, scripts.scripts_to_keep)
     }
 
@@ -200,7 +198,6 @@ def baseline_script_standardization(
                 language=row[language_column],
                 allowed_scripts=allowed_scripts_per_lang,
             )
-
             for ix, row in tqdm(data.iterrows(), total=data.shape[0])
         ],
         index=data.index,
@@ -287,7 +284,7 @@ def main(
 
     print(f"No. of rows manually intervened: {data_manually_intervened.shape[0]}")
 
-    data = data_manually_intervened
+    data = pd.concat([data_manually_intervened, data_not_intervened], ignore_index=True)
     filtered = filtered_manual
 
     if write_filtered_names:
