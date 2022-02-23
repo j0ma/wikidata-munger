@@ -68,7 +68,7 @@ dump () {
         -d "tab" \
         --database-name "${db_name}" \
         --collection-name "${collection_name}" \
-        -o - $exclude_langs_flag | tqdm > "${output}"
+        -o - $exclude_langs_flag > "${output}"
 
 }
 
@@ -165,7 +165,7 @@ wait
 
 # combine everything into one tsv for script standardization
 combined_tsv="${output_folder}/combined_postprocessed.tsv"
-combine_tsv_files ${output_folder}/*.tsv | tqdm > $combined_tsv
+combine_tsv_files ${output_folder}/*.tsv > $combined_tsv
 
 combined_postprocessed_tsv="${output_folder}/combined_postprocessed.tsv"
 postprocess $combined_tsv $combined_postprocessed_tsv $should_disambiguate_types
@@ -181,7 +181,7 @@ standardize_script \
 # separate into PER,LOC,ORG for name permutations
 for conll_type in $entity_types
 do
-    separate_by_entity_type $combined_script_standardized_tsv $conll_type | tqdm \
+    separate_by_entity_type $combined_script_standardized_tsv $conll_type \
         > "${output_folder}/${conll_type}_script_standardized_${voting_method}.tsv" &
 done
 wait
@@ -191,7 +191,7 @@ final_combined_output="${output_folder}/combined_script_standardized_${voting_me
 echo "Destination: ${final_combined_output}"
 
 rm -vrf $final_combined_output
-combine_tsv_files ${output_folder}/*_script_standardized_${voting_method}.tsv | tqdm > $final_combined_output
+combine_tsv_files ${output_folder}/*_script_standardized_${voting_method}.tsv > $final_combined_output
 separate_by_language $final_combined_output
 
 mv --verbose ${output_folder}/{PER,LOC,ORG,combined}*.tsv ${output_folder}/combined

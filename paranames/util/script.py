@@ -61,7 +61,6 @@ class UnicodeAnalyzer:
         # Skip punctuation depending on settings
         self.punctuation_cond = (
             lambda w: not self.is_punctuation(str(w))
-
             if self.ignore_punctuation
             else True
         )
@@ -98,9 +97,7 @@ class UnicodeAnalyzer:
 
         return Counter(
             blocks.of(c)
-
             for c in self.maybe_strip(word)
-
             if blocks.of(c) and self.punctuation_cond(c) and self.digit_cond(c)
         )
 
@@ -123,14 +120,12 @@ class UnicodeAnalyzer:
 
         return Counter(
             self.get_icu_script(c)
-
             for c in self.maybe_strip(word)
-
             if self.get_icu_script(c)
             and self.punctuation_cond(c)
             and self.digit_cond(c)
         )
-    
+
     def most_common_icu_script(self, word: str) -> str:
         try:
             return self.icu_scripts(word).most_common(1)[0][0]
@@ -257,7 +252,6 @@ class Alignment:
         alignment_tokens: List[Tuple[int, ...]] = sorted(
             [
                 tuple([int(x) for x in at.split("-")])
-
                 for at in self.alignment_str.split(" ")
             ],
             key=lambda t: t[0],
@@ -543,7 +537,6 @@ class FastAligner:
 
             fastalign_stdout = [
                 line
-
                 for name, line in zip(names, fastalign_completed_pid.stdout.split("\n"))
             ]
 
@@ -987,7 +980,6 @@ class Corpus:
         # we can just take the names if blanks have been filtered out
         aligner_input = (
             self.names
-
             if self.filter_out_blank
             else [n if n else self.placeholder_token for n in self.names]
         )
@@ -1064,7 +1056,6 @@ class AnomalousTagger:
                 conll_type=n.conll_type,
                 is_unchanged=n.is_unchanged,
             )
-
             for n in names
         ]
 
@@ -1216,7 +1207,6 @@ class AggregatedTagger(AnomalousTagger):
                 noise_sample=False,
                 is_unchanged=w.is_unchanged,
             )
-
             for w, pred in zip(names, boolean_preds)
         ]
 

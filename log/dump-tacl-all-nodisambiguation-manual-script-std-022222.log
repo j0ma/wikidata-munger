@@ -1,0 +1,8 @@
+mkdir: created directory '/home/jonne/datasets/paranames/tacl-all-nodisamb-manual-script-std'
+mkdir: created directory '/home/jonne/datasets/paranames/tacl-all-nodisamb-manual-script-std/combined'
+mkdir: created directory '/home/jonne/datasets/paranames/tacl-all-nodisamb-manual-script-std/extra_data'
+Extract & clean everything for each type
+[INFO] No languages being excluded.
+[INFO] No languages being excluded.
+[INFO] No languages being excluded.
+Not disambiguating entity types!
