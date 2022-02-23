@@ -128,7 +128,7 @@
 {"lang_code":"dag","language":"Dagbani","is_subtag":false,"en_wikipedia_link":"https://en.wikipedia.org/wiki/Dagbani_language","wikidata_url":"http://www.wikidata.org/entity/Q32238"}
 {"lang_code":"dar","language":"Dargwa","is_subtag":false,"en_wikipedia_link":"https://en.wikipedia.org/wiki/Dargwa_language","wikidata_url":"http://www.wikidata.org/entity/Q32332"}
 {"lang_code":"de","language":"German","is_subtag":false,"en_wikipedia_link":"https://en.wikipedia.org/wiki/German_language","wikidata_url":"http://www.wikidata.org/entity/Q188"}
-{"lang_code":"de","language":"Hauptseite","is_subtag":false,"en_wikipedia_link":"https://en.wikipedia.org/wiki/","wikidata_url":"http://www.wikidata.org/entity/Q21167895"}
+{"lang_code":"de","language":"German","is_subtag":false,"en_wikipedia_link":"https://en.wikipedia.org/wiki/","wikidata_url":"http://www.wikidata.org/entity/Q21167895"}
 {"lang_code":"de-at","language":"Austrian German","is_subtag":true,"en_wikipedia_link":"https://en.wikipedia.org/wiki/Austrian_German","wikidata_url":"http://www.wikidata.org/entity/Q306626"}
 {"lang_code":"de-ch","language":"Swiss High German","is_subtag":true,"en_wikipedia_link":"https://en.wikipedia.org/wiki/Swiss_Standard_German","wikidata_url":"http://www.wikidata.org/entity/Q1366643"}
 {"lang_code":"de-formal","language":"formal address in German","is_subtag":true,"en_wikipedia_link":"https://en.wikipedia.org/wiki/","wikidata_url":"http://www.wikidata.org/entity/Q64427341"}
