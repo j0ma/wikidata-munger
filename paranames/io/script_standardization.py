@@ -177,6 +177,7 @@ def validate_name(
 
     return (
         ua.most_common_icu_script(name)
+
         if icu_mode
         else ua.most_common_unicode_block(name)
     ) in allowed_scripts[language]
@@ -187,7 +188,8 @@ def baseline_script_standardization(
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     scripts = read(scripts_file, "tsv")
     allowed_scripts_per_lang = {
-        lang: set(scr.split(", "))
+        lang: set(s.strip() for s in scr.split(","))
+
         for lang, scr in zip(scripts.language_code, scripts.scripts_to_keep)
     }
 
@@ -198,6 +200,7 @@ def baseline_script_standardization(
                 language=row[language_column],
                 allowed_scripts=allowed_scripts_per_lang,
             )
+
             for ix, row in tqdm(data.iterrows(), total=data.shape[0])
         ],
         index=data.index,
@@ -240,7 +243,7 @@ def baseline_script_standardization(
 @click.option(
     "--scripts-file",
     "-s",
-    default="~/paranames/data/anecdata/script_standardization/lang_codes_with_longname_and_scripts",
+    default="~/paranames/data/unicode_scripts_and_allowed_scripts_and_scripts_to_keep_final_022222.tsv",
 )
 def main(
     input_file,
