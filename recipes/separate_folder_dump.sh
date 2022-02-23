@@ -168,7 +168,7 @@ combined_tsv="${output_folder}/combined_postprocessed.tsv"
 combine_tsv_files ${output_folder}/*.tsv | tqdm > $combined_tsv
 
 combined_postprocessed_tsv="${output_folder}/combined_postprocessed.tsv"
-postprocess $combined_tsv $combined_postprocessed_tsv
+postprocess $combined_tsv $combined_postprocessed_tsv $should_disambiguate_types
 
 
 # script standardization: remove parentheses from everything
