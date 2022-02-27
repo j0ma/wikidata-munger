@@ -199,6 +199,7 @@ def baseline_script_standardization(
                 name=row[alias_column],
                 language=row[language_column],
                 allowed_scripts=allowed_scripts_per_lang,
+                icu_mode=True
             )
 
             for ix, row in tqdm(data.iterrows(), total=data.shape[0])
