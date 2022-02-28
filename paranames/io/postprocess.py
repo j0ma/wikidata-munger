@@ -17,7 +17,7 @@ def keep_above_threshold(
     old_nrows = data.shape[0]
     num_names_per_lang = data[language_column].value_counts().to_dict()
     lang_big_enough = data[language_column].apply(
-        lambda l: num_names_per_lang.get(l, 0) >= threshold
+        lambda l: num_names_per_lang.get(l, 0) > threshold
     )
 
     filtered_out_langs = data[~lang_big_enough][language_column].unique()
