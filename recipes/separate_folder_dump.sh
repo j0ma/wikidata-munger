@@ -33,6 +33,9 @@ exclude_these_langs=""
 # Change to "yes" to disambiguate entity types
 should_disambiguate_types="no"
 
+# Change to "yes" to collapse language subcodes into one
+should_collapse_languages="no"
+
 dump () {
 
     local conll_type=$1
@@ -76,6 +79,7 @@ postprocess () {
     local input_file=$1
     local output_file=$2
     local should_disambiguate=${3:-yes}
+    local should_collapse=${3:-no}
 
     if [ "${should_disambiguate}" = "yes" ]
     then
@@ -86,11 +90,20 @@ postprocess () {
         disamb_flag=""
     fi
 
+    if [ "${should_collapse}" = "yes" ]
+    then
+        echo "Collapsing language codes to top-level only!"
+        collapse_flag="--should-collapse-languages"
+    else
+        echo "Language codes left as-is!"
+        collapse_flag=""
+    fi
+
     python paranames/io/postprocess.py \
         -i $input_file -o $output_file -f $default_format \
-        -m $default_name_threshold --should-remove-parentheses $disamb_flag
+        -m $default_name_threshold $disamb_flag $collapse_flag --should-remove-parentheses
 
-}
+    }
 
 standardize_script () {
     local input_file=$1
@@ -168,7 +181,7 @@ combined_tsv="${output_folder}/combined_postprocessed.tsv"
 combine_tsv_files ${output_folder}/*.tsv > $combined_tsv
 
 combined_postprocessed_tsv="${output_folder}/combined_postprocessed.tsv"
-postprocess $combined_tsv $combined_postprocessed_tsv $should_disambiguate_types
+postprocess $combined_tsv $combined_postprocessed_tsv $should_disambiguate_types $should_collapse_languages
 
 
 # script standardization: remove parentheses from everything
