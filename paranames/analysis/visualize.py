@@ -21,7 +21,8 @@ def plot_zipf_distribution(
     language_column="language",
     language_code_column="language_code",
     conll_type_column="type",
-    without_english=False
+    without_english=False,
+    tail=False,
 ):
 
     if without_english:
@@ -41,7 +42,8 @@ def plot_zipf_distribution(
         out["total"] = out.sum(axis=1)
         out.sort_values("total", ascending=False, inplace=True)
         out.drop("total", 1, inplace=True)
-        out.head(n_langs).plot(
+        out = out.head(n_langs) if not tail else out.tail(n_langs)
+        out.plot(
             kind="bar",
             title=title,
             logy=use_log_y,
@@ -53,7 +55,8 @@ def plot_zipf_distribution(
         )
     else:
         out = out["count"].sort_values(ascending=False)
-        out.head(n_langs).plot(
+        out = out.head(n_langs) if not tail else out.tail(n_langs)
+        out.plot(
             kind="bar",
             title=title,
             logy=use_log_y,
@@ -76,37 +79,27 @@ def plot_zipf_distribution(
 
 def plot_entropy_distribution(
     df,
-    n_langs=50,
     title="",
-    use_log_y=False,
     save_path="",
     width=12,
     height=6,
-    disable_xticks=False,
-    entropy_threshold=0.1,
-    pruned=False,
-    n_bins=20,
 ):
-    if pruned:
-        df = df[df.script_entropy < entropy_threshold]
 
-    df.sort_values("script_entropy", ascending=False).head(n_langs).set_index(
-        "language"
-    ).script_entropy.plot(
-        kind="hist",
-        title=title,
-        # logy=use_log_y,
-        # rot=rotation_angle,
-        figsize=(width, height),
-        xlabel="",
-        bins=n_bins,
+    df = df.rename(
+        columns={
+            "script_entropy_before": "Script entropy (before)",
+            "script_entropy_after": "Script entropy (after)",
+        }
     )
 
-    if not pruned:
-        plt.axvline(x=entropy_threshold, linestyle="dashed", color="black")
+    df.plot(
+        kind="scatter",
+        x="Script entropy (before)",
+        y="Script entropy (after)",
+        figsize=(width, height),
+        title=title,
+    )
 
-    if disable_xticks:
-        plt.xticks([])
     plt.tight_layout()
 
     if save_path:
@@ -116,6 +109,10 @@ def plot_entropy_distribution(
         plt.show()
 
     plt.clf()
+
+
+def remove_unknown_languages(df, language_column, language_code_column):
+    return df[df[language_column] != df[language_code_column]]
 
 
 @click.command()
@@ -170,6 +167,12 @@ def plot_entropy_distribution(
     default="data/human_readable_lang_names_from_sparql.json",
 )
 @click.option("--without-english", is_flag=True, help="Don't include English")
+@click.option("--tail", is_flag=True, help="Look at smallest languages instead")
+@click.option(
+    "--drop-unknown-languages",
+    is_flag=True,
+    help="Drop languages for which there is no human-readable language name",
+)
 def main(
     counts_table_path,
     entropy_table_path,
@@ -190,7 +193,9 @@ def main(
     language_code_column,
     conll_type_column,
     human_readable_languages_path,
-    without_english
+    without_english,
+    tail,
+    drop_unknown_languages,
 ):
 
     count_table = read(
@@ -209,6 +214,11 @@ def main(
                 hrl.get(lc, lc) for lc in count_table[language_code_column]
             ]
 
+    if drop_unknown_languages:
+        count_table = remove_unknown_languages(
+            count_table, language_column, language_code_column
+        )
+
     if output_folder:
 
         output_folder = Path(output_folder)
@@ -218,11 +228,16 @@ def main(
 
         zipf_output_file = output_folder / "zipf_count_distribution.png"
 
+        if entropy_table_path:
+            entropy_output_file = output_folder / "entropy_scatterplot.png"
+
     else:
         zipf_output_file = ""
+        entropy_output_file = ""
 
     if collapse_types:
         count_table = count_table.groupby(language_column)["count"].sum().reset_index()
+
 
     plot_zipf_distribution(
         count_table,
@@ -232,8 +247,27 @@ def main(
         use_log_y=log_scale,
         width=counts_width,
         height=counts_height,
-        without_english=without_english
+        without_english=without_english,
+        tail=tail,
     )
+
+    if entropy_table_path:
+        entropy_table = read(
+            entropy_table_path,
+            io_format=maybe_infer_io_format(entropy_table_path),
+        )
+
+        if drop_unknown_languages:
+            entropy_table = remove_unknown_languages(
+                entropy_table, language_column, language_code_column
+            )
+
+        plot_entropy_distribution(
+            entropy_table,
+            save_path=entropy_output_file,
+            width=counts_width,
+            height=counts_height,
+        )
 
 
 if __name__ == "__main__":
