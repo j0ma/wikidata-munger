@@ -4,221 +4,75 @@ from typing import Dict, Tuple, Generator, Any, Iterable
 from functools import partial
 from pathlib import Path
 import tempfile
+import multiprocessing as mp
 
 import click
 import pandas as pd
 from tqdm import tqdm
 from paranames.util import read, write
 import paranames.util.script as s
-from p_tqdm import p_map
 
 
 vote_aggregation_methods = set(["baseline", "all", "any", "majority_vote"])
 
 
-def safe_concat(
-    df_iterable: Iterable[pd.DataFrame], ignore_index: bool = True
-) -> pd.DataFrame:
-    """Concatenates individual DataFrames in df_iterable.
-
-    In case there are no rows to concatenate, returns an empty DataFrame
-    """
-    try:
-        return pd.concat(df_iterable, ignore_index=ignore_index)
-    except ValueError:
-        return pd.DataFrame()
-
-
-def tag_and_split_names(
-    language_subset: Tuple[Any, pd.DataFrame],
-    aggregation_method: str,
-    critical_value: float = 0.1,
-    language_column: str = "language",
-    alias_column: str = "alias",
-    id_column: str = "wikidata_id",
-    english_text_column: str = "eng",
-    strip: bool = True,
-):
-
-    language, subset = language_subset
-
-    if subset.empty:
-        return pd.DataFrame(), subset
-
-    unicode_analyzer = s.UnicodeAnalyzer(
-        strip=strip,
-        ignore_punctuation=True,
-        ignore_numbers=True,
-        normalize_histogram=True,
-    )
-
-    name_loader = s.TransliteratedNameLoader(
-        language_column=language_column,
-        debug_mode=False,
-        name_column=alias_column,
-        wikidata_id_column=id_column,
-        english_column=english_text_column,
-    )
-
-    print(f"[{language}] Loading names...")
-    subset_names = name_loader(subset)
-
-    print(f"[{language}] Finding most common Unicode block")
-
-    most_common_block = (
-        subset[alias_column]
-        .apply(unicode_analyzer.most_common_unicode_block)
-        .value_counts()
-        .idxmax()
-    )
-
-    # anomalous if most common unicode block is not expected one
-    incorrect_block_tagger = s.IncorrectBlockTagger(expected_block=most_common_block)
-
-    # anomalous if given block is missing
-    missing_block_tagger = s.MissingBlockTagger(missing_block=most_common_block)
-
-    # anomalous if JSD from language prototype is greater than a critical value
-    prototype = "".join(str(s) for s in subset[alias_column])
-    distance_based_tagger = s.JSDTagger(
-        per_language_distribution=unicode_analyzer.unicode_block_histogram(prototype),
-        critical_value=critical_value,
-        distance_measure="jensen_shannon",
-    )
-
-    hiragana_katakana_tagger = s.HiraganaKatakanaTagger()
-    cjk_tagger = s.CJKTagger()
-
-    aggregated_tagger = s.AggregatedTagger(
-        taggers=[
-            incorrect_block_tagger,
-            missing_block_tagger,
-            distance_based_tagger,
-            hiragana_katakana_tagger,
-            cjk_tagger,
-        ],
-        aggregation_method=aggregation_method,
-    )
-
-    print(f"[{language}] Tagging names...")
-    tagged_names = aggregated_tagger(subset_names)
-    subset[alias_column] = [n.text for n in tagged_names]
-    subset.loc[:, "anomalous"] = [n.anomalous for n in tagged_names]
-
-    filtered_names = subset[subset["anomalous"]]
-    kept_names = subset[~subset["anomalous"]]
-
-    return filtered_names, kept_names
-
-
-def slice_by_column(
-    data: pd.DataFrame, column: str
-) -> Generator[Tuple[str, pd.DataFrame], None, None]:
-    """Yields slices of data frame based on values of column."""
-    unique_values = data[column].unique()
-
-    for val in unique_values:
-        yield val, data[data[column] == val]
-
-
-def standardize_script(
-    data: pd.DataFrame,
-    aggregation_method: str,
-    critical_value: float = 0.1,
-    language_column: str = "language",
-    alias_column: str = "alias",
-    id_column: str = "wikidata_id",
-    english_text_column: str = "eng",
-    strip: bool = True,
-    num_workers: int = 32,
-    *args,
-    **kwargs,
-) -> Tuple[pd.DataFrame, pd.DataFrame]:
-
-    _tag_and_split_names = partial(
-        tag_and_split_names,
-        aggregation_method=aggregation_method,
-        critical_value=critical_value,
-        language_column=language_column,
-        alias_column=alias_column,
-        id_column=id_column,
-        english_text_column=english_text_column,
-        strip=strip,
-    )
-
-    output_chunks = []
-    filtered_chunks = []
-    tag_and_split_names_output = p_map(
-        _tag_and_split_names,
-        slice_by_column(data, language_column),
-        num_cpus=num_workers,
-    )
-
-    for filtered_names, kept_names in tag_and_split_names_output:
-        filtered_chunks.append(filtered_names)
-        output_chunks.append(kept_names)
-
-    output = safe_concat(output_chunks, ignore_index=True)
-    filtered = safe_concat(filtered_chunks, ignore_index=True)
-
-    return output, filtered
-
-
 def validate_name(
-    name: str,
-    language: str,
+    name_language_tuple: Tuple[str, str],
     allowed_scripts: Dict[str, Dict[str, str]],
     icu_mode: bool = False,
 ) -> bool:
-    ua = s.UnicodeAnalyzer()
+    name, language = name_language_tuple
+
+    ua = s.UnicodeAnalyzer(ignore_punctuation=True, ignore_numbers=True)
 
     if language not in allowed_scripts:
         return True
 
     return (
         ua.most_common_icu_script(name)
-
         if icu_mode
         else ua.most_common_unicode_block(name)
     ) in allowed_scripts[language]
 
 
-def baseline_script_standardization(
-    data, scripts_file, alias_column, language_column, *args, **kwargs
+def validate_names(tuples, allowed_scripts, icu_mode=True, num_workers=60):
+    _validate_name = partial(
+        validate_name, allowed_scripts=allowed_scripts, icu_mode=icu_mode
+    )
+    with mp.Pool(num_workers) as pool:
+        mask_iterable = pool.map(_validate_name, tuples)
+
+    return mask_iterable
+
+
+def standardize_script_manual(
+    data, scripts_file, alias_column, language_column, num_workers, *args, **kwargs
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     scripts = read(scripts_file, "tsv")
     allowed_scripts_per_lang = {
         lang: set(s.strip() for s in scr.split(","))
-
         for lang, scr in zip(scripts.language_code, scripts.scripts_to_keep)
     }
 
-    valid_rows_mask = pd.Series(
-        [
-            validate_name(
-                name=row[alias_column],
-                language=row[language_column],
-                allowed_scripts=allowed_scripts_per_lang,
-                icu_mode=True
-            )
+    print(f"[standardize_script_manual] Creating tuples of (name, language)")
+    name_lang_tuples = zip(data[alias_column], data[language_column])
 
-            for ix, row in tqdm(data.iterrows(), total=data.shape[0])
-        ],
-        index=data.index,
+    print(
+        f"[standardize_script_manual] Creating valid name mask using {num_workers} workers"
+    )
+    mask_iterable = validate_names(
+        name_lang_tuples,
+        allowed_scripts=allowed_scripts_per_lang,
+        icu_mode=True,
+        num_workers=num_workers,
     )
 
-    manually_intervened_mask = data[language_column].apply(
-        lambda l: l in allowed_scripts_per_lang
-    )
-    manually_not_intervened_mask = ~manually_intervened_mask
+    valid_rows_mask = pd.Series(mask_iterable, index=data.index)
 
-    print("No. of valid rows: {} / {}".format(sum(valid_rows_mask), data.shape[0]))
-
-    valid_intervened = data[valid_rows_mask & manually_intervened_mask]
-    valid_not_intervened = data[valid_rows_mask & manually_not_intervened_mask]
+    valid = data[valid_rows_mask]
     filtered = data[~valid_rows_mask]
 
-    return valid_intervened, valid_not_intervened, filtered
+    return valid, filtered
 
 
 @click.command()
@@ -267,14 +121,7 @@ def main(
     # read in data and sort it by language
     data = read(input_file, io_format=io_format)
 
-    # need to sort by language to ensure ordered chunks
-    data = data.sort_values(language_column)
-
-    (
-        data_manually_intervened,
-        data_not_intervened,
-        filtered_manual,
-    ) = baseline_script_standardization(
+    data, filtered = standardize_script_manual(
         data,
         id_column=id_column,
         type_column=type_column,
@@ -285,11 +132,6 @@ def main(
         scripts_file=scripts_file,
         alias_column=alias_column,
     )
-
-    print(f"No. of rows manually intervened: {data_manually_intervened.shape[0]}")
-
-    data = pd.concat([data_manually_intervened, data_not_intervened], ignore_index=True)
-    filtered = filtered_manual
 
     if write_filtered_names:
 
