@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -exuo pipefail
 
 usage () {
-    echo "Usage: bash separate_folder_dump.sh LANGUAGES OUTPUT_FOLDER [ENTITY_TYPES=PER,LOC,ORG DB_NAME=wikidata_db COLLECTION_NAME=wikidata_simple VOTING_METHOD=majority_vote NUM_WORKERS=n_cpus]"
+    echo "Usage: bash separate_folder_dump.sh LANGUAGES OUTPUT_FOLDER [ENTITY_TYPES=PER,LOC,ORG DB_NAME=wikidata_db COLLECTION_NAME=wikidata_simple COLLAPSE_LANGUAGES=no NUM_WORKERS=n_cpus]"
 }
 
 [ $# -lt 4 ] && usage && exit 1
@@ -14,7 +14,8 @@ entity_types=$(echo "${3:-PER,LOC,ORG}" | tr "," " ")
 db_name="${4:-wikidata_db}"
 collection_name="${5:-wikidata_simple}"
 default_format="tsv"
-voting_method=${6:-majority_vote}
+should_collapse_languages=${6:-no}
+voting_method="baseline"
 
 default_num_workers=$(nproc)
 num_workers=${7:-$default_num_workers}
@@ -32,9 +33,6 @@ exclude_these_langs=""
 
 # Change to "yes" to disambiguate entity types
 should_disambiguate_types="no"
-
-# Change to "yes" to collapse language subcodes into one
-should_collapse_languages="no"
 
 dump () {
 
@@ -79,7 +77,7 @@ postprocess () {
     local input_file=$1
     local output_file=$2
     local should_disambiguate=${3:-yes}
-    local should_collapse=${3:-no}
+    local should_collapse=${4:-no}
 
     if [ "${should_disambiguate}" = "yes" ]
     then
