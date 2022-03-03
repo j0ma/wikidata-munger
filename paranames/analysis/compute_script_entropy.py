@@ -93,6 +93,7 @@ def main(
         output_file,
         single_file=True,  # only one output file
         index=False,  # no line numbers
+        sep="\t"      # tab-separated
     )
 
 

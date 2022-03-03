@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[ $# -lt 1 ] && usage && exit 1
+[ $# -lt 1 ] && echo "Need TSV file!" && exit 1
 
 tsv_file=$1
 nlines=$(wc -l $tsv_file | cut -f1 -d' ')
