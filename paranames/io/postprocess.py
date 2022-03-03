@@ -130,9 +130,10 @@ def remove_parentheses(
     data[alias_column] = data[alias_column].apply(lambda a: regex.sub("", a).strip())
     return data
 
-def collapse_language_codes(data):
-    print("[collapse_language_codes] TODO: implement me!")
-    print("[collapse_language_codes] Defaulting to no-op!")
+def collapse_language_codes(data, language_column: str = "language"):
+    print(f"[collapse_language_codes] Collapsing all language codes across {data.shape[0]}...")
+    collapsed = [l.split("-")[0] for l in data[language_column]]
+    data[language_column] = collapsed
 
     return data
 
@@ -148,7 +149,7 @@ def collapse_language_codes(data):
 @click.option("--min-names-threshold", "-m", default=0)
 @click.option("--should-disambiguate-entity-types", "-d", is_flag=True, default=False)
 @click.option("--should-remove-parentheses", "-r", is_flag=True, default=False)
-@click.option("--should-collapse-languages", "-r", is_flag=True, default=False)
+@click.option("--should-collapse-languages", "-c", is_flag=True, default=False)
 def main(
     input_file,
     output_file,
@@ -192,7 +193,7 @@ def main(
 
     # collapse sub-languages into top-level language codes if needed
     if should_collapse_languages:
-        data = collapse_language_codes(data)
+        data = collapse_language_codes(data, language_column=language_column)
 
 
     # write to disk
