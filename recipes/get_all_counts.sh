@@ -27,7 +27,7 @@ echo "Computing counts for each language and type"
 counts_output_file=$output_folder/counts_per_language_and_type.tsv
 bash paranames/analysis/counts_per_lang_and_type.sh $dump_after | xsv fmt -t"\t" | tqdm > $counts_output_file
 
-# TODO: counts for lumped languages and types
+# maybe: counts for lumped languages and types
 
 # script entropy before
 echo "Computing script entropy before script standardization"
@@ -42,3 +42,12 @@ entropy_after_output_file=$output_folder/entropy_per_language_after_script_stand
 compute_script_entropy \
     $dump_after \
     $entropy_after_output_file
+
+# counts of PER/LOC/ORG overlap
+echo "Computing overlap counts of PER/LOC/ORG"
+overlap_counts_output_file=$output_folder/overlap_counts.json
+python paranames/analysis/compute_overlap_counts.py \
+    --input-file $dump_after \
+    --input-format tsv \
+    --output-file $overlap_counts_output_file \
+    --output-format json
