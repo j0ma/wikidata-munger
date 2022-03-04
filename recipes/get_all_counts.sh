@@ -3,7 +3,7 @@
 set -euo pipefail
 
 usage () {
-    echo "get_all_counts.sh DUMP_BEFORE DUMP_AFTER OUTPUT_FOLDER"
+    echo "get_all_counts.sh DUMP_BEFORE DUMP_AFTER [OUTPUT_FOLDER]"
 }
 
 
@@ -15,11 +15,12 @@ compute_script_entropy () {
 }
 
 
-[ $# -lt 3 ] && usage && exit 1
+[ $# -lt 2 ] && usage && exit 1
 
 dump_before=$1
 dump_after=$2
-output_folder=$3
+default_output_folder=$(dirname $dump_after)/../extra_data
+output_folder=${3:-$default_output_folder}
 
 mkdir -pv $output_folder || exit 1
 
