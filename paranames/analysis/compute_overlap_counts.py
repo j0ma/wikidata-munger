@@ -46,7 +46,7 @@ def compute_overlap_counts(
     "-o",
     required=True,
     type=click.File(
-        mode="w", encoding="utf-8", allow_dash=True
+        mode="w", encoding="utf-8"
     )
 )
 @click.option(
