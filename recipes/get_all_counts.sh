@@ -35,14 +35,16 @@ echo "Computing script entropy before script standardization"
 entropy_before_output_file=$output_folder/entropy_per_language_before_script_standardization.tsv
 compute_script_entropy \
     $dump_before \
-    $entropy_before_output_file
+    $entropy_before_output_file &
 
 # script entropy after
 echo "Computing script entropy after script standardization"
 entropy_after_output_file=$output_folder/entropy_per_language_after_script_standardization.tsv
 compute_script_entropy \
     $dump_after \
-    $entropy_after_output_file
+    $entropy_after_output_file &
+
+wait
 
 # counts of PER/LOC/ORG overlap
 echo "Computing overlap counts of PER/LOC/ORG"
