@@ -187,7 +187,7 @@ class TransliteratedName:
     def to_dict(
         self,
         english_text_key: str = "eng",
-        text_key: str = "alias",
+        text_key: str = "label",
         wikidata_id_key: str = "wikidata_id",
         conll_type_key: str = "type",
         unicode_block_key: str = "most_common_unicode_block",
@@ -209,7 +209,7 @@ class TransliteratedName:
     def to_series(
         self,
         english_text_key: str = "eng",
-        text_key: str = "alias",
+        text_key: str = "label",
         wikidata_id_key: str = "wikidata_id",
         conll_type_key: str = "type",
         unicode_block_key: str = "most_common_unicode_block",
@@ -292,7 +292,7 @@ class NameWriter:
             field_name_map = {
                 "wikidata_id": "wikidata_id",
                 "conll_type": "type",
-                "text": "alias",
+                "text": "label",
                 "english_text": "eng",
                 "unicode_block": "most_common_unicode_block",
                 "original_text": "original_text",
@@ -833,7 +833,7 @@ class RemoveParenthesisPermuteLowestDistance(NameProcessor):
 @attr.s
 class TransliteratedNameLoader:
     language_column: str = attr.ib(default="language")
-    name_column: str = attr.ib(default="alias", repr=False)
+    name_column: str = attr.ib(default="label", repr=False)
     wikidata_id_column: str = attr.ib(default="wikidata_id", repr=False)
     conll_type_column: str = attr.ib(default="type", repr=True)
     english_column: Optional[str] = attr.ib(default="eng", repr=False)
@@ -878,7 +878,7 @@ class Corpus:
     )
     num_workers: int = attr.ib(default=1, repr=False)
     out_folder: str = attr.ib(default="")
-    name_column: str = attr.ib(default="alias", repr=False)
+    name_column: str = attr.ib(default="label", repr=False)
     english_column: Optional[str] = attr.ib(default="eng", repr=False)
 
     strip: bool = attr.ib(default=True)
