@@ -17,7 +17,7 @@ class WikidataRecord:
         self.parse_ids()
         self.parse_instance_of()
         self.parse_labels()
-        self.parse_covered_languages()
+        self.parse_languages()
         self.parse_ipa()
 
     def parse_ids(self) -> None:
@@ -47,14 +47,20 @@ class WikidataRecord:
                 lang: d["value"] for lang, d in self.record["labels"].items()
             }
 
-    def parse_covered_languages(self) -> None:
+    def parse_languages(self) -> None:
         if self.simple:
-            self.covered_languages = self.record["languages"]
+            self._languages = self.record["languages"]
         else:
-            self.covered_languages = {lang for lang in self.labels}
+            self._languages = {lang for lang in self.labels}
 
     def parse_ipa(self) -> None:
         pass
+
+    @property
+    def languages(self) -> Set[str]:
+        """Returns a set of languages in which the entity has a transliteration."""
+
+        return self._languages
 
     @property
     def name(self) -> str:
@@ -65,12 +71,6 @@ class WikidataRecord:
             return self._name
         except KeyError:
             return self.wikidata_id
-
-    @property
-    def languages(self) -> Set[str]:
-        """Returns a set of languages in which the entity has a transliteration."""
-
-        return self.covered_languages
 
     def instance_of(self, classes: Set[str]) -> bool:
         """Checks whether the record is an instance of a set of classes"""
@@ -84,7 +84,7 @@ class WikidataRecord:
                 "name": self.name,
                 "labels": self.labels,
                 "instance_of": list(self.instance_ofs),
-                "languages": list(self.covered_languages),
+                "languages": list(self._languages),
             }
         else:
             return self.record
