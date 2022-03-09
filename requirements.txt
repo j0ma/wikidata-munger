@@ -27,3 +27,4 @@ ipython
 more-itertools
 datasketch
 rich
+rich-cli
