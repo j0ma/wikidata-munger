@@ -16,8 +16,8 @@ class WikidataRecord:
         self.default_lang = default_lang
         self.parse_ids()
         self.parse_instance_of()
-        self.parse_aliases()
-        self.parse_alias_langs()
+        self.parse_labels()
+        self.parse_covered_languages()
         self.parse_ipa()
 
     def parse_ids(self) -> None:
@@ -39,19 +39,19 @@ class WikidataRecord:
             except KeyError:
                 self.instance_ofs = set()
 
-    def parse_aliases(self) -> None:
+    def parse_labels(self) -> None:
         if self.simple:
-            self.aliases = self.record["aliases"]
+            self.labels = self.record["labels"]
         else:
-            self.aliases = {
+            self.labels = {
                 lang: d["value"] for lang, d in self.record["labels"].items()
             }
 
-    def parse_alias_langs(self) -> None:
+    def parse_covered_languages(self) -> None:
         if self.simple:
-            self.alias_langs = self.record["languages"]
+            self.covered_languages = self.record["languages"]
         else:
-            self.alias_langs = {lang for lang in self.aliases}
+            self.covered_languages = {lang for lang in self.labels}
 
     def parse_ipa(self) -> None:
         pass
@@ -60,7 +60,7 @@ class WikidataRecord:
     def name(self) -> str:
         try:
             if not hasattr(self, "_name"):
-                self._name = self.aliases[self.default_lang]
+                self._name = self.labels[self.default_lang]
 
             return self._name
         except KeyError:
@@ -70,7 +70,7 @@ class WikidataRecord:
     def languages(self) -> Set[str]:
         """Returns a set of languages in which the entity has a transliteration."""
 
-        return self.alias_langs
+        return self.covered_languages
 
     def instance_of(self, classes: Set[str]) -> bool:
         """Checks whether the record is an instance of a set of classes"""
@@ -82,9 +82,9 @@ class WikidataRecord:
             return {
                 "id": self.wikidata_id,
                 "name": self.name,
-                "aliases": self.aliases,
+                "labels": self.labels,
                 "instance_of": list(self.instance_ofs),
-                "languages": list(self.alias_langs),
+                "languages": list(self.covered_languages),
             }
         else:
             return self.record
