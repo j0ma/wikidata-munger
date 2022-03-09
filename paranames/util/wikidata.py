@@ -3,6 +3,8 @@ import math
 
 from typing import Generator, Set, List, Union, Dict, Any
 from pymongo import MongoClient
+from paranames.util import orjson_dump
+from tqdm import tqdm
 
 DEFAULT_MONGODB_PORT = 27617
 
@@ -34,6 +36,7 @@ class WikidataRecord:
             try:
                 self.instance_ofs = set(
                     iof["mainsnak"]["datavalue"]["value"]["id"]
+
                     for iof in self.record["claims"]["P31"]
                 )
             except KeyError:
@@ -221,7 +224,7 @@ class WikidataMongoIngesterWorker:
         to a specified MongoDB collection as required."""
 
         with open(self.input_path, encoding="utf-8") as f:
-            for line_nr, line in enumerate(f, start=1):
+            for line_nr, line in tqdm(enumerate(f, start=1)):
 
                 # if we're too early, skip
 
